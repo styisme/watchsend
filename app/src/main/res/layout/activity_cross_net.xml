@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_cross_net"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F6F8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="6dp">
+        <Button android:id="@+id/btn_cn_back"
+            android:layout_width="36dp" android:layout_height="36dp"
+            android:text="←" android:textSize="18sp" android:textColor="#1C1B1F"
+            android:background="@android:color/transparent" android:minHeight="0dp" android:minWidth="0dp"/>
+        <TextView android:id="@+id/tv_cross_net_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="跨网传输" android:textSize="15sp" android:textStyle="bold"
+            android:textColor="#1C1B1F" android:layout_marginLeft="4dp"/>
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="8dp">
+
+            <TextView android:id="@+id/tv_cross_net_desc"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="无需同一Wi-Fi" android:textColor="#666" android:textSize="10sp"
+                android:layout_marginBottom="6dp"/>
+
+            <TextView android:id="@+id/tv_ipv6_info"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="IPv6: ..." android:textSize="10sp" android:textColor="#388E3C"
+                android:padding="6dp" android:background="@drawable/watch_card"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical" android:padding="6dp">
+                <TextView android:id="@+id/tv_stun_info"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:text="STUN: 未探测" android:textSize="10sp" android:textColor="#666"/>
+                <Button android:id="@+id/btn_stun_probe"
+                    android:layout_width="wrap_content" android:layout_height="30dp"
+                    android:text="探测" android:textSize="11sp" android:textColor="#1B5E20"
+                    android:background="@drawable/watch_btn_secondary" android:minHeight="0dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical" android:padding="6dp">
+                <CheckBox android:id="@+id/cb_use_direct"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:text="极速直连" android:textColor="#1C1B1F" android:textSize="12sp"/>
+                <Button android:id="@+id/btn_upnp_punch"
+                    android:layout_width="wrap_content" android:layout_height="30dp"
+                    android:text="UPnP" android:textSize="11sp" android:textColor="#1B5E20"
+                    android:background="@drawable/watch_btn_secondary" android:minHeight="0dp"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/layout_direct_ip"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:visibility="gone" android:padding="6dp">
+                <EditText android:id="@+id/et_direct_ip"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:hint="对方公网 IP:端口" android:inputType="text"
+                    android:background="@drawable/watch_edittext" android:padding="8dp"
+                    android:textSize="11sp"/>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/layout_cn_selected_files"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:background="@drawable/watch_card"
+                android:padding="6dp" android:visibility="gone" android:layout_marginTop="4dp">
+                <TextView android:id="@+id/tv_cn_file_info"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="10sp" android:textColor="#388E3C"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="end" android:layout_marginTop="4dp">
+                    <Button android:id="@+id/btn_cn_edit_files"
+                        android:layout_width="wrap_content" android:layout_height="26dp"
+                        android:text="编辑" android:textSize="10sp" android:textColor="#49454F"
+                        android:background="@android:color/transparent" android:minHeight="0dp"/>
+                    <Button android:id="@+id/btn_cn_add_files"
+                        android:layout_width="wrap_content" android:layout_height="26dp"
+                        android:text="+ 添加" android:textSize="10sp" android:textColor="#FFFFFF"
+                        android:background="@drawable/watch_btn_primary" android:minHeight="0dp"
+                        android:layout_marginLeft="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button android:id="@+id/btn_cn_generate"
+                android:layout_width="match_parent" android:layout_height="44dp"
+                android:text="生成 6 位密码发送" android:textColor="#FFFFFF"
+                android:background="@drawable/watch_btn_send" android:textSize="12sp"
+                android:layout_marginTop="6dp"/>
+
+            <TextView android:id="@+id/tv_cn_pin_display"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="#388E3C" android:textSize="18sp" android:textStyle="bold"
+                android:gravity="center" android:layout_marginTop="6dp" android:visibility="gone"/>
+
+            <EditText android:id="@+id/et_cn_pin"
+                android:layout_width="match_parent" android:layout_height="42dp"
+                android:hint="输入 6 位密码" android:inputType="number"
+                android:gravity="center" android:textSize="15sp"
+                android:background="@drawable/watch_edittext" android:layout_marginTop="6dp"/>
+
+            <Button android:id="@+id/btn_cn_receive"
+                android:layout_width="match_parent" android:layout_height="44dp"
+                android:text="连接并接收" android:textColor="#1B5E20"
+                android:background="@drawable/watch_btn_secondary" android:textSize="12sp"
+                android:layout_marginTop="6dp"/>
+
+            <TextView android:id="@+id/tv_cn_status"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textColor="#388E3C" android:textSize="10sp"
+                android:layout_marginTop="6dp" android:gravity="center"/>
+
+            <TextView android:id="@+id/tv_advanced_tip"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:textSize="10sp" android:textColor="#888" android:layout_marginTop="6dp"/>
+
+            <TextView android:id="@+id/tv_send_title" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+            <TextView android:id="@+id/tv_recv_title" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+            <TextView android:id="@+id/tv_select_mode" android:layout_width="0dp" android:layout_height="0dp" android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

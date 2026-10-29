@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.oldsend">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:allowBackup="true"
+        android:theme="@android:style/Theme.Light">
+
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".OldSendService"/>
+        <receiver android:name=".BootReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
+        <receiver android:name=".NotificationReceiver">
+        <intent-filter>
+            <action android:name="org.oldsend.ACCEPT" />
+            <action android:name="org.oldsend.REJECT" />
+        </intent-filter>
+    </receiver>
+        <activity android:name=".TransferActivity"
+            android:launchMode="singleTop" android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity android:name=".SelectListActivity" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name=".CrossNetActivity" android:theme="@android:style/Theme.NoTitleBar" />
+            <activity android:name=".watch.WatchSettingsActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+    </application>
+</manifest>

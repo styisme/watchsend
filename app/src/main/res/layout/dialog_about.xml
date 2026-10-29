@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="◎"
+        android:textSize="56sp"
+        android:textColor="#388E3C" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OldSend"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#1C1B1F"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="© 2026 styisme"
+        android:textSize="13sp"
+        android:textColor="#666666"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="github.com/styisme/oldsend"
+        android:textSize="13sp"
+        android:textColor="#388E3C"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_about_desc"
+            android:text="OldSend 是一款打破常规的极客级文件传输工具。\n完美兼容 LocalSend 局域网协议；独创 6 位密码跨网传输；支持公网 P2P 极速直连。无惧距离，速度与安全尽在掌控。\n\nAI 辅助生成，开源协议: MIT License。"
+        android:textSize="13sp"
+        android:textColor="#333333"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="2dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_about_credits"
+            android:text="作者\nstyisme\n\n贡献者\nAI 助手 (大语言模型)"
+        android:textSize="13sp"
+        android:textColor="#666666"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="2dp" />
+</LinearLayout>
