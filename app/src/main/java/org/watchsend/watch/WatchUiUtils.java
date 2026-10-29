@@ -277,26 +277,67 @@ public class WatchUiUtils {
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
     }
 
-    private static float mStartX = 0;
-    private static float mStartY = 0;
+    
+    private static float startX = 0;
+    private static float startY = 0;
+    private static boolean isSwiping = false;
 
-    // 全局滑动返回手势拦截
-    public static boolean handleSwipeBack(android.app.Activity activity, android.view.MotionEvent ev) {
+    // 升级版：全局跟手滑动返回手势
+    public static boolean handleSwipeBack(final android.app.Activity activity, android.view.MotionEvent ev) {
+        final android.view.View decorView = activity.getWindow().getDecorView();
+        final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
+        
         switch (ev.getAction()) {
             case android.view.MotionEvent.ACTION_DOWN:
-                mStartX = ev.getX();
-                mStartY = ev.getY();
+                startX = ev.getX();
+                startY = ev.getY();
+                isSwiping = false;
                 break;
-            case android.view.MotionEvent.ACTION_UP:
-                float endX = ev.getX();
-                float endY = ev.getY();
-                float deltaX = endX - mStartX;
-                float deltaY = endY - mStartY;
-                float screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
                 
-                // 滑动超过屏幕的 1/4，且横向滑动幅度是纵向的 1.5 倍以上
-                if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-                    activity.finish();
+            case android.view.MotionEvent.ACTION_MOVE:
+                float deltaX = ev.getX() - startX;
+                float deltaY = ev.getY() - startY;
+                
+                // 还没判定为滑动时，判断横向位移是否大于 40px 且占主导
+                if (!isSwiping) {
+                    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                        isSwiping = true;
+                    }
+                }
+                
+                if (isSwiping) {
+                    // 跟手拖拽界面
+                    decorView.setTranslationX(deltaX);
+                    // 跟手渐变透明
+                    float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth);
+                    if (alpha < 0.2f) alpha = 0.2f; // 最低保留一点，防止完全看不见变黑
+                    decorView.setAlpha(alpha);
+                    return true; // 拦截事件，防止底层列表也跟着乱滚
+                }
+                break;
+                
+            case android.view.MotionEvent.ACTION_UP:
+            case android.view.MotionEvent.ACTION_CANCEL:
+                if (isSwiping) {
+                    isSwiping = false;
+                    float finalDeltaX = ev.getX() - startX;
+                    
+                    // 如果滑过屏幕宽度的 1/4，认定要返回
+                    if (Math.abs(finalDeltaX) > screenWidth / 4) {
+                        float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
+                        // 顺着手势方向飞出去
+                        decorView.animate().translationX(targetX).alpha(0f).setDuration(200).withEndAction(new Runnable() {
+                            public void run() {
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0); // 关闭系统默认生硬的转场动画
+                                decorView.setTranslationX(0);
+                                decorView.setAlpha(1f);
+                            }
+                        }).start();
+                    } else {
+                        // 没滑够，丝滑弹回原位
+                        decorView.animate().translationX(0).alpha(1f).setDuration(150).start();
+                    }
                     return true;
                 }
                 break;
