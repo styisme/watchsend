@@ -464,24 +464,50 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     private void showLogDialog() {
         if (logDialog != null && logDialog.isShowing()) return;
+        
         dialogLogView = new TextView(this);
-        dialogLogView.setTextSize(10);
+        dialogLogView.setTextSize(12);
         dialogLogView.setTypeface(android.graphics.Typeface.MONOSPACE);
-        dialogLogView.setPadding(8, 8, 8, 8);
+        dialogLogView.setPadding(16, 16, 16, 16);
         dialogLogView.setText(logCache.toString());
-        if (ThemeUtils.isDarkMode(this)) {
-            dialogLogView.setTextColor(0xFFAAAAAA);
-            dialogLogView.setBackgroundColor(0xFF1E1E1E);
-        } else {
-            dialogLogView.setTextColor(0xFF333333);
-            dialogLogView.setBackgroundColor(0xFFF5F5F5);
-        }
-        ScrollView sv = new ScrollView(this); sv.addView(dialogLogView);
+        
+        boolean isDark = ThemeUtils.isDarkMode(this);
+        dialogLogView.setTextColor(isDark ? 0xFFAAAAAA : 0xFF333333);
+        
+        ScrollView sv = new ScrollView(this); 
+        sv.addView(dialogLogView);
+        
+        // 传 "分享" 给 positive，传 "关闭" 给 negative
         logDialog = WatchUiUtils.createBaseDialog(this, I18nManager.get("log"), sv,
-            I18nManager.get("close"), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface d, int w) { dialogLogView = null; }
-            }, null, null);
+            "分享", new android.content.DialogInterface.OnClickListener() {
+                public void onClick(android.content.DialogInterface d, int w) { 
+                    d.dismiss();
+                    shareLogFile();
+                }
+            }, 
+            "关闭", new android.content.DialogInterface.OnClickListener() {
+                public void onClick(android.content.DialogInterface d, int w) { 
+                    d.dismiss(); 
+                    dialogLogView = null; 
+                }
+            });
         logDialog.show();
+    }
+
+    private void shareLogFile() {
+        File logFile = new File(android.os.Environment.getExternalStorageDirectory(), "Download/OldSend/debug_log.txt");
+        if (!logFile.exists()) { 
+            toast("日志文件尚未生成"); 
+            return; 
+        }
+        try {
+            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.fromFile(logFile));
+            startActivity(android.content.Intent.createChooser(intent, "分享日志"));
+        } catch (Exception e) { 
+            toast("分享失败: " + e.getMessage()); 
+        }
     }
 
     public void onChanged() { if (!historyMode) refreshDevices(); }
