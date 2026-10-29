@@ -4,54 +4,67 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/watch_card"
-    android:padding="12dp">
+    android:background="#1A1A1A"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <TextView
         android:id="@+id/dlg_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="输入"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="#1C1B1F" />
+        android:textSize="15sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center" />
 
     <EditText
         android:id="@+id/dlg_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="40dp"
-        android:layout_marginTop="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:textSize="14sp"
-        android:singleLine="true"
-        android:background="@drawable/watch_edittext" />
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/dlg_input_bg"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:textCursorDrawable="@null"
+        android:singleLine="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginTop="8dp">
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
         <TextView
             android:id="@+id/dlg_btn_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="取消"
-            android:textColor="#666"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:padding="8dp" />
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/dlg_btn_neg"
+            android:gravity="center"
+            android:text="×"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <View
+            android:layout_width="24dp"
+            android:layout_height="1dp" />
+
         <TextView
             android:id="@+id/dlg_btn_positive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="确定"
-            android:textColor="#388E3C"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:padding="8dp"
-            android:layout_marginLeft="10dp" />
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/dlg_btn_pos"
+            android:gravity="center"
+            android:text="✓"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"/>
     </LinearLayout>
 </LinearLayout>
