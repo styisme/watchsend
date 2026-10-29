@@ -118,6 +118,11 @@ public class I18nManager {
         zh.put("ipv6_format_direct", "本机公网 IPv6: [%s]:53317 (可用直连)");
         zh.put("stun_probe_btn", "STUN探测");
         zh.put("advanced_tip", "高级玩法：可配合 FRP/Ngrok 或 ZeroTier 组网后，将生成的公网地址填入下方极速直连。");
+
+        zh.put("ui_size", "UI 大小"); zh.put("ui_size_small", "小"); zh.put("ui_size_medium", "标准"); zh.put("ui_size_large", "大");
+        zh.put("update_success", "更新成功"); zh.put("export_ok", "导出成功"); zh.put("import_ok", "导入成功");
+        zh.put("view_whitelist", "查看白名单"); zh.put("view_blacklist", "查看黑名单"); zh.put("clear_all", "清空所有");
+        zh.put("list_empty", "名单为空");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -282,6 +287,11 @@ dict.put("zh_TW", zhTW);
         en.put("ipv6_format_direct", "Local IPv6: [%s]:53317 (Direct connect)");
         en.put("stun_probe_btn", "STUN Probe");
         en.put("advanced_tip", "Pro Tip: Combine with FRP/Ngrok or ZeroTier, and fill the generated public address into Direct Connect.");
+
+        en.put("ui_size", "UI Size"); en.put("ui_size_small", "Small"); en.put("ui_size_medium", "Medium"); en.put("ui_size_large", "Large");
+        en.put("update_success", "Updated"); en.put("export_ok", "Exported"); en.put("import_ok", "Imported");
+        en.put("view_whitelist", "View Whitelist"); en.put("view_blacklist", "View Blacklist"); en.put("clear_all", "Clear all");
+        en.put("list_empty", "List is empty");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============

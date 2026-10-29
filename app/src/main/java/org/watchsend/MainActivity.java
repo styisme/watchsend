@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        org.watchsend.watch.WatchUiUtils.applyScale(this);
         I18nManager.init(this);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

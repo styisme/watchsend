@@ -3,6 +3,8 @@ package org.watchsend.watch;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +20,24 @@ public class WatchUiUtils {
     public interface OnInputListener { void onInput(String text); }
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
+
+    // 全局 UI 缩放核心方法
+    public static void applyScale(Context context) {
+        float scale = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getFloat("ui_scale", 1.0f);
+        if (scale != 1.0f) {
+            Configuration config = new Configuration();
+            config.updateFrom(context.getResources().getConfiguration());
+            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+            
+            // 备份原始值防止重复缩放
+            if (metrics.densityDpi > 0 && metrics.densityDpi < 1000) {
+                metrics.density *= scale;
+                metrics.scaledDensity *= scale;
+                metrics.densityDpi = (int)(metrics.densityDpi * scale);
+                context.getResources().updateConfiguration(config, metrics);
+            }
+        }
+    }
 
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
