@@ -47,7 +47,6 @@ public class WatchUiUtils {
         root.setPadding(pLeft, 0, pRight, 0);
     }
 
-    // 主界面卡片背景 (保留原来的样式，但如果是深色则偏黑灰)
     public static GradientDrawable getPillBackground(Context ctx) {
         boolean isDark = isDark(ctx);
         GradientDrawable bg = new GradientDrawable();
@@ -110,7 +109,7 @@ public class WatchUiUtils {
 
     private static int dp(int val, Context ctx) { return (int)(val * ctx.getResources().getDisplayMetrics().density); }
 
-    // ================= Dialog 核心重写 =================
+    // ================= Dialog 动态主题 =================
     
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
@@ -125,14 +124,45 @@ public class WatchUiUtils {
     }
 
     private static void applyWearStyle(Context ctx, Dialog d, View root) {
-        // 强制纯黑圆角风格
+        boolean isDark = isDark(ctx);
+        
         GradientDrawable bg = new GradientDrawable();
-        bg.setColor(0xFF1A1A1A); // 纯黑略带一点点灰，质感更好
-        bg.setCornerRadius(36 * ctx.getResources().getDisplayMetrics().density); // 大圆角
+        bg.setColor(isDark ? 0xFF1A1A1A : 0xFFFFFFFF); // 黑底 / 白底
+        bg.setCornerRadius(36 * ctx.getResources().getDisplayMetrics().density); 
         if (root != null) root.setBackground(bg);
         
         TextView title = (TextView) d.findViewById(R.id.dlg_title);
-        if (title != null) title.setTextColor(Color.WHITE);
+        if (title != null) title.setTextColor(isDark ? Color.WHITE : Color.BLACK);
+        
+        // 动态调整取消按钮（×）颜色
+        TextView btnNeg = (TextView) d.findViewById(R.id.dlg_btn_negative);
+        if (btnNeg != null) {
+            if (isDark) {
+                btnNeg.setBackgroundResource(R.drawable.dlg_btn_neg); // 深灰
+                btnNeg.setTextColor(Color.WHITE);
+            } else {
+                GradientDrawable negBg = new GradientDrawable();
+                negBg.setColor(0xFFEEEEEE); // 浅灰
+                negBg.setCornerRadius(18 * ctx.getResources().getDisplayMetrics().density);
+                btnNeg.setBackground(negBg);
+                btnNeg.setTextColor(Color.BLACK);
+            }
+        }
+        
+        // 动态调整输入框
+        EditText et = (EditText) d.findViewById(R.id.dlg_input);
+        if (et != null) {
+            if (isDark) {
+                et.setBackgroundResource(R.drawable.dlg_input_bg); // 深灰
+                et.setTextColor(Color.WHITE);
+            } else {
+                GradientDrawable inputBg = new GradientDrawable();
+                inputBg.setColor(0xFFF0F0F0); // 浅灰
+                inputBg.setCornerRadius(16 * ctx.getResources().getDisplayMetrics().density);
+                et.setBackground(inputBg);
+                et.setTextColor(Color.BLACK);
+            }
+        }
     }
 
     public static Dialog createBaseDialog(Context ctx, String title, View contentView,
@@ -181,6 +211,7 @@ public class WatchUiUtils {
         setupWindow(ctx, d);
         applyWearStyle(ctx, d, d.findViewById(R.id.dlg_root));
 
+        boolean isDark = isDark(ctx);
         ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
         LinearLayout container = (LinearLayout) d.findViewById(R.id.dlg_list_container);
         container.removeAllViews();
@@ -191,8 +222,8 @@ public class WatchUiUtils {
             tv.setText(items[i]);
             tv.setTextSize(15);
             tv.setPadding(16, 16, 16, 16);
-            tv.setTextColor(0xFFE0E0E0);
-            tv.setGravity(Gravity.CENTER); // 居中排版更像系统原生
+            tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF333333);
+            tv.setGravity(Gravity.CENTER);
             android.util.TypedValue tv2 = new android.util.TypedValue();
             ctx.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, tv2, true);
             tv.setBackgroundResource(tv2.resourceId);
@@ -220,7 +251,6 @@ public class WatchUiUtils {
         ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
         final EditText et = (EditText) d.findViewById(R.id.dlg_input);
         et.setText(def);
-        et.setTextColor(Color.WHITE);
 
         d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { d.dismiss(); }
@@ -241,7 +271,7 @@ public class WatchUiUtils {
     public static Dialog showConfirm(Context ctx, String title, String msg, final DialogInterface.OnClickListener positive) {
         TextView tv = new TextView(ctx);
         tv.setText(msg); tv.setTextSize(14);
-        tv.setTextColor(0xFFE0E0E0);
+        tv.setTextColor(isDark(ctx) ? 0xFFE0E0E0 : 0xFF49454F);
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(16, 8, 16, 8);
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
