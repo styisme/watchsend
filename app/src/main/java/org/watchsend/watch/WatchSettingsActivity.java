@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
+import java.util.Locale;
 
 import org.watchsend.MainActivity;
 import org.watchsend.OldSendService;
@@ -18,14 +20,13 @@ public class WatchSettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this); // 应用 UI 缩放
+        WatchUiUtils.applyScale(this);
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
         ThemeUtils.applyTheme(this);
         
-        // 设置根背景色
         boolean isDark = ThemeUtils.isDarkMode(this);
         findViewById(R.id.settings_root).setBackgroundColor(isDark ? 0xFF121212 : 0xFFF4F6F8);
 
@@ -50,8 +51,7 @@ public class WatchSettingsActivity extends Activity {
 
     private void buildSettings() {
         container.removeAllViews();
-        boolean isDark = ThemeUtils.isDarkMode(this);
-
+        
         addSection(I18nManager.get("general"));
 
         addSwitch(I18nManager.get("dark_mode"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
@@ -85,10 +85,8 @@ public class WatchSettingsActivity extends Activity {
 
         addSection(I18nManager.get("other"));
         
-        // 新增：UI 大小调节
-        addItem(I18nManager.get("ui_size") + ": " + getUiSizeLabel(), new View.OnClickListener() {
-            public void onClick(View v) { pickUiSize(); }
-        });
+        // 新增：无级调节 UI 大小
+        addUiScaleSlider();
 
         addItem(I18nManager.get("language") + ": " + currentLangLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickLang(); }
@@ -110,6 +108,62 @@ public class WatchSettingsActivity extends Activity {
         addItem(I18nManager.get("about"), new View.OnClickListener() {
             public void onClick(View v) { aboutDialog(); }
         });
+    }
+
+    // ===== 核心：无级滑动条 =====
+    private void addUiScaleSlider() {
+        boolean isDark = ThemeUtils.isDarkMode(this);
+        float currentScale = prefs().getFloat("ui_scale", 1.0f);
+        
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.VERTICAL);
+        row.setPadding(14, 10, 14, 10);
+        row.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = 4;
+        row.setLayoutParams(lp);
+
+        final TextView tv = new TextView(this);
+        tv.setText(I18nManager.get("ui_size") + ": " + String.format(Locale.US, "%.2f", currentScale) + "x");
+        tv.setTextSize(13);
+        tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        row.addView(tv);
+
+        // 范围设定为 0.5x 到 1.5x (进度条 0-100)
+        SeekBar sb = new SeekBar(this);
+        sb.setMax(100);
+        int progress = (int) ((currentScale - 0.5f) * 100); // 映射 0.5~1.5 到 0~100
+        if (progress < 0) progress = 0;
+        if (progress > 100) progress = 100;
+        sb.setProgress(progress);
+        
+        // 在老版本 Android 上给 Thumb 加一点尺寸
+        ViewGroup.LayoutParams sbLp = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, 60);
+        sb.setLayoutParams(sbLp);
+        
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float newScale = 0.5f + (progress / 100.0f);
+                tv.setText(I18nManager.get("ui_size") + ": " + String.format(Locale.US, "%.2f", newScale) + "x");
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                float newScale = 0.5f + (seekBar.getProgress() / 100.0f);
+                prefs().edit().putFloat("ui_scale", newScale).commit();
+                // 稍作延迟后重启 Activity 让缩放生效
+                Toast.makeText(WatchSettingsActivity.this, I18nManager.get("update_success"), Toast.LENGTH_SHORT).show();
+                new android.os.Handler().postDelayed(new Runnable() {
+                    public void run() { recreate(); }
+                }, 300);
+            }
+        });
+        row.addView(sb);
+        container.addView(row);
     }
 
     private void addSection(String title) {
@@ -176,13 +230,6 @@ public class WatchSettingsActivity extends Activity {
         container.addView(row);
     }
 
-    private String getUiSizeLabel() {
-        float scale = prefs().getFloat("ui_scale", 1.0f);
-        if (scale <= 0.85f) return I18nManager.get("ui_size_small");
-        if (scale >= 1.15f) return I18nManager.get("ui_size_large");
-        return I18nManager.get("ui_size_medium");
-    }
-
     private String currentLangLabel() {
         String lang = prefs().getString("app_lang", "system");
         String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
@@ -245,20 +292,6 @@ public class WatchSettingsActivity extends Activity {
                     }
                 }
             });
-    }
-    
-    private void pickUiSize() {
-        String[] items = {I18nManager.get("ui_size_small"), I18nManager.get("ui_size_medium"), I18nManager.get("ui_size_large")};
-        WatchUiUtils.showList(this, I18nManager.get("ui_size"), items,
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    float scale = 1.0f;
-                    if (pos == 0) scale = 0.85f;
-                    else if (pos == 2) scale = 1.15f;
-                    prefs().edit().putFloat("ui_scale", scale).commit();
-                    recreate();
-                }
-            }).show();
     }
 
     private void pickLang() {
