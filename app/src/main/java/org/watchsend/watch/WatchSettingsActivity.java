@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.*;
 
 import org.watchsend.MainActivity;
-import org.watchsend.OldSendService;
+import org.watchsend.WatchSendService;
 import org.watchsend.R;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
@@ -51,11 +51,11 @@ public class WatchSettingsActivity extends Activity {
         addSwitch(I18nManager.get("dark_mode"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("dark_mode", v).commit(); recreate(); }
         });
-        addSwitch(I18nManager.get("auto_save"), OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
-        addSwitch(I18nManager.get("auto_whitelist"), OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
-        addSwitch(I18nManager.get("save_album"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
-        addSwitch(I18nManager.get("save_history"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
-        addSwitch(I18nManager.get("use_pin"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
+        addSwitch(I18nManager.get("auto_save"), WatchSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
+        addSwitch(I18nManager.get("auto_whitelist"), WatchSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
+        addSwitch(I18nManager.get("save_album"), WatchSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
+        addSwitch(I18nManager.get("save_history"), WatchSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
+        addSwitch(I18nManager.get("use_pin"), WatchSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
 
         addItem("PIN: " + prefs().getString("pin_code", "0000"), new View.OnClickListener() {
             public void onClick(View v) { editPin(); }
@@ -66,9 +66,9 @@ public class WatchSettingsActivity extends Activity {
         addSwitch(I18nManager.get("https_enable"), prefs().getBoolean("use_https", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("use_https", v).commit(); }
         });
-        addSwitch(I18nManager.get("web_enable"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
-        addSwitch(I18nManager.get("auto_start"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
-        addSwitch(I18nManager.get("receive_notif"), OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
+        addSwitch(I18nManager.get("web_enable"), WatchSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
+        addSwitch(I18nManager.get("auto_start"), WatchSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+        addSwitch(I18nManager.get("receive_notif"), WatchSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
 
         addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
@@ -83,11 +83,11 @@ public class WatchSettingsActivity extends Activity {
             public void onClick(View v) { pickLang(); }
         });
         addSwitch(I18nManager.get("anim"), prefs().getBoolean("use_anim", true), saveTo("use_anim"));
-        addItem(I18nManager.get("filter_ext_title") + ": " + OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
+        addItem(I18nManager.get("filter_ext_title") + ": " + WatchSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
             new View.OnClickListener() {
                 public void onClick(View v) { editFilter(); }
             });
-        addItem(I18nManager.get("set_name") + ": " + OldSendService.getAlias(this), new View.OnClickListener() {
+        addItem(I18nManager.get("set_name") + ": " + WatchSendService.getAlias(this), new View.OnClickListener() {
             public void onClick(View v) { editName(); }
         });
         addItem(I18nManager.get("manage_acl"), new View.OnClickListener() {
@@ -205,7 +205,7 @@ public class WatchSettingsActivity extends Activity {
 
     private void editFilter() {
         WatchUiUtils.showInput(this, "拦截后缀",
-            OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
+            WatchSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
             new WatchUiUtils.OnInputListener() {
                 public void onInput(String text) {
                     prefs().edit().putString("filter_ext", text.replace(" ","").toLowerCase()).commit();
@@ -215,11 +215,11 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void editName() {
-        WatchUiUtils.showInput(this, I18nManager.get("set_name"), OldSendService.getAlias(this),
+        WatchUiUtils.showInput(this, I18nManager.get("set_name"), WatchSendService.getAlias(this),
             new WatchUiUtils.OnInputListener() {
                 public void onInput(String text) {
                     if (text != null && text.length() > 0) {
-                        OldSendService.setAlias(WatchSettingsActivity.this, text);
+                        WatchSendService.setAlias(WatchSettingsActivity.this, text);
                         buildSettings();
                     }
                 }
@@ -254,7 +254,7 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void showSpecificList(final String key) {
-        String s = OldSendService.getPrefStringGlobal(key, "");
+        String s = WatchSendService.getPrefStringGlobal(key, "");
         if (s.trim().isEmpty()) { Toast.makeText(this, "名单为空", Toast.LENGTH_SHORT).show(); return; }
         final String[] arr = s.split(",");
         String[] display = new String[arr.length];
@@ -264,7 +264,7 @@ public class WatchSettingsActivity extends Activity {
             new WatchUiUtils.OnItemSelectListener() {
                 public void onItemSelect(int pos) {
                     String t = arr[pos];
-                    String cur = OldSendService.getPrefStringGlobal(key, "");
+                    String cur = WatchSendService.getPrefStringGlobal(key, "");
                     cur = cur.replace(t + ",", "").replace(t, "");
                     prefs().edit().putString(key, cur).commit();
                     showSpecificList(key);
@@ -284,7 +284,7 @@ public class WatchSettingsActivity extends Activity {
                             org.json.JSONObject o = new org.json.JSONObject();
                             for (java.util.Map.Entry<String, ?> e : prefs().getAll().entrySet())
                                 o.put(e.getKey(), e.getValue());
-                            cm.setPrimaryClip(android.content.ClipData.newPlainText("OldSendBackup", o.toString()));
+                            cm.setPrimaryClip(android.content.ClipData.newPlainText("WatchSendBackup", o.toString()));
                             Toast.makeText(WatchSettingsActivity.this, "已导出到剪贴板", Toast.LENGTH_SHORT).show();
                         } catch (Exception ignored) {}
                     } else {
@@ -312,7 +312,7 @@ public class WatchSettingsActivity extends Activity {
 
     private void aboutDialog() {
         TextView tv = new TextView(this);
-        tv.setText("OldSend · Watch Edition\nv2.0.0\n\n作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2\n端口 53317\n组播 224.0.0.167");
+        tv.setText("WatchSend · Watch Edition\nv2.0.0\n\n作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2\n端口 53317\n组播 224.0.0.167");
         tv.setTextSize(12);
         tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF333333);
         tv.setLineSpacing(0, 1.3f);
