@@ -636,4 +636,13 @@ public class CrossNetActivity extends Activity {
             return "未知公网IP";
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

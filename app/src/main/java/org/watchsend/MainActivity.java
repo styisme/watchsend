@@ -543,4 +543,13 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         DeviceStore.get().setListener(null);
         super.onDestroy();
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

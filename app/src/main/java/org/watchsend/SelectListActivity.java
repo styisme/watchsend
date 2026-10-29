@@ -149,4 +149,13 @@ public class SelectListActivity extends Activity {
         String totalSizeStr = totalSize > 1024*1024 ? String.format("%.1f MB", totalSize/1024.0/1024.0) : String.format("%.1f KB", totalSize/1024.0);
         if (tvTotalSize != null) tvTotalSize.setText(String.format(I18nManager.get("size_label"), (totalSize > 0 ? totalSizeStr : I18nManager.get("unknown_size"))));
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

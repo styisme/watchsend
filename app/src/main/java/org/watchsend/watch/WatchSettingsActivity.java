@@ -361,4 +361,13 @@ public class WatchSettingsActivity extends Activity {
         tv.setTextSize(13); tv.setTextColor(0xFFE0E0E0); tv.setLineSpacing(0, 1.3f);
         WatchUiUtils.createBaseDialog(this, "关于", tv, "确定", null, null, null).show();
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

@@ -315,4 +315,13 @@ public class TransferActivity extends Activity {
         super.onPause();
         unregisterReceiver(receiver);
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 }

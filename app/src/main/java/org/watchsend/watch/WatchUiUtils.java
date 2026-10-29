@@ -276,4 +276,31 @@ public class WatchUiUtils {
         tv.setPadding(16, 8, 16, 8);
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
     }
+
+    private static float mStartX = 0;
+    private static float mStartY = 0;
+
+    // 全局滑动返回手势拦截
+    public static boolean handleSwipeBack(android.app.Activity activity, android.view.MotionEvent ev) {
+        switch (ev.getAction()) {
+            case android.view.MotionEvent.ACTION_DOWN:
+                mStartX = ev.getX();
+                mStartY = ev.getY();
+                break;
+            case android.view.MotionEvent.ACTION_UP:
+                float endX = ev.getX();
+                float endY = ev.getY();
+                float deltaX = endX - mStartX;
+                float deltaY = endY - mStartY;
+                float screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
+                
+                // 滑动超过屏幕的 1/4，且横向滑动幅度是纵向的 1.5 倍以上
+                if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                    activity.finish();
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
 }
