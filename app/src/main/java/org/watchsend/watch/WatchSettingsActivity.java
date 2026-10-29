@@ -3,6 +3,7 @@ package org.watchsend.watch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -33,7 +34,9 @@ public class WatchSettingsActivity extends Activity {
         ThemeUtils.applyTheme(this);
         
         boolean isDark = ThemeUtils.isDarkMode(this);
-        findViewById(R.id.settings_root).setBackgroundColor(isDark ? 0xFF121212 : 0xFFF4F6F8);
+        View root = findViewById(R.id.settings_root);
+        root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8); // 纯黑底更高级
+        WatchUiUtils.applyRoundPadding(this, root);
 
         container = (LinearLayout) findViewById(R.id.settings_container);
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
@@ -57,176 +60,129 @@ public class WatchSettingsActivity extends Activity {
     private void buildSettings() {
         container.removeAllViews();
         
-        addSection(I18nManager.get("general"));
+        addMainTitle("设置");
+        addSection("基本");
 
-        addSwitch(I18nManager.get("dark_mode"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
+        // 新增：圆屏优化
+        addSwitch("圆屏优化", "防止内容被圆形边缘遮挡", prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
+            public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
+        });
+
+        addSwitch("深色模式", "黑白主题切换", prefs().getBoolean("dark_mode", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("dark_mode", v).commit(); recreate(); }
         });
-        addSwitch(I18nManager.get("auto_save"), OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
-        addSwitch(I18nManager.get("auto_whitelist"), OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
-        addSwitch(I18nManager.get("save_album"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
-        addSwitch(I18nManager.get("save_history"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
-        addSwitch(I18nManager.get("use_pin"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
+        
+        addItem("语言设置", currentLangLabel(), new View.OnClickListener() {
+            public void onClick(View v) { pickLang(); }
+        });
+        
+        addItem("UI 大小", String.format(Locale.US, "%.2f", prefs().getFloat("ui_scale", 1.0f)) + "x", new View.OnClickListener() {
+            public void onClick(View v) { showUiScaleDialog(); }
+        });
 
-        addItem("PIN: " + prefs().getString("pin_code", "0000"), new View.OnClickListener() {
+        addSection("传输");
+        addSwitch("自动保存", "免确认直接接收", OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
+        addSwitch("白名单自动接收", "仅限白名单设备", OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
+        addSwitch("保存到相册", "图片与视频放入图库", OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
+        addSwitch("保存到历史记录", "记录收发日志", OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
+        addSwitch("启用 PIN 密码", "增强接收安全性", OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
+        
+        addItem("修改 PIN", prefs().getString("pin_code", "0000"), new View.OnClickListener() {
             public void onClick(View v) { editPin(); }
         });
 
-        addSection(I18nManager.get("network"));
-
-        addSwitch(I18nManager.get("https_enable"), prefs().getBoolean("use_https", false), new SwitchHandler() {
+        addSection("网络与自动化");
+        addSwitch("开启 HTTPS 加密", "可能影响旧设备兼容性", prefs().getBoolean("use_https", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("use_https", v).commit(); }
         });
-        addSwitch(I18nManager.get("web_enable"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
-        addSwitch(I18nManager.get("auto_start"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
-        addSwitch(I18nManager.get("receive_notif"), OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
+        addSwitch("启用网页传输", "浏览器互传", OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
+        addSwitch("开机自动启动", "后台常驻", OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+        addSwitch("通知栏接收", "需系统权限", OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
 
-        addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
+        addItem("端口设置", String.valueOf(prefs().getInt("port", 53317)), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
         });
-        addItem(I18nManager.get("timeout") + ": " + prefs().getInt("timeout", 500), new View.OnClickListener() {
+        addItem("搜索超时", String.valueOf(prefs().getInt("timeout", 500)) + " ms", new View.OnClickListener() {
             public void onClick(View v) { editTimeout(); }
         });
 
-        addSection(I18nManager.get("other"));
-        
-        // 美化后的无级调节 UI 大小
-        addUiScaleSlider();
-
-        addItem(I18nManager.get("language") + ": " + currentLangLabel(), new View.OnClickListener() {
-            public void onClick(View v) { pickLang(); }
-        });
-        addSwitch(I18nManager.get("anim"), prefs().getBoolean("use_anim", true), saveTo("use_anim"));
-        addItem(I18nManager.get("filter_ext_title") + ": " + OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
-            new View.OnClickListener() {
-                public void onClick(View v) { editFilter(); }
-            });
-        addItem(I18nManager.get("set_name") + ": " + OldSendService.getAlias(this), new View.OnClickListener() {
+        addSection("设备与安全");
+        addItem("设备名称", OldSendService.getAlias(this), new View.OnClickListener() {
             public void onClick(View v) { editName(); }
         });
-        addItem(I18nManager.get("manage_acl"), new View.OnClickListener() {
+        addItem("危险后缀拦截", OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new View.OnClickListener() {
+            public void onClick(View v) { editFilter(); }
+        });
+        addItem("白名单 / 黑名单", "管理已信任设备", new View.OnClickListener() {
             public void onClick(View v) { manageAcl(); }
         });
-        addItem(I18nManager.get("backup"), new View.OnClickListener() {
-            public void onClick(View v) { backupDialog(); }
-        });
-        addItem(I18nManager.get("about"), new View.OnClickListener() {
+
+        addSection("其他");
+        addItem("关于 WatchSend", "v2.0.0", new View.OnClickListener() {
             public void onClick(View v) { aboutDialog(); }
         });
     }
 
-    // ===== 核心：美化版无级滑动条 =====
-    private void addUiScaleSlider() {
-        boolean isDark = ThemeUtils.isDarkMode(this);
-        float currentScale = prefs().getFloat("ui_scale", 1.0f);
-        
-        LinearLayout row = new LinearLayout(this);
-        row.setOrientation(LinearLayout.VERTICAL);
-        row.setPadding(14, 10, 14, 10);
-        row.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.bottomMargin = 4;
-        row.setLayoutParams(lp);
-
-        final TextView tv = new TextView(this);
-        tv.setText(I18nManager.get("ui_size") + ": " + String.format(Locale.US, "%.2f", currentScale) + "x");
-        tv.setTextSize(13);
-        tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
-        row.addView(tv);
-
-        SeekBar sb = new SeekBar(this);
-        sb.setMax(100);
-        int progress = (int) ((currentScale - 0.5f) * 100);
-        sb.setProgress(Math.max(0, Math.min(100, progress)));
-        
-        // 暴力修改 SeekBar 样式为 MD 风格
-        int trackHeight = (int) (6 * getResources().getDisplayMetrics().density);
-        int thumbSize = (int) (24 * getResources().getDisplayMetrics().density);
-
-        GradientDrawable bg = new GradientDrawable();
-        bg.setCornerRadius(trackHeight);
-        bg.setColor(isDark ? 0xFF3E3E3E : 0xFFE0E0E0);
-        bg.setSize(0, trackHeight);
-
-        GradientDrawable progressDrawable = new GradientDrawable();
-        progressDrawable.setCornerRadius(trackHeight);
-        progressDrawable.setColor(0xFF388E3C); // 主题绿
-        progressDrawable.setSize(0, trackHeight);
-
-        ClipDrawable clip = new ClipDrawable(progressDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-        LayerDrawable ld = new LayerDrawable(new Drawable[]{bg, clip});
-        ld.setId(0, android.R.id.background);
-        ld.setId(1, android.R.id.progress);
-        sb.setProgressDrawable(ld);
-
-        GradientDrawable thumb = new GradientDrawable();
-        thumb.setShape(GradientDrawable.OVAL);
-        thumb.setColor(0xFFFFFFFF);
-        thumb.setStroke((int) (3 * getResources().getDisplayMetrics().density), 0xFF388E3C); // 3dp绿边
-        thumb.setSize(thumbSize, thumbSize);
-        sb.setThumb(thumb);
-        
-        // 去掉原生丑陋的 padding 和 split track
-        sb.setSplitTrack(false);
-        sb.setPadding(thumbSize / 2, 0, thumbSize / 2, 0);
-        
-        ViewGroup.LayoutParams sbLp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, thumbSize + 16);
-        sb.setLayoutParams(sbLp);
-        
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float newScale = 0.5f + (progress / 100.0f);
-                tv.setText(I18nManager.get("ui_size") + ": " + String.format(Locale.US, "%.2f", newScale) + "x");
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                float newScale = 0.5f + (seekBar.getProgress() / 100.0f);
-                prefs().edit().putFloat("ui_scale", newScale).commit();
-                Toast.makeText(WatchSettingsActivity.this, I18nManager.get("update_success"), Toast.LENGTH_SHORT).show();
-                new android.os.Handler().postDelayed(new Runnable() {
-                    public void run() { recreate(); }
-                }, 300);
-            }
-        });
-        row.addView(sb);
-        container.addView(row);
-    }
-
-    private void addSection(String title) {
-        boolean isDark = ThemeUtils.isDarkMode(this);
+    // ===== UI 构建核心方法 =====
+    
+    private void addMainTitle(String title) {
         TextView tv = new TextView(this);
-        tv.setText(title); tv.setTextSize(12);
-        tv.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
-        tv.setTypeface(null, android.graphics.Typeface.BOLD);
-        tv.setPadding(12, 10, 12, 4);
+        tv.setText(title);
+        tv.setTextSize(24);
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        tv.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.topMargin = (int)(16 * getResources().getDisplayMetrics().density);
+        lp.bottomMargin = (int)(24 * getResources().getDisplayMetrics().density);
+        tv.setLayoutParams(lp);
         container.addView(tv);
     }
 
-    private void addSwitch(String label, boolean value, final SwitchHandler handler) {
-        boolean isDark = ThemeUtils.isDarkMode(this);
+    private void addSection(String title) {
+        TextView tv = new TextView(this);
+        tv.setText(title); tv.setTextSize(13);
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin = (int)(16 * getResources().getDisplayMetrics().density);
+        lp.topMargin = (int)(16 * getResources().getDisplayMetrics().density);
+        lp.bottomMargin = (int)(8 * getResources().getDisplayMetrics().density);
+        tv.setLayoutParams(lp);
+        container.addView(tv);
+    }
+
+    private void addSwitch(String title, String subtitle, boolean value, final SwitchHandler handler) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setGravity(android.view.Gravity.CENTER_VERTICAL);
-        row.setPadding(12, 6, 12, 6);
-        row.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.bottomMargin = 4;
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setBackground(WatchUiUtils.getPillBackground(this));
+        row.setPadding(dp(20), dp(16), dp(20), dp(16));
+        
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = dp(8);
         row.setLayoutParams(lp);
 
-        TextView tv = new TextView(this);
-        tv.setText(label); tv.setTextSize(13);
-        tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
-        tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        row.addView(tv);
+        LinearLayout textContainer = new LinearLayout(this);
+        textContainer.setOrientation(LinearLayout.VERTICAL);
+        textContainer.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        TextView tvTitle = new TextView(this);
+        tvTitle.setText(title); tvTitle.setTextSize(16);
+        tvTitle.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        textContainer.addView(tvTitle);
+
+        if (subtitle != null) {
+            TextView tvSub = new TextView(this);
+            tvSub.setText(subtitle); tvSub.setTextSize(12);
+            tvSub.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
+            tvSub.setPadding(0, dp(4), 0, 0);
+            textContainer.addView(tvSub);
+        }
+        row.addView(textContainer);
 
         org.watchsend.ui.Md3Switch cb = new org.watchsend.ui.Md3Switch(this);
-        cb.setLayoutParams(new LinearLayout.LayoutParams(44, 26));
+        cb.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(28)));
         cb.setChecked(value);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton b, boolean c) { handler.onChanged(c); }
@@ -235,187 +191,179 @@ public class WatchSettingsActivity extends Activity {
         container.addView(row);
     }
 
-    private void addItem(String label, View.OnClickListener click) {
-        boolean isDark = ThemeUtils.isDarkMode(this);
+    private void addItem(String title, String subtitle, View.OnClickListener click) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setGravity(android.view.Gravity.CENTER_VERTICAL);
-        row.setPadding(12, 12, 12, 12);
-        row.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.bottomMargin = 4;
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setBackground(WatchUiUtils.getPillBackground(this));
+        row.setPadding(dp(20), dp(16), dp(20), dp(16));
+        
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = dp(8);
         row.setLayoutParams(lp);
 
-        TextView tv = new TextView(this);
-        tv.setText(label); tv.setTextSize(13);
-        tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
-        tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        row.addView(tv);
+        LinearLayout textContainer = new LinearLayout(this);
+        textContainer.setOrientation(LinearLayout.VERTICAL);
+        textContainer.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        TextView tvTitle = new TextView(this);
+        tvTitle.setText(title); tvTitle.setTextSize(16);
+        tvTitle.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        textContainer.addView(tvTitle);
+
+        if (subtitle != null) {
+            TextView tvSub = new TextView(this);
+            tvSub.setText(subtitle); tvSub.setTextSize(12);
+            tvSub.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
+            tvSub.setPadding(0, dp(4), 0, 0);
+            textContainer.addView(tvSub);
+        }
+        row.addView(textContainer);
 
         TextView arrow = new TextView(this);
-        arrow.setText(">"); arrow.setTextSize(20); arrow.setTextColor(isDark ? 0xFF81C784 : 0xFF999999);
+        arrow.setText(">"); 
+        arrow.setTextSize(18); 
+        arrow.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFF81C784 : 0xFF999999);
         row.addView(arrow);
 
         row.setOnClickListener(click);
         container.addView(row);
     }
 
+    private void showUiScaleDialog() {
+        final float currentScale = prefs().getFloat("ui_scale", 1.0f);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(dp(16), dp(16), dp(16), dp(16));
+
+        final TextView tvValue = new TextView(this);
+        tvValue.setText(String.format(Locale.US, "%.2f", currentScale) + "x");
+        tvValue.setTextSize(18); tvValue.setGravity(Gravity.CENTER);
+        tvValue.setTextColor(0xFF388E3C);
+        layout.addView(tvValue);
+
+        SeekBar sb = new SeekBar(this);
+        sb.setMax(100);
+        sb.setProgress(Math.max(0, Math.min(100, (int)((currentScale - 0.5f) * 100))));
+        
+        int thumbSize = dp(24);
+        GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadius(dp(3)); bg.setColor(0xFF3E3E3E); bg.setSize(0, dp(6));
+        GradientDrawable progress = new GradientDrawable();
+        progress.setCornerRadius(dp(3)); progress.setColor(0xFF388E3C); progress.setSize(0, dp(6));
+        ClipDrawable clip = new ClipDrawable(progress, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+        LayerDrawable ld = new LayerDrawable(new Drawable[]{bg, clip});
+        ld.setId(0, android.R.id.background); ld.setId(1, android.R.id.progress);
+        sb.setProgressDrawable(ld);
+
+        GradientDrawable thumb = new GradientDrawable();
+        thumb.setShape(GradientDrawable.OVAL); thumb.setColor(0xFFFFFFFF); thumb.setStroke(dp(3), 0xFF388E3C); thumb.setSize(thumbSize, thumbSize);
+        sb.setThumb(thumb);
+        sb.setSplitTrack(false);
+        sb.setPadding(thumbSize/2, 0, thumbSize/2, 0);
+        
+        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar seekBar, int p, boolean f) {
+                tvValue.setText(String.format(Locale.US, "%.2f", 0.5f + (p/100f)) + "x");
+            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                prefs().edit().putFloat("ui_scale", 0.5f + (seekBar.getProgress()/100f)).commit();
+                recreate();
+            }
+        });
+        layout.addView(sb);
+
+        WatchUiUtils.createBaseDialog(this, "无级缩放 UI", layout, "确定", null, null, null).show();
+    }
+
+    private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density); }
+
     private String currentLangLabel() {
         String lang = prefs().getString("app_lang", "system");
         String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
-        String[] names = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
+        String[] names = {"跟随系统","简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
         for (int i = 0; i < codes.length; i++) if (codes[i].equals(lang)) return names[i];
         return lang;
     }
 
     private void editPin() {
-        WatchUiUtils.showInput(this, "PIN", prefs().getString("pin_code", "0000"),
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    if (text != null && text.length() > 0) {
-                        prefs().edit().putString("pin_code", text).commit();
-                        Toast.makeText(WatchSettingsActivity.this, I18nManager.get("update_success"), Toast.LENGTH_SHORT).show();
-                        buildSettings();
-                    }
-                }
-            });
+        WatchUiUtils.showInput(this, "修改 PIN", prefs().getString("pin_code", "0000"), new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                if (text.length() > 0) { prefs().edit().putString("pin_code", text).commit(); recreate(); }
+            }
+        });
     }
 
     private void editPort() {
-        WatchUiUtils.showInput(this, I18nManager.get("port"), String.valueOf(prefs().getInt("port", 53317)),
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    try { int v = Integer.parseInt(text); prefs().edit().putInt("port", v).commit(); buildSettings(); }
-                    catch (Exception ignored) {}
-                }
-            });
+        WatchUiUtils.showInput(this, "端口", String.valueOf(prefs().getInt("port", 53317)), new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                try { prefs().edit().putInt("port", Integer.parseInt(text)).commit(); recreate(); } catch (Exception ignored) {}
+            }
+        });
     }
 
     private void editTimeout() {
-        WatchUiUtils.showInput(this, I18nManager.get("timeout"), String.valueOf(prefs().getInt("timeout", 500)),
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    try { int v = Integer.parseInt(text); prefs().edit().putInt("timeout", v).commit(); buildSettings(); }
-                    catch (Exception ignored) {}
-                }
-            });
+        WatchUiUtils.showInput(this, "搜索超时(ms)", String.valueOf(prefs().getInt("timeout", 500)), new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                try { prefs().edit().putInt("timeout", Integer.parseInt(text)).commit(); recreate(); } catch (Exception ignored) {}
+            }
+        });
     }
 
     private void editFilter() {
-        WatchUiUtils.showInput(this, I18nManager.get("filter_ext_title"),
-            OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"),
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    prefs().edit().putString("filter_ext", text.replace(" ","").toLowerCase()).commit();
-                    buildSettings();
-                }
-            });
+        WatchUiUtils.showInput(this, "拦截后缀", OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) { prefs().edit().putString("filter_ext", text.replace(" ","").toLowerCase()).commit(); recreate(); }
+        });
     }
 
     private void editName() {
-        WatchUiUtils.showInput(this, I18nManager.get("set_name"), OldSendService.getAlias(this),
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    if (text != null && text.length() > 0) {
-                        OldSendService.setAlias(WatchSettingsActivity.this, text);
-                        buildSettings();
-                    }
-                }
-            });
+        WatchUiUtils.showInput(this, "设备名称", OldSendService.getAlias(this), new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                if (text.length() > 0) { OldSendService.setAlias(WatchSettingsActivity.this, text); recreate(); }
+            }
+        });
     }
 
     private void pickLang() {
-        final String[] items = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
-        WatchUiUtils.showList(this, I18nManager.get("select_lang"), items,
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
-                    prefs().edit().putString("app_lang", codes[pos]).commit();
-                    Toast.makeText(WatchSettingsActivity.this, I18nManager.get("restart_tip"), Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(WatchSettingsActivity.this, MainActivity.class));
-                }
-            }).show();
+        final String[] items = {"跟随系统","简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
+        WatchUiUtils.showList(this, "语言设置", items, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
+                prefs().edit().putString("app_lang", codes[pos]).commit();
+                finish(); startActivity(new Intent(WatchSettingsActivity.this, MainActivity.class));
+            }
+        }).show();
     }
 
     private void manageAcl() {
-        String[] items = {I18nManager.get("view_whitelist"), I18nManager.get("view_blacklist"), I18nManager.get("clear_all")};
-        WatchUiUtils.showList(this, I18nManager.get("manage_acl"), items,
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    if (pos == 2) {
-                        prefs().edit().remove("whitelist").remove("blacklist").commit();
-                        Toast.makeText(WatchSettingsActivity.this, I18nManager.get("all_deleted"), Toast.LENGTH_SHORT).show();
-                    } else showSpecificList(pos == 0 ? "whitelist" : "blacklist");
-                }
-            }).show();
+        String[] items = {"查看白名单", "查看黑名单", "清空所有"};
+        WatchUiUtils.showList(this, "黑白名单", items, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                if (pos == 2) { prefs().edit().remove("whitelist").remove("blacklist").commit(); recreate(); }
+                else showSpecificList(pos == 0 ? "whitelist" : "blacklist");
+            }
+        }).show();
     }
 
     private void showSpecificList(final String key) {
         String s = OldSendService.getPrefStringGlobal(key, "");
-        if (s.trim().isEmpty()) { Toast.makeText(this, I18nManager.get("list_empty"), Toast.LENGTH_SHORT).show(); return; }
+        if (s.trim().isEmpty()) { Toast.makeText(this, "名单为空", Toast.LENGTH_SHORT).show(); return; }
         final String[] arr = s.split(",");
-        String[] display = new String[arr.length];
-        for (int i = 0; i < arr.length; i++)
-            display[i] = arr[i].length() > 16 ? arr[i].substring(0, 16) + "..." : arr[i];
-        WatchUiUtils.showList(this, key.equals("whitelist") ? I18nManager.get("view_whitelist") : I18nManager.get("view_blacklist"), display,
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    String t = arr[pos];
-                    String cur = OldSendService.getPrefStringGlobal(key, "");
-                    cur = cur.replace(t + ",", "").replace(t, "");
-                    prefs().edit().putString(key, cur).commit();
-                    showSpecificList(key);
-                }
-            }).show();
-    }
-
-    private void backupDialog() {
-        String[] items = {I18nManager.get("backup_export"), I18nManager.get("backup_import")};
-        WatchUiUtils.showList(this, I18nManager.get("backup_title"), items,
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    android.content.ClipboardManager cm = (android.content.ClipboardManager)
-                            getSystemService(Context.CLIPBOARD_SERVICE);
-                    if (pos == 0) {
-                        try {
-                            org.json.JSONObject o = new org.json.JSONObject();
-                            for (java.util.Map.Entry<String, ?> e : prefs().getAll().entrySet())
-                                o.put(e.getKey(), e.getValue());
-                            cm.setPrimaryClip(android.content.ClipData.newPlainText("WatchSendBackup", o.toString()));
-                            Toast.makeText(WatchSettingsActivity.this, I18nManager.get("export_ok"), Toast.LENGTH_SHORT).show();
-                        } catch (Exception ignored) {}
-                    } else {
-                        try {
-                            android.content.ClipData clip = cm.getPrimaryClip();
-                            if (clip == null || clip.getItemCount() == 0) return;
-                            String text = clip.getItemAt(0).coerceToText(WatchSettingsActivity.this).toString();
-                            org.json.JSONObject o = new org.json.JSONObject(text);
-                            android.content.SharedPreferences.Editor ed = prefs().edit();
-                            java.util.Iterator<String> keys = o.keys();
-                            while (keys.hasNext()) {
-                                String k = keys.next(); Object v = o.get(k);
-                                if (v instanceof Boolean) ed.putBoolean(k, (Boolean) v);
-                                else if (v instanceof Integer) ed.putInt(k, (Integer) v);
-                                else if (v instanceof String) ed.putString(k, (String) v);
-                            }
-                            ed.commit();
-                            Toast.makeText(WatchSettingsActivity.this, I18nManager.get("import_ok"), Toast.LENGTH_SHORT).show();
-                            buildSettings();
-                        } catch (Exception ignored) {}
-                    }
-                }
-            }).show();
+        WatchUiUtils.showList(this, key.equals("whitelist") ? "白名单" : "黑名单", arr, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                String cur = OldSendService.getPrefStringGlobal(key, "");
+                cur = cur.replace(arr[pos] + ",", "").replace(arr[pos], "");
+                prefs().edit().putString(key, cur).commit();
+                showSpecificList(key);
+            }
+        }).show();
     }
 
     private void aboutDialog() {
         TextView tv = new TextView(this);
-        tv.setText("WatchSend · Watch Edition\nv2.0.0\n\n" + I18nManager.get("author") + ": styisme\nAI " + I18nManager.get("contributors") + "\nMIT License\n\n" + I18nManager.get("about_desc"));
-        tv.setTextSize(12);
-        tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF333333);
-        tv.setLineSpacing(0, 1.3f);
-        WatchUiUtils.createBaseDialog(this, I18nManager.get("about"), tv,
-            I18nManager.get("confirm"), null, null, null).show();
+        tv.setText("WatchSend · Watch Edition\nv2.0.0\n\n作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2");
+        tv.setTextSize(13); tv.setTextColor(0xFFE0E0E0); tv.setLineSpacing(0, 1.3f);
+        WatchUiUtils.createBaseDialog(this, "关于", tv, "确定", null, null, null).show();
     }
 }

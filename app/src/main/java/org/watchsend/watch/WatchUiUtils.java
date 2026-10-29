@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -21,15 +22,12 @@ public class WatchUiUtils {
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
-    // 全局 UI 缩放核心方法
     public static void applyScale(Context context) {
         float scale = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getFloat("ui_scale", 1.0f);
         if (scale != 1.0f) {
             Configuration config = new Configuration();
             config.updateFrom(context.getResources().getConfiguration());
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            
-            // 备份原始值防止重复缩放
             if (metrics.densityDpi > 0 && metrics.densityDpi < 1000) {
                 metrics.density *= scale;
                 metrics.scaledDensity *= scale;
@@ -39,13 +37,44 @@ public class WatchUiUtils {
         }
     }
 
+    // ===== 核心：圆屏优化与边距调整 =====
+    public static void applyRoundPadding(Context ctx, View root) {
+        boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        float density = ctx.getResources().getDisplayMetrics().density;
+        if (isRoundOpt) {
+            // 圆屏模式：左右留出 24dp 空间，上下留 16dp
+            int pLeft = (int)(24 * density);
+            int pTop = (int)(16 * density);
+            int pRight = (int)(24 * density);
+            int pBottom = (int)(16 * density);
+            root.setPadding(pLeft, pTop, pRight, pBottom);
+        } else {
+            // 非圆屏：紧凑模式
+            int p = (int)(8 * density);
+            root.setPadding(p, p, p, p);
+        }
+    }
+
+    // 生成药丸背景
+    public static GradientDrawable getPillBackground(Context ctx) {
+        boolean isDark = isDark(ctx);
+        GradientDrawable bg = new GradientDrawable();
+        bg.setShape(GradientDrawable.RECTANGLE);
+        bg.setCornerRadius(32 * ctx.getResources().getDisplayMetrics().density); // 超大圆角
+        bg.setColor(isDark ? 0xFF1E1E1E : 0xFFFFFFFF);
+        if (!isDark) {
+            bg.setStroke((int)(1 * ctx.getResources().getDisplayMetrics().density), 0xFFE0E0E0);
+        }
+        return bg;
+    }
+
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
         if (w != null) {
             w.setBackgroundDrawableResource(android.R.color.transparent);
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(w.getAttributes());
-            lp.width = (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.95);
+            lp.width = (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.85); // 弹窗收窄一点
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             w.setAttributes(lp);
         }
@@ -101,8 +130,7 @@ public class WatchUiUtils {
         return d;
     }
 
-    public static Dialog showList(Context ctx, String title, String[] items,
-                                  final OnItemSelectListener listener) {
+    public static Dialog showList(Context ctx, String title, String[] items, final OnItemSelectListener listener) {
         final Dialog d = new Dialog(ctx);
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setContentView(R.layout.dialog_watch_list);
@@ -132,16 +160,13 @@ public class WatchUiUtils {
                 }
             });
             container.addView(tv);
-
             if (i < items.length - 1) {
                 View div = new View(ctx);
-                div.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 1));
+                div.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
                 div.setBackgroundColor(dark ? 0xFF3E3E3E : 0xFFE0E0E0);
                 container.addView(div);
             }
         }
-
         d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { d.dismiss(); }
         });
@@ -176,13 +201,11 @@ public class WatchUiUtils {
         return d;
     }
 
-    public static Dialog showConfirm(Context ctx, String title, String msg,
-                                     final DialogInterface.OnClickListener positive) {
+    public static Dialog showConfirm(Context ctx, String title, String msg, final DialogInterface.OnClickListener positive) {
         TextView tv = new TextView(ctx);
         tv.setText(msg); tv.setTextSize(13);
         tv.setTextColor(isDark(ctx) ? 0xFFAAAAAA : 0xFF49454F);
         tv.setPadding(8, 8, 8, 8);
-        return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive,
-            I18nManager.get("cancel"), null);
+        return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
     }
 }

@@ -64,6 +64,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ThemeUtils.applyTheme(this);
+        org.watchsend.watch.WatchUiUtils.applyRoundPadding(this, findViewById(android.R.id.content));
         FileLogger.log("WatchMain", "onCreate");
 
         status = (TextView) findViewById(R.id.status);
