@@ -3,7 +3,12 @@ package org.watchsend.watch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -85,7 +90,7 @@ public class WatchSettingsActivity extends Activity {
 
         addSection(I18nManager.get("other"));
         
-        // 新增：无级调节 UI 大小
+        // 美化后的无级调节 UI 大小
         addUiScaleSlider();
 
         addItem(I18nManager.get("language") + ": " + currentLangLabel(), new View.OnClickListener() {
@@ -110,7 +115,7 @@ public class WatchSettingsActivity extends Activity {
         });
     }
 
-    // ===== 核心：无级滑动条 =====
+    // ===== 核心：美化版无级滑动条 =====
     private void addUiScaleSlider() {
         boolean isDark = ThemeUtils.isDarkMode(this);
         float currentScale = prefs().getFloat("ui_scale", 1.0f);
@@ -130,17 +135,44 @@ public class WatchSettingsActivity extends Activity {
         tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
         row.addView(tv);
 
-        // 范围设定为 0.5x 到 1.5x (进度条 0-100)
         SeekBar sb = new SeekBar(this);
         sb.setMax(100);
-        int progress = (int) ((currentScale - 0.5f) * 100); // 映射 0.5~1.5 到 0~100
-        if (progress < 0) progress = 0;
-        if (progress > 100) progress = 100;
-        sb.setProgress(progress);
+        int progress = (int) ((currentScale - 0.5f) * 100);
+        sb.setProgress(Math.max(0, Math.min(100, progress)));
         
-        // 在老版本 Android 上给 Thumb 加一点尺寸
+        // 暴力修改 SeekBar 样式为 MD 风格
+        int trackHeight = (int) (6 * getResources().getDisplayMetrics().density);
+        int thumbSize = (int) (24 * getResources().getDisplayMetrics().density);
+
+        GradientDrawable bg = new GradientDrawable();
+        bg.setCornerRadius(trackHeight);
+        bg.setColor(isDark ? 0xFF3E3E3E : 0xFFE0E0E0);
+        bg.setSize(0, trackHeight);
+
+        GradientDrawable progressDrawable = new GradientDrawable();
+        progressDrawable.setCornerRadius(trackHeight);
+        progressDrawable.setColor(0xFF388E3C); // 主题绿
+        progressDrawable.setSize(0, trackHeight);
+
+        ClipDrawable clip = new ClipDrawable(progressDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+        LayerDrawable ld = new LayerDrawable(new Drawable[]{bg, clip});
+        ld.setId(0, android.R.id.background);
+        ld.setId(1, android.R.id.progress);
+        sb.setProgressDrawable(ld);
+
+        GradientDrawable thumb = new GradientDrawable();
+        thumb.setShape(GradientDrawable.OVAL);
+        thumb.setColor(0xFFFFFFFF);
+        thumb.setStroke((int) (3 * getResources().getDisplayMetrics().density), 0xFF388E3C); // 3dp绿边
+        thumb.setSize(thumbSize, thumbSize);
+        sb.setThumb(thumb);
+        
+        // 去掉原生丑陋的 padding 和 split track
+        sb.setSplitTrack(false);
+        sb.setPadding(thumbSize / 2, 0, thumbSize / 2, 0);
+        
         ViewGroup.LayoutParams sbLp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, 60);
+                ViewGroup.LayoutParams.MATCH_PARENT, thumbSize + 16);
         sb.setLayoutParams(sbLp);
         
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -155,7 +187,6 @@ public class WatchSettingsActivity extends Activity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 float newScale = 0.5f + (seekBar.getProgress() / 100.0f);
                 prefs().edit().putFloat("ui_scale", newScale).commit();
-                // 稍作延迟后重启 Activity 让缩放生效
                 Toast.makeText(WatchSettingsActivity.this, I18nManager.get("update_success"), Toast.LENGTH_SHORT).show();
                 new android.os.Handler().postDelayed(new Runnable() {
                     public void run() { recreate(); }
