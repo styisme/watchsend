@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.*;
@@ -37,30 +38,19 @@ public class WatchUiUtils {
         }
     }
 
-    // ===== 核心：圆屏优化与边距调整 =====
     public static void applyRoundPadding(Context ctx, View root) {
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
         float density = ctx.getResources().getDisplayMetrics().density;
-        if (isRoundOpt) {
-            // 圆屏模式：左右留出 24dp 空间，上下留 16dp
-            int pLeft = (int)(24 * density);
-            int pTop = (int)(16 * density);
-            int pRight = (int)(24 * density);
-            int pBottom = (int)(16 * density);
-            root.setPadding(pLeft, pTop, pRight, pBottom);
-        } else {
-            // 非圆屏：紧凑模式
-            int p = (int)(8 * density);
-            root.setPadding(p, p, p, p);
-        }
+        int pLeft = isRoundOpt ? (int)(24 * density) : (int)(8 * density);
+        int pRight = isRoundOpt ? (int)(24 * density) : (int)(8 * density);
+        root.setPadding(pLeft, 0, pRight, 0);
     }
 
-    // 生成药丸背景
     public static GradientDrawable getPillBackground(Context ctx) {
         boolean isDark = isDark(ctx);
         GradientDrawable bg = new GradientDrawable();
         bg.setShape(GradientDrawable.RECTANGLE);
-        bg.setCornerRadius(32 * ctx.getResources().getDisplayMetrics().density); // 超大圆角
+        bg.setCornerRadius(32 * ctx.getResources().getDisplayMetrics().density);
         bg.setColor(isDark ? 0xFF1E1E1E : 0xFFFFFFFF);
         if (!isDark) {
             bg.setStroke((int)(1 * ctx.getResources().getDisplayMetrics().density), 0xFFE0E0E0);
@@ -68,13 +58,70 @@ public class WatchUiUtils {
         return bg;
     }
 
+    // ===== 核心：3D滚轮效果与居中留白 =====
+    public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
+        scrollView.setClipToPadding(false); // 允许滑出边界不被裁剪
+        scrollView.setVerticalScrollBarEnabled(false);
+        
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                int screenHeight = scrollView.getHeight();
+                if (screenHeight > 0) {
+                    // 上下各留一半屏幕，保证第一个和最后一个卡片能滑到正中间
+                    int padding = screenHeight / 2 - dp(40, scrollView.getContext());
+                    container.setPadding(container.getPaddingLeft(), padding, container.getPaddingRight(), padding);
+                    
+                    scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                        @Override
+                        public void onScrollChanged() {
+                            applyWheelEffect(scrollView, container);
+                        }
+                    });
+                    applyWheelEffect(scrollView, container);
+                }
+            }
+        });
+    }
+
+    private static void applyWheelEffect(ScrollView scrollView, LinearLayout container) {
+        int centerY = scrollView.getHeight() / 2;
+        int scrollY = scrollView.getScrollY();
+        
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+            if (child.getVisibility() != View.VISIBLE) continue;
+            
+            int childCenterY = child.getTop() + (child.getHeight() / 2) - scrollY;
+            int distance = Math.abs(centerY - childCenterY);
+            
+            float maxDistance = centerY;
+            float fraction = distance / maxDistance; 
+            if (fraction > 1.0f) fraction = 1.0f;
+            
+            // 中心最大 1.0，两边缩小到 0.75
+            float scale = 1.0f - (0.25f * fraction);
+            // 中心不透明，两边变暗到 0.3
+            float alpha = 1.0f - (0.7f * fraction);
+            
+            child.setScaleX(scale);
+            child.setScaleY(scale);
+            child.setAlpha(alpha);
+        }
+    }
+
+    private static int dp(int val, Context ctx) {
+        return (int)(val * ctx.getResources().getDisplayMetrics().density);
+    }
+
+    // ================= Dialog 相关 =================
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
         if (w != null) {
             w.setBackgroundDrawableResource(android.R.color.transparent);
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(w.getAttributes());
-            lp.width = (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.85); // 弹窗收窄一点
+            lp.width = (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.85);
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             w.setAttributes(lp);
         }

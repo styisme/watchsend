@@ -64,6 +64,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ThemeUtils.applyTheme(this);
+        View root = findViewById(R.id.main_root);
+        root.setBackgroundColor(ThemeUtils.isDarkMode(this) ? 0xFF000000 : 0xFFF4F6F8);
+        WatchUiUtils.applyRoundPadding(this, root);
+        ScrollView mainScroll = (ScrollView) findViewById(R.id.main_scroll);
+        LinearLayout mainContainer = (LinearLayout) findViewById(R.id.main_container);
+        WatchUiUtils.setupWheelScroll(mainScroll, mainContainer);
         org.watchsend.watch.WatchUiUtils.applyRoundPadding(this, findViewById(android.R.id.content));
         FileLogger.log("WatchMain", "onCreate");
 

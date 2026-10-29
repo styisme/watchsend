@@ -35,10 +35,13 @@ public class WatchSettingsActivity extends Activity {
         
         boolean isDark = ThemeUtils.isDarkMode(this);
         View root = findViewById(R.id.settings_root);
-        root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8); // 纯黑底更高级
+        root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
         WatchUiUtils.applyRoundPadding(this, root);
 
         container = (LinearLayout) findViewById(R.id.settings_container);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.settings_scroll);
+        WatchUiUtils.setupWheelScroll(scrollView, container);
+
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { finish(); }
         });
@@ -63,7 +66,6 @@ public class WatchSettingsActivity extends Activity {
         addMainTitle("设置");
         addSection("基本");
 
-        // 新增：圆屏优化
         addSwitch("圆屏优化", "防止内容被圆形边缘遮挡", prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
         });
@@ -123,18 +125,14 @@ public class WatchSettingsActivity extends Activity {
         });
     }
 
-    // ===== UI 构建核心方法 =====
-    
     private void addMainTitle(String title) {
         TextView tv = new TextView(this);
-        tv.setText(title);
-        tv.setTextSize(24);
+        tv.setText(title); tv.setTextSize(24);
         tv.setTypeface(null, Typeface.BOLD);
         tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF1C1B1F);
         tv.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.topMargin = (int)(16 * getResources().getDisplayMetrics().density);
-        lp.bottomMargin = (int)(24 * getResources().getDisplayMetrics().density);
+        lp.bottomMargin = dp(16);
         tv.setLayoutParams(lp);
         container.addView(tv);
     }
@@ -145,9 +143,7 @@ public class WatchSettingsActivity extends Activity {
         tv.setTypeface(null, Typeface.BOLD);
         tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.leftMargin = (int)(16 * getResources().getDisplayMetrics().density);
-        lp.topMargin = (int)(16 * getResources().getDisplayMetrics().density);
-        lp.bottomMargin = (int)(8 * getResources().getDisplayMetrics().density);
+        lp.leftMargin = dp(16); lp.topMargin = dp(16); lp.bottomMargin = dp(8);
         tv.setLayoutParams(lp);
         container.addView(tv);
     }
@@ -157,7 +153,7 @@ public class WatchSettingsActivity extends Activity {
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
         row.setBackground(WatchUiUtils.getPillBackground(this));
-        row.setPadding(dp(20), dp(16), dp(20), dp(16));
+        row.setPadding(dp(20), dp(12), dp(20), dp(12));
         
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.bottomMargin = dp(8);
@@ -176,13 +172,13 @@ public class WatchSettingsActivity extends Activity {
             TextView tvSub = new TextView(this);
             tvSub.setText(subtitle); tvSub.setTextSize(12);
             tvSub.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
-            tvSub.setPadding(0, dp(4), 0, 0);
+            tvSub.setPadding(0, dp(2), 0, 0);
             textContainer.addView(tvSub);
         }
         row.addView(textContainer);
 
         org.watchsend.ui.Md3Switch cb = new org.watchsend.ui.Md3Switch(this);
-        cb.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(28)));
+        cb.setLayoutParams(new LinearLayout.LayoutParams(dp(44), dp(26)));
         cb.setChecked(value);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton b, boolean c) { handler.onChanged(c); }
@@ -196,7 +192,7 @@ public class WatchSettingsActivity extends Activity {
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
         row.setBackground(WatchUiUtils.getPillBackground(this));
-        row.setPadding(dp(20), dp(16), dp(20), dp(16));
+        row.setPadding(dp(20), dp(12), dp(20), dp(12));
         
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.bottomMargin = dp(8);
@@ -215,14 +211,13 @@ public class WatchSettingsActivity extends Activity {
             TextView tvSub = new TextView(this);
             tvSub.setText(subtitle); tvSub.setTextSize(12);
             tvSub.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
-            tvSub.setPadding(0, dp(4), 0, 0);
+            tvSub.setPadding(0, dp(2), 0, 0);
             textContainer.addView(tvSub);
         }
         row.addView(textContainer);
 
         TextView arrow = new TextView(this);
-        arrow.setText(">"); 
-        arrow.setTextSize(18); 
+        arrow.setText(">"); arrow.setTextSize(18); 
         arrow.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFF81C784 : 0xFF999999);
         row.addView(arrow);
 

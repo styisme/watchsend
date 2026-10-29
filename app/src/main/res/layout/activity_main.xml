@@ -1,169 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F8"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:orientation="vertical"
+    android:background="#F4F6F8">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="6dp">
-
+        android:layout_height="match_parent">
+        
         <LinearLayout
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/watch_card"
-            android:padding="8dp"
-            android:layout_marginBottom="6dp">
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="STOPPED"
-                android:textColor="#1C1B1F"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/status_ip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="IP 0.0.0.0:53317"
-                android:textColor="#666"
-                android:textSize="10sp"
-                android:singleLine="true"
-                android:ellipsize="middle" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/toggle"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="启动"
-            android:textSize="15sp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/watch_btn_primary"
-            android:layout_marginBottom="6dp" />
-
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="发送文件"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/watch_btn_send"
-            android:layout_marginBottom="6dp" />
-
-        <Button
-            android:id="@+id/btn_history"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:text="接收记录"
-            android:textSize="13sp"
-            android:textColor="#1B5E20"
-            android:background="@drawable/watch_btn_secondary"
-            android:layout_marginBottom="6dp" />
-
-        <Button
-            android:id="@+id/btn_cross_net"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:text="跨网传输"
-            android:textSize="13sp"
-            android:textColor="#1B5E20"
-            android:background="@drawable/watch_btn_secondary"
-            android:layout_marginBottom="8dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="4dp">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="附近的设备"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#1C1B1F"
-                android:layout_marginLeft="6dp" />
-            <Button
-                android:id="@+id/scan"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="扫描"
-                android:textSize="11sp"
-                android:textColor="#1B5E20"
-                android:background="@drawable/watch_btn_secondary"
-                android:minHeight="0dp"
-                android:minWidth="44dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp" />
-            <Button
-                android:id="@+id/btn_manual_ip"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="+IP"
-                android:textSize="11sp"
-                android:textColor="#1B5E20"
-                android:background="@drawable/watch_btn_secondary"
-                android:minHeight="0dp"
-                android:minWidth="40dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:layout_marginLeft="4dp" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/watch_card"
-            android:minHeight="80dp"
-            android:layout_marginBottom="6dp">
-            <ListView
-                android:id="@+id/devices"
+            android:orientation="vertical">
+            
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@null"
-                android:dividerHeight="0dp" />
-            <TextView
-                android:id="@+id/empty_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="暂无设备"
-                android:textColor="#999"
-                android:textSize="11sp" />
-        </FrameLayout>
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/watch_card"
+                android:padding="8dp"
+                android:layout_marginBottom="6dp">
+                <TextView android:id="@+id/status"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="STOPPED" android:textColor="#1C1B1F"
+                    android:textSize="14sp" android:textStyle="bold" />
+                <TextView android:id="@+id/status_ip"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="IP 0.0.0.0:53317" android:textColor="#666"
+                    android:textSize="10sp" android:singleLine="true" android:ellipsize="middle" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_settings"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:text="设置"
-            android:textSize="13sp"
-            android:textColor="#1B5E20"
-            android:background="@drawable/watch_btn_secondary"
-            android:layout_marginBottom="4dp" />
+            <Button android:id="@+id/toggle"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:text="启动" android:textSize="15sp" android:textColor="#FFFFFF"
+                android:background="@drawable/watch_btn_primary" android:layout_marginBottom="6dp" />
 
-        <Button
-            android:id="@+id/btn_log"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:text="日志"
-            android:textSize="11sp"
-            android:textColor="#666"
-            android:background="@android:color/transparent"
-            android:minHeight="0dp" />
-    </LinearLayout>
-</ScrollView>
+            <Button android:id="@+id/btn_send"
+                android:layout_width="match_parent" android:layout_height="52dp"
+                android:text="发送文件" android:textSize="14sp" android:textColor="#FFFFFF"
+                android:background="@drawable/watch_btn_send" android:layout_marginBottom="6dp" />
+
+            <Button android:id="@+id/btn_history"
+                android:layout_width="match_parent" android:layout_height="46dp"
+                android:text="接收记录" android:textSize="13sp" android:textColor="#1B5E20"
+                android:background="@drawable/watch_btn_secondary" android:layout_marginBottom="6dp" />
+
+            <Button android:id="@+id/btn_cross_net"
+                android:layout_width="match_parent" android:layout_height="46dp"
+                android:text="跨网传输" android:textSize="13sp" android:textColor="#1B5E20"
+                android:background="@drawable/watch_btn_secondary" android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+                <TextView android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:text="附近的设备"
+                    android:textSize="12sp" android:textStyle="bold" android:textColor="#1C1B1F"
+                    android:layout_marginLeft="6dp" />
+                <Button android:id="@+id/scan"
+                    android:layout_width="wrap_content" android:layout_height="30dp"
+                    android:text="扫描" android:textSize="11sp" android:textColor="#1B5E20"
+                    android:background="@drawable/watch_btn_secondary"
+                    android:minHeight="0dp" android:minWidth="44dp"
+                    android:paddingLeft="8dp" android:paddingRight="8dp" />
+                <Button android:id="@+id/btn_manual_ip"
+                    android:layout_width="wrap_content" android:layout_height="30dp"
+                    android:text="+IP" android:textSize="11sp" android:textColor="#1B5E20"
+                    android:background="@drawable/watch_btn_secondary"
+                    android:minHeight="0dp" android:minWidth="40dp"
+                    android:paddingLeft="6dp" android:paddingRight="6dp"
+                    android:layout_marginLeft="4dp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@drawable/watch_card" android:minHeight="80dp"
+                android:layout_marginBottom="6dp">
+                <ListView android:id="@+id/devices"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:divider="@null" android:dividerHeight="0dp" />
+                <TextView android:id="@+id/empty_hint"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center" android:text="暂无设备"
+                    android:textColor="#999" android:textSize="11sp" />
+            </FrameLayout>
+
+            <Button android:id="@+id/btn_settings"
+                android:layout_width="match_parent" android:layout_height="46dp"
+                android:text="设置" android:textSize="13sp" android:textColor="#1B5E20"
+                android:background="@drawable/watch_btn_secondary" android:layout_marginBottom="4dp" />
+
+            <Button android:id="@+id/btn_log"
+                android:layout_width="match_parent" android:layout_height="36dp"
+                android:text="日志" android:textSize="11sp" android:textColor="#666"
+                android:background="@android:color/transparent" android:minHeight="0dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
