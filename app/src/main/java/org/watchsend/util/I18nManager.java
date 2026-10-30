@@ -175,6 +175,9 @@ public class I18nManager {
         zh.put("files_count_fmt", "%d 个文件"); zh.put("total_size_fmt", "共 %s"); zh.put("swipe_back_toast", "请滑动屏幕返回");
         zh.put("selected_files_fmt", "已选择 %d 个文件 (%s)");
     
+
+        zh.put("low_perf_mode", "低性能模式"); zh.put("low_perf_desc", "减弱或关闭UI动画特效");
+    
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -281,6 +284,9 @@ dict.put("zh", zh);
         zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加"); zhTW.put("nearby_devices", "附近的設備");
         zhTW.put("files_count_fmt", "%d 個檔案"); zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
         zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)");
+    
+
+        zhTW.put("low_perf_mode", "低效能模式"); zhTW.put("low_perf_desc", "減弱或關閉UI動畫特效");
     
 dict.put("zh_TW", zhTW);
 
@@ -449,6 +455,9 @@ dict.put("zh_TW", zhTW);
         en.put("files_count_fmt", "%d Files"); en.put("total_size_fmt", "Total %s"); en.put("swipe_back_toast", "Swipe to go back");
         en.put("selected_files_fmt", "Selected %d files (%s)");
     
+
+        en.put("low_perf_mode", "Low Performance"); en.put("low_perf_desc", "Reduce UI animations");
+    
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -559,6 +568,9 @@ dict.put("en", en);
         ja.put("edit_btn", "編集"); ja.put("add_btn", "+ 追加"); ja.put("nearby_devices", "近くのデバイス");
         ja.put("files_count_fmt", "%d 個のファイル"); ja.put("total_size_fmt", "合計 %s"); ja.put("swipe_back_toast", "スワイプして戻る");
         ja.put("selected_files_fmt", "%d 個のファイルを選択 (%s)");
+    
+
+        ja.put("low_perf_mode", "低パフォーマンス"); ja.put("low_perf_desc", "UIアニメーションを減らす");
     
 dict.put("ja", ja);
 
@@ -671,6 +683,9 @@ dict.put("ja", ja);
         ko.put("files_count_fmt", "%d개 파일"); ko.put("total_size_fmt", "총 %s"); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
         ko.put("selected_files_fmt", "%d개 파일 선택됨 (%s)");
     
+
+        ko.put("low_perf_mode", "저성능 모드"); ko.put("low_perf_desc", "UI 애니메이션 감소");
+    
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -781,6 +796,9 @@ dict.put("ko", ko);
         de.put("edit_btn", "Bearbeiten"); de.put("add_btn", "+ Hinzufügen"); de.put("nearby_devices", "Geräte in der Nähe");
         de.put("files_count_fmt", "%d Dateien"); de.put("total_size_fmt", "Gesamt %s"); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
         de.put("selected_files_fmt", "%d Dateien ausgewählt (%s)");
+    
+
+        de.put("low_perf_mode", "Geringe Leistung"); de.put("low_perf_desc", "UI-Animationen reduzieren");
     
 dict.put("de", de);
 
@@ -893,6 +911,9 @@ dict.put("de", de);
         fr.put("files_count_fmt", "%d fichiers"); fr.put("total_size_fmt", "Total %s"); fr.put("swipe_back_toast", "Glissez pour revenir");
         fr.put("selected_files_fmt", "%d fichiers sélectionnés (%s)");
     
+
+        fr.put("low_perf_mode", "Basses performances"); fr.put("low_perf_desc", "Réduire les animations");
+    
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1003,6 +1024,9 @@ dict.put("fr", fr);
         es.put("edit_btn", "Editar"); es.put("add_btn", "+ Añadir"); es.put("nearby_devices", "Dispositivos cercanos");
         es.put("files_count_fmt", "%d archivos"); es.put("total_size_fmt", "Total %s"); es.put("swipe_back_toast", "Desliza para volver");
         es.put("selected_files_fmt", "%d archivos seleccionados (%s)");
+    
+
+        es.put("low_perf_mode", "Bajo rendimiento"); es.put("low_perf_desc", "Reducir animaciones");
     
 dict.put("es", es);
 
@@ -1115,6 +1139,9 @@ dict.put("es", es);
         ru.put("files_count_fmt", "%d файлов"); ru.put("total_size_fmt", "Всего %s"); ru.put("swipe_back_toast", "Свайп для возврата");
         ru.put("selected_files_fmt", "Выбрано %d файлов (%s)");
     
+
+        ru.put("low_perf_mode", "Низкая производительность"); ru.put("low_perf_desc", "Меньше анимаций");
+    
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1225,6 +1252,9 @@ dict.put("ru", ru);
         pt.put("edit_btn", "Editar"); pt.put("add_btn", "+ Adicionar"); pt.put("nearby_devices", "Dispositivos próximos");
         pt.put("files_count_fmt", "%d arquivos"); pt.put("total_size_fmt", "Total %s"); pt.put("swipe_back_toast", "Deslize para voltar");
         pt.put("selected_files_fmt", "%d arquivos selecionados (%s)");
+    
+
+        pt.put("low_perf_mode", "Baixo desempenho"); pt.put("low_perf_desc", "Reduzir animações");
     
 dict.put("pt", pt);
     }

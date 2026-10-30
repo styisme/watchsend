@@ -64,6 +64,7 @@ public class WatchUiUtils {
 
     // 4. 3D 滚轮特效
     public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
+        if (isLowPerformance(ctx)) return;
         final Context ctx = scrollView.getContext();
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
         scrollView.setClipToPadding(false); 
@@ -296,7 +297,14 @@ public class WatchUiUtils {
             case android.view.MotionEvent.ACTION_MOVE:
                 float deltaX = ev.getX() - startX;
                 float deltaY = ev.getY() - startY;
-                
+                if (isLowPerformance(activity)) {
+                    if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                        // 直接返回，无跟手
+                        activity.finish();
+                        return true;
+                    }
+                    return false;
+                }
                 if (!isSwiping) {
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         isSwiping = true;
@@ -324,30 +332,6 @@ public class WatchUiUtils {
                     return true; 
                 }
                 break;
-                
-            case android.view.MotionEvent.ACTION_UP:
-            case android.view.MotionEvent.ACTION_CANCEL:
-                if (isSwiping) {
-                    isSwiping = false;
-                    float finalDeltaX = ev.getX() - startX;
-                    
-                    if (Math.abs(finalDeltaX) > screenWidth / 4) {
-                        float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
-                        root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
-                            public void run() {
-                                activity.finish();
-                                activity.overridePendingTransition(0, 0); 
-                                root.setTranslationX(0);
-                                root.setScaleX(1f);
-                                root.setScaleY(1f);
-                                root.setAlpha(1f);
-                            }
-                        }).start();
-                    } else {
-                        root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
-                    }
-                    return true;
-                }
                 break;
         }
         return false;
@@ -355,25 +339,26 @@ public class WatchUiUtils {
 
     // 6. 从中间放大的入场动画
     public static void applyEntryAnimation(android.app.Activity activity) {
-        activity.overridePendingTransition(0, 0); // 关掉系统默认的转场
+        activity.overridePendingTransition(0, 0);
         final View root = activity.findViewById(android.R.id.content);
         if (root == null) return;
         
-        root.setScaleX(0.6f);
-        root.setScaleY(0.6f);
-        root.setAlpha(0f);
+        if (isLowPerformance(activity)) {
+            root.setScaleX(1.0f); root.setScaleY(1.0f); root.setAlpha(1.0f);
+            return;
+        }
         
-        root.animate()
-            .scaleX(1.0f)
-            .scaleY(1.0f)
-            .alpha(1.0f)
-            .setDuration(250)
-            .setInterpolator(new android.view.animation.DecelerateInterpolator())
-            .start();
+        root.setScaleX(0.6f); root.setScaleY(0.6f); root.setAlpha(0f);
+        root.animate().scaleX(1.0f).scaleY(1.0f).alpha(1.0f).setDuration(250).setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
     }
 
     // 检查是否开启了拦截系统返回
     public static boolean isSystemBackBlocked(Context ctx) {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("block_system_back", true);
     }
+
+    public static boolean isLowPerformance(Context ctx) {
+        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("low_perf_mode", false);
+    }
+
 }

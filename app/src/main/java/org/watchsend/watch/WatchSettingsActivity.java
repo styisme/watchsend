@@ -75,6 +75,7 @@ public class WatchSettingsActivity extends Activity {
         addMainTitle(I18nManager.get("settings_title"));
         addSection(I18nManager.get("general"));
 
+        addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
         addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
         });
