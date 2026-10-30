@@ -371,6 +371,8 @@ public class WatchSettingsActivity extends Activity {
         tv.setText("WatchSend · Watch Edition\nv2.0.0\n\n作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2");
         tv.setTextSize(13); tv.setTextColor(0xFFE0E0E0); tv.setLineSpacing(0, 1.3f);
         WatchUiUtils.createBaseDialog(this, "关于", tv, "确定", null, null, null).show();
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -389,4 +391,3 @@ public class WatchSettingsActivity extends Activity {
         }
     }
 }
-

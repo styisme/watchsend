@@ -242,6 +242,8 @@ public class SelectListActivity extends Activity {
     }
     
     private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density);
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -260,4 +262,3 @@ public class SelectListActivity extends Activity {
         }
     }
 }
-

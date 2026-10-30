@@ -315,6 +315,8 @@ public class TransferActivity extends Activity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -333,4 +335,3 @@ public class TransferActivity extends Activity {
         }
     }
 }
-

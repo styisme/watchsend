@@ -694,6 +694,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             String sizeStr = totalSize > 1024*1024 ? String.format(java.util.Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(java.util.Locale.US, "%.1f KB", totalSize/1024.0);
             if (tvSelectedFile != null) {
                 tvSelectedFile.setText("已选择 " + pendingUris.size() + " 个文件 (" + (totalSize > 0 ? sizeStr : "未知") + ")");
+    }
+    }
+    }
+
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -712,4 +716,3 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         }
     }
 }
-
