@@ -1,66 +1,44 @@
 # Changelog
 
-格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
-版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
+本文件记录 **WatchSend** 的版本更新历史，格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
+
+> **关于溯源**：WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属独立分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）继承自 OldSend v2.0.0，UI 层与包名已完全重写。
 
 ## [Unreleased]
 
 ### Planned
-- 基于 WebRTC 的 NAT 打洞。
+- 基于 WebRTC 的手表端 NAT 打洞。
+- 表冠（Rotary Input）滑动列表支持。
 
 ---
 
-## [2.0.0] - 2026-10-19
+## [1.0.0] - 2026-10-30
 
-本次更新将 OldSend 从单纯的局域网工具，彻底升维成了广域网全能大杀器。
+首个 WatchSend 正式版本，将 OldSend 的 UI 彻底推翻重写，100% 针对 Wear OS 圆屏、小屏幕与手势交互进行深度定制。
 
 ### Added
-- **跨网传输模块**：新增独立的跨网传输页面，支持基于 ntfy.sh 的 6 位一次性密码传输，且底层采用 Zip 打包与 Base64 切片保证大文件稳定。
-- **公网直连模式**：支持 P2P 极速直连（兼容 IPv4/IPv6），内网穿透后可跑满公网带宽。
-- **UPnP 自动穿透**：纯手写 SSDP/SOAP 协议，一键强制路由器映射 53317 端口。
-- **STUN 探测器**：纯手写 UDP STUN 客户端，一键获取 NAT 公网 IP 和端口。
-- **IPv6 原生支持**：重构底层 URL 拼接与获取逻辑，完美兼容 IPv6 地址直连。
-- **Web UI 完全重构**：使用原生 JS/CSS 重写了极简 SPA，支持深浅色模式。
-- **Web 高级功能**：前端支持 3 线程并发上传、剪贴板双向同步、拖拽文本生成文件、反向索要下载。
-- **设备黑白名单管理**：长按设备即可加入名单，黑名单 403 拦截，白名单自动接收。
-- **接收端断点续传**：加入 `.tmp` 追加模式。
-- **历史记录持久化**：基于 SharedPreferences 保存文件传输记录。
-- **安全防护**：新增自定义危险后缀拦截（exe/bat等）。
-- **文本自动复制**：接收小于 10KB 的 txt 文件时自动复制到剪贴板。
-- **智能文件图标**：列表页及传输页根据后缀自动匹配 Emoji 图标。
+- **Wear OS 原生交互 UI**：彻底废弃旧版手机端布局，使用纯 Java 动态渲染“药丸卡片”（Pill Cards）与居中大标题，全面对齐系统设置页。
+- **3D 滚轮特效**：列表滑动时，中间卡片保持原大，上下边缘卡片自动缩小（最小至 75%）并降低透明度，模拟真实滚轮物理感。
+- **预测性返回动画**：全面接管系统返回。滑动返回时，界面自动缩小、增加超大圆角并浮起，模拟原生 Predictive Back 体验。
+- **无级 UI 缩放**：在设置页引入自定义 Material 风格滑动条，支持 `0.5x` 至 `1.5x` 缩放，实时改变全 App 字体与控件大小。
+- **圆屏沉浸优化**：新增开关。开启后，自动隐藏各页面顶部标题栏，增加左右边距以防圆屏切字，并启用上下半屏留白。
+- **拦截系统返回开关**：防止手表系统侧滑与 App 内部滑动返回手势冲突（默认开启）。
+- **应用包名更新**：从 `org.oldsend` 变更为独立的 `org.watchsend`。
 
 ### Fixed
-- 修复了长按菜单、匿名内部类、UI 跨线程更新导致的各种致命闪退。
-- 修复了文件列表管理页（SelectListActivity）因缺少 ID 导致的空指针崩溃。
-- 修复了文件大小在某些系统下显示为 `0.0 KB` 的问题。
-- 修复了主界面超长 IPv6 地址导致 UI 撑爆的问题。
-- 修复了组播死循环及中英文混杂的 UI 问题。
+- 彻底修复了主界面、跨网页面、传输页面在深色模式下的“白底白字”视觉灾难。
+- 修复了跨网页面输入框、复选框风格与 App 整体割裂的问题，淘汰了刺眼的蓝色按钮。
+- 修复了传输页面丑陋的亮黄色进度条，替换为极简极客绿进度条。
+- 修复了原旧版代码中因反复注入导致的大括号丢失、类型不匹配等 Java 编译报错。
+- 修复了接收文件后图标及文件大小显示异常的问题。
 
----
-
-## [1.1.0] - 2026-10-18
-
-### Added
-- 全局深色模式，支持 MD3 暗黑配色。
-- 仿 LocalSend 的全屏传输 UI（支持速度、百分比）。
-- 10 种语言完整覆盖。
-- 支持修改 PIN 码与多选文件。
-
-### Fixed
-- 发送端正确拦截并处理 PIN 401 响应。
-- 修复了端口占用与虚拟网卡重复设备问题。
-
----
-
-## [1.0.0] - 2026-10-17
-
-首个正式版本，实现了完整的 LocalSend 协议和 Web 传输。
+### Changed
+- **编译产物**：GitHub Actions 构建产物名称变更为 `watchsend-debug`。
+- **应用名称**：全量替换为 WatchSend。
 
 ---
 
 ## 版本对比链接
 
-[Unreleased]: https://github.com/styisme/oldsend/compare/v2.0.0...HEAD
-[2.0.0]: https://github.com/styisme/oldsend/compare/v1.1.0...v2.0.0
-[1.1.0]: https://github.com/styisme/oldsend/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/styisme/oldsend/releases/tag/v1.0.0
+[Unreleased]: https://github.com/styisme/watchsend/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/styisme/watchsend/releases/tag/v1.0.0
