@@ -371,4 +371,9 @@ public class WatchUiUtils {
             .setInterpolator(new android.view.animation.DecelerateInterpolator())
             .start();
     }
+
+    // 检查是否开启了拦截系统返回
+    public static boolean isSystemBackBlocked(Context ctx) {
+        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("block_system_back", true);
+    }
 }

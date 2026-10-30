@@ -325,4 +325,12 @@ public class TransferActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-}
+
+    @Override
+    public void onBackPressed() {
+        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
+            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }

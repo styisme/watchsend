@@ -224,6 +224,21 @@ public class SelectListActivity extends Activity {
             }
         });
         listContainer.addView(btnClearAll);
+
+        // 新增：返回按钮
+        Button btnReturn = new Button(this);
+        btnReturn.setText("返回上一页");
+        btnReturn.setTextColor(colorAccent);
+        btnReturn.setTextSize(14);
+        btnReturn.setBackgroundResource(bgSec);
+        btnReturn.setMinHeight(0);
+        LinearLayout.LayoutParams retLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        retLp.bottomMargin = dp(16);
+        btnReturn.setLayoutParams(retLp);
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { finish(); }
+        });
+        listContainer.addView(btnReturn);
     }
     
     private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density); }
@@ -235,4 +250,12 @@ public class SelectListActivity extends Activity {
         }
         return super.dispatchTouchEvent(ev);
     }
-}
+
+    @Override
+    public void onBackPressed() {
+        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
+            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }

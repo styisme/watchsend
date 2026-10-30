@@ -704,4 +704,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         }
     }
 
-}
+
+    @Override
+    public void onBackPressed() {
+        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
+            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }

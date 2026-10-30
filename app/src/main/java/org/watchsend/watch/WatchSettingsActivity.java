@@ -79,6 +79,7 @@ public class WatchSettingsActivity extends Activity {
             public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
         });
 
+        addSwitch("拦截系统返回", "防止与滑动返回冲突", prefs().getBoolean("block_system_back", true), saveTo("block_system_back"));
         addSwitch("深色模式", "黑白主题切换", prefs().getBoolean("dark_mode", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("dark_mode", v).commit(); recreate(); }
         });
@@ -380,4 +381,12 @@ public class WatchSettingsActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-}
+
+    @Override
+    public void onBackPressed() {
+        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
+            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }

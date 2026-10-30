@@ -50,13 +50,48 @@ public class CrossNetActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cross_net);
+        org.watchsend.watch.WatchUiUtils.applyScale(this);
+        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
+        android.view.View rootCn = findViewById(R.id.root_cross_net);
+        org.watchsend.watch.WatchUiUtils.applyRoundPadding(this, rootCn);
         org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
 
-        if (ThemeUtils.isDarkMode(this)) {
-            findViewById(R.id.root_cross_net).setBackgroundColor(0xFF121212);
-            ((TextView)findViewById(R.id.btn_cn_back)).setTextColor(0xFFE0E0E0);
+        boolean isDark = org.watchsend.util.ThemeUtils.isDarkMode(this);
+        int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
+        int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
+        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+
+        rootCn.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
+        findViewById(R.id.btn_cn_back).setBackground(org.watchsend.watch.WatchUiUtils.getPillBackground(this));
+        ((android.widget.Button)findViewById(R.id.btn_cn_back)).setTextColor(colorMain);
+        ((android.widget.TextView)findViewById(R.id.tv_cross_net_title)).setTextColor(colorMain);
+        ((android.widget.TextView)findViewById(R.id.tv_cross_net_desc)).setTextColor(colorSec);
+        
+        android.view.View[] cards = {
+            findViewById(R.id.tv_ipv6_info),
+            findViewById(R.id.btn_cn_generate),
+            findViewById(R.id.layout_cn_selected_files),
+            findViewById(R.id.et_cn_pin),
+            findViewById(R.id.btn_cn_receive)
+        };
+        for(android.view.View v : cards) {
+            if(v != null) {
+                v.setBackground(org.watchsend.watch.WatchUiUtils.getPillBackground(this));
+                if(v instanceof android.widget.TextView) ((android.widget.TextView)v).setTextColor(colorMain);
+            }
         }
+        
+        ((android.widget.Button)findViewById(R.id.btn_stun_probe)).setBackgroundResource(bgSec);
+        ((android.widget.Button)findViewById(R.id.btn_stun_probe)).setTextColor(colorAccent);
+        ((android.widget.Button)findViewById(R.id.btn_upnp_punch)).setBackgroundResource(bgSec);
+        ((android.widget.Button)findViewById(R.id.btn_upnp_punch)).setTextColor(colorAccent);
+        ((android.widget.Button)findViewById(R.id.btn_cn_receive)).setBackgroundResource(bgSec);
+        ((android.widget.Button)findViewById(R.id.btn_cn_receive)).setTextColor(colorAccent);
+        
+
+        
 
         // 初始化所有 UI 变量，确保不漏掉任何一个
         tvStatus = (TextView) findViewById(R.id.tv_cn_status);
@@ -646,4 +681,12 @@ public class CrossNetActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-}
+
+    @Override
+    public void onBackPressed() {
+        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
+            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
