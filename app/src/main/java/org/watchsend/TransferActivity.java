@@ -42,12 +42,10 @@ public class TransferActivity extends Activity {
     private Handler handler = new Handler();
     
     private boolean isDark;
-    private int colorMain, colorSec, colorAccent, bgSec;
-    private int dp(float val) { return (int)(val * getResources().getDisplayMetrics().density); }
+    private int colorMain, colorSec, colorAccent;
+    private LinearLayout container;
 
-    // UI 控件
-    private LinearLayout layoutConfirm, layoutProgress;
-    private TextView tvSenderName, tvTitle, tvSaveDir, tvFileName, tvTotalTitle, tvSpeedInfo, tvFileIcon, tvFileStatus;
+    private TextView tvFileName, tvFileIcon, tvFileStatus, tvPercent, tvSpeedSize;
     private ProgressBar pbFile, pbTotal;
     private Button btnAccept, btnReject, btnCancel, btnDone;
 
@@ -81,130 +79,138 @@ public class TransferActivity extends Activity {
         colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
         colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
-        bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
 
         View root = findViewById(R.id.root_transfer);
         root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
+        
+        // 应用圆屏边距（会覆盖XML里的默认16dp）
         WatchUiUtils.applyRoundPadding(this, root);
 
-        buildUI();
+        container = (LinearLayout) findViewById(R.id.transfer_container);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.transfer_scroll);
+        
+        // 初始化滚轮特效
+        WatchUiUtils.setupWheelScroll(scrollView, container);
+
         handleIntent(getIntent());
     }
 
-    private void buildUI() {
-        FrameLayout root = (FrameLayout) findViewById(R.id.root_transfer);
+    private void handleIntent(Intent intent) {
+        mode = intent.getIntExtra("mode", 0);
+        isDone = false;
+        container.removeAllViews();
 
-        // ========== 接收确认界面 ==========
-        layoutConfirm = new LinearLayout(this);
-        layoutConfirm.setOrientation(LinearLayout.VERTICAL);
-        layoutConfirm.setGravity(Gravity.CENTER);
-        layoutConfirm.setPadding(dp(16), dp(16), dp(16), dp(16));
-        layoutConfirm.setVisibility(View.GONE);
+        if (mode == 1) {
+            buildReceiveRequestUI(intent);
+        } else {
+            buildTransferProgressUI(intent);
+        }
+    }
+
+    // ================== UI 构建 ==================
+
+    private void buildReceiveRequestUI(Intent intent) {
+        String senderName = intent.getStringExtra("senderName");
+        if (senderName == null) senderName = I18nManager.get("unknown_device");
+
+        addMainTitle("接收请求");
+        addSection("来自设备");
+        
+        LinearLayout card = createPillCard();
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        
+        TextView tvName = new TextView(this);
+        tvName.setText(senderName);
+        tvName.setTextColor(colorMain);
+        tvName.setTextSize(16);
+        tvName.setTypeface(null, Typeface.BOLD);
+        tvName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        row.addView(tvName);
         
         TextView icon = new TextView(this);
         icon.setText("📱");
-        icon.setTextSize(36);
-        icon.setGravity(Gravity.CENTER);
-        layoutConfirm.addView(icon);
-
-        tvSenderName = new TextView(this);
-        tvSenderName.setTextColor(colorMain);
-        tvSenderName.setTextSize(18);
-        tvSenderName.setTypeface(null, Typeface.BOLD);
-        tvSenderName.setGravity(Gravity.CENTER);
-        tvSenderName.setPadding(0, dp(8), 0, 0);
-        layoutConfirm.addView(tvSenderName);
-
-        TextView tvWant = new TextView(this);
-        tvWant.setText("想要发送文件给你");
-        tvWant.setTextColor(colorSec);
-        tvWant.setTextSize(13);
-        tvWant.setGravity(Gravity.CENTER);
-        tvWant.setPadding(0, dp(8), 0, dp(24));
-        layoutConfirm.addView(tvWant);
-
-        LinearLayout btnRow = new LinearLayout(this);
-        btnRow.setOrientation(LinearLayout.HORIZONTAL);
-        btnRow.setGravity(Gravity.CENTER);
+        icon.setTextSize(24);
+        row.addView(icon);
         
-        btnReject = new Button(this);
-        btnReject.setText("✕ 拒绝");
-        btnReject.setTextColor(0xFFFFFFFF);
-        btnReject.setTextSize(14);
-        btnReject.setBackground(createRoundRect(0xFFD32F2F, 24));
-        btnReject.setMinHeight(0);
-        LinearLayout.LayoutParams rejLp = new LinearLayout.LayoutParams(0, dp(46), 1);
-        rejLp.rightMargin = dp(8);
-        btnReject.setLayoutParams(rejLp);
-        btnRow.addView(btnReject);
+        card.addView(row);
+        
+        TextView desc = new TextView(this);
+        desc.setText("想要发送文件给你");
+        desc.setTextColor(colorSec);
+        desc.setTextSize(13);
+        desc.setPadding(0, dp(8), 0, 0);
+        card.addView(desc);
+        container.addView(card);
 
-        btnAccept = new Button(this);
-        btnAccept.setText("✔ 接受");
-        btnAccept.setTextColor(0xFFFFFFFF);
-        btnAccept.setTextSize(14);
-        btnAccept.setBackground(createRoundRect(0xFF388E3C, 24));
-        btnAccept.setMinHeight(0);
-        LinearLayout.LayoutParams accLp = new LinearLayout.LayoutParams(0, dp(46), 1);
-        accLp.leftMargin = dp(8);
+        addSection("操作");
+        
+        btnAccept = createButton("✔ 接受", 0xFF388E3C, 0xFFFFFFFF);
+        LinearLayout.LayoutParams accLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        accLp.bottomMargin = dp(8);
         btnAccept.setLayoutParams(accLp);
-        btnRow.addView(btnAccept);
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(true); ReceiveManager.pendingCallback = null; }
+                Intent i = getIntent();
+                i.putExtra("mode", 2);
+                setIntent(i);
+                handleIntent(i);
+            }
+        });
+        container.addView(btnAccept);
 
-        layoutConfirm.addView(btnRow);
-        root.addView(layoutConfirm);
+        btnReject = createButton("✕ 拒绝", 0xFFD32F2F, 0xFFFFFFFF);
+        LinearLayout.LayoutParams rejLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        rejLp.bottomMargin = dp(8);
+        btnReject.setLayoutParams(rejLp);
+        btnReject.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(false); ReceiveManager.pendingCallback = null; }
+                finish();
+            }
+        });
+        container.addView(btnReject);
+    }
 
-        // ========== 进度界面 ==========
-        layoutProgress = new LinearLayout(this);
-        layoutProgress.setOrientation(LinearLayout.VERTICAL);
-        layoutProgress.setGravity(Gravity.CENTER_HORIZONTAL);
-        layoutProgress.setPadding(dp(16), dp(16), dp(16), dp(16));
-        layoutProgress.setVisibility(View.GONE);
+    private void buildTransferProgressUI(Intent intent) {
+        if (mode == 2) {
+            addMainTitle("正在接收");
+        } else {
+            addMainTitle("正在发送");
+        }
 
-        tvTitle = new TextView(this);
-        tvTitle.setTextColor(colorMain);
-        tvTitle.setTextSize(16);
-        tvTitle.setTypeface(null, Typeface.BOLD);
-        layoutProgress.addView(tvTitle);
+        targetDevice = (Device) intent.getSerializableExtra("device");
+        filePaths = intent.getStringArrayListExtra("files");
 
-        tvSaveDir = new TextView(this);
-        tvSaveDir.setTextColor(colorSec);
-        tvSaveDir.setTextSize(11);
-        tvSaveDir.setPadding(0, dp(4), 0, dp(16));
-        tvSaveDir.setVisibility(View.GONE);
-        layoutProgress.addView(tvSaveDir);
-
-        // 当前文件卡片
-        LinearLayout fileCard = new LinearLayout(this);
-        fileCard.setOrientation(LinearLayout.VERTICAL);
-        fileCard.setBackground(WatchUiUtils.getPillBackground(this));
-        fileCard.setPadding(dp(16), dp(16), dp(16), dp(16));
-        LinearLayout.LayoutParams cardLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        cardLp.bottomMargin = dp(12);
-        fileCard.setLayoutParams(cardLp);
-
+        addSection("当前文件");
+        
+        LinearLayout fileCard = createPillCard();
         LinearLayout topRow = new LinearLayout(this);
         topRow.setOrientation(LinearLayout.HORIZONTAL);
         topRow.setGravity(Gravity.CENTER_VERTICAL);
 
+        tvFileName = new TextView(this);
+        tvFileName.setText("准备中...");
+        tvFileName.setTextColor(colorMain);
+        tvFileName.setTextSize(15);
+        tvFileName.setSingleLine(true);
+        tvFileName.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
+        tvFileName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        topRow.addView(tvFileName);
+
         tvFileIcon = new TextView(this);
         tvFileIcon.setText("📄");
         tvFileIcon.setTextSize(24);
-        tvFileIcon.setPadding(0, 0, dp(12), 0);
         topRow.addView(tvFileIcon);
-
-        tvFileName = new TextView(this);
-        tvFileName.setTextColor(colorMain);
-        tvFileName.setTextSize(14);
-        tvFileName.setSingleLine(true);
-        tvFileName.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
-        topRow.addView(tvFileName);
-        
         fileCard.addView(topRow);
 
         tvFileStatus = new TextView(this);
+        tvFileStatus.setText("传输中...");
         tvFileStatus.setTextColor(colorAccent);
-        tvFileStatus.setTextSize(11);
+        tvFileStatus.setTextSize(12);
         tvFileStatus.setPadding(0, dp(8), 0, dp(8));
-        tvFileStatus.setVisibility(View.GONE);
         fileCard.addView(tvFileStatus);
 
         pbFile = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
@@ -214,75 +220,126 @@ public class TransferActivity extends Activity {
         pbLp.topMargin = dp(8);
         pbFile.setLayoutParams(pbLp);
         fileCard.addView(pbFile);
+        container.addView(fileCard);
 
-        layoutProgress.addView(fileCard);
+        addSection("总进度");
+        
+        LinearLayout totalCard = createPillCard();
+        LinearLayout dataRow = new LinearLayout(this);
+        dataRow.setOrientation(LinearLayout.HORIZONTAL);
+        dataRow.setGravity(Gravity.CENTER_VERTICAL);
 
-        // 总进度卡片
-        LinearLayout totalCard = new LinearLayout(this);
-        totalCard.setOrientation(LinearLayout.VERTICAL);
-        totalCard.setBackground(WatchUiUtils.getPillBackground(this));
-        totalCard.setPadding(dp(16), dp(16), dp(16), dp(16));
-        totalCard.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout infoCol = new LinearLayout(this);
+        infoCol.setOrientation(LinearLayout.VERTICAL);
+        infoCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
-        tvTotalTitle = new TextView(this);
-        tvTotalTitle.setTextColor(colorMain);
-        tvTotalTitle.setTextSize(13);
-        totalCard.addView(tvTotalTitle);
+        tvSpeedSize = new TextView(this);
+        tvSpeedSize.setText("计算中...");
+        tvSpeedSize.setTextColor(colorSec);
+        tvSpeedSize.setTextSize(12);
+        tvSpeedSize.setLineSpacing(0, 1.2f);
+        infoCol.addView(tvSpeedSize);
+        dataRow.addView(infoCol);
+
+        tvPercent = new TextView(this);
+        tvPercent.setText("0%");
+        tvPercent.setTextColor(colorAccent);
+        tvPercent.setTextSize(24);
+        tvPercent.setTypeface(null, Typeface.BOLD);
+        dataRow.addView(tvPercent);
+        
+        totalCard.addView(dataRow);
 
         pbTotal = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         pbTotal.setMax(100);
         pbTotal.setProgressDrawable(createProgressDrawable());
         LinearLayout.LayoutParams totLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(6));
-        totLp.topMargin = dp(8);
+        totLp.topMargin = dp(12);
         pbTotal.setLayoutParams(totLp);
         totalCard.addView(pbTotal);
-
-        tvSpeedInfo = new TextView(this);
-        tvSpeedInfo.setTextColor(colorSec);
-        tvSpeedInfo.setTextSize(11);
-        tvSpeedInfo.setLineSpacing(0, 1.2f);
-        tvSpeedInfo.setPadding(0, dp(8), 0, 0);
-        totalCard.addView(tvSpeedInfo);
-
-        layoutProgress.addView(totalCard);
-
-        // 底部操作按钮
-        LinearLayout btnRow2 = new LinearLayout(this);
-        btnRow2.setOrientation(LinearLayout.HORIZONTAL);
-        btnRow2.setGravity(Gravity.END);
-        btnRow2.setPadding(0, dp(16), 0, 0);
         
-        btnCancel = new Button(this);
-        btnCancel.setText("✕ 取消");
-        btnCancel.setTextColor(0xFFD32F2F);
-        btnCancel.setTextSize(13);
-        btnCancel.setBackground(createRoundRect(0xFF2C2C2E, 20));
-        btnCancel.setMinHeight(0);
-        btnCancel.setPadding(dp(16), 0, dp(16), 0);
-        btnRow2.addView(btnCancel);
+        container.addView(totalCard);
 
-        btnDone = new Button(this);
-        btnDone.setText("✔ 完成");
-        btnDone.setTextColor(0xFFFFFFFF);
-        btnDone.setTextSize(13);
-        btnDone.setBackground(createRoundRect(0xFF388E3C, 20));
-        btnDone.setMinHeight(0);
-        btnDone.setVisibility(View.GONE);
-        LinearLayout.LayoutParams doneLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, dp(40));
-        doneLp.leftMargin = dp(12);
+        addSection("操作");
+        
+        btnCancel = createButton("✕ 取消", isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFFD32F2F);
+        LinearLayout.LayoutParams cancelLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        cancelLp.bottomMargin = dp(8);
+        btnCancel.setLayoutParams(cancelLp);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { finish(); }
+        });
+        container.addView(btnCancel);
+
+        btnDone = createButton("✔ 完成", 0xFF388E3C, 0xFFFFFFFF);
+        LinearLayout.LayoutParams doneLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        doneLp.bottomMargin = dp(8);
         btnDone.setLayoutParams(doneLp);
-        btnRow2.addView(btnDone);
+        btnDone.setVisibility(View.GONE);
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) { finish(); }
+        });
+        container.addView(btnDone);
 
-        layoutProgress.addView(btnRow2);
-        root.addView(layoutProgress);
+        if (mode != 2 && filePaths != null && !filePaths.isEmpty()) {
+            tvFileIcon.setText(getIconForFile(new File(filePaths.get(0)).getName()));
+            startUpload();
+        }
+        startTime = System.currentTimeMillis();
     }
 
-    private GradientDrawable createRoundRect(int color, float radiusDp) {
+    // ================== 辅助方法 ==================
+
+    private void addMainTitle(String title) {
+        TextView tv = new TextView(this);
+        tv.setText(title);
+        tv.setTextSize(24);
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setTextColor(colorMain);
+        tv.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.topMargin = dp(16);
+        lp.bottomMargin = dp(16);
+        tv.setLayoutParams(lp);
+        container.addView(tv);
+    }
+
+    private void addSection(String title) {
+        TextView tv = new TextView(this);
+        tv.setText(title);
+        tv.setTextSize(13);
+        tv.setTypeface(null, Typeface.BOLD);
+        tv.setTextColor(colorSec);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin = dp(8);
+        lp.topMargin = dp(12);
+        lp.bottomMargin = dp(8);
+        tv.setLayoutParams(lp);
+        container.addView(tv);
+    }
+
+    private LinearLayout createPillCard() {
+        LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setBackground(WatchUiUtils.getPillBackground(this));
+        card.setPadding(dp(16), dp(16), dp(16), dp(16));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = dp(8);
+        card.setLayoutParams(lp);
+        return card;
+    }
+
+    private Button createButton(String text, int bgColor, int textColor) {
+        Button btn = new Button(this);
+        btn.setText(text);
+        btn.setTextColor(textColor);
+        btn.setTextSize(15);
+        btn.setMinHeight(0);
         GradientDrawable bg = new GradientDrawable();
-        bg.setShape(GradientDrawable.RECTANGLE);
-        bg.setCornerRadius(dp(radiusDp));
-        bg.setColor(color);
-        return bg;
+        bg.setCornerRadius(dp(24));
+        bg.setColor(bgColor);
+        btn.setBackground(bg);
+        return btn;
     }
 
     private Drawable createProgressDrawable() {
@@ -303,64 +360,9 @@ public class TransferActivity extends Activity {
         return ld;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        handleIntent(intent);
-    }
+    private int dp(float val) { return (int)(val * getResources().getDisplayMetrics().density); }
 
-    private void handleIntent(Intent intent) {
-        mode = intent.getIntExtra("mode", 0);
-        isDone = false;
-
-        if (mode == 1) {
-            // 接收请求
-            String senderName = intent.getStringExtra("senderName");
-            tvSenderName.setText(senderName != null ? senderName : I18nManager.get("unknown_device"));
-            layoutConfirm.setVisibility(View.VISIBLE);
-            layoutProgress.setVisibility(View.GONE);
-            
-            btnAccept.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(true); ReceiveManager.pendingCallback = null; }
-                    layoutConfirm.setVisibility(View.GONE);
-                    layoutProgress.setVisibility(View.VISIBLE);
-                    tvTitle.setText("正在接收文件");
-                    tvSaveDir.setVisibility(View.VISIBLE);
-                    tvSaveDir.setText("保存到: Download/WatchSend");
-                    startTime = System.currentTimeMillis();
-                }
-            });
-            
-            btnReject.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(false); ReceiveManager.pendingCallback = null; }
-                    finish();
-                }
-            });
-        } else {
-            // 发送请求
-            layoutConfirm.setVisibility(View.GONE);
-            layoutProgress.setVisibility(View.VISIBLE);
-            tvTitle.setText("正在发送文件");
-            
-            targetDevice = (Device) intent.getSerializableExtra("device");
-            filePaths = intent.getStringArrayListExtra("files");
-            
-            if (filePaths != null && !filePaths.isEmpty()) {
-                tvFileIcon.setText(getIconForFile(new File(filePaths.get(0)).getName()));
-            }
-            startUpload();
-        }
-        
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { finish(); }
-        });
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { finish(); }
-        });
-    }
+    // ================== 业务逻辑 ==================
 
     private String getIconForFile(String name) {
         String lower = name.toLowerCase();
@@ -382,8 +384,6 @@ public class TransferActivity extends Activity {
             files.add(new File(path));
             totalSize += new File(path).length();
         }
-        
-        startTime = System.currentTimeMillis();
         
         new Thread(new Runnable() {
             public void run() {
@@ -407,9 +407,7 @@ public class TransferActivity extends Activity {
                         }
                         public void onDone(final boolean ok, final String msg) {
                             handler.post(new Runnable() { public void run() { 
-                                if (!isDone) {
-                                    transferDone(ok); 
-                                }
+                                if (!isDone) transferDone(ok); 
                             }});
                         }
                     });
@@ -439,11 +437,8 @@ public class TransferActivity extends Activity {
             pbTotal.setProgress(pct);
             pbFile.setProgress(pct);
             
-            long remain = (long)((total - current) / (speed + 1));
-            String timeStr = String.format(Locale.US, "%02d:%02d", remain / 60, remain % 60);
-            
-            tvTotalTitle.setText("总进度 (" + timeStr + ")");
-            tvSpeedInfo.setText("大小: " + formatSize(current) + " / " + formatSize(total) + "\n速度: " + speedStr);
+            tvPercent.setText(pct + "%");
+            tvSpeedSize.setText("大小: " + formatSize(current) + " / " + formatSize(total) + "\n速度: " + speedStr);
         }
     }
 
@@ -460,31 +455,28 @@ public class TransferActivity extends Activity {
         btnDone.setVisibility(View.VISIBLE);
         
         if (ok) {
-            tvTitle.setText(mode == 1 ? "接收完成" : "发送完成");
-            tvTotalTitle.setText("已完成");
+            addMainTitle(mode == 1 || mode == 2 ? "接收完成" : "发送完成");
+            tvFileStatus.setText(mode == 1 || mode == 2 ? "已保存到本地" : "传输成功");
+            tvFileStatus.setTextColor(0xFF388E3C);
             pbTotal.setProgress(100);
             pbFile.setProgress(100);
-            tvFileStatus.setVisibility(View.VISIBLE);
-            
-            if (mode == 1) {
-                tvFileStatus.setText("已保存到相册/下载目录");
-                tvSaveDir.setText("保存目录: Download/WatchSend");
-            } else {
-                tvFileStatus.setText("传输成功");
-            }
-            tvFileStatus.setTextColor(0xFF388E3C);
         } else {
-            tvTitle.setText("传输失败");
-            tvTotalTitle.setText("已中断");
-            tvFileStatus.setText("失败");
+            addMainTitle("传输失败");
+            tvFileStatus.setText("已中断");
             tvFileStatus.setTextColor(0xFFD32F2F);
-            tvFileStatus.setVisibility(View.VISIBLE);
         }
     }
 
     private String formatSize(long size) {
         if (size > 1024 * 1024) return String.format(Locale.US, "%.1f MB", size / 1024.0 / 1024.0);
         return String.format(Locale.US, "%.1f KB", size / 1024.0);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIntent(intent);
     }
 
     @Override
