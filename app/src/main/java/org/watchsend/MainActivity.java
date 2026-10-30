@@ -403,7 +403,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void doScan() {
-        log("Scanning..."); toast("扫描中...");
+        log("Scanning..."); toast(I18nManager.get("empty_scanning"));
         MulticastScanner.scanAsync(new MulticastScanner.Callback() {
             public void onDevice(Device d) { DeviceStore.get().addDevice(d); log("Found: " + d.alias); }
             public void onFinished() { log("Scan finished"); }
@@ -433,8 +433,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         final boolean isWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(fp);
         final boolean isBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(fp);
         String[] items = new String[]{
-            isWl ? "移除白名单" : "⭐ 加入白名单",
-            isBl ? "移除黑名单" : "🚫 加入黑名单"
+            isWl ? I18nManager.get("remove_whitelist") : "⭐ 加入白名单",
+            isBl ? I18nManager.get("remove_blacklist") : "🚫 加入黑名单"
         };
         WatchUiUtils.showList(this, d.alias, items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int p) {
@@ -693,7 +693,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
             String sizeStr = totalSize > 1024*1024 ? String.format(java.util.Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(java.util.Locale.US, "%.1f KB", totalSize/1024.0);
             if (tvSelectedFile != null) {
-                tvSelectedFile.setText("已选择 " + pendingUris.size() + " 个文件 (" + (totalSize > 0 ? sizeStr : "未知") + ")");
+                tvSelectedFile.setText(String.format(java.util.Locale.US, I18nManager.get("selected_files_fmt"), pendingUris.size(), (totalSize > 0 ? sizeStr : I18nManager.get("unknown_size"))));
     }
     }
     }

@@ -206,7 +206,7 @@ public class SelectListActivity extends Activity {
 
         // ===== 底部：清空全部按钮 =====
         Button btnClearAll = new Button(this);
-        btnClearAll.setText("清空所有文件");
+        btnClearAll.setText(I18nManager.get("clear_all_files_btn"));
         btnClearAll.setTextColor(colorAccent);
         btnClearAll.setTextSize(14);
         int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;

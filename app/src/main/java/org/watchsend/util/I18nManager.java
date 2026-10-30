@@ -168,6 +168,12 @@ public class I18nManager {
         zh.put("files_count_prefix", "文件: "); zh.put("size_label", "大小: "); zh.put("clear_all_files", "全部删除");
         zh.put("back_prev", "返回上一页"); zh.put("save_to_dir", "保存目录: "); zh.put("ip_prefix", "IP ");
     
+
+        zh.put("empty_scanning", "扫描中..."); zh.put("swipe_back_toast", "请滑动屏幕返回");
+        zh.put("selected_files_fmt", "已选择 %d 个文件 (%s)"); zh.put("edit", "编辑"); zh.put("add", "+ 追加");
+        zh.put("settings_title", "设置"); zh.put("clear_all_files_btn", "清空所有文件"); zh.put("add_whitelist", "加入白名单");
+        zh.put("remove_whitelist", "移除白名单"); zh.put("add_blacklist", "加入黑名单"); zh.put("remove_blacklist", "移除黑名单");
+    
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -266,6 +272,12 @@ dict.put("zh", zh);
         zhTW.put("add_files", "追加檔案"); zhTW.put("select_folder_send", ">> [傳送此資料夾] <<"); zhTW.put("unknown_file", "未知檔案");
         zhTW.put("files_count_prefix", "檔案: "); zhTW.put("size_label", "大小: "); zhTW.put("clear_all_files", "全部刪除");
         zhTW.put("back_prev", "返回上一頁"); zhTW.put("save_to_dir", "儲存目錄: "); zhTW.put("ip_prefix", "IP ");
+    
+
+        zhTW.put("empty_scanning", "掃描中..."); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
+        zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)"); zhTW.put("edit", "編輯"); zhTW.put("add", "+ 追加");
+        zhTW.put("settings_title", "設定"); zhTW.put("clear_all_files_btn", "清空所有檔案"); zhTW.put("add_whitelist", "加入白名單");
+        zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單"); zhTW.put("remove_blacklist", "移除黑名單");
     
 dict.put("zh_TW", zhTW);
 
@@ -427,6 +439,12 @@ dict.put("zh_TW", zhTW);
         en.put("files_count_prefix", "Files: "); en.put("size_label", "Size: "); en.put("clear_all_files", "Delete All");
         en.put("back_prev", "Go Back"); en.put("save_to_dir", "Save to: "); en.put("ip_prefix", "IP ");
     
+
+        en.put("empty_scanning", "Scanning..."); en.put("swipe_back_toast", "Swipe to go back");
+        en.put("selected_files_fmt", "Selected %d files (%s)"); en.put("edit", "Edit"); en.put("add", "+ Add");
+        en.put("settings_title", "Settings"); en.put("clear_all_files_btn", "Clear All Files"); en.put("add_whitelist", "Add Whitelist");
+        en.put("remove_whitelist", "Remove Whitelist"); en.put("add_blacklist", "Add Blacklist"); en.put("remove_blacklist", "Remove Blacklist");
+    
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -529,6 +547,12 @@ dict.put("en", en);
         ja.put("add_files", "ファイルを追加"); ja.put("select_folder_send", ">> [このフォルダを送信] <<"); ja.put("unknown_file", "不明なファイル");
         ja.put("files_count_prefix", "ファイル: "); ja.put("size_label", "サイズ: "); ja.put("clear_all_files", "すべて削除");
         ja.put("back_prev", "戻る"); ja.put("save_to_dir", "保存先: "); ja.put("ip_prefix", "IP ");
+    
+
+        ja.put("empty_scanning", "スキャン中..."); ja.put("swipe_back_toast", "スワイプして戻る");
+        ja.put("selected_files_fmt", "%d 個のファイルを選択 (%s)"); ja.put("edit", "編集"); ja.put("add", "+ 追加");
+        ja.put("settings_title", "設定"); ja.put("clear_all_files_btn", "すべてのファイルを消去"); ja.put("add_whitelist", "ホワイトリストに追加");
+        ja.put("remove_whitelist", "ホワイトリストから削除"); ja.put("add_blacklist", "ブラックリストに追加"); ja.put("remove_blacklist", "ブラックリストから削除");
     
 dict.put("ja", ja);
 
@@ -633,6 +657,12 @@ dict.put("ja", ja);
         ko.put("files_count_prefix", "파일: "); ko.put("size_label", "크기: "); ko.put("clear_all_files", "전체 삭제");
         ko.put("back_prev", "뒤로 가기"); ko.put("save_to_dir", "저장 위치: "); ko.put("ip_prefix", "IP ");
     
+
+        ko.put("empty_scanning", "스캔 중..."); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
+        ko.put("selected_files_fmt", "%d개 파일 선택됨 (%s)"); ko.put("edit", "편집"); ko.put("add", "+ 추가");
+        ko.put("settings_title", "설정"); ko.put("clear_all_files_btn", "모든 파일 삭제"); ko.put("add_whitelist", "화이트리스트 추가");
+        ko.put("remove_whitelist", "화이트리스트 제거"); ko.put("add_blacklist", "블랙리스트 추가"); ko.put("remove_blacklist", "블랙리스트 제거");
+    
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -735,6 +765,12 @@ dict.put("ko", ko);
         de.put("add_files", "Dateien anfügen"); de.put("select_folder_send", ">> [Diesen Ordner senden] <<"); de.put("unknown_file", "Unbekannte Datei");
         de.put("files_count_prefix", "Dateien: "); de.put("size_label", "Größe: "); de.put("clear_all_files", "Alle löschen");
         de.put("back_prev", "Zurück"); de.put("save_to_dir", "Speichern unter: "); de.put("ip_prefix", "IP ");
+    
+
+        de.put("empty_scanning", "Scannen..."); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
+        de.put("selected_files_fmt", "%d Dateien ausgewählt (%s)"); de.put("edit", "Bearbeiten"); de.put("add", "+ Hinzufügen");
+        de.put("settings_title", "Einstellungen"); de.put("clear_all_files_btn", "Alle Dateien löschen"); de.put("add_whitelist", "Zur Whitelist");
+        de.put("remove_whitelist", "Von Whitelist entfernen"); de.put("add_blacklist", "Zur Blacklist"); de.put("remove_blacklist", "Von Blacklist entfernen");
     
 dict.put("de", de);
 
@@ -839,6 +875,12 @@ dict.put("de", de);
         fr.put("files_count_prefix", "Fichiers : "); fr.put("size_label", "Taille : "); fr.put("clear_all_files", "Tout supprimer");
         fr.put("back_prev", "Retour"); fr.put("save_to_dir", "Enregistrer dans : "); fr.put("ip_prefix", "IP ");
     
+
+        fr.put("empty_scanning", "Scan..."); fr.put("swipe_back_toast", "Glissez pour revenir");
+        fr.put("selected_files_fmt", "%d fichiers sélectionnés (%s)"); fr.put("edit", "Modifier"); fr.put("add", "+ Ajouter");
+        fr.put("settings_title", "Paramètres"); fr.put("clear_all_files_btn", "Effacer tous les fichiers"); fr.put("add_whitelist", "Ajouter à la liste blanche");
+        fr.put("remove_whitelist", "Retirer de la liste blanche"); fr.put("add_blacklist", "Ajouter à la liste noire"); fr.put("remove_blacklist", "Retirer de la liste noire");
+    
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -941,6 +983,12 @@ dict.put("fr", fr);
         es.put("add_files", "Añadir archivos"); es.put("select_folder_send", ">> [Enviar esta carpeta] <<"); es.put("unknown_file", "Archivo desconocido");
         es.put("files_count_prefix", "Archivos: "); es.put("size_label", "Tamaño: "); es.put("clear_all_files", "Borrar todo");
         es.put("back_prev", "Volver"); es.put("save_to_dir", "Guardar en: "); es.put("ip_prefix", "IP ");
+    
+
+        es.put("empty_scanning", "Escaneando..."); es.put("swipe_back_toast", "Desliza para volver");
+        es.put("selected_files_fmt", "%d archivos seleccionados (%s)"); es.put("edit", "Editar"); es.put("add", "+ Añadir");
+        es.put("settings_title", "Ajustes"); es.put("clear_all_files_btn", "Borrar todos los archivos"); es.put("add_whitelist", "Añadir a lista blanca");
+        es.put("remove_whitelist", "Quitar de lista blanca"); es.put("add_blacklist", "Añadir a lista negra"); es.put("remove_blacklist", "Quitar de lista negra");
     
 dict.put("es", es);
 
@@ -1045,6 +1093,12 @@ dict.put("es", es);
         ru.put("files_count_prefix", "Файлы: "); ru.put("size_label", "Размер: "); ru.put("clear_all_files", "Удалить всё");
         ru.put("back_prev", "Назад"); ru.put("save_to_dir", "Сохранить в: "); ru.put("ip_prefix", "IP ");
     
+
+        ru.put("empty_scanning", "Сканирование..."); ru.put("swipe_back_toast", "Свайп для возврата");
+        ru.put("selected_files_fmt", "Выбрано %d файлов (%s)"); ru.put("edit", "Изменить"); ru.put("add", "+ Добавить");
+        ru.put("settings_title", "Настройки"); ru.put("clear_all_files_btn", "Очистить все файлы"); ru.put("add_whitelist", "В белый список");
+        ru.put("remove_whitelist", "Из белого списка"); ru.put("add_blacklist", "В черный список"); ru.put("remove_blacklist", "Из черного списка");
+    
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1147,6 +1201,12 @@ dict.put("ru", ru);
         pt.put("add_files", "Adicionar arquivos"); pt.put("select_folder_send", ">> [Enviar esta pasta] <<"); pt.put("unknown_file", "Arquivo desconhecido");
         pt.put("files_count_prefix", "Arquivos: "); pt.put("size_label", "Tamanho: "); pt.put("clear_all_files", "Excluir tudo");
         pt.put("back_prev", "Voltar"); pt.put("save_to_dir", "Salvar em: "); pt.put("ip_prefix", "IP ");
+    
+
+        pt.put("empty_scanning", "Escaneando..."); pt.put("swipe_back_toast", "Deslize para voltar");
+        pt.put("selected_files_fmt", "%d arquivos selecionados (%s)"); pt.put("edit", "Editar"); pt.put("add", "+ Adicionar");
+        pt.put("settings_title", "Configurações"); pt.put("clear_all_files_btn", "Limpar todos os arquivos"); pt.put("add_whitelist", "Adicionar à lista branca");
+        pt.put("remove_whitelist", "Remover da lista branca"); pt.put("add_blacklist", "Adicionar à lista negra"); pt.put("remove_blacklist", "Remover da lista negra");
     
 dict.put("pt", pt);
     }

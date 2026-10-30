@@ -72,7 +72,7 @@ public class WatchSettingsActivity extends Activity {
     private void buildSettings() {
         container.removeAllViews();
         
-        addMainTitle("设置");
+        addMainTitle(I18nManager.get("settings_title"));
         addSection(I18nManager.get("general"));
 
         addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
