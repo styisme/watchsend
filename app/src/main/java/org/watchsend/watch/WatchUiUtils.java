@@ -64,7 +64,7 @@ public class WatchUiUtils {
 
     // 4. 3D 滚轮特效
     public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
-        if (isLowPerformance(ctx)) return;
+        if (isLowPerformance(scrollView.getContext())) return;
         final Context ctx = scrollView.getContext();
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
         scrollView.setClipToPadding(false); 
