@@ -1,5 +1,5 @@
 =======================================================================
-              OldSend (Protocol Compatibility Notice)
+              WatchSend (Protocol Compatibility Notice)
 =======================================================================
 
 This project is protocol-compatible with LocalSend (https://github.com/localsend/localsend).
@@ -12,6 +12,11 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Note: OldSend is a completely independent implementation written from scratch.
-It does not directly copy or modify the source code of the official LocalSend app.
+Note: WatchSend is a fork of OldSend (https://github.com/styisme/oldsend) 
+specifically tailored for Wear OS. The underlying protocol stack is inherited 
+from OldSend, which is a completely independent implementation written from scratch. 
+The UI layer of WatchSend (including dynamic pill cards, 3D scroll effects, and 
+predictive back gestures) has been completely rewritten for the watch form factor. 
+Neither WatchSend nor OldSend directly copies or modifies the source code of the 
+official LocalSend app.
 =======================================================================
