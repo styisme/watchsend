@@ -37,6 +37,10 @@ import org.watchsend.watch.WatchSettingsActivity;
 import org.watchsend.watch.WatchUiUtils;
 
 public class MainActivity extends Activity implements OldSendService.LogSink, DeviceStore.Listener {
+    private String lastLang;
+    private boolean lastDark;
+    private boolean lastRound;
+    private float lastScale;
     private static final int REQ_FILE = 1001;
     private static final int REQ_MEDIA = 1002;
 
@@ -144,6 +148,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         applyI18n();
         checkAndRequestPermission();
         handleIntent(getIntent());
+        recordConfigState();
     }
 
     private void applyI18n() {
@@ -561,6 +566,18 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override protected void onResume() {
         super.onResume();
+        
+        android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
+        String curLang = sp.getString("app_lang", "system");
+        boolean curDark = sp.getBoolean("dark_mode", false);
+        boolean curRound = sp.getBoolean("round_screen_opt", false);
+        float curScale = sp.getFloat("ui_scale", 1.0f);
+        
+        if (!curLang.equals(lastLang) || curDark != lastDark || curRound != lastRound || curScale != lastScale) {
+            recreate(); // 配置变了，原地重建
+            return;
+        }
+        
         if (!historyMode) refreshDevices();
         updateStatus();
     }
@@ -577,6 +594,15 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             return true;
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+
+    private void recordConfigState() {
+        android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
+        lastLang = sp.getString("app_lang", "system");
+        lastDark = sp.getBoolean("dark_mode", false);
+        lastRound = sp.getBoolean("round_screen_opt", false);
+        lastScale = sp.getFloat("ui_scale", 1.0f);
     }
 
 }
