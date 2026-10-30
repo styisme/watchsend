@@ -178,6 +178,8 @@ public class I18nManager {
 
         zh.put("low_perf_mode", "低性能模式"); zh.put("low_perf_desc", "减弱或关闭UI动画特效");
     
+zh.put("empty_scanning", "扫描中...");
+zh.put("scan", "扫描"); zh.put("log", "日志");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -458,6 +460,8 @@ dict.put("zh_TW", zhTW);
 
         en.put("low_perf_mode", "Low Performance"); en.put("low_perf_desc", "Reduce UI animations");
     
+en.put("empty_scanning", "Scanning...");
+en.put("scan", "Scan"); en.put("log", "Log");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============

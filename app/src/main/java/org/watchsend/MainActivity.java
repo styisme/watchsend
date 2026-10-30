@@ -185,7 +185,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         toggleBtn.setText(running ? I18nManager.get("stop") : I18nManager.get("start"));
         updateStatus();
     }
-
+        if (scanBtn != null) scanBtn.setText(I18nManager.get("scan"));
+        if (btnLog != null) btnLog.setText(I18nManager.get("log"));
+        if (manualIpBtn != null) manualIpBtn.setText("+ " + I18nManager.get("add_ip"));
+    }
     private void updateStatus() {
         if (status == null) return;
         String ip = OldSendService.getLocalIp();
