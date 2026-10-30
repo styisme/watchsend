@@ -30,26 +30,21 @@ import org.watchsend.discovery.MulticastScanner;
 import org.watchsend.model.Device;
 import org.watchsend.model.HistoryStore;
 import org.watchsend.ui.DeviceAdapter;
-import org.watchsend.util.FileLogger;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
-import org.watchsend.watch.WatchSettingsActivity;
 import org.watchsend.watch.WatchUiUtils;
+import org.watchsend.watch.WatchSettingsActivity;
 
 public class MainActivity extends Activity implements OldSendService.LogSink, DeviceStore.Listener {
-    private String lastLang;
-    private boolean lastDark;
-    private boolean lastRound;
-    private float lastScale;
     private static final int REQ_FILE = 1001;
     private static final int REQ_MEDIA = 1002;
 
     public static List<Uri> pendingUris = new ArrayList<Uri>();
 
-    private TextView status, statusIp, emptyHint, tvSelectedFile;
+    private TextView status, statusIp, emptyHint;
     private LinearLayout layoutSelectedFiles;
-    private Button btnEditFiles, btnAddFilesMore;
-    private Button toggleBtn, btnSend, btnHistory, btnCrossNet, btnSettings, btnLog, scanBtn, manualIpBtn;
+    private TextView tvSelectedFile;
+    private Button toggleBtn, btnSend, btnHistory, btnCrossNet, btnSettings, btnLog, scanBtn, manualIpBtn, btnAddFilesMore, btnEditFiles;
     private ListView deviceList;
     private DeviceAdapter adapter;
     private ArrayAdapter<String> historyAdapter;
@@ -61,24 +56,34 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private Dialog logDialog;
     private TextView dialogLogView;
     private StringBuilder logCache = new StringBuilder();
+    
+    private String lastLang;
+    private boolean lastDark;
+    private boolean lastRound;
+    private float lastScale;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        org.watchsend.watch.WatchUiUtils.applyScale(this);
-        I18nManager.init(this);
+        WatchUiUtils.applyScale(this);
         super.onCreate(savedInstanceState);
+        I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
+        WatchUiUtils.applyEntryAnimation(this);
+
+        boolean isDark = ThemeUtils.isDarkMode(this);
         View root = findViewById(R.id.main_root);
-        root.setBackgroundColor(ThemeUtils.isDarkMode(this) ? 0xFF000000 : 0xFFF4F6F8);
-        WatchUiUtils.applyRoundPadding(this, root);
+        if (root != null) {
+            root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
+            WatchUiUtils.applyRoundPadding(this, root);
+        }
+        
         ScrollView mainScroll = (ScrollView) findViewById(R.id.main_scroll);
         LinearLayout mainContainer = (LinearLayout) findViewById(R.id.main_container);
-        WatchUiUtils.setupWheelScroll(mainScroll, mainContainer);
-        org.watchsend.watch.WatchUiUtils.applyRoundPadding(this, findViewById(android.R.id.content));
-        FileLogger.log("WatchMain", "onCreate");
+        if (mainScroll != null && mainContainer != null) {
+            WatchUiUtils.setupWheelScroll(mainScroll, mainContainer);
+        }
 
         status = (TextView) findViewById(R.id.status);
         statusIp = (TextView) findViewById(R.id.status_ip);
@@ -92,23 +97,20 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         scanBtn = (Button) findViewById(R.id.scan);
         manualIpBtn = (Button) findViewById(R.id.btn_manual_ip);
         deviceList = (ListView) findViewById(R.id.devices);
-
         
         layoutSelectedFiles = (LinearLayout) findViewById(R.id.layout_selected_files);
         tvSelectedFile = (TextView) findViewById(R.id.tv_selected_file);
-        btnEditFiles = (Button) findViewById(R.id.btn_edit_files);
         btnAddFilesMore = (Button) findViewById(R.id.btn_add_files_more);
+        btnEditFiles = (Button) findViewById(R.id.btn_edit_files);
 
         if (btnEditFiles != null) {
             btnEditFiles.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, SelectListActivity.class));
-                }
+                public void onClick(View v) { startActivity(new Intent(MainActivity.this, SelectListActivity.class)); }
             });
         }
         if (btnAddFilesMore != null) {
             btnAddFilesMore.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) { showSendTypeDialog(true); } // true 代表追加模式
+                public void onClick(View v) { showSendTypeDialog(true); }
             });
         }
 
@@ -123,20 +125,16 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             public void onClick(View v) { toggleService(); }
         });
         btnSend.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { showSendTypeDialog(); }
+            public void onClick(View v) { showSendTypeDialog(false); }
         });
         btnHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { toggleHistory(); }
         });
         btnCrossNet.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CrossNetActivity.class));
-            }
+            public void onClick(View v) { startActivity(new Intent(MainActivity.this, CrossNetActivity.class)); }
         });
         btnSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, WatchSettingsActivity.class));
-            }
+            public void onClick(View v) { startActivity(new Intent(MainActivity.this, WatchSettingsActivity.class)); }
         });
         btnLog.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { showLogDialog(); }
@@ -152,7 +150,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 if (historyMode) { openHistoryFile(pos); return; }
                 Device target = adapter.getItem(pos);
-                if (pendingUris.isEmpty()) { toast("请先选择文件"); return; }
+                if (pendingUris.isEmpty()) { toast(I18nManager.get("not_selected")); return; }
                 log("Sending to: " + target.alias);
                 sendToDevice(target);
             }
@@ -169,45 +167,44 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         applyI18n();
         checkAndRequestPermission();
         handleIntent(getIntent());
-        applyThemeToViews();
         recordConfigState();
     }
 
-    private void applyI18n() {
-        btnSend.setText("📤  " + I18nManager.get("send"));
-        btnHistory.setText("📥  " + I18nManager.get("receive_history"));
-        btnCrossNet.setText("🌐  " + I18nManager.get("cross_net"));
-        btnSettings.setText("⚙  " + I18nManager.get("settings"));
-        btnLog.setText("📃  " + I18nManager.get("log"));
-
-        scanBtn.setText(I18nManager.get("scan"));
-        manualIpBtn.setText("+ " + I18nManager.get("add_ip"));
-        if (emptyHint != null) emptyHint.setText(I18nManager.get("no_device"));
-        toggleBtn.setText(running ? I18nManager.get("stop") : I18nManager.get("start"));
-        updateStatus();
-    
-        if (scanBtn != null) scanBtn.setText(I18nManager.get("scan"));
-        if (btnLog != null) btnLog.setText(I18nManager.get("log"));
-        if (manualIpBtn != null) manualIpBtn.setText("+ " + I18nManager.get("add_ip"));
-}
-
+    private void recordConfigState() {
+        android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
+        lastLang = sp.getString("app_lang", "system");
+        lastDark = sp.getBoolean("dark_mode", false);
+        lastRound = sp.getBoolean("round_screen_opt", false);
+        lastScale = sp.getFloat("ui_scale", 1.0f);
     }
+
+    private void applyI18n() {
+        if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+        if (btnHistory != null) btnHistory.setText(I18nManager.get("record"));
+        if (btnCrossNet != null) btnCrossNet.setText(I18nManager.get("cross_net"));
+        if (btnSettings != null) btnSettings.setText(I18nManager.get("settings"));
+        if (btnLog != null) btnLog.setText(I18nManager.get("log"));
+        if (scanBtn != null) scanBtn.setText(I18nManager.get("scan"));
+        if (manualIpBtn != null) manualIpBtn.setText("+ " + I18nManager.get("add_ip"));
+        if (emptyHint != null) emptyHint.setText(I18nManager.get("no_device_scan"));
+        if (toggleBtn != null) toggleBtn.setText(running ? I18nManager.get("stop_service") : I18nManager.get("start_service"));
+        if (btnAddFilesMore != null) btnAddFilesMore.setText(I18nManager.get("add"));
+        if (btnEditFiles != null) btnEditFiles.setText(I18nManager.get("edit"));
+        
+        updateStatus();
+    }
+
     private void updateStatus() {
         if (status == null) return;
         String ip = OldSendService.getLocalIp();
         if (ip != null && ip.length() > 15) ip = ip.substring(0, 12) + "...";
         status.setText(running ? I18nManager.get("running") : I18nManager.get("stopped"));
-        statusIp.setText("IP " + ip + ":53317");
+        statusIp.setText(I18nManager.get("ip_prefix") + ip + ":53317");
     }
 
     private void checkAndRequestPermission() {
-        if (Build.VERSION.SDK_INT >= 23
-                && checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, 1001);
+        if (Build.VERSION.SDK_INT >= 23 && checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         }
     }
 
@@ -215,10 +212,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (running) { stopService(new Intent(this, OldSendService.class)); running = false; }
         else { startService(new Intent(this, OldSendService.class)); running = true; }
         updateStatus();
-        toggleBtn.setText(running ? I18nManager.get("stop") : I18nManager.get("start"));
+        applyI18n();
     }
 
-    private void showSendTypeDialog() { showSendTypeDialog(false); }
     private void showSendTypeDialog(final boolean isAppend) {
         final String[] items = {
             I18nManager.get("file"), I18nManager.get("media"), I18nManager.get("app"),
@@ -259,14 +255,13 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
         }
         if (names.isEmpty()) { toast(I18nManager.get("no_app")); return; }
-        WatchUiUtils.showList(this, I18nManager.get("select_app"), names.toArray(new String[0]),
-            new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    if (!pendingAppend) pendingUris.clear();
-                    pendingUris.add(Uri.fromFile(new File(apps.get(pos).sourceDir)));
-                    onFilesPicked();
-                }
-            }).show();
+        WatchUiUtils.showList(this, I18nManager.get("select_app"), names.toArray(new String[0]), new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                if (!pendingAppend) pendingUris.clear();
+                pendingUris.add(Uri.fromFile(new File(apps.get(pos).sourceDir)));
+                onFilesPicked();
+            }
+        }).show();
     }
 
     private void pickFolder(boolean append) {
@@ -279,26 +274,25 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (files == null) return;
         List<String> folderNames = new ArrayList<String>();
         final List<File> folders = new ArrayList<File>();
-        folderNames.add(I18nManager.get("send_folder"));
+        folderNames.add(I18nManager.get("select_folder_send"));
         for (File f : files) {
             if (f.isDirectory() && !f.isHidden()) {
-                folderNames.add("[DIR] " + f.getName());
+                folderNames.add(I18nManager.get("folder_prefix") + f.getName());
                 folders.add(f);
             }
         }
-        WatchUiUtils.showList(this, dir.getName().isEmpty() ? "/" : dir.getName(),
-            folderNames.toArray(new String[0]), new WatchUiUtils.OnItemSelectListener() {
-                public void onItemSelect(int pos) {
-                    if (pos == 0) {
-                        List<File> all = new ArrayList<File>();
-                        getAllFiles(dir, all);
-                        if (all.isEmpty()) { toast(I18nManager.get("empty_folder")); return; }
-                        if (!pendingAppend) pendingUris.clear();
-                        for (File f : all) pendingUris.add(Uri.fromFile(f));
-                        onFilesPicked();
-                    } else showFolderSelector(folders.get(pos - 1));
-                }
-            }).show();
+        WatchUiUtils.showList(this, dir.getName().isEmpty() ? "/" : dir.getName(), folderNames.toArray(new String[0]), new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                if (pos == 0) {
+                    List<File> all = new ArrayList<File>();
+                    getAllFiles(dir, all);
+                    if (all.isEmpty()) { toast(I18nManager.get("empty_folder")); return; }
+                    if (!pendingAppend) pendingUris.clear();
+                    for (File f : all) pendingUris.add(Uri.fromFile(f));
+                    onFilesPicked();
+                } else showFolderSelector(folders.get(pos - 1));
+            }
+        }).show();
     }
 
     private void getAllFiles(File dir, List<File> out) {
@@ -307,20 +301,19 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showSendTextDialog(final boolean append) {
-        WatchUiUtils.showInput(this, I18nManager.get("input_text"), "",
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    if (text == null || text.length() == 0) return;
-                    try {
-                        File f = new File(getCacheDir(), "text_" + System.currentTimeMillis() + ".txt");
-                        FileOutputStream fos = new FileOutputStream(f);
-                        fos.write(text.getBytes("UTF-8")); fos.close();
-                        if (!append) pendingUris.clear();
-                        pendingUris.add(Uri.fromFile(f));
-                        onFilesPicked();
-                    } catch (Exception e) { toast("失败"); }
-                }
-            }).show();
+        WatchUiUtils.showInput(this, I18nManager.get("input_text"), "", new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                if (text == null || text.length() == 0) return;
+                try {
+                    File f = new File(getCacheDir(), "text_" + System.currentTimeMillis() + ".txt");
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(text.getBytes("UTF-8")); fos.close();
+                    if (!append) pendingUris.clear();
+                    pendingUris.add(Uri.fromFile(f));
+                    onFilesPicked();
+                } catch (Exception e) { toast("失败"); }
+            }
+        }).show();
     }
 
     private void sendClipboard(final boolean append) {
@@ -349,6 +342,30 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         log("Selected " + pendingUris.size() + " files");
     }
 
+    private void updateSelectedFilesUI() {
+        if (pendingUris == null || pendingUris.isEmpty()) {
+            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
+            if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+        } else {
+            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
+            long totalSize = 0;
+            for (Uri u : pendingUris) {
+                try {
+                    android.database.Cursor c = getContentResolver().query(u, null, null, null, null);
+                    if (c != null && c.moveToFirst()) {
+                        int sizeIdx = c.getColumnIndex(android.provider.OpenableColumns.SIZE);
+                        if (sizeIdx != -1) totalSize += c.getLong(sizeIdx);
+                        c.close();
+                    }
+                } catch (Exception ignored) {}
+            }
+            String sizeStr = totalSize > 1024*1024 ? String.format(java.util.Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(java.util.Locale.US, "%.1f KB", totalSize/1024.0);
+            if (tvSelectedFile != null) {
+                tvSelectedFile.setText(String.format(java.util.Locale.US, I18nManager.get("selected_files_fmt"), pendingUris.size(), (totalSize > 0 ? sizeStr : I18nManager.get("unknown_size"))));
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode != REQ_FILE && requestCode != REQ_MEDIA) || resultCode != RESULT_OK || data == null) return;
@@ -365,12 +382,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             public void run() {
                 final List<File> files = new ArrayList<File>();
                 for (Uri u : pendingUris) {
-                    try { files.add(copyToCache(u, queryDisplayName(u))); }
-                    catch (Exception e) { log("Read failed: " + e); }
+                    try { files.add(copyToCache(u, queryDisplayName(u))); } catch (Exception e) { log("Read failed: " + e); }
                 }
                 runOnUiThread(new Runnable() {
                     public void run() {
                         pendingUris.clear();
+                        updateSelectedFilesUI();
                         Intent i = new Intent(MainActivity.this, TransferActivity.class);
                         i.putExtra("mode", 0);
                         i.putExtra("device", device);
@@ -387,10 +404,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private String queryDisplayName(Uri uri) {
         if ("file".equals(uri.getScheme())) return new File(uri.getPath()).getName();
         String name = null; android.database.Cursor c = null;
-        try { c = getContentResolver().query(uri, new String[]{"_display_name"}, null, null, null);
-            if (c != null && c.moveToFirst()) name = c.getString(0); }
-        catch (Exception ignored) {}
-        finally { if (c != null) try { c.close(); } catch (Exception ignored) {} }
+        try { c = getContentResolver().query(uri, new String[]{"_display_name"}, null, null, null); if (c != null && c.moveToFirst()) name = c.getString(0); }
+        catch (Exception ignored) {} finally { if (c != null) try { c.close(); } catch (Exception ignored) {} }
         if (name == null) name = uri.getLastPathSegment();
         return name == null ? "file" : name;
     }
@@ -398,8 +413,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private File copyToCache(Uri uri, String name) throws Exception {
         if ("file".equals(uri.getScheme())) return new File(uri.getPath());
         InputStream in = getContentResolver().openInputStream(uri);
-        String safe = name.replace("/", "_").replace("\\","_").replace(":","_")
-            .replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_");
+        String safe = name.replace("/", "_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_");
         File out = new File(getCacheDir(), safe);
         FileOutputStream fos = new FileOutputStream(out);
         byte[] buf = new byte[65536]; int n;
@@ -417,21 +431,20 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showManualIpDialog() {
-        WatchUiUtils.showInput(this, I18nManager.get("input_address"), "",
-            new WatchUiUtils.OnInputListener() {
-                public void onInput(String text) {
-                    if (text == null || text.length() == 0) return;
-                    String ip = text.trim();
-                    if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
-                        toast("IP 格式错误"); return;
-                    }
-                    Device d = new Device();
-                    d.alias = I18nManager.get("manual_device");
-                    d.ip = ip; d.port = 53317; d.https = false;
-                    DeviceStore.get().addDevice(d);
-                    log("Manual add: " + ip);
+        WatchUiUtils.showInput(this, I18nManager.get("input_address"), "", new WatchUiUtils.OnInputListener() {
+            public void onInput(String text) {
+                if (text == null || text.length() == 0) return;
+                String ip = text.trim();
+                if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
+                    toast("IP Format Error"); return;
                 }
-            }).show();
+                Device d = new Device();
+                d.alias = I18nManager.get("manual_device");
+                d.ip = ip; d.port = 53317; d.https = false;
+                DeviceStore.get().addDevice(d);
+                log("Manual add: " + ip);
+            }
+        }).show();
     }
 
     private void showAclMenu(final Device d) {
@@ -439,8 +452,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         final boolean isWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(fp);
         final boolean isBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(fp);
         String[] items = new String[]{
-            isWl ? I18nManager.get("remove_whitelist") : "⭐ 加入白名单",
-            isBl ? I18nManager.get("remove_blacklist") : "🚫 加入黑名单"
+            isWl ? I18nManager.get("remove_whitelist") : I18nManager.get("add_whitelist"),
+            isBl ? I18nManager.get("remove_blacklist") : I18nManager.get("add_blacklist")
         };
         WatchUiUtils.showList(this, d.alias, items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int p) {
@@ -455,7 +468,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (exists) current = current.replace(fp + ",", "").replace(fp, "");
         else current += fp + ",";
         getSharedPreferences("oldsend", MODE_PRIVATE).edit().putString(key, current).commit();
-        toast(exists ? "已移出" : "已加入");
+        toast(exists ? I18nManager.get("removed") : I18nManager.get("added_to_list"));
     }
 
     private void toggleHistory() {
@@ -472,7 +485,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     private void exitHistoryMode() {
         historyMode = false;
-        btnHistory.setText("📥  " + I18nManager.get("receive_history"));
+        btnHistory.setText(I18nManager.get("record"));
         deviceList.setAdapter(adapter);
         refreshDevices();
     }
@@ -502,50 +515,22 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     private void showLogDialog() {
         if (logDialog != null && logDialog.isShowing()) return;
-        
         dialogLogView = new TextView(this);
-        dialogLogView.setTextSize(12);
+        dialogLogView.setTextSize(10);
         dialogLogView.setTypeface(android.graphics.Typeface.MONOSPACE);
-        dialogLogView.setPadding(16, 16, 16, 16);
+        dialogLogView.setPadding(8, 8, 8, 8);
         dialogLogView.setText(logCache.toString());
-        
-        boolean isDark = ThemeUtils.isDarkMode(this);
-        dialogLogView.setTextColor(isDark ? 0xFFAAAAAA : 0xFF333333);
-        
-        ScrollView sv = new ScrollView(this); 
-        sv.addView(dialogLogView);
-        
-        // 传 "分享" 给 positive，传 "关闭" 给 negative
+        if (ThemeUtils.isDarkMode(this)) {
+            dialogLogView.setTextColor(0xFFAAAAAA); dialogLogView.setBackgroundColor(0xFF1E1E1E);
+        } else {
+            dialogLogView.setTextColor(0xFF333333); dialogLogView.setBackgroundColor(0xFFF5F5F5);
+        }
+        ScrollView sv = new ScrollView(this); sv.addView(dialogLogView);
         logDialog = WatchUiUtils.createBaseDialog(this, I18nManager.get("log"), sv,
-            "分享", new android.content.DialogInterface.OnClickListener() {
-                public void onClick(android.content.DialogInterface d, int w) { 
-                    d.dismiss();
-                    shareLogFile();
-                }
-            }, 
-            "关闭", new android.content.DialogInterface.OnClickListener() {
-                public void onClick(android.content.DialogInterface d, int w) { 
-                    d.dismiss(); 
-                    dialogLogView = null; 
-                }
-            });
+            I18nManager.get("confirm"), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface d, int w) { dialogLogView = null; }
+            }, null, null);
         logDialog.show();
-    }
-
-    private void shareLogFile() {
-        File logFile = new File(android.os.Environment.getExternalStorageDirectory(), "Download/OldSend/debug_log.txt");
-        if (!logFile.exists()) { 
-            toast("日志文件尚未生成"); 
-            return; 
-        }
-        try {
-            android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.fromFile(logFile));
-            startActivity(android.content.Intent.createChooser(intent, "分享日志"));
-        } catch (Exception e) { 
-            toast("分享失败: " + e.getMessage()); 
-        }
     }
 
     public void onChanged() { if (!historyMode) refreshDevices(); }
@@ -570,7 +555,6 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     public void log(final String msg) {
-        FileLogger.log("UI", msg);
         handler.post(new Runnable() {
             public void run() {
                 logCache.append(msg).append("\n");
@@ -598,7 +582,6 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override protected void onResume() {
         super.onResume();
-        
         android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
         String curLang = sp.getString("app_lang", "system");
         boolean curDark = sp.getBoolean("dark_mode", false);
@@ -606,11 +589,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         float curScale = sp.getFloat("ui_scale", 1.0f);
         
         if (!curLang.equals(lastLang) || curDark != lastDark || curRound != lastRound || curScale != lastScale) {
-            recreate(); 
-            return;
+            recreate(); return;
         }
         
-        applyThemeToViews();
+        applyI18n();
         updateSelectedFilesUI();
         if (!historyMode) refreshDevices();
         updateStatus();
@@ -622,101 +604,16 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         super.onDestroy();
     }
 
-    
-
-
-    private void recordConfigState() {
-        android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
-        lastLang = sp.getString("app_lang", "system");
-        lastDark = sp.getBoolean("dark_mode", false);
-        lastRound = sp.getBoolean("round_screen_opt", false);
-        lastScale = sp.getFloat("ui_scale", 1.0f);
-    }
-
-
-    private void applyThemeToViews() {
-        boolean isDark = ThemeUtils.isDarkMode(this);
-        int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
-        int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
-        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
-        
-        // 彻底修复左右灰边：直接涂黑窗口底层
-        getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(isDark ? 0xFF000000 : 0xFFF4F6F8));
-
-        // 状态卡片
-        View statusCard = (View) status.getParent();
-        statusCard.setBackground(WatchUiUtils.getPillBackground(this));
-        status.setTextColor(colorMain);
-        statusIp.setTextColor(colorSec);
-
-        // 附近设备标题
-        View nearbyTitle = findViewById(R.id.tv_nearby_title);
-        if (nearbyTitle != null && nearbyTitle instanceof TextView) {
-            ((TextView) nearbyTitle).setTextColor(colorMain);
-        }
-
-        // 设备列表区
-        View deviceListParent = (View) deviceList.getParent();
-        deviceListParent.setBackground(WatchUiUtils.getPillBackground(this));
-        emptyHint.setTextColor(colorSec);
-
-        // 次级按钮 (接收记录, 跨网, 扫描, +IP, 设置)
-        int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
-        if (btnHistory != null) { btnHistory.setBackgroundResource(bgSec); btnHistory.setTextColor(colorAccent); }
-        if (btnCrossNet != null) { btnCrossNet.setBackgroundResource(bgSec); btnCrossNet.setTextColor(colorAccent); }
-        if (scanBtn != null) { scanBtn.setBackgroundResource(bgSec); scanBtn.setTextColor(colorAccent); }
-        if (manualIpBtn != null) { manualIpBtn.setBackgroundResource(bgSec); manualIpBtn.setTextColor(colorAccent); }
-        if (btnSettings != null) { btnSettings.setBackgroundResource(bgSec); btnSettings.setTextColor(colorAccent); }
-
-        // 底部日志按钮
-        
-        // 适配新加的已选文件卡片
-        if (layoutSelectedFiles != null) {
-            layoutSelectedFiles.setBackground(WatchUiUtils.getPillBackground(this));
-        }
-        if (tvSelectedFile != null) tvSelectedFile.setTextColor(colorMain);
-        if (btnEditFiles != null) btnEditFiles.setTextColor(colorSec);
-
-        if (btnLog != null) btnLog.setTextColor(colorSec);
-    }
-
-
-    private void updateSelectedFilesUI() {
-        if (pendingUris == null || pendingUris.isEmpty()) {
-            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
-        } else {
-            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
-            long totalSize = 0;
-            for (Uri u : pendingUris) {
-                try {
-                    android.database.Cursor c = getContentResolver().query(u, null, null, null, null);
-                    if (c != null && c.moveToFirst()) {
-                        int sizeIdx = c.getColumnIndex(android.provider.OpenableColumns.SIZE);
-                        if (sizeIdx != -1) totalSize += c.getLong(sizeIdx);
-                        c.close();
-                    }
-                } catch (Exception ignored) {}
-            }
-            String sizeStr = totalSize > 1024*1024 ? String.format(java.util.Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(java.util.Locale.US, "%.1f KB", totalSize/1024.0);
-            if (tvSelectedFile != null) {
-                tvSelectedFile.setText(String.format(java.util.Locale.US, I18nManager.get("selected_files_fmt"), pendingUris.size(), (totalSize > 0 ? sizeStr : I18nManager.get("unknown_size"))));
-    }
-    }
-    }
-
-
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
-        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
-            return true;
-        }
+        if (WatchUiUtils.handleSwipeBack(this, ev)) return true;
         return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public void onBackPressed() {
-        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
-            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        if (WatchUiUtils.isSystemBackBlocked(this)) {
+            Toast.makeText(this, I18nManager.get("swipe_back_toast"), Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressed();
         }
