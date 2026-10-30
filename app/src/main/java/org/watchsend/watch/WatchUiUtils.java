@@ -24,6 +24,7 @@ public class WatchUiUtils {
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
+    // 1. UI 缩放
     public static void applyScale(Context context) {
         float scale = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getFloat("ui_scale", 1.0f);
         if (scale != 1.0f) {
@@ -39,6 +40,7 @@ public class WatchUiUtils {
         }
     }
 
+    // 2. 圆屏边距
     public static void applyRoundPadding(Context ctx, View root) {
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
         float density = ctx.getResources().getDisplayMetrics().density;
@@ -47,6 +49,7 @@ public class WatchUiUtils {
         root.setPadding(pLeft, 0, pRight, 0);
     }
 
+    // 3. 药丸卡片背景
     public static GradientDrawable getPillBackground(Context ctx) {
         boolean isDark = isDark(ctx);
         GradientDrawable bg = new GradientDrawable();
@@ -59,6 +62,7 @@ public class WatchUiUtils {
         return bg;
     }
 
+    // 4. 3D 滚轮特效
     public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
         final Context ctx = scrollView.getContext();
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
@@ -109,8 +113,7 @@ public class WatchUiUtils {
 
     private static int dp(int val, Context ctx) { return (int)(val * ctx.getResources().getDisplayMetrics().density); }
 
-    // ================= Dialog 动态主题 =================
-    
+    // ================= Dialog 核心 (纯黑/白动态) =================
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
         if (w != null) {
@@ -125,39 +128,36 @@ public class WatchUiUtils {
 
     private static void applyWearStyle(Context ctx, Dialog d, View root) {
         boolean isDark = isDark(ctx);
-        
         GradientDrawable bg = new GradientDrawable();
-        bg.setColor(isDark ? 0xFF1A1A1A : 0xFFFFFFFF); // 黑底 / 白底
+        bg.setColor(isDark ? 0xFF1A1A1A : 0xFFFFFFFF); 
         bg.setCornerRadius(36 * ctx.getResources().getDisplayMetrics().density); 
         if (root != null) root.setBackground(bg);
         
         TextView title = (TextView) d.findViewById(R.id.dlg_title);
         if (title != null) title.setTextColor(isDark ? Color.WHITE : Color.BLACK);
         
-        // 动态调整取消按钮（×）颜色
         TextView btnNeg = (TextView) d.findViewById(R.id.dlg_btn_negative);
         if (btnNeg != null) {
             if (isDark) {
-                btnNeg.setBackgroundResource(R.drawable.dlg_btn_neg); // 深灰
+                btnNeg.setBackgroundResource(R.drawable.dlg_btn_neg); 
                 btnNeg.setTextColor(Color.WHITE);
             } else {
                 GradientDrawable negBg = new GradientDrawable();
-                negBg.setColor(0xFFEEEEEE); // 浅灰
+                negBg.setColor(0xFFEEEEEE); 
                 negBg.setCornerRadius(18 * ctx.getResources().getDisplayMetrics().density);
                 btnNeg.setBackground(negBg);
                 btnNeg.setTextColor(Color.BLACK);
             }
         }
         
-        // 动态调整输入框
         EditText et = (EditText) d.findViewById(R.id.dlg_input);
         if (et != null) {
             if (isDark) {
-                et.setBackgroundResource(R.drawable.dlg_input_bg); // 深灰
+                et.setBackgroundResource(R.drawable.dlg_input_bg); 
                 et.setTextColor(Color.WHITE);
             } else {
                 GradientDrawable inputBg = new GradientDrawable();
-                inputBg.setColor(0xFFF0F0F0); // 浅灰
+                inputBg.setColor(0xFFF0F0F0); 
                 inputBg.setCornerRadius(16 * ctx.getResources().getDisplayMetrics().density);
                 et.setBackground(inputBg);
                 et.setTextColor(Color.BLACK);
@@ -275,14 +275,14 @@ public class WatchUiUtils {
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(16, 8, 16, 8);
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
-    
+    }
+
+    // ================= 5. 预测性返回手势 =================
     private static float startX = 0;
     private static float startY = 0;
     private static boolean isSwiping = false;
 
-    // 高级版：模拟 Wear OS 预测性返回的卡片推移动画
     public static boolean handleSwipeBack(final android.app.Activity activity, android.view.MotionEvent ev) {
-        // 使用 android.R.id.content 作为被拖拽的卡片，这样不会影响系统状态栏
         final android.view.View root = activity.findViewById(android.R.id.content);
         final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
         
@@ -300,7 +300,6 @@ public class WatchUiUtils {
                 if (!isSwiping) {
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         isSwiping = true;
-                        // 动态设置圆角和阴影 (需要 API 21+)
                         if (android.os.Build.VERSION.SDK_INT >= 21) {
                             root.setClipToOutline(true);
                             root.setOutlineProvider(new android.view.ViewOutlineProvider() {
@@ -316,15 +315,10 @@ public class WatchUiUtils {
                 }
                 
                 if (isSwiping) {
-                    // 跟手拖动
                     root.setTranslationX(deltaX);
-                    
-                    // 模拟缩放：往右滑得越多，卡片越小，越像被推走
                     float scale = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.25f;
                     root.setScaleX(scale);
                     root.setScaleY(scale);
-                    
-                    // 稍微变暗
                     float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.5f;
                     root.setAlpha(alpha);
                     return true; 
@@ -338,13 +332,11 @@ public class WatchUiUtils {
                     float finalDeltaX = ev.getX() - startX;
                     
                     if (Math.abs(finalDeltaX) > screenWidth / 4) {
-                        // 滑动超过 1/4，直接飞出去
                         float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
                         root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
                             public void run() {
                                 activity.finish();
                                 activity.overridePendingTransition(0, 0); 
-                                // 重置状态，防止下次进来是缩小的
                                 root.setTranslationX(0);
                                 root.setScaleX(1f);
                                 root.setScaleY(1f);
@@ -352,7 +344,6 @@ public class WatchUiUtils {
                             }
                         }).start();
                     } else {
-                        // 没滑够，丝滑弹回原位
                         root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
                     }
                     return true;
