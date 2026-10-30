@@ -275,16 +275,15 @@ public class WatchUiUtils {
         tv.setGravity(Gravity.CENTER);
         tv.setPadding(16, 8, 16, 8);
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
-    }
-
     
     private static float startX = 0;
     private static float startY = 0;
     private static boolean isSwiping = false;
 
-    // 升级版：全局跟手滑动返回手势
+    // 高级版：模拟 Wear OS 预测性返回的卡片推移动画
     public static boolean handleSwipeBack(final android.app.Activity activity, android.view.MotionEvent ev) {
-        final android.view.View decorView = activity.getWindow().getDecorView();
+        // 使用 android.R.id.content 作为被拖拽的卡片，这样不会影响系统状态栏
+        final android.view.View root = activity.findViewById(android.R.id.content);
         final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
         
         switch (ev.getAction()) {
@@ -298,21 +297,37 @@ public class WatchUiUtils {
                 float deltaX = ev.getX() - startX;
                 float deltaY = ev.getY() - startY;
                 
-                // 还没判定为滑动时，判断横向位移是否大于 40px 且占主导
                 if (!isSwiping) {
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         isSwiping = true;
+                        // 动态设置圆角和阴影 (需要 API 21+)
+                        if (android.os.Build.VERSION.SDK_INT >= 21) {
+                            root.setClipToOutline(true);
+                            root.setOutlineProvider(new android.view.ViewOutlineProvider() {
+                                @Override
+                                public void getOutline(android.view.View view, android.graphics.Outline outline) {
+                                    float radius = 40f * view.getContext().getResources().getDisplayMetrics().density;
+                                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+                                }
+                            });
+                            root.setElevation(20f * activity.getResources().getDisplayMetrics().density);
+                        }
                     }
                 }
                 
                 if (isSwiping) {
-                    // 跟手拖拽界面
-                    decorView.setTranslationX(deltaX);
-                    // 跟手渐变透明
-                    float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth);
-                    if (alpha < 0.2f) alpha = 0.2f; // 最低保留一点，防止完全看不见变黑
-                    decorView.setAlpha(alpha);
-                    return true; // 拦截事件，防止底层列表也跟着乱滚
+                    // 跟手拖动
+                    root.setTranslationX(deltaX);
+                    
+                    // 模拟缩放：往右滑得越多，卡片越小，越像被推走
+                    float scale = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.25f;
+                    root.setScaleX(scale);
+                    root.setScaleY(scale);
+                    
+                    // 稍微变暗
+                    float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.5f;
+                    root.setAlpha(alpha);
+                    return true; 
                 }
                 break;
                 
@@ -322,21 +337,23 @@ public class WatchUiUtils {
                     isSwiping = false;
                     float finalDeltaX = ev.getX() - startX;
                     
-                    // 如果滑过屏幕宽度的 1/4，认定要返回
                     if (Math.abs(finalDeltaX) > screenWidth / 4) {
+                        // 滑动超过 1/4，直接飞出去
                         float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
-                        // 顺着手势方向飞出去
-                        decorView.animate().translationX(targetX).alpha(0f).setDuration(200).withEndAction(new Runnable() {
+                        root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
                             public void run() {
                                 activity.finish();
-                                activity.overridePendingTransition(0, 0); // 关闭系统默认生硬的转场动画
-                                decorView.setTranslationX(0);
-                                decorView.setAlpha(1f);
+                                activity.overridePendingTransition(0, 0); 
+                                // 重置状态，防止下次进来是缩小的
+                                root.setTranslationX(0);
+                                root.setScaleX(1f);
+                                root.setScaleY(1f);
+                                root.setAlpha(1f);
                             }
                         }).start();
                     } else {
                         // 没滑够，丝滑弹回原位
-                        decorView.animate().translationX(0).alpha(1f).setDuration(150).start();
+                        root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
                     }
                     return true;
                 }

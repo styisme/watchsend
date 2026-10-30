@@ -31,6 +31,14 @@ public class WatchSettingsActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
+        
+        // 如果开启了圆屏优化，隐藏顶部标题和返回按钮
+        boolean isRoundOpt = getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        View headerBar = findViewById(R.id.settings_header);
+        if (headerBar != null) {
+            headerBar.setVisibility(isRoundOpt ? View.GONE : View.VISIBLE);
+        }
+
         ThemeUtils.applyTheme(this);
         
         boolean isDark = ThemeUtils.isDarkMode(this);
