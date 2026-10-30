@@ -3,7 +3,6 @@ package org.watchsend;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -11,8 +10,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +24,6 @@ import java.util.Locale;
 
 public class SelectListActivity extends Activity {
     private LinearLayout listContainer;
-    private TextView tvFileCount, tvTotalSize;
-    private Button btnDeleteAll, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,50 +32,36 @@ public class SelectListActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_list);
         ThemeUtils.applyTheme(this);
+        WatchUiUtils.applyEntryAnimation(this); // 入场动画
 
         boolean isDark = ThemeUtils.isDarkMode(this);
+        boolean isRoundOpt = getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("round_screen_opt", false);
         
-        // 1. 圆屏边距优化
         View root = findViewById(R.id.root_layout);
         root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
         WatchUiUtils.applyRoundPadding(this, root);
 
-        // 2. 绑定基础控件
-        listContainer = (LinearLayout) findViewById(R.id.list_container);
-        tvFileCount = (TextView) findViewById(R.id.tv_file_count);
-        tvTotalSize = (TextView) findViewById(R.id.tv_total_size);
-        btnDeleteAll = (Button) findViewById(R.id.btn_delete_all);
-        btnBack = (Button) findViewById(R.id.btn_back);
-        
-        int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
-        int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
-        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
-
-        TextView tvSltTitle = (TextView) findViewById(R.id.tv_slt_title);
-        if (tvSltTitle != null) {
-            tvSltTitle.setText("编辑文件");
-            tvSltTitle.setTextColor(colorMain);
+        // 隐藏顶部栏
+        View topBar = findViewById(R.id.top_bar);
+        if (topBar != null) {
+            topBar.setVisibility(isRoundOpt ? View.GONE : View.VISIBLE);
         }
-        
-        btnBack.setTextColor(colorMain);
+
+        Button btnBack = (Button) findViewById(R.id.btn_back);
+        btnBack.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
         btnBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { finish(); }
         });
 
-        tvFileCount.setTextColor(colorMain);
-        tvTotalSize.setTextColor(colorSec);
+        TextView tvSltTitle = (TextView) findViewById(R.id.tv_slt_title);
+        if (tvSltTitle != null) {
+            tvSltTitle.setText(I18nManager.get("select_title"));
+            tvSltTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        }
 
-        int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
-        btnDeleteAll.setBackgroundResource(bgSec);
-        btnDeleteAll.setTextColor(colorAccent);
-
-        btnDeleteAll.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                MainActivity.pendingUris.clear();
-                refreshList();
-                Toast.makeText(SelectListActivity.this, "已全部清空", Toast.LENGTH_SHORT).show();
-            }
-        });
+        listContainer = (LinearLayout) findViewById(R.id.list_container);
+        ScrollView listScroll = (ScrollView) findViewById(R.id.list_scroll);
+        WatchUiUtils.setupWheelScroll(listScroll, listContainer); // 开启滚轮特效
 
         refreshList();
     }
@@ -95,10 +78,29 @@ public class SelectListActivity extends Activity {
         boolean isDark = ThemeUtils.isDarkMode(this);
         int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
+        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+
+        // ===== 顶部：文件数量与总大小 =====
+        LinearLayout headerCard = new LinearLayout(this);
+        headerCard.setOrientation(LinearLayout.HORIZONTAL);
+        headerCard.setGravity(Gravity.CENTER_VERTICAL);
+        headerCard.setPadding(dp(16), dp(12), dp(16), dp(12));
+        headerCard.setBackground(WatchUiUtils.getPillBackground(this));
+        LinearLayout.LayoutParams headLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        headLp.bottomMargin = dp(8);
+        headerCard.setLayoutParams(headLp);
+
+        TextView tvCount = new TextView(this);
+        tvCount.setText(uris.size() + " 个文件");
+        tvCount.setTextSize(14);
+        tvCount.setTextColor(colorMain);
+        tvCount.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        headerCard.addView(tvCount);
 
         long totalSize = 0;
         ContentResolver resolver = getContentResolver();
 
+        // ===== 循环：文件列表 =====
         for (int i = 0; i < uris.size(); i++) {
             final Uri uri = uris.get(i);
             final int index = i;
@@ -132,22 +134,17 @@ public class SelectListActivity extends Activity {
                     }
                 }
             }
-
             totalSize += (size > 0 ? size : 0);
-            String sizeStr = size > 1024*1024 ? String.format(Locale.US, "%.1f MB", size/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", size/1024.0);
 
-            // ====== 核心：纯代码绘制药丸卡片 ======
             LinearLayout card = new LinearLayout(this);
             card.setOrientation(LinearLayout.HORIZONTAL);
             card.setGravity(Gravity.CENTER_VERTICAL);
             card.setPadding(dp(16), dp(12), dp(16), dp(12));
-            // 使用之前的动态背景
             card.setBackground(WatchUiUtils.getPillBackground(this));
             LinearLayout.LayoutParams cardLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardLp.bottomMargin = dp(8);
             card.setLayoutParams(cardLp);
 
-            // 左侧 Emoji 图标
             TextView tvIcon = new TextView(this);
             tvIcon.setTextSize(24);
             tvIcon.setGravity(Gravity.CENTER);
@@ -161,7 +158,6 @@ public class SelectListActivity extends Activity {
             tvIcon.setPadding(0, 0, dp(12), 0);
             card.addView(tvIcon);
 
-            // 中间 名字和大小
             LinearLayout textContainer = new LinearLayout(this);
             textContainer.setOrientation(LinearLayout.VERTICAL);
             textContainer.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -175,7 +171,8 @@ public class SelectListActivity extends Activity {
             textContainer.addView(itemName);
 
             TextView itemSize = new TextView(this);
-            itemSize.setText(size > 0 ? sizeStr : "未知大小");
+            String sizeStr = size > 1024*1024 ? String.format(Locale.US, "%.1f MB", size/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", size/1024.0);
+            itemSize.setText(size > 0 ? sizeStr : "未知");
             itemSize.setTextSize(12);
             itemSize.setTextColor(colorSec);
             itemSize.setPadding(0, dp(2), 0, 0);
@@ -183,7 +180,6 @@ public class SelectListActivity extends Activity {
 
             card.addView(textContainer);
 
-            // 右侧 删除按钮 (用垃圾桶 emoji 最省事且兼容老系统)
             TextView btnDelete = new TextView(this);
             btnDelete.setText("🗑");
             btnDelete.setTextSize(18);
@@ -195,13 +191,39 @@ public class SelectListActivity extends Activity {
                 }
             });
             card.addView(btnDelete);
-
             listContainer.addView(card);
         }
 
-        if (tvFileCount != null) tvFileCount.setText("文件: " + uris.size());
+        // 填完总大小后，更新顶部卡片
         String totalSizeStr = totalSize > 1024*1024 ? String.format(Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", totalSize/1024.0);
-        if (tvTotalSize != null) tvTotalSize.setText("大小: " + (totalSize > 0 ? totalSizeStr : "未知"));
+        TextView tvTotal = new TextView(this);
+        tvTotal.setText("共 " + (totalSize > 0 ? totalSizeStr : "未知"));
+        tvTotal.setTextSize(14);
+        tvTotal.setTextColor(colorSec);
+        headerCard.addView(tvTotal);
+        
+        listContainer.addView(headerCard, 0); // 插在最前面
+
+        // ===== 底部：清空全部按钮 =====
+        Button btnClearAll = new Button(this);
+        btnClearAll.setText("清空所有文件");
+        btnClearAll.setTextColor(colorAccent);
+        btnClearAll.setTextSize(14);
+        int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+        btnClearAll.setBackgroundResource(bgSec);
+        btnClearAll.setMinHeight(0);
+        LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+        btnLp.topMargin = dp(16);
+        btnLp.bottomMargin = dp(16);
+        btnClearAll.setLayoutParams(btnLp);
+        btnClearAll.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.pendingUris.clear();
+                Toast.makeText(SelectListActivity.this, "已清空所有文件", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        listContainer.addView(btnClearAll);
     }
     
     private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density); }
