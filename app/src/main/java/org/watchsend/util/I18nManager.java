@@ -13,7 +13,6 @@ public class I18nManager {
         // ============ 简体中文 (zh) ============
         Map<String, String> zh = new HashMap<>();
         zh.put("running", "运行中"); zh.put("stopped", "已停止"); zh.put("start", "启动"); zh.put("stop", "停止");
-        zh.put("log", "日志"); zh.put("scan", "扫描"); zh.put("select_content", "选择内容"); zh.put("nearby_devices", "附近的设备");
         zh.put("no_device", "暂无设备，请点击扫描"); zh.put("receive_history", "接收记录"); zh.put("settings", "设置");
         zh.put("send", "发送"); zh.put("receive", "接收"); zh.put("file", "文件"); zh.put("media", "媒体");
         zh.put("folder", "文件夹"); zh.put("app", "应用"); zh.put("text", "文本"); zh.put("clipboard", "剪贴板");
@@ -113,7 +112,6 @@ public class I18nManager {
         zh.put("cn_upnp_api_err", "映射失败：路由器 UPnP 接口异常。");
         zh.put("cn_upnp_rejected_fmt", "穿透失败：路由器拒绝映射请求(%d)。");
         zh.put("cn_upnp_exception_fmt", "穿透异常: %s");
-        zh.put("edit_btn", "编辑"); zh.put("add_btn", "+ 添加"); zh.put("manage_arrow", "管理 >");
         zh.put("select_mode", "选择传输模式"); zh.put("nat_public_untested", "NAT公网地址: 未探测");
         zh.put("ipv6_format_direct", "本机公网 IPv6: [%s]:53317 (可用直连)");
         zh.put("stun_probe_btn", "STUN探测");
@@ -169,17 +167,19 @@ public class I18nManager {
         zh.put("back_prev", "返回上一页"); zh.put("save_to_dir", "保存目录: "); zh.put("ip_prefix", "IP ");
     
 
-        zh.put("empty_scanning", "扫描中..."); zh.put("swipe_back_toast", "请滑动屏幕返回");
-        zh.put("selected_files_fmt", "已选择 %d 个文件 (%s)"); zh.put("edit", "编辑"); zh.put("add", "+ 追加");
         zh.put("settings_title", "设置"); zh.put("clear_all_files_btn", "清空所有文件"); zh.put("add_whitelist", "加入白名单");
         zh.put("remove_whitelist", "移除白名单"); zh.put("add_blacklist", "加入黑名单"); zh.put("remove_blacklist", "移除黑名单");
+    
+
+        zh.put("edit_btn", "编辑"); zh.put("add_btn", "+ 追加"); zh.put("nearby_devices", "附近的设备");
+        zh.put("files_count_fmt", "%d 个文件"); zh.put("total_size_fmt", "共 %s"); zh.put("swipe_back_toast", "请滑动屏幕返回");
+        zh.put("selected_files_fmt", "已选择 %d 个文件 (%s)");
     
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
         Map<String, String> zhTW = new HashMap<>(zh);
         zhTW.put("running", "運行中"); zhTW.put("stopped", "已停止"); zhTW.put("start", "啟動"); zhTW.put("stop", "停止");
-        zhTW.put("log", "日誌"); zhTW.put("scan", "掃描"); zhTW.put("select_content", "選擇內容"); zhTW.put("nearby_devices", "附近的設備");
         zhTW.put("no_device", "暫無設備，請點擊掃描"); zhTW.put("receive_history", "接收記錄"); zhTW.put("settings", "設定");
         zhTW.put("send", "發送"); zhTW.put("receive", "接收"); zhTW.put("file", "檔案"); zhTW.put("media", "媒體");
         zhTW.put("folder", "資料夾"); zhTW.put("app", "應用"); zhTW.put("text", "文字"); zhTW.put("clipboard", "剪貼簿");
@@ -274,17 +274,19 @@ dict.put("zh", zh);
         zhTW.put("back_prev", "返回上一頁"); zhTW.put("save_to_dir", "儲存目錄: "); zhTW.put("ip_prefix", "IP ");
     
 
-        zhTW.put("empty_scanning", "掃描中..."); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
-        zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)"); zhTW.put("edit", "編輯"); zhTW.put("add", "+ 追加");
         zhTW.put("settings_title", "設定"); zhTW.put("clear_all_files_btn", "清空所有檔案"); zhTW.put("add_whitelist", "加入白名單");
         zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單"); zhTW.put("remove_blacklist", "移除黑名單");
+    
+
+        zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加"); zhTW.put("nearby_devices", "附近的設備");
+        zhTW.put("files_count_fmt", "%d 個檔案"); zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
+        zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)");
     
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
         Map<String, String> en = new HashMap<>();
         en.put("running", "Running"); en.put("stopped", "Stopped"); en.put("start", "Start"); en.put("stop", "Stop");
-        en.put("log", "Log"); en.put("scan", "Scan"); en.put("select_content", "Select Content"); en.put("nearby_devices", "Nearby Devices");
         en.put("no_device", "No devices, tap scan"); en.put("receive_history", "Receive History"); en.put("settings", "Settings");
         en.put("send", "Send"); en.put("receive", "Receive"); en.put("file", "File"); en.put("media", "Media");
         en.put("folder", "Folder"); en.put("app", "App"); en.put("text", "Text"); en.put("clipboard", "Clipboard");
@@ -384,7 +386,6 @@ dict.put("zh_TW", zhTW);
         en.put("cn_upnp_api_err", "Failed: router UPnP API error.");
         en.put("cn_upnp_rejected_fmt", "Failed: router rejected mapping (%d).");
         en.put("cn_upnp_exception_fmt", "Error: %s");
-        en.put("edit_btn", "Edit"); en.put("add_btn", "+ Add"); en.put("manage_arrow", "Manage >");
         en.put("select_mode", "Select Transfer Mode"); en.put("nat_public_untested", "NAT Public Addr: Untested");
         en.put("ipv6_format_direct", "Local IPv6: [%s]:53317 (Direct connect)");
         en.put("stun_probe_btn", "STUN Probe");
@@ -440,17 +441,19 @@ dict.put("zh_TW", zhTW);
         en.put("back_prev", "Go Back"); en.put("save_to_dir", "Save to: "); en.put("ip_prefix", "IP ");
     
 
-        en.put("empty_scanning", "Scanning..."); en.put("swipe_back_toast", "Swipe to go back");
-        en.put("selected_files_fmt", "Selected %d files (%s)"); en.put("edit", "Edit"); en.put("add", "+ Add");
         en.put("settings_title", "Settings"); en.put("clear_all_files_btn", "Clear All Files"); en.put("add_whitelist", "Add Whitelist");
         en.put("remove_whitelist", "Remove Whitelist"); en.put("add_blacklist", "Add Blacklist"); en.put("remove_blacklist", "Remove Blacklist");
+    
+
+        en.put("edit_btn", "Edit"); en.put("add_btn", "+ Add"); en.put("nearby_devices", "Nearby Devices");
+        en.put("files_count_fmt", "%d Files"); en.put("total_size_fmt", "Total %s"); en.put("swipe_back_toast", "Swipe to go back");
+        en.put("selected_files_fmt", "Selected %d files (%s)");
     
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
         Map<String, String> ja = new HashMap<>(en);
         ja.put("running", "実行中"); ja.put("stopped", "停止"); ja.put("start", "開始"); ja.put("stop", "停止");
-        ja.put("log", "ログ"); ja.put("scan", "スキャン"); ja.put("select_content", "コンテンツを選択"); ja.put("nearby_devices", "近くのデバイス");
         ja.put("no_device", "デバイスなし、スキャンしてください"); ja.put("receive_history", "受信履歴"); ja.put("settings", "設定");
         ja.put("send", "送信"); ja.put("receive", "受信"); ja.put("file", "ファイル"); ja.put("media", "メディア");
         ja.put("folder", "フォルダ"); ja.put("app", "アプリ"); ja.put("text", "テキスト"); ja.put("clipboard", "クリップボード");
@@ -549,17 +552,19 @@ dict.put("en", en);
         ja.put("back_prev", "戻る"); ja.put("save_to_dir", "保存先: "); ja.put("ip_prefix", "IP ");
     
 
-        ja.put("empty_scanning", "スキャン中..."); ja.put("swipe_back_toast", "スワイプして戻る");
-        ja.put("selected_files_fmt", "%d 個のファイルを選択 (%s)"); ja.put("edit", "編集"); ja.put("add", "+ 追加");
         ja.put("settings_title", "設定"); ja.put("clear_all_files_btn", "すべてのファイルを消去"); ja.put("add_whitelist", "ホワイトリストに追加");
         ja.put("remove_whitelist", "ホワイトリストから削除"); ja.put("add_blacklist", "ブラックリストに追加"); ja.put("remove_blacklist", "ブラックリストから削除");
+    
+
+        ja.put("edit_btn", "編集"); ja.put("add_btn", "+ 追加"); ja.put("nearby_devices", "近くのデバイス");
+        ja.put("files_count_fmt", "%d 個のファイル"); ja.put("total_size_fmt", "合計 %s"); ja.put("swipe_back_toast", "スワイプして戻る");
+        ja.put("selected_files_fmt", "%d 個のファイルを選択 (%s)");
     
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
         Map<String, String> ko = new HashMap<>(en);
         ko.put("running", "실행 중"); ko.put("stopped", "중지됨"); ko.put("start", "시작"); ko.put("stop", "중지");
-        ko.put("log", "로그"); ko.put("scan", "스캔"); ko.put("select_content", "콘텐츠 선택"); ko.put("nearby_devices", "주변 기기");
         ko.put("no_device", "기기가 없습니다. 스캔하세요"); ko.put("receive_history", "수신 기록"); ko.put("settings", "설정");
         ko.put("send", "보내기"); ko.put("receive", "받기"); ko.put("file", "파일"); ko.put("media", "미디어");
         ko.put("folder", "폴더"); ko.put("app", "앱"); ko.put("text", "텍스트"); ko.put("clipboard", "클립보드");
@@ -658,17 +663,19 @@ dict.put("ja", ja);
         ko.put("back_prev", "뒤로 가기"); ko.put("save_to_dir", "저장 위치: "); ko.put("ip_prefix", "IP ");
     
 
-        ko.put("empty_scanning", "스캔 중..."); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
-        ko.put("selected_files_fmt", "%d개 파일 선택됨 (%s)"); ko.put("edit", "편집"); ko.put("add", "+ 추가");
         ko.put("settings_title", "설정"); ko.put("clear_all_files_btn", "모든 파일 삭제"); ko.put("add_whitelist", "화이트리스트 추가");
         ko.put("remove_whitelist", "화이트리스트 제거"); ko.put("add_blacklist", "블랙리스트 추가"); ko.put("remove_blacklist", "블랙리스트 제거");
+    
+
+        ko.put("edit_btn", "편집"); ko.put("add_btn", "+ 추가"); ko.put("nearby_devices", "주변 기기");
+        ko.put("files_count_fmt", "%d개 파일"); ko.put("total_size_fmt", "총 %s"); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
+        ko.put("selected_files_fmt", "%d개 파일 선택됨 (%s)");
     
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
         Map<String, String> de = new HashMap<>(en);
         de.put("running", "Läuft"); de.put("stopped", "Gestoppt"); de.put("start", "Start"); de.put("stop", "Stopp");
-        de.put("log", "Protokoll"); de.put("scan", "Scannen"); de.put("select_content", "Inhalt wählen"); de.put("nearby_devices", "Geräte in der Nähe");
         de.put("no_device", "Keine Geräte, scannen"); de.put("receive_history", "Empfangsverlauf"); de.put("settings", "Einstellungen");
         de.put("send", "Senden"); de.put("receive", "Empfangen"); de.put("file", "Datei"); de.put("media", "Medien");
         de.put("folder", "Ordner"); de.put("app", "App"); de.put("text", "Text"); de.put("clipboard", "Zwischenablage");
@@ -767,17 +774,19 @@ dict.put("ko", ko);
         de.put("back_prev", "Zurück"); de.put("save_to_dir", "Speichern unter: "); de.put("ip_prefix", "IP ");
     
 
-        de.put("empty_scanning", "Scannen..."); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
-        de.put("selected_files_fmt", "%d Dateien ausgewählt (%s)"); de.put("edit", "Bearbeiten"); de.put("add", "+ Hinzufügen");
         de.put("settings_title", "Einstellungen"); de.put("clear_all_files_btn", "Alle Dateien löschen"); de.put("add_whitelist", "Zur Whitelist");
         de.put("remove_whitelist", "Von Whitelist entfernen"); de.put("add_blacklist", "Zur Blacklist"); de.put("remove_blacklist", "Von Blacklist entfernen");
+    
+
+        de.put("edit_btn", "Bearbeiten"); de.put("add_btn", "+ Hinzufügen"); de.put("nearby_devices", "Geräte in der Nähe");
+        de.put("files_count_fmt", "%d Dateien"); de.put("total_size_fmt", "Gesamt %s"); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
+        de.put("selected_files_fmt", "%d Dateien ausgewählt (%s)");
     
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
         Map<String, String> fr = new HashMap<>(en);
         fr.put("running", "En cours"); fr.put("stopped", "Arrêté"); fr.put("start", "Démarrer"); fr.put("stop", "Arrêter");
-        fr.put("log", "Journal"); fr.put("scan", "Scanner"); fr.put("select_content", "Sélectionner"); fr.put("nearby_devices", "Appareils à proximité");
         fr.put("no_device", "Aucun appareil, scannez"); fr.put("receive_history", "Historique"); fr.put("settings", "Paramètres");
         fr.put("send", "Envoyer"); fr.put("receive", "Recevoir"); fr.put("file", "Fichier"); fr.put("media", "Média");
         fr.put("folder", "Dossier"); fr.put("app", "Appli"); fr.put("text", "Texte"); fr.put("clipboard", "Presse-papiers");
@@ -876,17 +885,19 @@ dict.put("de", de);
         fr.put("back_prev", "Retour"); fr.put("save_to_dir", "Enregistrer dans : "); fr.put("ip_prefix", "IP ");
     
 
-        fr.put("empty_scanning", "Scan..."); fr.put("swipe_back_toast", "Glissez pour revenir");
-        fr.put("selected_files_fmt", "%d fichiers sélectionnés (%s)"); fr.put("edit", "Modifier"); fr.put("add", "+ Ajouter");
         fr.put("settings_title", "Paramètres"); fr.put("clear_all_files_btn", "Effacer tous les fichiers"); fr.put("add_whitelist", "Ajouter à la liste blanche");
         fr.put("remove_whitelist", "Retirer de la liste blanche"); fr.put("add_blacklist", "Ajouter à la liste noire"); fr.put("remove_blacklist", "Retirer de la liste noire");
+    
+
+        fr.put("edit_btn", "Modifier"); fr.put("add_btn", "+ Ajouter"); fr.put("nearby_devices", "Appareils à proximité");
+        fr.put("files_count_fmt", "%d fichiers"); fr.put("total_size_fmt", "Total %s"); fr.put("swipe_back_toast", "Glissez pour revenir");
+        fr.put("selected_files_fmt", "%d fichiers sélectionnés (%s)");
     
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
         Map<String, String> es = new HashMap<>(en);
         es.put("running", "Ejecutando"); es.put("stopped", "Detenido"); es.put("start", "Iniciar"); es.put("stop", "Detener");
-        es.put("log", "Registro"); es.put("scan", "Escanear"); es.put("select_content", "Seleccionar contenido"); es.put("nearby_devices", "Dispositivos cercanos");
         es.put("no_device", "Sin dispositivos, escanea"); es.put("receive_history", "Historial"); es.put("settings", "Ajustes");
         es.put("send", "Enviar"); es.put("receive", "Recibir"); es.put("file", "Archivo"); es.put("media", "Multimedia");
         es.put("folder", "Carpeta"); es.put("app", "App"); es.put("text", "Texto"); es.put("clipboard", "Portapapeles");
@@ -985,17 +996,19 @@ dict.put("fr", fr);
         es.put("back_prev", "Volver"); es.put("save_to_dir", "Guardar en: "); es.put("ip_prefix", "IP ");
     
 
-        es.put("empty_scanning", "Escaneando..."); es.put("swipe_back_toast", "Desliza para volver");
-        es.put("selected_files_fmt", "%d archivos seleccionados (%s)"); es.put("edit", "Editar"); es.put("add", "+ Añadir");
         es.put("settings_title", "Ajustes"); es.put("clear_all_files_btn", "Borrar todos los archivos"); es.put("add_whitelist", "Añadir a lista blanca");
         es.put("remove_whitelist", "Quitar de lista blanca"); es.put("add_blacklist", "Añadir a lista negra"); es.put("remove_blacklist", "Quitar de lista negra");
+    
+
+        es.put("edit_btn", "Editar"); es.put("add_btn", "+ Añadir"); es.put("nearby_devices", "Dispositivos cercanos");
+        es.put("files_count_fmt", "%d archivos"); es.put("total_size_fmt", "Total %s"); es.put("swipe_back_toast", "Desliza para volver");
+        es.put("selected_files_fmt", "%d archivos seleccionados (%s)");
     
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
         Map<String, String> ru = new HashMap<>(en);
         ru.put("running", "Работает"); ru.put("stopped", "Остановлен"); ru.put("start", "Старт"); ru.put("stop", "Стоп");
-        ru.put("log", "Лог"); ru.put("scan", "Сканировать"); ru.put("select_content", "Выбрать контент"); ru.put("nearby_devices", "Устройства рядом");
         ru.put("no_device", "Нет устройств, сканируйте"); ru.put("receive_history", "История"); ru.put("settings", "Настройки");
         ru.put("send", "Отправить"); ru.put("receive", "Получить"); ru.put("file", "Файл"); ru.put("media", "Медиа");
         ru.put("folder", "Папка"); ru.put("app", "Прил."); ru.put("text", "Текст"); ru.put("clipboard", "Буфер");
@@ -1094,17 +1107,19 @@ dict.put("es", es);
         ru.put("back_prev", "Назад"); ru.put("save_to_dir", "Сохранить в: "); ru.put("ip_prefix", "IP ");
     
 
-        ru.put("empty_scanning", "Сканирование..."); ru.put("swipe_back_toast", "Свайп для возврата");
-        ru.put("selected_files_fmt", "Выбрано %d файлов (%s)"); ru.put("edit", "Изменить"); ru.put("add", "+ Добавить");
         ru.put("settings_title", "Настройки"); ru.put("clear_all_files_btn", "Очистить все файлы"); ru.put("add_whitelist", "В белый список");
         ru.put("remove_whitelist", "Из белого списка"); ru.put("add_blacklist", "В черный список"); ru.put("remove_blacklist", "Из черного списка");
+    
+
+        ru.put("edit_btn", "Изменить"); ru.put("add_btn", "+ Добавить"); ru.put("nearby_devices", "Устройства рядом");
+        ru.put("files_count_fmt", "%d файлов"); ru.put("total_size_fmt", "Всего %s"); ru.put("swipe_back_toast", "Свайп для возврата");
+        ru.put("selected_files_fmt", "Выбрано %d файлов (%s)");
     
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
         Map<String, String> pt = new HashMap<>(en);
         pt.put("running", "Rodando"); pt.put("stopped", "Parado"); pt.put("start", "Iniciar"); pt.put("stop", "Parar");
-        pt.put("log", "Log"); pt.put("scan", "Escanear"); pt.put("select_content", "Selecionar conteúdo"); pt.put("nearby_devices", "Dispositivos próximos");
         pt.put("no_device", "Nenhum dispositivo, escaneie"); pt.put("receive_history", "Histórico"); pt.put("settings", "Configurações");
         pt.put("send", "Enviar"); pt.put("receive", "Receber"); pt.put("file", "Arquivo"); pt.put("media", "Mídia");
         pt.put("folder", "Pasta"); pt.put("app", "App"); pt.put("text", "Texto"); pt.put("clipboard", "Área de transferência");
@@ -1203,10 +1218,13 @@ dict.put("ru", ru);
         pt.put("back_prev", "Voltar"); pt.put("save_to_dir", "Salvar em: "); pt.put("ip_prefix", "IP ");
     
 
-        pt.put("empty_scanning", "Escaneando..."); pt.put("swipe_back_toast", "Deslize para voltar");
-        pt.put("selected_files_fmt", "%d arquivos selecionados (%s)"); pt.put("edit", "Editar"); pt.put("add", "+ Adicionar");
         pt.put("settings_title", "Configurações"); pt.put("clear_all_files_btn", "Limpar todos os arquivos"); pt.put("add_whitelist", "Adicionar à lista branca");
         pt.put("remove_whitelist", "Remover da lista branca"); pt.put("add_blacklist", "Adicionar à lista negra"); pt.put("remove_blacklist", "Remover da lista negra");
+    
+
+        pt.put("edit_btn", "Editar"); pt.put("add_btn", "+ Adicionar"); pt.put("nearby_devices", "Dispositivos próximos");
+        pt.put("files_count_fmt", "%d arquivos"); pt.put("total_size_fmt", "Total %s"); pt.put("swipe_back_toast", "Deslize para voltar");
+        pt.put("selected_files_fmt", "%d arquivos selecionados (%s)");
     
 dict.put("pt", pt);
     }

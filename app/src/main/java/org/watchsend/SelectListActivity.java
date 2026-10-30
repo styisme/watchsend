@@ -91,7 +91,7 @@ public class SelectListActivity extends Activity {
         headerCard.setLayoutParams(headLp);
 
         TextView tvCount = new TextView(this);
-        tvCount.setText(uris.size() + " 个文件");
+        tvCount.setText(String.format(java.util.Locale.US, I18nManager.get("files_count_fmt"), uris.size()));
         tvCount.setTextSize(14);
         tvCount.setTextColor(colorMain);
         tvCount.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -197,7 +197,7 @@ public class SelectListActivity extends Activity {
         // 填完总大小后，更新顶部卡片
         String totalSizeStr = totalSize > 1024*1024 ? String.format(Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", totalSize/1024.0);
         TextView tvTotal = new TextView(this);
-        tvTotal.setText("共 " + (totalSize > 0 ? totalSizeStr : I18nManager.get("unknown_size")));
+        tvTotal.setText(String.format(java.util.Locale.US, I18nManager.get("total_size_fmt"), (totalSize > 0 ? totalSizeStr : I18nManager.get("unknown_size"))));
         tvTotal.setTextSize(14);
         tvTotal.setTextColor(colorSec);
         headerCard.addView(tvTotal);
