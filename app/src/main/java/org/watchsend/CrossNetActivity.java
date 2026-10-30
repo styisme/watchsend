@@ -1,5 +1,4 @@
 package org.watchsend;
-import android.os.Build;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.OpenableColumns;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
+import org.watchsend.watch.WatchUiUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,52 +49,31 @@ public class CrossNetActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        WatchUiUtils.applyScale(this);
         super.onCreate(savedInstanceState);
+        I18nManager.init(this);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cross_net);
-        org.watchsend.watch.WatchUiUtils.applyScale(this);
-        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
-        android.view.View rootCn = findViewById(R.id.root_cross_net);
-        org.watchsend.watch.WatchUiUtils.applyRoundPadding(this, rootCn);
-        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
+        WatchUiUtils.applyEntryAnimation(this);
 
-        boolean isDark = org.watchsend.util.ThemeUtils.isDarkMode(this);
+        boolean isDark = ThemeUtils.isDarkMode(this);
         int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
         int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
         int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+        android.graphics.drawable.GradientDrawable pillBg = WatchUiUtils.getPillBackground(this);
 
+        View rootCn = findViewById(R.id.root_cross_net);
         rootCn.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
-        findViewById(R.id.btn_cn_back).setBackground(org.watchsend.watch.WatchUiUtils.getPillBackground(this));
-        ((android.widget.Button)findViewById(R.id.btn_cn_back)).setTextColor(colorMain);
-        ((android.widget.TextView)findViewById(R.id.tv_cross_net_title)).setTextColor(colorMain);
-        ((android.widget.TextView)findViewById(R.id.tv_cross_net_desc)).setTextColor(colorSec);
-        
-        android.view.View[] cards = {
-            findViewById(R.id.tv_ipv6_info),
-            findViewById(R.id.btn_cn_generate),
-            findViewById(R.id.layout_cn_selected_files),
-            findViewById(R.id.et_cn_pin),
-            findViewById(R.id.btn_cn_receive)
-        };
-        for(android.view.View v : cards) {
-            if(v != null) {
-                v.setBackground(org.watchsend.watch.WatchUiUtils.getPillBackground(this));
-                if(v instanceof android.widget.TextView) ((android.widget.TextView)v).setTextColor(colorMain);
-            }
-        }
-        
-        ((android.widget.Button)findViewById(R.id.btn_stun_probe)).setBackgroundResource(bgSec);
-        ((android.widget.Button)findViewById(R.id.btn_stun_probe)).setTextColor(colorAccent);
-        ((android.widget.Button)findViewById(R.id.btn_upnp_punch)).setBackgroundResource(bgSec);
-        ((android.widget.Button)findViewById(R.id.btn_upnp_punch)).setTextColor(colorAccent);
-        ((android.widget.Button)findViewById(R.id.btn_cn_receive)).setBackgroundResource(bgSec);
-        ((android.widget.Button)findViewById(R.id.btn_cn_receive)).setTextColor(colorAccent);
-        
+        WatchUiUtils.applyRoundPadding(this, rootCn);
 
-        
+        // 1. 圆屏隐藏顶栏
+        boolean isRoundOpt = getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        View topBar = findViewById(R.id.cross_net_top_bar);
+        if (topBar != null) topBar.setVisibility(isRoundOpt ? View.GONE : View.VISIBLE);
 
-        // 初始化所有 UI 变量，确保不漏掉任何一个
+        // 2. 初始化 UI 控件
         tvStatus = (TextView) findViewById(R.id.tv_cn_status);
         tvPinDisplay = (TextView) findViewById(R.id.tv_cn_pin_display);
         tvFileInfo = (TextView) findViewById(R.id.tv_cn_file_info);
@@ -112,36 +92,43 @@ public class CrossNetActivity extends Activity {
         btnStunProbe = (Button) findViewById(R.id.btn_stun_probe);
         btnUpnpPunch = (Button) findViewById(R.id.btn_upnp_punch);
 
-        // 设置多语言
-        ((TextView)findViewById(R.id.tv_cross_net_title)).setText(I18nManager.get("cross_net_title"));
-        ((TextView)findViewById(R.id.tv_cross_net_desc)).setText(I18nManager.get("cross_net_desc"));
-        ((TextView)findViewById(R.id.tv_send_title)).setText(I18nManager.get("send_file_title"));
-        ((TextView)findViewById(R.id.tv_recv_title)).setText(I18nManager.get("recv_file_title"));
-        btnGen.setText(I18nManager.get("gen_pin_btn"));
-        btnRecv.setText(I18nManager.get("connect_recv_btn"));
-        etPin.setHint(I18nManager.get("input_pin_hint"));
-        cbUseDirect.setText(I18nManager.get("direct_mode"));
-        btnUpnpPunch.setText(I18nManager.get("upnp_punch"));
-        ((TextView) findViewById(R.id.tv_select_mode)).setText(I18nManager.get("select_mode"));
-        ((TextView) findViewById(R.id.tv_stun_info)).setText(I18nManager.get("nat_public_untested"));
-        ((Button) findViewById(R.id.btn_stun_probe)).setText(I18nManager.get("stun_probe_btn"));
-        
-        // 深色模式下把那个丑陋的灰框 CheckBox 染成浅绿色
-        if (ThemeUtils.isDarkMode(this) && Build.VERSION.SDK_INT >= 21) {
-            cbUseDirect.setButtonTintList(android.content.res.ColorStateList.valueOf(0xFF81C784));
-        }
-        ((Button) findViewById(R.id.btn_cn_add_files)).setText(I18nManager.get("add_btn"));
-        ((Button) findViewById(R.id.btn_cn_edit_files)).setText(I18nManager.get("edit_btn"));
-        ((TextView) findViewById(R.id.tv_advanced_tip)).setText(I18nManager.get("advanced_tip"));
-        
-        String ipv6 = OldSendService.getIpv6();
-        if (ipv6 != null) {
-            tvIpv6Info.setText(String.format(I18nManager.get("ipv6_format_direct"), ipv6));
-        } else {
-            tvIpv6Info.setText(I18nManager.get("ipv6_none"));
-        }
+        // 3. 动态适配所有颜色与背景
+        ((Button) findViewById(R.id.btn_cn_back)).setTextColor(colorMain);
+        ((TextView) findViewById(R.id.tv_cross_net_title)).setTextColor(colorMain);
+        tvCrossNetDescSetColor(colorSec);
 
-        // 绑定各种点击事件
+        tvIpv6Info.setBackground(pillBg);
+        tvIpv6Info.setTextColor(colorAccent);
+
+        ((View) btnStunProbe.getParent()).setBackground(pillBg);
+        tvStunInfo.setTextColor(colorSec);
+        btnStunProbe.setBackgroundResource(bgSec);
+        btnStunProbe.setTextColor(colorAccent);
+
+        ((View) btnUpnpPunch.getParent()).setBackground(pillBg);
+        cbUseDirect.setTextColor(colorMain);
+        btnUpnpPunch.setBackgroundResource(bgSec);
+        btnUpnpPunch.setTextColor(colorAccent);
+
+        etDirectIp.setBackground(pillBg);
+        etDirectIp.setTextColor(colorMain);
+        etDirectIp.setHintTextColor(colorSec);
+
+        layoutSelectedFiles.setBackground(pillBg);
+        tvFileInfo.setTextColor(colorMain);
+
+        // 接收区域
+        ((View) etPin.getParent()).setBackground(pillBg);
+        etPin.setTextColor(colorMain);
+        etPin.setHintTextColor(colorSec);
+        btnRecv.setBackgroundResource(bgSec);
+        btnRecv.setTextColor(colorAccent);
+
+        tvPinDisplay.setTextColor(colorAccent);
+        tvStatus.setTextColor(colorAccent);
+        ((TextView) findViewById(R.id.tv_advanced_tip)).setTextColor(colorSec);
+
+        // 4. 绑定事件
         findViewById(R.id.btn_cn_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { finish(); }
         });
@@ -217,7 +204,7 @@ public class CrossNetActivity extends Activity {
                                     tvStunInfo.setText("NAT 穿透失败 (对称型NAT)");
                                     tvStunInfo.setTextColor(0xFFD32F2F);
                                 } else {
-                                    tvStunInfo.setText("NAT公网地址: " + result);
+                                    tvStunInfo.setText("NAT: " + result);
                                     tvStunInfo.setTextColor(0xFF388E3C);
                                     etDirectIp.setText(result);
                                 }
@@ -248,6 +235,10 @@ public class CrossNetActivity extends Activity {
                 }).start();
             }
         });
+    }
+
+    private void tvCrossNetDescSetColor(int color) {
+        ((TextView) findViewById(R.id.tv_cross_net_desc)).setTextColor(color);
     }
 
     @Override
@@ -390,29 +381,23 @@ public class CrossNetActivity extends Activity {
         String cleanIp = ipStr.trim();
         int port = 53317;
         
-        // 如果用户点了自己头像，或者填了本机 IP，直接拦截
         if (cleanIp.contains(OldSendService.getLocalIp())) {
             tvStatus.setText("直连失败: 无法通过公网IP直连本机，请使用另一台设备。");
             return;
         }
 
-        // 暴力清洗：去除所有可能存在的方括号
         cleanIp = cleanIp.replace("[", "").replace("]", "");
-
-        // 检查是否带端口 (如果是 IPv6，最后一个冒号后面可能跟着端口)
         int lastColon = cleanIp.lastIndexOf(':');
         if (lastColon != -1) {
             String possiblePort = cleanIp.substring(lastColon + 1);
-            // 如果最后一段是纯数字，且长度小于 6 位，说明是端口
             if (possiblePort.matches("\\d{1,5}")) {
                 try {
                     port = Integer.parseInt(possiblePort);
-                    cleanIp = cleanIp.substring(0, lastColon); // 剥离端口
+                    cleanIp = cleanIp.substring(0, lastColon);
                 } catch (Exception ignored) {}
             }
         }
         
-        // 最终 cleanIp 是纯净的 IP（绝对无括号），port 是合法数字
         final String ip = cleanIp;
         final int finalPort = port;
         
@@ -556,7 +541,6 @@ public class CrossNetActivity extends Activity {
         return name == null ? "file" : name;
     }
 
-    // 极其硬核的纯手写 UPnP SSDP 搜索与端口映射
     private String requestUPnP() {
         try {
             java.net.DatagramSocket ssdpSock = new java.net.DatagramSocket();
@@ -636,7 +620,7 @@ public class CrossNetActivity extends Activity {
                     "<NewInternalPort>53317</NewInternalPort>\n" +
                     "<NewInternalClient>" + localIp + "</NewInternalClient>\n" +
                     "<NewEnabled>1</NewEnabled>\n" +
-                    "<NewPortMappingDescription>OldSend</NewPortMappingDescription>\n" +
+                    "<NewPortMappingDescription>WatchSend</NewPortMappingDescription>\n" +
                     "<NewLeaseDuration>0</NewLeaseDuration>\n" +
                     "</u:AddPortMapping>\n" +
                     "</s:Body>\n" +
@@ -670,22 +654,19 @@ public class CrossNetActivity extends Activity {
             return ip;
         } catch (Exception e) {
             return "未知公网IP";
+        }
     }
-    }
-
-
+    
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
-        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
-            return true;
-        }
+        if (WatchUiUtils.handleSwipeBack(this, ev)) return true;
         return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public void onBackPressed() {
-        if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
-            android.widget.Toast.makeText(this, "请滑动屏幕返回", android.widget.Toast.LENGTH_SHORT).show();
+        if (WatchUiUtils.isSystemBackBlocked(this)) {
+            Toast.makeText(this, "请滑动屏幕返回", Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressed();
         }
