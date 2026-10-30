@@ -315,7 +315,6 @@ public class TransferActivity extends Activity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(receiver);
-    }
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -325,7 +324,6 @@ public class TransferActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-
     @Override
     public void onBackPressed() {
         if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
@@ -334,3 +332,5 @@ public class TransferActivity extends Activity {
             super.onBackPressed();
         }
     }
+}
+

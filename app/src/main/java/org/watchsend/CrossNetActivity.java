@@ -670,8 +670,6 @@ public class CrossNetActivity extends Activity {
             return ip;
         } catch (Exception e) {
             return "未知公网IP";
-        }
-    }
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
@@ -681,7 +679,6 @@ public class CrossNetActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-
     @Override
     public void onBackPressed() {
         if (org.watchsend.watch.WatchUiUtils.isSystemBackBlocked(this)) {
@@ -690,3 +687,5 @@ public class CrossNetActivity extends Activity {
             super.onBackPressed();
         }
     }
+}
+

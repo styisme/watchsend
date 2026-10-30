@@ -241,11 +241,11 @@ public class SelectListActivity extends Activity {
         listContainer.addView(btnReturn);
     }
     
-    private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density); }
+    private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density);
 
     @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
-        if (WatchUiUtils.handleSwipeBack(this, ev)) {
+        if (org.watchsend.watch.WatchUiUtils.handleSwipeBack(this, ev)) {
             return true;
         }
         return super.dispatchTouchEvent(ev);
@@ -259,3 +259,5 @@ public class SelectListActivity extends Activity {
             super.onBackPressed();
         }
     }
+}
+
