@@ -218,7 +218,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             I18nManager.get("file"), I18nManager.get("media"), I18nManager.get("app"),
             I18nManager.get("folder"), I18nManager.get("text"), I18nManager.get("clipboard")
         };
-        WatchUiUtils.showList(this, isAppend ? "追加文件" : I18nManager.get("send"), items, new WatchUiUtils.OnItemSelectListener() {
+        WatchUiUtils.showList(this, isAppend ? I18nManager.get("add_files") : I18nManager.get("send"), items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
                 pendingAppend = isAppend;
                 if (pos == 0) pickFile(false, isAppend);
@@ -252,7 +252,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                 apps.add(app); names.add(app.loadLabel(pm).toString());
             }
         }
-        if (names.isEmpty()) { toast("无应用"); return; }
+        if (names.isEmpty()) { toast(I18nManager.get("no_app")); return; }
         WatchUiUtils.showList(this, I18nManager.get("select_app"), names.toArray(new String[0]),
             new WatchUiUtils.OnItemSelectListener() {
                 public void onItemSelect(int pos) {
@@ -286,7 +286,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                     if (pos == 0) {
                         List<File> all = new ArrayList<File>();
                         getAllFiles(dir, all);
-                        if (all.isEmpty()) { toast("空文件夹"); return; }
+                        if (all.isEmpty()) { toast(I18nManager.get("empty_folder")); return; }
                         if (!pendingAppend) pendingUris.clear();
                         for (File f : all) pendingUris.add(Uri.fromFile(f));
                         onFilesPicked();
@@ -458,7 +458,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     private void enterHistoryMode() {
         historyMode = true;
-        btnHistory.setText("↩ 返回设备");
+        btnHistory.setText(I18nManager.get("return_to_devices"));
         deviceList.setAdapter(historyAdapter);
         refreshHistory();
         setListViewHeightBasedOnChildren(deviceList);
@@ -480,18 +480,18 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             historyPaths.add(r.path);
         }
         historyAdapter.notifyDataSetChanged();
-        emptyHint.setText(historyPaths.isEmpty() ? "暂无记录" : "");
+        emptyHint.setText(historyPaths.isEmpty() ? I18nManager.get("no_record") : "");
         emptyHint.setVisibility(historyPaths.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private void openHistoryFile(int pos) {
         File f = new File(historyPaths.get(pos));
-        if (!f.exists()) { toast("文件不存在"); return; }
+        if (!f.exists()) { toast(I18nManager.get("file_not_found")); return; }
         try {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setDataAndType(Uri.fromFile(f), "application/*");
             startActivity(i);
-        } catch (Exception e) { toast("无法打开"); }
+        } catch (Exception e) { toast(I18nManager.get("cannot_open")); }
     }
 
     private void showLogDialog() {

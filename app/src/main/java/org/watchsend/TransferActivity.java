@@ -113,8 +113,8 @@ public class TransferActivity extends Activity {
         String senderName = intent.getStringExtra("senderName");
         if (senderName == null) senderName = I18nManager.get("unknown_device");
 
-        addMainTitle("接收请求");
-        addSection("来自设备");
+        addMainTitle(I18nManager.get("recv_request"));
+        addSection(I18nManager.get("from_device"));
         
         LinearLayout card = createPillCard();
         LinearLayout row = new LinearLayout(this);
@@ -137,16 +137,16 @@ public class TransferActivity extends Activity {
         card.addView(row);
         
         TextView desc = new TextView(this);
-        desc.setText("想要发送文件给你");
+        desc.setText(I18nManager.get("wants_to_send_you"));
         desc.setTextColor(colorSec);
         desc.setTextSize(13);
         desc.setPadding(0, dp(8), 0, 0);
         card.addView(desc);
         container.addView(card);
 
-        addSection("操作");
+        addSection(I18nManager.get("action"));
         
-        btnAccept = createButton("✔ 接受", 0xFF388E3C, 0xFFFFFFFF);
+        btnAccept = createButton("✔ " + I18nManager.get("accept"), 0xFF388E3C, 0xFFFFFFFF);
         LinearLayout.LayoutParams accLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         accLp.bottomMargin = dp(8);
         btnAccept.setLayoutParams(accLp);
@@ -161,7 +161,7 @@ public class TransferActivity extends Activity {
         });
         container.addView(btnAccept);
 
-        btnReject = createButton("✕ 拒绝", 0xFFD32F2F, 0xFFFFFFFF);
+        btnReject = createButton("✕ " + I18nManager.get("reject"), 0xFFD32F2F, 0xFFFFFFFF);
         LinearLayout.LayoutParams rejLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         rejLp.bottomMargin = dp(8);
         btnReject.setLayoutParams(rejLp);
@@ -176,15 +176,15 @@ public class TransferActivity extends Activity {
 
     private void buildTransferProgressUI(Intent intent) {
         if (mode == 2) {
-            addMainTitle("正在接收");
+            addMainTitle(I18nManager.get("receiving_title"));
         } else {
-            addMainTitle("正在发送");
+            addMainTitle(I18nManager.get("sending_title"));
         }
 
         targetDevice = (Device) intent.getSerializableExtra("device");
         filePaths = intent.getStringArrayListExtra("files");
 
-        addSection("当前文件");
+        addSection(I18nManager.get("current_file"));
         
         LinearLayout fileCard = createPillCard();
         LinearLayout topRow = new LinearLayout(this);
@@ -192,7 +192,7 @@ public class TransferActivity extends Activity {
         topRow.setGravity(Gravity.CENTER_VERTICAL);
 
         tvFileName = new TextView(this);
-        tvFileName.setText("准备中...");
+        tvFileName.setText(I18nManager.get("preparing"));
         tvFileName.setTextColor(colorMain);
         tvFileName.setTextSize(15);
         tvFileName.setSingleLine(true);
@@ -207,7 +207,7 @@ public class TransferActivity extends Activity {
         fileCard.addView(topRow);
 
         tvFileStatus = new TextView(this);
-        tvFileStatus.setText("传输中...");
+        tvFileStatus.setText(I18nManager.get("transferring"));
         tvFileStatus.setTextColor(colorAccent);
         tvFileStatus.setTextSize(12);
         tvFileStatus.setPadding(0, dp(8), 0, dp(8));
@@ -222,7 +222,7 @@ public class TransferActivity extends Activity {
         fileCard.addView(pbFile);
         container.addView(fileCard);
 
-        addSection("总进度");
+        addSection(I18nManager.get("total_progress"));
         
         LinearLayout totalCard = createPillCard();
         LinearLayout dataRow = new LinearLayout(this);
@@ -234,7 +234,7 @@ public class TransferActivity extends Activity {
         infoCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
         tvSpeedSize = new TextView(this);
-        tvSpeedSize.setText("计算中...");
+        tvSpeedSize.setText(I18nManager.get("calculating"));
         tvSpeedSize.setTextColor(colorSec);
         tvSpeedSize.setTextSize(12);
         tvSpeedSize.setLineSpacing(0, 1.2f);
@@ -260,9 +260,9 @@ public class TransferActivity extends Activity {
         
         container.addView(totalCard);
 
-        addSection("操作");
+        addSection(I18nManager.get("action"));
         
-        btnCancel = createButton("✕ 取消", isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFFD32F2F);
+        btnCancel = createButton("✕ " + I18nManager.get("cancel"), isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFFD32F2F);
         LinearLayout.LayoutParams cancelLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         cancelLp.bottomMargin = dp(8);
         btnCancel.setLayoutParams(cancelLp);
@@ -271,7 +271,7 @@ public class TransferActivity extends Activity {
         });
         container.addView(btnCancel);
 
-        btnDone = createButton("✔ 完成", 0xFF388E3C, 0xFFFFFFFF);
+        btnDone = createButton("✔ " + I18nManager.get("completed"), 0xFF388E3C, 0xFFFFFFFF);
         LinearLayout.LayoutParams doneLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         doneLp.bottomMargin = dp(8);
         btnDone.setLayoutParams(doneLp);
@@ -438,7 +438,7 @@ public class TransferActivity extends Activity {
             pbFile.setProgress(pct);
             
             tvPercent.setText(pct + "%");
-            tvSpeedSize.setText("大小: " + formatSize(current) + " / " + formatSize(total) + "\n速度: " + speedStr);
+            tvSpeedSize.setText(I18nManager.get("size") + ": " + formatSize(current) + " / " + formatSize(total) + "\n速度: " + speedStr);
         }
     }
 
@@ -455,14 +455,14 @@ public class TransferActivity extends Activity {
         btnDone.setVisibility(View.VISIBLE);
         
         if (ok) {
-            addMainTitle(mode == 1 || mode == 2 ? "接收完成" : "发送完成");
-            tvFileStatus.setText(mode == 1 || mode == 2 ? "已保存到本地" : "传输成功");
+            addMainTitle(mode == 1 || mode == 2 ? I18nManager.get("recv_completed") : I18nManager.get("send_completed"));
+            tvFileStatus.setText(mode == 1 || mode == 2 ? I18nManager.get("saved_to_local") : I18nManager.get("transfer_success"));
             tvFileStatus.setTextColor(0xFF388E3C);
             pbTotal.setProgress(100);
             pbFile.setProgress(100);
         } else {
-            addMainTitle("传输失败");
-            tvFileStatus.setText("已中断");
+            addMainTitle(I18nManager.get("send_failed"));
+            tvFileStatus.setText(I18nManager.get("interrupted"));
             tvFileStatus.setTextColor(0xFFD32F2F);
         }
     }

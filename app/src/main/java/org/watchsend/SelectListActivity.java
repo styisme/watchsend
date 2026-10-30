@@ -105,7 +105,7 @@ public class SelectListActivity extends Activity {
             final Uri uri = uris.get(i);
             final int index = i;
             
-            String name = "未知文件";
+            String name = I18nManager.get("unknown_file");
             long size = 0;
             
             try {
@@ -129,7 +129,7 @@ public class SelectListActivity extends Activity {
                 if (path != null) {
                     File f = new File(path);
                     if (f.exists()) {
-                        if ("未知文件".equals(name)) name = f.getName();
+                        if (I18nManager.get("unknown_file").equals(name)) name = f.getName();
                         size = f.length();
                     }
                 }
@@ -172,7 +172,7 @@ public class SelectListActivity extends Activity {
 
             TextView itemSize = new TextView(this);
             String sizeStr = size > 1024*1024 ? String.format(Locale.US, "%.1f MB", size/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", size/1024.0);
-            itemSize.setText(size > 0 ? sizeStr : "未知");
+            itemSize.setText(size > 0 ? sizeStr : I18nManager.get("unknown_size"));
             itemSize.setTextSize(12);
             itemSize.setTextColor(colorSec);
             itemSize.setPadding(0, dp(2), 0, 0);
@@ -197,7 +197,7 @@ public class SelectListActivity extends Activity {
         // 填完总大小后，更新顶部卡片
         String totalSizeStr = totalSize > 1024*1024 ? String.format(Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(Locale.US, "%.1f KB", totalSize/1024.0);
         TextView tvTotal = new TextView(this);
-        tvTotal.setText("共 " + (totalSize > 0 ? totalSizeStr : "未知"));
+        tvTotal.setText("共 " + (totalSize > 0 ? totalSizeStr : I18nManager.get("unknown_size")));
         tvTotal.setTextSize(14);
         tvTotal.setTextColor(colorSec);
         headerCard.addView(tvTotal);
@@ -219,7 +219,7 @@ public class SelectListActivity extends Activity {
         btnClearAll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MainActivity.pendingUris.clear();
-                Toast.makeText(SelectListActivity.this, "已清空所有文件", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SelectListActivity.this, I18nManager.get("all_deleted"), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -227,7 +227,7 @@ public class SelectListActivity extends Activity {
 
         // 新增：返回按钮
         Button btnReturn = new Button(this);
-        btnReturn.setText("返回上一页");
+        btnReturn.setText(I18nManager.get("back_prev"));
         btnReturn.setTextColor(colorAccent);
         btnReturn.setTextSize(14);
         btnReturn.setBackgroundResource(bgSec);

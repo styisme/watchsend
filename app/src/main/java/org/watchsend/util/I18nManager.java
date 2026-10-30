@@ -123,6 +123,51 @@ public class I18nManager {
         zh.put("update_success", "更新成功"); zh.put("export_ok", "导出成功"); zh.put("import_ok", "导入成功");
         zh.put("view_whitelist", "查看白名单"); zh.put("view_blacklist", "查看黑名单"); zh.put("clear_all", "清空所有");
         zh.put("list_empty", "名单为空");
+
+        zh.put("recv_request", "接收请求"); zh.put("from_device", "来自设备"); zh.put("wants_to_send_you", "想要发送文件给你");
+        zh.put("action", "操作"); zh.put("current_file", "当前文件"); zh.put("preparing", "准备中...");
+        zh.put("transferring", "传输中..."); zh.put("calculating", "计算中..."); zh.put("saved_to_local", "已保存到本地");
+        zh.put("transfer_success", "传输成功"); zh.put("local_ipv6", "本机 IPv6"); zh.put("getting", "正在获取...");
+        zh.put("not_probed", "未探测"); zh.put("probing", "探测中..."); zh.put("nat_addr", "NAT 公网地址");
+        zh.put("input_direct_ip", "对方公网 IP:端口"); zh.put("selected_prefix", "已选 "); zh.put("files_suffix", " 个文件\n");
+        zh.put("select_file_gen_pin", "选择文件并生成密码"); zh.put("pin_prefix", "密码: "); zh.put("toast_input_ip", "请输入对方公网IP和端口");
+        zh.put("toast_input_pin", "请输入6位纯数字密码"); zh.put("ipv6_not_found", "未获取到公网 IPv6"); zh.put("packing", "正在打包文件...");
+        zh.put("packed_connecting", "打包完成，正在建立通道..."); zh.put("sending_prefix", "发送中... "); zh.put("send_done", "发送完成！");
+        zh.put("failed_prefix", "失败: "); zh.put("direct_self", "直连失败: 无法通过公网IP直连本机。"); zh.put("preparing_direct", "准备直连...");
+        zh.put("read_failed", "读取失败"); zh.put("prepare_failed", "准备失败"); zh.put("direct_sending", "正在直连发送...");
+        zh.put("sending_percent", "发送中 "); zh.put("direct_send_done", "直连发送完成！"); zh.put("direct_failed", "直连失败: ");
+        zh.put("connecting", "正在连接..."); zh.put("receiving_prefix", "接收中... "); zh.put("recv_unzipping", "接收完成，解压中...");
+        zh.put("recv_done", "接收完成！已保存到下载。"); zh.put("recv_failed", "接收失败: ");
+
+
+        zh.put("round_screen_opt", "圆屏优化"); zh.put("round_screen_opt_desc", "防止内容被圆形边缘遮挡");
+        zh.put("block_system_back", "拦截系统返回"); zh.put("block_system_back_desc", "防止与滑动返回冲突");
+        zh.put("dark_mode_desc", "黑白主题切换"); zh.put("transfer_settings", "传输");
+        zh.put("auto_save_desc", "免确认直接接收"); zh.put("auto_whitelist_desc", "仅限白名单设备");
+        zh.put("save_album_desc", "图片与视频放入图库"); zh.put("save_history_desc", "记录收发日志");
+        zh.put("use_pin_desc", "增强接收安全性"); zh.put("https_enable_desc", "可能影响旧设备兼容性");
+        zh.put("web_enable_desc", "浏览器互传"); zh.put("auto_start_desc", "后台常驻");
+        zh.put("receive_notif_desc", "需系统权限"); zh.put("port_settings", "端口设置");
+        zh.put("timeout_settings", "搜索超时"); zh.put("device_security", "设备与安全");
+        zh.put("manage_acl_desc", "管理已信任设备"); zh.put("ui_scale_dialog_title", "无级缩放 UI");
+        zh.put("about_title", "关于"); zh.put("pin_title_dialog", "修改 PIN");
+        zh.put("port_dialog_title", "端口"); zh.put("timeout_dialog_title", "搜索超时(ms)");
+        zh.put("filter_dialog_title", "拦截后缀"); zh.put("device_name_title", "设备名称");
+        zh.put("lang_title", "语言设置"); zh.put("acl_dialog_title", "黑白名单");
+        zh.put("whitelist_title", "白名单"); zh.put("blacklist_title", "黑名单");
+        zh.put("about_desc_watchsend", "作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2");
+    
+
+        zh.put("start_service", "启动"); zh.put("stop_service", "停止"); zh.put("devices_nearby", "附近的设备");
+        zh.put("no_device_scan", "暂无设备，请点击扫描"); zh.put("send_file", "发送文件"); zh.put("select_title_desc", "选择内容");
+        zh.put("device", "设备"); zh.put("file", "文件"); zh.put("media", "媒体"); zh.put("app", "应用");
+        zh.put("folder", "文件夹"); zh.put("text", "文本"); zh.put("clipboard", "剪贴板"); zh.put("record", "接收记录");
+        zh.put("return_to_devices", "↩ 返回设备"); zh.put("no_record", "暂无记录"); zh.put("file_not_found", "文件不存在");
+        zh.put("cannot_open", "无法打开"); zh.put("no_app", "无应用"); zh.put("empty_folder", "空文件夹");
+        zh.put("add_files", "追加文件"); zh.put("select_folder_send", ">> [发送此文件夹] <<"); zh.put("unknown_file", "未知文件");
+        zh.put("files_count_prefix", "文件: "); zh.put("size_label", "大小: "); zh.put("clear_all_files", "全部删除");
+        zh.put("back_prev", "返回上一页"); zh.put("save_to_dir", "保存目录: "); zh.put("ip_prefix", "IP ");
+    
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -177,6 +222,51 @@ dict.put("zh", zh);
         zhTW.put("clipboard_empty", "剪貼簿為空");
         zhTW.put("folder_prefix", "[資料夾] "); zhTW.put("empty_folder", "空資料夾");
         zhTW.put("send_folder", ">> [傳送此資料夾] <<"); zhTW.put("manual_device", "手動設備");
+
+        zhTW.put("recv_request", "接收請求"); zhTW.put("from_device", "來自設備"); zhTW.put("wants_to_send_you", "想要傳送檔案給你");
+        zhTW.put("action", "操作"); zhTW.put("current_file", "當前檔案"); zhTW.put("preparing", "準備中...");
+        zhTW.put("transferring", "傳輸中..."); zhTW.put("calculating", "計算中..."); zhTW.put("saved_to_local", "已儲存到本機");
+        zhTW.put("transfer_success", "傳輸成功"); zhTW.put("local_ipv6", "本機 IPv6"); zhTW.put("getting", "正在取得...");
+        zhTW.put("not_probed", "未探測"); zhTW.put("probing", "探測中..."); zhTW.put("nat_addr", "NAT 公網位址");
+        zhTW.put("input_direct_ip", "對方公網 IP:連接埠"); zhTW.put("selected_prefix", "已選 "); zhTW.put("files_suffix", "個檔案\n");
+        zhTW.put("select_file_gen_pin", "選擇檔案並產生密碼"); zhTW.put("pin_prefix", "密碼: "); zhTW.put("toast_input_ip", "請輸入對方公網IP和連接埠");
+        zhTW.put("toast_input_pin", "請輸入6位純數字密碼"); zhTW.put("ipv6_not_found", "未取得公網 IPv6"); zhTW.put("packing", "正在打包檔案...");
+        zhTW.put("packed_connecting", "打包完成，正在建立通道..."); zhTW.put("sending_prefix", "傳送中... "); zhTW.put("send_done", "傳送完成！");
+        zhTW.put("failed_prefix", "失敗: "); zhTW.put("direct_self", "直連失敗: 無法透過公網IP直連本機。"); zhTW.put("preparing_direct", "準備直連...");
+        zhTW.put("read_failed", "讀取失敗"); zhTW.put("prepare_failed", "準備失敗"); zhTW.put("direct_sending", "正在直連傳送...");
+        zhTW.put("sending_percent", "傳送中 "); zhTW.put("direct_send_done", "直連傳送完成！"); zhTW.put("direct_failed", "直連失敗: ");
+        zhTW.put("connecting", "正在連線..."); zhTW.put("receiving_prefix", "接收中... "); zhTW.put("recv_unzipping", "接收完成，解壓中...");
+        zhTW.put("recv_done", "接收完成！已儲存到下載。"); zhTW.put("recv_failed", "接收失敗: ");
+    
+
+        zhTW.put("round_screen_opt", "圓屏優化"); zhTW.put("round_screen_opt_desc", "防止內容被圓形邊緣遮擋");
+        zhTW.put("block_system_back", "攔截系統返回"); zhTW.put("block_system_back_desc", "防止與滑動返回衝突");
+        zhTW.put("dark_mode_desc", "黑白主題切換"); zhTW.put("transfer_settings", "傳輸");
+        zhTW.put("auto_save_desc", "免確認直接接收"); zhTW.put("auto_whitelist_desc", "僅限白名單設備");
+        zhTW.put("save_album_desc", "圖片與影片放入圖庫"); zhTW.put("save_history_desc", "記錄收發日誌");
+        zhTW.put("use_pin_desc", "增強接收安全性"); zhTW.put("https_enable_desc", "可能影響舊設備相容性");
+        zhTW.put("web_enable_desc", "瀏覽器互傳"); zhTW.put("auto_start_desc", "後台常駐");
+        zhTW.put("receive_notif_desc", "需系統權限"); zhTW.put("port_settings", "連接埠設定");
+        zhTW.put("timeout_settings", "搜尋逾時"); zhTW.put("device_security", "設備與安全");
+        zhTW.put("manage_acl_desc", "管理已信任設備"); zhTW.put("ui_scale_dialog_title", "無級縮放 UI");
+        zhTW.put("about_title", "關於"); zhTW.put("pin_title_dialog", "修改 PIN");
+        zhTW.put("port_dialog_title", "連接埠"); zhTW.put("timeout_dialog_title", "搜尋逾時(ms)");
+        zhTW.put("filter_dialog_title", "攔截副檔名"); zhTW.put("device_name_title", "設備名稱");
+        zhTW.put("lang_title", "語言設定"); zhTW.put("acl_dialog_title", "黑白名單");
+        zhTW.put("whitelist_title", "白名單"); zhTW.put("blacklist_title", "黑名單");
+        zhTW.put("about_desc_watchsend", "作者: styisme\nAI 輔助生成\nMIT License\n\n相容 LocalSend v2.2");
+    
+
+        zhTW.put("start_service", "啟動"); zhTW.put("stop_service", "停止"); zhTW.put("devices_nearby", "附近的設備");
+        zhTW.put("no_device_scan", "暫無設備，請點擊掃描"); zhTW.put("send_file", "傳送檔案"); zhTW.put("select_title_desc", "選擇內容");
+        zhTW.put("device", "設備"); zhTW.put("file", "檔案"); zhTW.put("media", "媒體"); zhTW.put("app", "應用");
+        zhTW.put("folder", "資料夾"); zhTW.put("text", "文字"); zhTW.put("clipboard", "剪貼簿"); zhTW.put("record", "接收記錄");
+        zhTW.put("return_to_devices", "↩ 返回設備"); zhTW.put("no_record", "暫無記錄"); zhTW.put("file_not_found", "檔案不存在");
+        zhTW.put("cannot_open", "無法開啟"); zhTW.put("no_app", "無應用"); zhTW.put("empty_folder", "空資料夾");
+        zhTW.put("add_files", "追加檔案"); zhTW.put("select_folder_send", ">> [傳送此資料夾] <<"); zhTW.put("unknown_file", "未知檔案");
+        zhTW.put("files_count_prefix", "檔案: "); zhTW.put("size_label", "大小: "); zhTW.put("clear_all_files", "全部刪除");
+        zhTW.put("back_prev", "返回上一頁"); zhTW.put("save_to_dir", "儲存目錄: "); zhTW.put("ip_prefix", "IP ");
+    
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -292,6 +382,51 @@ dict.put("zh_TW", zhTW);
         en.put("update_success", "Updated"); en.put("export_ok", "Exported"); en.put("import_ok", "Imported");
         en.put("view_whitelist", "View Whitelist"); en.put("view_blacklist", "View Blacklist"); en.put("clear_all", "Clear all");
         en.put("list_empty", "List is empty");
+
+        en.put("recv_request", "Receive Request"); en.put("from_device", "From Device"); en.put("wants_to_send_you", "Wants to send you files");
+        en.put("action", "Action"); en.put("current_file", "Current File"); en.put("preparing", "Preparing...");
+        en.put("transferring", "Transferring..."); en.put("calculating", "Calculating..."); en.put("saved_to_local", "Saved locally");
+        en.put("transfer_success", "Success"); en.put("local_ipv6", "Local IPv6"); en.put("getting", "Getting...");
+        en.put("not_probed", "Not probed"); en.put("probing", "Probing..."); en.put("nat_addr", "NAT Addr");
+        en.put("input_direct_ip", "Peer IP:Port"); en.put("selected_prefix", "Selected "); en.put("files_suffix", " files\n");
+        en.put("select_file_gen_pin", "Select File & Gen PIN"); en.put("pin_prefix", "PIN: "); en.put("toast_input_ip", "Please enter peer IP and port");
+        en.put("toast_input_pin", "Please enter 6-digit PIN"); en.put("ipv6_not_found", "Public IPv6 not found"); en.put("packing", "Packing files...");
+        en.put("packed_connecting", "Packed, connecting..."); en.put("sending_prefix", "Sending... "); en.put("send_done", "Sent!");
+        en.put("failed_prefix", "Failed: "); en.put("direct_self", "Cannot connect to self."); en.put("preparing_direct", "Preparing direct...");
+        en.put("read_failed", "Read failed"); en.put("prepare_failed", "Prepare failed"); en.put("direct_sending", "Direct sending...");
+        en.put("sending_percent", "Sending "); en.put("direct_send_done", "Direct send complete!"); en.put("direct_failed", "Direct failed: ");
+        en.put("connecting", "Connecting..."); en.put("receiving_prefix", "Receiving... "); en.put("recv_unzipping", "Received, extracting...");
+        en.put("recv_done", "Received! Saved to Downloads."); en.put("recv_failed", "Receive failed: ");
+
+
+        en.put("round_screen_opt", "Round Screen Opt"); en.put("round_screen_opt_desc", "Prevent edge cutoff");
+        en.put("block_system_back", "Block System Back"); en.put("block_system_back_desc", "Prevent gesture conflict");
+        en.put("dark_mode_desc", "Black/White theme"); en.put("transfer_settings", "Transfer");
+        en.put("auto_save_desc", "Auto accept files"); en.put("auto_whitelist_desc", "Only whitelisted devices");
+        en.put("save_album_desc", "Save pics/vids to gallery"); en.put("save_history_desc", "Record transfer logs");
+        en.put("use_pin_desc", "Enhance receive security"); en.put("https_enable_desc", "Might affect old devices");
+        en.put("web_enable_desc", "Browser transfer"); en.put("auto_start_desc", "Run in background");
+        en.put("receive_notif_desc", "Requires system permission"); en.put("port_settings", "Port Settings");
+        en.put("timeout_settings", "Search Timeout"); en.put("device_security", "Device & Security");
+        en.put("manage_acl_desc", "Manage trusted devices"); en.put("ui_scale_dialog_title", "Scale UI");
+        en.put("about_title", "About"); en.put("pin_title_dialog", "Modify PIN");
+        en.put("port_dialog_title", "Port"); en.put("timeout_dialog_title", "Timeout(ms)");
+        en.put("filter_dialog_title", "Block Exts"); en.put("device_name_title", "Device Name");
+        en.put("lang_title", "Language Settings"); en.put("acl_dialog_title", "Whitelist/Blacklist");
+        en.put("whitelist_title", "Whitelist"); en.put("blacklist_title", "Blacklist");
+        en.put("about_desc_watchsend", "Author: styisme\nAI Assisted\nMIT License\n\nCompatible with LocalSend v2.2");
+    
+
+        en.put("start_service", "Start"); en.put("stop_service", "Stop"); en.put("devices_nearby", "Nearby Devices");
+        en.put("no_device_scan", "No devices, tap to scan"); en.put("send_file", "Send File"); en.put("select_title_desc", "Select Content");
+        en.put("device", "Device"); en.put("file", "File"); en.put("media", "Media"); en.put("app", "App");
+        en.put("folder", "Folder"); en.put("text", "Text"); en.put("clipboard", "Clipboard"); en.put("record", "Receive History");
+        en.put("return_to_devices", "↩ Back to Devices"); en.put("no_record", "No records"); en.put("file_not_found", "File not found");
+        en.put("cannot_open", "Cannot open"); en.put("no_app", "No apps"); en.put("empty_folder", "Empty folder");
+        en.put("add_files", "Append Files"); en.put("select_folder_send", ">> [Send this folder] <<"); en.put("unknown_file", "Unknown file");
+        en.put("files_count_prefix", "Files: "); en.put("size_label", "Size: "); en.put("clear_all_files", "Delete All");
+        en.put("back_prev", "Go Back"); en.put("save_to_dir", "Save to: "); en.put("ip_prefix", "IP ");
+    
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -350,6 +485,51 @@ dict.put("en", en);
         ja.put("language", "言語"); ja.put("anim", "UIアニメーション");
         ja.put("set_name", "デバイス名"); ja.put("backup", "バックアップ / 復元");
         ja.put("about", "WatchSendについて"); ja.put("manage_acl", "ホワイト/ブラックリスト管理");
+
+        ja.put("recv_request", "受信リクエスト"); ja.put("from_device", "送信元デバイス"); ja.put("wants_to_send_you", "ファイルを送信したい");
+        ja.put("action", "操作"); ja.put("current_file", "現在のファイル"); ja.put("preparing", "準備中...");
+        ja.put("transferring", "転送中..."); ja.put("calculating", "計算中..."); ja.put("saved_to_local", "ローカルに保存されました");
+        ja.put("transfer_success", "転送成功"); ja.put("local_ipv6", "ローカル IPv6"); ja.put("getting", "取得中...");
+        ja.put("not_probed", "未プローブ"); ja.put("probing", "プローブ中..."); ja.put("nat_addr", "NAT パブリックアドレス");
+        ja.put("input_direct_ip", "相手のIP:ポート"); ja.put("selected_prefix", "選択済み "); ja.put("files_suffix", "個のファイル\n");
+        ja.put("select_file_gen_pin", "ファイルを選択してPINを生成"); ja.put("pin_prefix", "PIN: "); ja.put("toast_input_ip", "相手のIPとポートを入力してください");
+        ja.put("toast_input_pin", "6桁の数字PINを入力してください"); ja.put("ipv6_not_found", "パブリックIPv6が見つかりません"); ja.put("packing", "パッキング中...");
+        ja.put("packed_connecting", "パッキング完了、接続中..."); ja.put("sending_prefix", "送信中... "); ja.put("send_done", "送信完了！");
+        ja.put("failed_prefix", "失敗: "); ja.put("direct_self", "直接接続失敗: 自分自身には接続できません。"); ja.put("preparing_direct", "直接接続の準備中...");
+        ja.put("read_failed", "読み取り失敗"); ja.put("prepare_failed", "準備失敗"); ja.put("direct_sending", "直接送信中...");
+        ja.put("sending_percent", "送信中 "); ja.put("direct_send_done", "直接送信完了！"); ja.put("direct_failed", "直接送信失敗: ");
+        ja.put("connecting", "接続中..."); ja.put("receiving_prefix", "受信中... "); ja.put("recv_unzipping", "受信完了、解凍中...");
+        ja.put("recv_done", "受信完了！ダウンロードに保存しました。"); ja.put("recv_failed", "受信失敗: ");
+    
+
+        ja.put("round_screen_opt", "丸型画面最適化"); ja.put("round_screen_opt_desc", "端の見切れを防ぐ");
+        ja.put("block_system_back", "システム戻るをブロック"); ja.put("block_system_back_desc", "スワイプとの競合を防ぐ");
+        ja.put("dark_mode_desc", "白黒テーマ切替"); ja.put("transfer_settings", "転送");
+        ja.put("auto_save_desc", "自動的に受け入れる"); ja.put("auto_whitelist_desc", "ホワイトリストのみ");
+        ja.put("save_album_desc", "ギャラリーに保存"); ja.put("save_history_desc", "履歴を記録する");
+        ja.put("use_pin_desc", "セキュリティを強化"); ja.put("https_enable_desc", "古い端末に影響する可能性");
+        ja.put("web_enable_desc", "ブラウザ転送"); ja.put("auto_start_desc", "バックグラウンド実行");
+        ja.put("receive_notif_desc", "システム権限が必要"); ja.put("port_settings", "ポート設定");
+        ja.put("timeout_settings", "検索タイムアウト"); ja.put("device_security", "デバイスとセキュリティ");
+        ja.put("manage_acl_desc", "信頼済みデバイスの管理"); ja.put("ui_scale_dialog_title", "UIスケール");
+        ja.put("about_title", "情報"); ja.put("pin_title_dialog", "PIN変更");
+        ja.put("port_dialog_title", "ポート"); ja.put("timeout_dialog_title", "タイムアウト(ms)");
+        ja.put("filter_dialog_title", "拡張子ブロック"); ja.put("device_name_title", "デバイス名");
+        ja.put("lang_title", "言語設定"); ja.put("acl_dialog_title", "ホワイト/ブラックリスト");
+        ja.put("whitelist_title", "ホワイトリスト"); ja.put("blacklist_title", "ブラックリスト");
+        ja.put("about_desc_watchsend", "作者: styisme\nAI アシスト\nMIT License\n\nLocalSend v2.2 互換");
+    
+
+        ja.put("start_service", "開始"); ja.put("stop_service", "停止"); ja.put("devices_nearby", "近くのデバイス");
+        ja.put("no_device_scan", "デバイスなし、スキャンしてください"); ja.put("send_file", "ファイル送信"); ja.put("select_title_desc", "コンテンツを選択");
+        ja.put("device", "デバイス"); ja.put("file", "ファイル"); ja.put("media", "メディア"); ja.put("app", "アプリ");
+        ja.put("folder", "フォルダ"); ja.put("text", "テキスト"); ja.put("clipboard", "クリップボード"); ja.put("record", "受信履歴");
+        ja.put("return_to_devices", "↩ デバイスに戻る"); ja.put("no_record", "履歴なし"); ja.put("file_not_found", "ファイルが見つかりません");
+        ja.put("cannot_open", "開けません"); ja.put("no_app", "アプリなし"); ja.put("empty_folder", "空のフォルダ");
+        ja.put("add_files", "ファイルを追加"); ja.put("select_folder_send", ">> [このフォルダを送信] <<"); ja.put("unknown_file", "不明なファイル");
+        ja.put("files_count_prefix", "ファイル: "); ja.put("size_label", "サイズ: "); ja.put("clear_all_files", "すべて削除");
+        ja.put("back_prev", "戻る"); ja.put("save_to_dir", "保存先: "); ja.put("ip_prefix", "IP ");
+    
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -408,6 +588,51 @@ dict.put("ja", ja);
         ko.put("language", "언어"); ko.put("anim", "UI 애니메이션");
         ko.put("set_name", "기기 이름"); ko.put("backup", "백업 / 복원");
         ko.put("about", "WatchSend 정보"); ko.put("manage_acl", "화이트/블랙리스트 관리");
+
+        ko.put("recv_request", "수신 요청"); ko.put("from_device", "보낸 기기"); ko.put("wants_to_send_you", "파일을 보내려 합니다");
+        ko.put("action", "작업"); ko.put("current_file", "현재 파일"); ko.put("preparing", "준비 중...");
+        ko.put("transferring", "전송 중..."); ko.put("calculating", "계산 중..."); ko.put("saved_to_local", "로컬에 저장됨");
+        ko.put("transfer_success", "전송 성공"); ko.put("local_ipv6", "로컬 IPv6"); ko.put("getting", "가져오는 중...");
+        ko.put("not_probed", "프로브 안 됨"); ko.put("probing", "프로브 중..."); ko.put("nat_addr", "NAT 공인 주소");
+        ko.put("input_direct_ip", "상대 IP:포트"); ko.put("selected_prefix", "선택됨 "); ko.put("files_suffix", "개 파일\n");
+        ko.put("select_file_gen_pin", "파일 선택 및 PIN 생성"); ko.put("pin_prefix", "PIN: "); ko.put("toast_input_ip", "상대 IP와 포트를 입력하세요");
+        ko.put("toast_input_pin", "6자리 숫자 PIN을 입력하세요"); ko.put("ipv6_not_found", "공인 IPv6를 찾을 수 없음"); ko.put("packing", "파일 패킹 중...");
+        ko.put("packed_connecting", "패킹 완료, 연결 중..."); ko.put("sending_prefix", "전송 중... "); ko.put("send_done", "전송 완료!");
+        ko.put("failed_prefix", "실패: "); ko.put("direct_self", "직접 연결 실패: 자신에게 연결할 수 없습니다."); ko.put("preparing_direct", "직접 연결 준비 중...");
+        ko.put("read_failed", "읽기 실패"); ko.put("prepare_failed", "준비 실패"); ko.put("direct_sending", "직접 전송 중...");
+        ko.put("sending_percent", "전송 중 "); ko.put("direct_send_done", "직접 전송 완료!"); ko.put("direct_failed", "직접 전송 실패: ");
+        ko.put("connecting", "연결 중..."); ko.put("receiving_prefix", "수신 중... "); ko.put("recv_unzipping", "수신 완료, 압축 해제 중...");
+        ko.put("recv_done", "수신 완료! 다운로드에 저장됨."); ko.put("recv_failed", "수신 실패: ");
+    
+
+        ko.put("round_screen_opt", "원형 화면 최적화"); ko.put("round_screen_opt_desc", "가장자리 잘림 방지");
+        ko.put("block_system_back", "시스템 뒤로 가기 차단"); ko.put("block_system_back_desc", "스와이프 충돌 방지");
+        ko.put("dark_mode_desc", "흑백 테마 전환"); ko.put("transfer_settings", "전송");
+        ko.put("auto_save_desc", "자동으로 받기"); ko.put("auto_whitelist_desc", "화이트리스트만");
+        ko.put("save_album_desc", "갤러리에 저장"); ko.put("save_history_desc", "기록 저장");
+        ko.put("use_pin_desc", "보안 강화"); ko.put("https_enable_desc", "구형 기기에 영향 줄 수 있음");
+        ko.put("web_enable_desc", "브라우저 전송"); ko.put("auto_start_desc", "백그라운드 실행");
+        ko.put("receive_notif_desc", "시스템 권한 필요"); ko.put("port_settings", "포트 설정");
+        ko.put("timeout_settings", "검색 시간 초과"); ko.put("device_security", "기기 및 보안");
+        ko.put("manage_acl_desc", "신뢰할 수 있는 기기 관리"); ko.put("ui_scale_dialog_title", "UI 크기 조절");
+        ko.put("about_title", "정보"); ko.put("pin_title_dialog", "PIN 변경");
+        ko.put("port_dialog_title", "포트"); ko.put("timeout_dialog_title", "시간 초과(ms)");
+        ko.put("filter_dialog_title", "확장자 차단"); ko.put("device_name_title", "기기 이름");
+        ko.put("lang_title", "언어 설정"); ko.put("acl_dialog_title", "화이트/블랙리스트");
+        ko.put("whitelist_title", "화이트리스트"); ko.put("blacklist_title", "블랙리스트");
+        ko.put("about_desc_watchsend", "제작: styisme\nAI 지원\nMIT License\n\nLocalSend v2.2 호환");
+    
+
+        ko.put("start_service", "시작"); ko.put("stop_service", "중지"); ko.put("devices_nearby", "주변 기기");
+        ko.put("no_device_scan", "기기가 없습니다. 스캔하세요"); ko.put("send_file", "파일 보내기"); ko.put("select_title_desc", "콘텐츠 선택");
+        ko.put("device", "기기"); ko.put("file", "파일"); ko.put("media", "미디어"); ko.put("app", "앱");
+        ko.put("folder", "폴더"); ko.put("text", "텍스트"); ko.put("clipboard", "클립보드"); ko.put("record", "수신 기록");
+        ko.put("return_to_devices", "↩ 기기로 돌아가기"); ko.put("no_record", "기록 없음"); ko.put("file_not_found", "파일을 찾을 수 없음");
+        ko.put("cannot_open", "열 수 없음"); ko.put("no_app", "앱 없음"); ko.put("empty_folder", "빈 폴더");
+        ko.put("add_files", "파일 추가"); ko.put("select_folder_send", ">> [이 폴더 보내기] <<"); ko.put("unknown_file", "알 수 없는 파일");
+        ko.put("files_count_prefix", "파일: "); ko.put("size_label", "크기: "); ko.put("clear_all_files", "전체 삭제");
+        ko.put("back_prev", "뒤로 가기"); ko.put("save_to_dir", "저장 위치: "); ko.put("ip_prefix", "IP ");
+    
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -466,6 +691,51 @@ dict.put("ko", ko);
         de.put("language", "Sprache"); de.put("anim", "UI-Animation");
         de.put("set_name", "Gerätename"); de.put("backup", "Sicherung / Wiederherstellung");
         de.put("about", "Über WatchSend"); de.put("manage_acl", "Weiß-/Schwarzliste verwalten");
+
+        de.put("recv_request", "Empfangsanfrage"); de.put("from_device", "Von Gerät"); de.put("wants_to_send_you", "Möchte dir Dateien senden");
+        de.put("action", "Aktion"); de.put("current_file", "Aktuelle Datei"); de.put("preparing", "Vorbereiten...");
+        de.put("transferring", "Übertragen..."); de.put("calculating", "Berechnen..."); de.put("saved_to_local", "Lokal gespeichert");
+        de.put("transfer_success", "Erfolg"); de.put("local_ipv6", "Lokale IPv6"); de.put("getting", "Abrufen...");
+        de.put("not_probed", "Nicht geprüft"); de.put("probing", "Prüfen..."); de.put("nat_addr", "NAT-Adresse");
+        de.put("input_direct_ip", "Peer IP:Port"); de.put("selected_prefix", "Ausgewählt "); de.put("files_suffix", "Dateien\n");
+        de.put("select_file_gen_pin", "Datei wählen & PIN generieren"); de.put("pin_prefix", "PIN: "); de.put("toast_input_ip", "Bitte Peer-IP und Port eingeben");
+        de.put("toast_input_pin", "Bitte 6-stellige PIN eingeben"); de.put("ipv6_not_found", "Öffentliche IPv6 nicht gefunden"); de.put("packing", "Dateien packen...");
+        de.put("packed_connecting", "Gepackt, verbinden..."); de.put("sending_prefix", "Senden... "); de.put("send_done", "Gesendet!");
+        de.put("failed_prefix", "Fehlgeschlagen: "); de.put("direct_self", "Direktverbindung fehlgeschlagen: Nicht zu sich selbst."); de.put("preparing_direct", "Direktverbindung vorbereiten...");
+        de.put("read_failed", "Lesen fehlgeschlagen"); de.put("prepare_failed", "Vorbereiten fehlgeschlagen"); de.put("direct_sending", "Direkt senden...");
+        de.put("sending_percent", "Senden "); de.put("direct_send_done", "Direkt gesendet!"); de.put("direct_failed", "Direkt fehlgeschlagen: ");
+        de.put("connecting", "Verbinden..."); de.put("receiving_prefix", "Empfangen... "); de.put("recv_unzipping", "Empfangen, entpacken...");
+        de.put("recv_done", "Empfangen! In Downloads gespeichert."); de.put("recv_failed", "Empfangen fehlgeschlagen: ");
+    
+
+        de.put("round_screen_opt", "Rundbildschirm-Opt"); de.put("round_screen_opt_desc", "Randabschnitt verhindern");
+        de.put("block_system_back", "System-Zurück blockieren"); de.put("block_system_back_desc", "Gestenkonflikt verhindern");
+        de.put("dark_mode_desc", "Schwarz/Weiß-Thema"); de.put("transfer_settings", "Übertragung");
+        de.put("auto_save_desc", "Automatisch annehmen"); de.put("auto_whitelist_desc", "Nur Whitelist-Geräte");
+        de.put("save_album_desc", "In Galerie speichern"); de.put("save_history_desc", "Verlauf aufzeichnen");
+        de.put("use_pin_desc", "Sicherheit erhöhen"); de.put("https_enable_desc", "Kann alte Geräte beeinträchtigen");
+        de.put("web_enable_desc", "Browser-Übertragung"); de.put("auto_start_desc", "Im Hintergrund ausführen");
+        de.put("receive_notif_desc", "Systemberechtigung erforderlich"); de.put("port_settings", "Port-Einstellungen");
+        de.put("timeout_settings", "Such-Timeout"); de.put("device_security", "Gerät & Sicherheit");
+        de.put("manage_acl_desc", "Vertrauenswürdige Geräte verwalten"); de.put("ui_scale_dialog_title", "UI skalieren");
+        de.put("about_title", "Über"); de.put("pin_title_dialog", "PIN ändern");
+        de.put("port_dialog_title", "Port"); de.put("timeout_dialog_title", "Timeout(ms)");
+        de.put("filter_dialog_title", "Endungen blockieren"); de.put("device_name_title", "Gerätename");
+        de.put("lang_title", "Spracheinstellungen"); de.put("acl_dialog_title", "Weiß-/Schwarzliste");
+        de.put("whitelist_title", "Whitelist"); de.put("blacklist_title", "Blacklist");
+        de.put("about_desc_watchsend", "Autor: styisme\nKI-unterstützt\nMIT License\n\nKompatibel mit LocalSend v2.2");
+    
+
+        de.put("start_service", "Start"); de.put("stop_service", "Stopp"); de.put("devices_nearby", "Geräte in der Nähe");
+        de.put("no_device_scan", "Keine Geräte, scannen"); de.put("send_file", "Datei senden"); de.put("select_title_desc", "Inhalt wählen");
+        de.put("device", "Gerät"); de.put("file", "Datei"); de.put("media", "Medien"); de.put("app", "App");
+        de.put("folder", "Ordner"); de.put("text", "Text"); de.put("clipboard", "Zwischenablage"); de.put("record", "Empfangsverlauf");
+        de.put("return_to_devices", "↩ Zurück zu Geräten"); de.put("no_record", "Keine Einträge"); de.put("file_not_found", "Datei nicht gefunden");
+        de.put("cannot_open", "Kann nicht öffnen"); de.put("no_app", "Keine Apps"); de.put("empty_folder", "Leerer Ordner");
+        de.put("add_files", "Dateien anfügen"); de.put("select_folder_send", ">> [Diesen Ordner senden] <<"); de.put("unknown_file", "Unbekannte Datei");
+        de.put("files_count_prefix", "Dateien: "); de.put("size_label", "Größe: "); de.put("clear_all_files", "Alle löschen");
+        de.put("back_prev", "Zurück"); de.put("save_to_dir", "Speichern unter: "); de.put("ip_prefix", "IP ");
+    
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -524,6 +794,51 @@ dict.put("de", de);
         fr.put("language", "Langue"); fr.put("anim", "Animations");
         fr.put("set_name", "Nom de l'appareil"); fr.put("backup", "Sauvegarde / Restauration");
         fr.put("about", "À propos d'WatchSend"); fr.put("manage_acl", "Gérer liste blanche/noire");
+
+        fr.put("recv_request", "Demande de réception"); fr.put("from_device", "De l'appareil"); fr.put("wants_to_send_you", "Veut t'envoyer des fichiers");
+        fr.put("action", "Action"); fr.put("current_file", "Fichier actuel"); fr.put("preparing", "Préparation...");
+        fr.put("transferring", "Transfert..."); fr.put("calculating", "Calcul..."); fr.put("saved_to_local", "Sauvegardé localement");
+        fr.put("transfer_success", "Succès"); fr.put("local_ipv6", "IPv6 locale"); fr.put("getting", "Obtention...");
+        fr.put("not_probed", "Non sondé"); fr.put("probing", "Sondage..."); fr.put("nat_addr", "Adresse NAT");
+        fr.put("input_direct_ip", "IP:Port du pair"); fr.put("selected_prefix", "Sélectionné "); fr.put("files_suffix", "fichiers\n");
+        fr.put("select_file_gen_pin", "Choisir fichier & générer PIN"); fr.put("pin_prefix", "PIN : "); fr.put("toast_input_ip", "Entrez l'IP et le port du pair");
+        fr.put("toast_input_pin", "Entrez le PIN à 6 chiffres"); fr.put("ipv6_not_found", "IPv6 publique introuvable"); fr.put("packing", "Empaquetage...");
+        fr.put("packed_connecting", "Empaqueté, connexion..."); fr.put("sending_prefix", "Envoi... "); fr.put("send_done", "Envoyé !");
+        fr.put("failed_prefix", "Échec : "); fr.put("direct_self", "Échec direct : Impossible de se connecter à soi-même."); fr.put("preparing_direct", "Préparation directe...");
+        fr.put("read_failed", "Échec de lecture"); fr.put("prepare_failed", "Échec de préparation"); fr.put("direct_sending", "Envoi direct...");
+        fr.put("sending_percent", "Envoi "); fr.put("direct_send_done", "Envoi direct terminé !"); fr.put("direct_failed", "Échec direct : ");
+        fr.put("connecting", "Connexion..."); fr.put("receiving_prefix", "Réception... "); fr.put("recv_unzipping", "Reçu, extraction...");
+        fr.put("recv_done", "Reçu ! Sauvegardé dans Téléchargements."); fr.put("recv_failed", "Échec de réception : ");
+    
+
+        fr.put("round_screen_opt", "Opt. écran rond"); fr.put("round_screen_opt_desc", "Éviter la coupe des bords");
+        fr.put("block_system_back", "Bloquer retour système"); fr.put("block_system_back_desc", "Éviter les conflits de gestes");
+        fr.put("dark_mode_desc", "Thème noir/blanc"); fr.put("transfer_settings", "Transfert");
+        fr.put("auto_save_desc", "Accepter automatiquement"); fr.put("auto_whitelist_desc", "Appareils en liste blanche uniquement");
+        fr.put("save_album_desc", "Enregistrer dans la galerie"); fr.put("save_history_desc", "Enregistrer l'historique");
+        fr.put("use_pin_desc", "Améliorer la sécurité"); fr.put("https_enable_desc", "Peut affecter les anciens appareils");
+        fr.put("web_enable_desc", "Transfert par navigateur"); fr.put("auto_start_desc", "Exécuter en arrière-plan");
+        fr.put("receive_notif_desc", "Nécessite une autorisation système"); fr.put("port_settings", "Paramètres du port");
+        fr.put("timeout_settings", "Délai de recherche"); fr.put("device_security", "Appareil & Sécurité");
+        fr.put("manage_acl_desc", "Gérer les appareils de confiance"); fr.put("ui_scale_dialog_title", "Échelle de l'UI");
+        fr.put("about_title", "À propos"); fr.put("pin_title_dialog", "Modifier le PIN");
+        fr.put("port_dialog_title", "Port"); fr.put("timeout_dialog_title", "Délai(ms)");
+        fr.put("filter_dialog_title", "Bloquer les extensions"); fr.put("device_name_title", "Nom de l'appareil");
+        fr.put("lang_title", "Paramètres de langue"); fr.put("acl_dialog_title", "Liste blanche/noire");
+        fr.put("whitelist_title", "Liste blanche"); fr.put("blacklist_title", "Liste noire");
+        fr.put("about_desc_watchsend", "Auteur : styisme\nAssisté par IA\nMIT License\n\nCompatible avec LocalSend v2.2");
+    
+
+        fr.put("start_service", "Démarrer"); fr.put("stop_service", "Arrêter"); fr.put("devices_nearby", "Appareils à proximité");
+        fr.put("no_device_scan", "Aucun appareil, scannez"); fr.put("send_file", "Envoyer fichier"); fr.put("select_title_desc", "Sélectionner");
+        fr.put("device", "Appareil"); fr.put("file", "Fichier"); fr.put("media", "Média"); fr.put("app", "Appli");
+        fr.put("folder", "Dossier"); fr.put("text", "Texte"); fr.put("clipboard", "Presse-papiers"); fr.put("record", "Historique");
+        fr.put("return_to_devices", "↩ Retour aux appareils"); fr.put("no_record", "Aucun historique"); fr.put("file_not_found", "Fichier introuvable");
+        fr.put("cannot_open", "Impossible d'ouvrir"); fr.put("no_app", "Aucune appli"); fr.put("empty_folder", "Dossier vide");
+        fr.put("add_files", "Ajouter des fichiers"); fr.put("select_folder_send", ">> [Envoyer ce dossier] <<"); fr.put("unknown_file", "Fichier inconnu");
+        fr.put("files_count_prefix", "Fichiers : "); fr.put("size_label", "Taille : "); fr.put("clear_all_files", "Tout supprimer");
+        fr.put("back_prev", "Retour"); fr.put("save_to_dir", "Enregistrer dans : "); fr.put("ip_prefix", "IP ");
+    
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -582,6 +897,51 @@ dict.put("fr", fr);
         es.put("language", "Idioma"); es.put("anim", "Animaciones");
         es.put("set_name", "Nombre del dispositivo"); es.put("backup", "Copia / Restaurar");
         es.put("about", "Acerca de WatchSend"); es.put("manage_acl", "Gestionar lista blanca/negra");
+
+        es.put("recv_request", "Solicitud de recepción"); es.put("from_device", "Del dispositivo"); es.put("wants_to_send_you", "Quiere enviarte archivos");
+        es.put("action", "Acción"); es.put("current_file", "Archivo actual"); es.put("preparing", "Preparando...");
+        es.put("transferring", "Transfiriendo..."); es.put("calculating", "Calculando..."); es.put("saved_to_local", "Guardado localmente");
+        es.put("transfer_success", "Éxito"); es.put("local_ipv6", "IPv6 local"); es.put("getting", "Obteniendo...");
+        es.put("not_probed", "No probado"); es.put("probing", "Probando..."); es.put("nat_addr", "Dirección NAT");
+        es.put("input_direct_ip", "IP:Puerto del par"); es.put("selected_prefix", "Seleccionado "); es.put("files_suffix", "archivos\n");
+        es.put("select_file_gen_pin", "Elegir archivo y gen. PIN"); es.put("pin_prefix", "PIN: "); es.put("toast_input_ip", "Ingrese IP y puerto del par");
+        es.put("toast_input_pin", "Ingrese PIN de 6 dígitos"); es.put("ipv6_not_found", "IPv6 pública no encontrada"); es.put("packing", "Empaquetando...");
+        es.put("packed_connecting", "Empaquetado, conectando..."); es.put("sending_prefix", "Enviando... "); es.put("send_done", "¡Enviado!");
+        es.put("failed_prefix", "Falló: "); es.put("direct_self", "Falló directo: No se puede conectar a sí mismo."); es.put("preparing_direct", "Preparando directo...");
+        es.put("read_failed", "Falló lectura"); es.put("prepare_failed", "Falló preparación"); es.put("direct_sending", "Enviando directo...");
+        es.put("sending_percent", "Enviando "); es.put("direct_send_done", "¡Envío directo completado!"); es.put("direct_failed", "Falló directo: ");
+        es.put("connecting", "Conectando..."); es.put("receiving_prefix", "Recibiendo... "); es.put("recv_unzipping", "Recibido, extrayendo...");
+        es.put("recv_done", "¡Recibido! Guardado en Descargas."); es.put("recv_failed", "Falló recepción: ");
+    
+
+        es.put("round_screen_opt", "Opt. pantalla redonda"); es.put("round_screen_opt_desc", "Evitar corte de bordes");
+        es.put("block_system_back", "Bloquear retroceso"); es.put("block_system_back_desc", "Evitar conflicto de gestos");
+        es.put("dark_mode_desc", "Tema blanco/negro"); es.put("transfer_settings", "Transferencia");
+        es.put("auto_save_desc", "Aceptar archivos automáticamente"); es.put("auto_whitelist_desc", "Solo dispositivos de lista blanca");
+        es.put("save_album_desc", "Guardar en galería"); es.put("save_history_desc", "Guardar historial");
+        es.put("use_pin_desc", "Mejorar seguridad"); es.put("https_enable_desc", "Puede afectar a dispositivos antiguos");
+        es.put("web_enable_desc", "Transferencia por navegador"); es.put("auto_start_desc", "Ejecutar en segundo plano");
+        es.put("receive_notif_desc", "Requiere permiso del sistema"); es.put("port_settings", "Ajustes de puerto");
+        es.put("timeout_settings", "Tiempo de búsqueda"); es.put("device_security", "Dispositivo y Seguridad");
+        es.put("manage_acl_desc", "Gestionar dispositivos de confianza"); es.put("ui_scale_dialog_title", "Escala de IU");
+        es.put("about_title", "Acerca de"); es.put("pin_title_dialog", "Modificar PIN");
+        es.put("port_dialog_title", "Puerto"); es.put("timeout_dialog_title", "Tiempo(ms)");
+        es.put("filter_dialog_title", "Bloquear extensiones"); es.put("device_name_title", "Nombre del dispositivo");
+        es.put("lang_title", "Ajustes de idioma"); es.put("acl_dialog_title", "Lista blanca/negra");
+        es.put("whitelist_title", "Lista blanca"); es.put("blacklist_title", "Lista negra");
+        es.put("about_desc_watchsend", "Autor: styisme\nAsistido por IA\nMIT License\n\nCompatible con LocalSend v2.2");
+    
+
+        es.put("start_service", "Iniciar"); es.put("stop_service", "Detener"); es.put("devices_nearby", "Dispositivos cercanos");
+        es.put("no_device_scan", "Sin dispositivos, escanea"); es.put("send_file", "Enviar archivo"); es.put("select_title_desc", "Seleccionar");
+        es.put("device", "Dispositivo"); es.put("file", "Archivo"); es.put("media", "Multimedia"); es.put("app", "App");
+        es.put("folder", "Carpeta"); es.put("text", "Texto"); es.put("clipboard", "Portapapeles"); es.put("record", "Historial");
+        es.put("return_to_devices", "↩ Volver a disp."); es.put("no_record", "Sin registros"); es.put("file_not_found", "Archivo no encontrado");
+        es.put("cannot_open", "No se puede abrir"); es.put("no_app", "Sin apps"); es.put("empty_folder", "Carpeta vacía");
+        es.put("add_files", "Añadir archivos"); es.put("select_folder_send", ">> [Enviar esta carpeta] <<"); es.put("unknown_file", "Archivo desconocido");
+        es.put("files_count_prefix", "Archivos: "); es.put("size_label", "Tamaño: "); es.put("clear_all_files", "Borrar todo");
+        es.put("back_prev", "Volver"); es.put("save_to_dir", "Guardar en: "); es.put("ip_prefix", "IP ");
+    
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -640,6 +1000,51 @@ dict.put("es", es);
         ru.put("language", "Язык"); ru.put("anim", "Анимации");
         ru.put("set_name", "Имя устройства"); ru.put("backup", "Резервная копия");
         ru.put("about", "О WatchSend"); ru.put("manage_acl", "Управление белым/черным списком");
+
+        ru.put("recv_request", "Запрос на получение"); ru.put("from_device", "От устройства"); ru.put("wants_to_send_you", "Хочет отправить тебе файлы");
+        ru.put("action", "Действие"); ru.put("current_file", "Текущий файл"); ru.put("preparing", "Подготовка...");
+        ru.put("transferring", "Передача..."); ru.put("calculating", "Вычисление..."); ru.put("saved_to_local", "Сохранено локально");
+        ru.put("transfer_success", "Успех"); ru.put("local_ipv6", "Локальный IPv6"); ru.put("getting", "Получение...");
+        ru.put("not_probed", "Не проверено"); ru.put("probing", "Проверка..."); ru.put("nat_addr", "Адрес NAT");
+        ru.put("input_direct_ip", "IP:Порт пира"); ru.put("selected_prefix", "Выбрано "); ru.put("files_suffix", "файлов\n");
+        ru.put("select_file_gen_pin", "Выбрать файл и создать PIN"); ru.put("pin_prefix", "PIN: "); ru.put("toast_input_ip", "Введите IP и порт пира");
+        ru.put("toast_input_pin", "Введите 6-значный PIN"); ru.put("ipv6_not_found", "Публичный IPv6 не найден"); ru.put("packing", "Упаковка файлов...");
+        ru.put("packed_connecting", "Упаковано, подключение..."); ru.put("sending_prefix", "Отправка... "); ru.put("send_done", "Отправлено!");
+        ru.put("failed_prefix", "Ошибка: "); ru.put("direct_self", "Ошибка: Нельзя подключиться к себе."); ru.put("preparing_direct", "Подготовка прямого подключения...");
+        ru.put("read_failed", "Ошибка чтения"); ru.put("prepare_failed", "Ошибка подготовки"); ru.put("direct_sending", "Прямая отправка...");
+        ru.put("sending_percent", "Отправка "); ru.put("direct_send_done", "Прямая отправка завершена!"); ru.put("direct_failed", "Ошибка прямого подключения: ");
+        ru.put("connecting", "Подключение..."); ru.put("receiving_prefix", "Получение... "); ru.put("recv_unzipping", "Получено, распаковка...");
+        ru.put("recv_done", "Получено! Сохранено в Загрузки."); ru.put("recv_failed", "Ошибка получения: ");
+    
+
+        ru.put("round_screen_opt", "Опт. круглого экрана"); ru.put("round_screen_opt_desc", "Предотвратить обрезку краев");
+        ru.put("block_system_back", "Блокировать системный возврат"); ru.put("block_system_back_desc", "Предотвратить конфликт жестов");
+        ru.put("dark_mode_desc", "Черно-белая тема"); ru.put("transfer_settings", "Передача");
+        ru.put("auto_save_desc", "Автоматически принимать"); ru.put("auto_whitelist_desc", "Только из белого списка");
+        ru.put("save_album_desc", "Сохранить в галерею"); ru.put("save_history_desc", "Записывать историю");
+        ru.put("use_pin_desc", "Повысить безопасность"); ru.put("https_enable_desc", "Может повлиять на старые устройства");
+        ru.put("web_enable_desc", "Передача через браузер"); ru.put("auto_start_desc", "Работать в фоне");
+        ru.put("receive_notif_desc", "Требуется разрешение"); ru.put("port_settings", "Настройки порта");
+        ru.put("timeout_settings", "Таймаут поиска"); ru.put("device_security", "Устройство и безопасность");
+        ru.put("manage_acl_desc", "Управление доверенными устройствами"); ru.put("ui_scale_dialog_title", "Масштаб UI");
+        ru.put("about_title", "О программе"); ru.put("pin_title_dialog", "Изменить PIN");
+        ru.put("port_dialog_title", "Порт"); ru.put("timeout_dialog_title", "Таймаут(мс)");
+        ru.put("filter_dialog_title", "Блокировать расширения"); ru.put("device_name_title", "Имя устройства");
+        ru.put("lang_title", "Настройки языка"); ru.put("acl_dialog_title", "Белый/Черный список");
+        ru.put("whitelist_title", "Белый список"); ru.put("blacklist_title", "Черный список");
+        ru.put("about_desc_watchsend", "Автор: styisme\nС поддержкой ИИ\nMIT License\n\nСовместимо с LocalSend v2.2");
+    
+
+        ru.put("start_service", "Старт"); ru.put("stop_service", "Стоп"); ru.put("devices_nearby", "Устройства рядом");
+        ru.put("no_device_scan", "Нет устройств, сканируйте"); ru.put("send_file", "Отправить файл"); ru.put("select_title_desc", "Выбрать контент");
+        ru.put("device", "Устройство"); ru.put("file", "Файл"); ru.put("media", "Медиа"); ru.put("app", "Прил.");
+        ru.put("folder", "Папка"); ru.put("text", "Текст"); ru.put("clipboard", "Буфер"); ru.put("record", "История");
+        ru.put("return_to_devices", "↩ К устройствам"); ru.put("no_record", "Нет записей"); ru.put("file_not_found", "Файл не найден");
+        ru.put("cannot_open", "Не удается открыть"); ru.put("no_app", "Нет приложений"); ru.put("empty_folder", "Пустая папка");
+        ru.put("add_files", "Добавить файлы"); ru.put("select_folder_send", ">> [Отправить эту папку] <<"); ru.put("unknown_file", "Неизвестный файл");
+        ru.put("files_count_prefix", "Файлы: "); ru.put("size_label", "Размер: "); ru.put("clear_all_files", "Удалить всё");
+        ru.put("back_prev", "Назад"); ru.put("save_to_dir", "Сохранить в: "); ru.put("ip_prefix", "IP ");
+    
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -698,6 +1103,51 @@ dict.put("ru", ru);
         pt.put("language", "Idioma"); pt.put("anim", "Animações");
         pt.put("set_name", "Nome do dispositivo"); pt.put("backup", "Backup / Restaurar");
         pt.put("about", "Sobre o WatchSend"); pt.put("manage_acl", "Gerenciar lista branca/negra");
+
+        pt.put("recv_request", "Pedido de recebimento"); pt.put("from_device", "Do dispositivo"); pt.put("wants_to_send_you", "Quer te enviar arquivos");
+        pt.put("action", "Ação"); pt.put("current_file", "Arquivo atual"); pt.put("preparing", "Preparando...");
+        pt.put("transferring", "Transferindo..."); pt.put("calculating", "Calculando..."); pt.put("saved_to_local", "Salvo localmente");
+        pt.put("transfer_success", "Sucesso"); pt.put("local_ipv6", "IPv6 local"); pt.put("getting", "Obtendo...");
+        pt.put("not_probed", "Não sondado"); pt.put("probing", "Sondando..."); pt.put("nat_addr", "Endereço NAT");
+        pt.put("input_direct_ip", "IP:Porta do par"); pt.put("selected_prefix", "Selecionado "); pt.put("files_suffix", "arquivos\n");
+        pt.put("select_file_gen_pin", "Escolher arquivo e gerar PIN"); pt.put("pin_prefix", "PIN: "); pt.put("toast_input_ip", "Digite o IP e a porta do par");
+        pt.put("toast_input_pin", "Digite o PIN de 6 dígitos"); pt.put("ipv6_not_found", "IPv6 pública não encontrada"); pt.put("packing", "Empacotando...");
+        pt.put("packed_connecting", "Empacotado, conectando..."); pt.put("sending_prefix", "Enviando... "); pt.put("send_done", "Enviado!");
+        pt.put("failed_prefix", "Falhou: "); pt.put("direct_self", "Falha direta: Não é possível conectar a si mesmo."); pt.put("preparing_direct", "Preparando direto...");
+        pt.put("read_failed", "Falha na leitura"); pt.put("prepare_failed", "Falha na preparação"); pt.put("direct_sending", "Enviando direto...");
+        pt.put("sending_percent", "Enviando "); pt.put("direct_send_done", "Envio direto concluído!"); pt.put("direct_failed", "Falha direta: ");
+        pt.put("connecting", "Conectando..."); pt.put("receiving_prefix", "Recebendo... "); pt.put("recv_unzipping", "Recebido, extraindo...");
+        pt.put("recv_done", "Recebido! Salvo em Downloads."); pt.put("recv_failed", "Falha no recebimento: ");
+    
+
+        pt.put("round_screen_opt", "Otim. tela redonda"); pt.put("round_screen_opt_desc", "Evitar corte de bordas");
+        pt.put("block_system_back", "Bloquear voltar sistema"); pt.put("block_system_back_desc", "Evitar conflito de gestos");
+        pt.put("dark_mode_desc", "Tema preto/branco"); pt.put("transfer_settings", "Transferência");
+        pt.put("auto_save_desc", "Aceitar automaticamente"); pt.put("auto_whitelist_desc", "Apenas dispositivos da lista branca");
+        pt.put("save_album_desc", "Salvar na galeria"); pt.put("save_history_desc", "Registrar histórico");
+        pt.put("use_pin_desc", "Aumentar segurança"); pt.put("https_enable_desc", "Pode afetar dispositivos antigos");
+        pt.put("web_enable_desc", "Transferência via navegador"); pt.put("auto_start_desc", "Executar em segundo plano");
+        pt.put("receive_notif_desc", "Requer permissão do sistema"); pt.put("port_settings", "Configurações de porta");
+        pt.put("timeout_settings", "Tempo de busca"); pt.put("device_security", "Dispositivo e Segurança");
+        pt.put("manage_acl_desc", "Gerenciar dispositivos confiáveis"); pt.put("ui_scale_dialog_title", "Escala da UI");
+        pt.put("about_title", "Sobre"); pt.put("pin_title_dialog", "Modificar PIN");
+        pt.put("port_dialog_title", "Porta"); pt.put("timeout_dialog_title", "Tempo(ms)");
+        pt.put("filter_dialog_title", "Bloquear extensões"); pt.put("device_name_title", "Nome do dispositivo");
+        pt.put("lang_title", "Configurações de idioma"); pt.put("acl_dialog_title", "Lista branca/negra");
+        pt.put("whitelist_title", "Lista branca"); pt.put("blacklist_title", "Lista negra");
+        pt.put("about_desc_watchsend", "Autor: styisme\nAssistido por IA\nMIT License\n\nCompatível com LocalSend v2.2");
+    
+
+        pt.put("start_service", "Iniciar"); pt.put("stop_service", "Parar"); pt.put("devices_nearby", "Dispositivos próximos");
+        pt.put("no_device_scan", "Nenhum dispositivo, escaneie"); pt.put("send_file", "Enviar arquivo"); pt.put("select_title_desc", "Selecionar");
+        pt.put("device", "Dispositivo"); pt.put("file", "Arquivo"); pt.put("media", "Mídia"); pt.put("app", "App");
+        pt.put("folder", "Pasta"); pt.put("text", "Texto"); pt.put("clipboard", "Área de transf."); pt.put("record", "Histórico");
+        pt.put("return_to_devices", "↩ Voltar aos disp."); pt.put("no_record", "Sem registros"); pt.put("file_not_found", "Arquivo não encontrado");
+        pt.put("cannot_open", "Não é possível abrir"); pt.put("no_app", "Sem apps"); pt.put("empty_folder", "Pasta vazia");
+        pt.put("add_files", "Adicionar arquivos"); pt.put("select_folder_send", ">> [Enviar esta pasta] <<"); pt.put("unknown_file", "Arquivo desconhecido");
+        pt.put("files_count_prefix", "Arquivos: "); pt.put("size_label", "Tamanho: "); pt.put("clear_all_files", "Excluir tudo");
+        pt.put("back_prev", "Voltar"); pt.put("save_to_dir", "Salvar em: "); pt.put("ip_prefix", "IP ");
+    
 dict.put("pt", pt);
     }
 

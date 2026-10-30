@@ -87,7 +87,7 @@ public class CrossNetActivity extends Activity {
 
         // 1. 居中大标题 (模仿设置页)
         TextView tvTitle = new TextView(this);
-        tvTitle.setText("跨网传输");
+        tvTitle.setText(I18nManager.get("cross_net"));
         tvTitle.setTextSize(24);
         tvTitle.setTypeface(null, Typeface.BOLD);
         tvTitle.setTextColor(colorMain);
@@ -99,7 +99,7 @@ public class CrossNetActivity extends Activity {
 
         // 2. 副标题 (无需同一Wi-Fi)
         TextView tvDesc = new TextView(this);
-        tvDesc.setText("无需同一 Wi-Fi，极客通道直连");
+        tvDesc.setText(I18nManager.get("cross_net_desc"));
         tvDesc.setTextSize(12);
         tvDesc.setTextColor(colorSec);
         tvDesc.setGravity(Gravity.CENTER);
@@ -115,24 +115,24 @@ public class CrossNetActivity extends Activity {
         tvIpv6Info.setText("IPv6: 正在获取...");
         tvIpv6Info.setTextColor(colorAccent);
         tvIpv6Info.setTextSize(12);
-        addCardItem("本机 IPv6", tvIpv6Info, null);
+        addCardItem(I18nManager.get("local_ipv6"), tvIpv6Info, null);
 
         // 卡片2：STUN 探测
         tvStunInfo = new TextView(this);
-        tvStunInfo.setText("未探测");
+        tvStunInfo.setText(I18nManager.get("not_probed"));
         tvStunInfo.setTextColor(colorSec);
         tvStunInfo.setTextSize(12);
-        btnStunProbe = createSmallButton("STUN 探测");
+        btnStunProbe = createSmallButton(I18nManager.get("stun_probe"));
         btnStunProbe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                tvStunInfo.setText("探测中...");
+                tvStunInfo.setText(I18nManager.get("probing"));
                 new Thread(new Runnable() {
                     public void run() {
                         final String result = org.watchsend.util.StunClient.getPublicAddress();
                         handler.post(new Runnable() {
                             public void run() {
                                 if (result.contains("失败") || result.contains("未知")) {
-                                    tvStunInfo.setText("穿透失败");
+                                    tvStunInfo.setText(I18nManager.get("stun_fail"));
                                     tvStunInfo.setTextColor(0xFFD32F2F);
                                 } else {
                                     tvStunInfo.setText(result);
@@ -145,7 +145,7 @@ public class CrossNetActivity extends Activity {
                 }).start();
             }
         });
-        addCardItem("NAT 公网地址", tvStunInfo, btnStunProbe);
+        addCardItem(I18nManager.get("nat_addr"), tvStunInfo, btnStunProbe);
 
         // 卡片3：极速直连
         cbUseDirect = new org.watchsend.ui.Md3Switch(this);
@@ -153,10 +153,10 @@ public class CrossNetActivity extends Activity {
         cbUseDirect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 layoutDirectIp.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                btnGen.setText(isChecked ? "直连发送已选文件" : "生成密码并开始发送");
+                btnGen.setText(isChecked ? I18nManager.get("direct_send") : I18nManager.get("gen_pin_send"));
             }
         });
-        addCardItem("启用极速直连", null, cbUseDirect);
+        addCardItem(I18nManager.get("direct_mode"), null, cbUseDirect);
 
         // 卡片4：直连 IP 输入框 (动态显示)
         layoutDirectIp = new LinearLayout(this);
@@ -169,7 +169,7 @@ public class CrossNetActivity extends Activity {
         layoutDirectIp.setVisibility(View.GONE);
 
         etDirectIp = new EditText(this);
-        etDirectIp.setHint("对方公网 IP:端口");
+        etDirectIp.setHint(I18nManager.get("input_direct_ip"));
         etDirectIp.setTextColor(colorMain);
         etDirectIp.setHintTextColor(colorSec);
         etDirectIp.setTextSize(13);
@@ -195,7 +195,7 @@ public class CrossNetActivity extends Activity {
         tvFileInfo.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         layoutSelectedFiles.addView(tvFileInfo);
 
-        TextView btnEdit = createTextButton("编辑");
+        TextView btnEdit = createTextButton(I18nManager.get("edit"));
         btnEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MainActivity.pendingUris = pendingUris;
@@ -207,7 +207,7 @@ public class CrossNetActivity extends Activity {
 
         // 卡片6：操作按钮 (生成密码)
         btnGen = new Button(this);
-        btnGen.setText("选择文件并生成密码");
+        btnGen.setText(I18nManager.get("select_file_gen_pin"));
         btnGen.setTextColor(0xFFFFFFFF);
         btnGen.setTextSize(14);
         btnGen.setBackgroundResource(R.drawable.watch_btn_primary);
@@ -225,7 +225,7 @@ public class CrossNetActivity extends Activity {
                     if (cbUseDirect.isChecked()) {
                         String ipStr = etDirectIp.getText().toString().trim();
                         if (ipStr.isEmpty()) {
-                            Toast.makeText(CrossNetActivity.this, "请输入对方公网IP和端口", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CrossNetActivity.this, I18nManager.get("toast_input_ip"), Toast.LENGTH_SHORT).show();
                         } else {
                             startDirectSend(ipStr);
                         }
@@ -260,7 +260,7 @@ public class CrossNetActivity extends Activity {
         recvCard.setLayoutParams(recvLp);
 
         etPin = new EditText(this);
-        etPin.setHint("输入 6 位密码");
+        etPin.setHint(I18nManager.get("input_pin_hint"));
         etPin.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
         etPin.setTextColor(colorMain);
         etPin.setHintTextColor(colorSec);
@@ -270,13 +270,13 @@ public class CrossNetActivity extends Activity {
         etPin.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         recvCard.addView(etPin);
 
-        btnRecv = createSmallButton("接收");
+        btnRecv = createSmallButton(I18nManager.get("receive"));
         btnRecv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (isTransferring) return;
                 String pin = etPin.getText().toString().trim();
                 if (pin.length() != 6) {
-                    Toast.makeText(CrossNetActivity.this, "请输入6位纯数字密码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrossNetActivity.this, I18nManager.get("toast_input_pin"), Toast.LENGTH_SHORT).show();
                 } else {
                     startReceive(pin);
                 }
@@ -299,7 +299,7 @@ public class CrossNetActivity extends Activity {
         // 初始化 IP 显示
         String ipv6 = OldSendService.getIpv6();
         if (ipv6 != null) tvIpv6Info.setText("[" + ipv6 + "]:53317");
-        else tvIpv6Info.setText("未获取到公网 IPv6");
+        else tvIpv6Info.setText(I18nManager.get("ipv6_not_found"));
     }
 
     // ====== 辅助 UI 方法 ======
@@ -403,7 +403,7 @@ public class CrossNetActivity extends Activity {
     private void updateUI() {
         if (pendingUris == null || pendingUris.isEmpty()) {
             layoutSelectedFiles.setVisibility(View.GONE);
-            if (btnGen != null) btnGen.setText("选择文件并生成密码");
+            if (btnGen != null) btnGen.setText(I18nManager.get("select_file_gen_pin"));
         } else {
             layoutSelectedFiles.setVisibility(View.VISIBLE);
             long totalSize = 0;
@@ -418,22 +418,22 @@ public class CrossNetActivity extends Activity {
                 } catch (Exception ignored) {}
             }
             String sizeStr = totalSize > 1024*1024 ? String.format("%.1f MB", totalSize/1024.0/1024.0) : String.format("%.1f KB", totalSize/1024.0);
-            if (tvFileInfo != null) tvFileInfo.setText("已选 " + pendingUris.size() + " 个文件\n" + sizeStr);
-            if (btnGen != null) btnGen.setText("生成密码并开始发送");
+            if (tvFileInfo != null) tvFileInfo.setText(I18nManager.get("selected_prefix") + pendingUris.size() + I18nManager.get("files_suffix") + sizeStr);
+            if (btnGen != null) btnGen.setText(I18nManager.get("gen_pin_send"));
         }
     }
 
     private void generatePinAndSend() {
         int pin = 100000 + new Random().nextInt(900000);
         currentPin = String.valueOf(pin);
-        tvPinDisplay.setText("密码: " + currentPin);
+        tvPinDisplay.setText(I18nManager.get("pin_prefix") + currentPin);
         tvPinDisplay.setVisibility(View.VISIBLE);
         startSend(currentPin);
     }
 
     private void startSend(final String pin) {
         isTransferring = true;
-        tvStatus.setText("正在打包文件...");
+        tvStatus.setText(I18nManager.get("packing"));
         
         new Thread(new Runnable() {
             public void run() {
@@ -455,7 +455,7 @@ public class CrossNetActivity extends Activity {
                     zos.close();
                     fos.close();
                     
-                    handler.post(new Runnable() { public void run() { tvStatus.setText("打包完成，正在建立通道..."); } });
+                    handler.post(new Runnable() { public void run() { tvStatus.setText(I18nManager.get("packed_connecting")); } });
                     
                     FileInputStream fis = new FileInputStream(tempZip);
                     byte[] chunk = new byte[3000];
@@ -478,7 +478,7 @@ public class CrossNetActivity extends Activity {
                         
                         totalSent += n;
                         final long finalSent = totalSent;
-                        handler.post(new Runnable() { public void run() { tvStatus.setText("发送中... " + (finalSent/1024) + " KB"); } });
+                        handler.post(new Runnable() { public void run() { tvStatus.setText(I18nManager.get("sending_prefix") + (finalSent/1024) + " KB"); } });
                         Thread.sleep(100);
                     }
                     fis.close();
@@ -492,13 +492,13 @@ public class CrossNetActivity extends Activity {
                     
                     handler.post(new Runnable() {
                         public void run() { 
-                            tvStatus.setText("发送完成！"); 
+                            tvStatus.setText(I18nManager.get("send_done")); 
                             isTransferring = false; 
                         }
                     });
                 } catch (final Exception e) {
                     handler.post(new Runnable() {
-                        public void run() { tvStatus.setText("失败: " + e.getMessage()); isTransferring = false; }
+                        public void run() { tvStatus.setText(I18nManager.get("failed_prefix") + e.getMessage()); isTransferring = false; }
                     });
                 }
             }
@@ -510,7 +510,7 @@ public class CrossNetActivity extends Activity {
         int port = 53317;
         
         if (cleanIp.contains(OldSendService.getLocalIp())) {
-            tvStatus.setText("直连失败: 无法通过公网IP直连本机。");
+            tvStatus.setText(I18nManager.get("direct_self"));
             return;
         }
 
@@ -536,7 +536,7 @@ public class CrossNetActivity extends Activity {
         target.https = false;
 
         isTransferring = true;
-        tvStatus.setText("准备直连...");
+        tvStatus.setText(I18nManager.get("preparing_direct"));
 
         new Thread(new Runnable() {
             public void run() {
@@ -554,15 +554,15 @@ public class CrossNetActivity extends Activity {
                     }
                 } catch (Exception e) {
                     handler.post(new Runnable() { public void run() {
-                        Toast.makeText(CrossNetActivity.this, "读取失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CrossNetActivity.this, I18nManager.get("read_failed"), Toast.LENGTH_SHORT).show();
                         isTransferring = false;
-                        tvStatus.setText("准备失败");
+                        tvStatus.setText(I18nManager.get("prepare_failed"));
                     }});
                     return;
                 }
 
                 handler.post(new Runnable() { public void run() {
-                    tvStatus.setText("正在直连发送...");
+                    tvStatus.setText(I18nManager.get("direct_sending"));
                 }});
 
                 org.watchsend.transfer.Uploader.uploadFiles(target, files, new org.watchsend.transfer.Uploader.ProgressCallback() {
@@ -570,14 +570,14 @@ public class CrossNetActivity extends Activity {
                         handler.post(new Runnable() { public void run() {
                             if (total > 0) {
                                 int pct = (int)(sent * 100 / total);
-                                tvStatus.setText("发送中 " + pct + "%");
+                                tvStatus.setText(I18nManager.get("sending_percent") + pct + "%");
                             }
                         }});
                     }
                     public void onDone(final boolean ok, final String msg) {
                         handler.post(new Runnable() { public void run() {
                             isTransferring = false;
-                            tvStatus.setText(ok ? "直连发送完成！" : "直连失败: " + msg);
+                            tvStatus.setText(ok ? I18nManager.get("direct_send_done") : I18nManager.get("direct_failed") + msg);
                         }});
                     }
                 });
@@ -587,7 +587,7 @@ public class CrossNetActivity extends Activity {
 
     private void startReceive(final String pin) {
         isTransferring = true;
-        tvStatus.setText("正在连接...");
+        tvStatus.setText(I18nManager.get("connecting"));
         
         new Thread(new Runnable() {
             public void run() {
@@ -620,7 +620,7 @@ public class CrossNetActivity extends Activity {
                                         byte[] data = Base64.decode(msg, Base64.NO_WRAP);
                                         fos.write(data);
                                         final long size = fos.getChannel().size();
-                                        handler.post(new Runnable() { public void run() { tvStatus.setText("接收中... " + (size/1024) + " KB"); } });
+                                        handler.post(new Runnable() { public void run() { tvStatus.setText(I18nManager.get("receiving_prefix") + (size/1024) + " KB"); } });
                                     }
                                     lastTime = time;
                                 }
@@ -631,7 +631,7 @@ public class CrossNetActivity extends Activity {
                     }
                     fos.close();
                     
-                    handler.post(new Runnable() { public void run() { tvStatus.setText("接收完成，解压中..."); } });
+                    handler.post(new Runnable() { public void run() { tvStatus.setText(I18nManager.get("recv_unzipping")); } });
                     File downloadDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS);
                     ZipInputStream zis = new ZipInputStream(new FileInputStream(tempZip));
                     ZipEntry entry;
@@ -648,13 +648,13 @@ public class CrossNetActivity extends Activity {
                     
                     handler.post(new Runnable() {
                         public void run() { 
-                            tvStatus.setText("接收完成！已保存到下载。"); 
+                            tvStatus.setText(I18nManager.get("recv_done")); 
                             isTransferring = false; 
                         }
                     });
                 } catch (final Exception e) {
                     handler.post(new Runnable() {
-                        public void run() { tvStatus.setText("接收失败: " + e.getMessage()); isTransferring = false; }
+                        public void run() { tvStatus.setText(I18nManager.get("recv_failed") + e.getMessage()); isTransferring = false; }
                     });
                 }
             }

@@ -73,64 +73,64 @@ public class WatchSettingsActivity extends Activity {
         container.removeAllViews();
         
         addMainTitle("设置");
-        addSection("基本");
+        addSection(I18nManager.get("general"));
 
-        addSwitch("圆屏优化", "防止内容被圆形边缘遮挡", prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
+        addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
         });
 
-        addSwitch("拦截系统返回", "防止与滑动返回冲突", prefs().getBoolean("block_system_back", true), saveTo("block_system_back"));
-        addSwitch("深色模式", "黑白主题切换", prefs().getBoolean("dark_mode", false), new SwitchHandler() {
+        addSwitch(I18nManager.get("block_system_back"), I18nManager.get("block_system_back_desc"), prefs().getBoolean("block_system_back", true), saveTo("block_system_back"));
+        addSwitch(I18nManager.get("dark_mode"), I18nManager.get("dark_mode_desc"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("dark_mode", v).commit(); recreate(); }
         });
         
-        addItem("语言设置", currentLangLabel(), new View.OnClickListener() {
+        addItem(I18nManager.get("lang_title"), currentLangLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickLang(); }
         });
         
-        addItem("UI 大小", String.format(Locale.US, "%.2f", prefs().getFloat("ui_scale", 1.0f)) + "x", new View.OnClickListener() {
+        addItem(I18nManager.get("ui_size"), String.format(Locale.US, "%.2f", prefs().getFloat("ui_scale", 1.0f)) + "x", new View.OnClickListener() {
             public void onClick(View v) { showUiScaleDialog(); }
         });
 
-        addSection("传输");
-        addSwitch("自动保存", "免确认直接接收", OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
-        addSwitch("白名单自动接收", "仅限白名单设备", OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
-        addSwitch("保存到相册", "图片与视频放入图库", OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
-        addSwitch("保存到历史记录", "记录收发日志", OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
-        addSwitch("启用 PIN 密码", "增强接收安全性", OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
+        addSection(I18nManager.get("transfer_settings"));
+        addSwitch(I18nManager.get("auto_save"), I18nManager.get("auto_save_desc"), OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
+        addSwitch(I18nManager.get("auto_whitelist"), I18nManager.get("auto_whitelist_desc"), OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
+        addSwitch(I18nManager.get("save_album"), I18nManager.get("save_album_desc"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
+        addSwitch(I18nManager.get("save_history"), I18nManager.get("save_history_desc"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
+        addSwitch(I18nManager.get("use_pin"), I18nManager.get("use_pin_desc"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
         
-        addItem("修改 PIN", prefs().getString("pin_code", "0000"), new View.OnClickListener() {
+        addItem(I18nManager.get("modify_pin"), prefs().getString("pin_code", "0000"), new View.OnClickListener() {
             public void onClick(View v) { editPin(); }
         });
 
-        addSection("网络与自动化");
-        addSwitch("开启 HTTPS 加密", "可能影响旧设备兼容性", prefs().getBoolean("use_https", false), new SwitchHandler() {
+        addSection(I18nManager.get("network"));
+        addSwitch(I18nManager.get("https_enable"), I18nManager.get("https_enable_desc"), prefs().getBoolean("use_https", false), new SwitchHandler() {
             public void onChanged(boolean v) { prefs().edit().putBoolean("use_https", v).commit(); }
         });
-        addSwitch("启用网页传输", "浏览器互传", OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
-        addSwitch("开机自动启动", "后台常驻", OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
-        addSwitch("通知栏接收", "需系统权限", OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
+        addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
+        addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+        addSwitch(I18nManager.get("receive_notif"), I18nManager.get("receive_notif_desc"), OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
 
-        addItem("端口设置", String.valueOf(prefs().getInt("port", 53317)), new View.OnClickListener() {
+        addItem(I18nManager.get("port_settings"), String.valueOf(prefs().getInt("port", 53317)), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
         });
-        addItem("搜索超时", String.valueOf(prefs().getInt("timeout", 500)) + " ms", new View.OnClickListener() {
+        addItem(I18nManager.get("timeout_settings"), String.valueOf(prefs().getInt("timeout", 500)) + " ms", new View.OnClickListener() {
             public void onClick(View v) { editTimeout(); }
         });
 
-        addSection("设备与安全");
-        addItem("设备名称", OldSendService.getAlias(this), new View.OnClickListener() {
+        addSection(I18nManager.get("device_security"));
+        addItem(I18nManager.get("device_name_title"), OldSendService.getAlias(this), new View.OnClickListener() {
             public void onClick(View v) { editName(); }
         });
-        addItem("危险后缀拦截", OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new View.OnClickListener() {
+        addItem(I18nManager.get("filter_ext_title"), OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new View.OnClickListener() {
             public void onClick(View v) { editFilter(); }
         });
-        addItem("白名单 / 黑名单", "管理已信任设备", new View.OnClickListener() {
+        addItem(I18nManager.get("manage_acl"), I18nManager.get("manage_acl_desc"), new View.OnClickListener() {
             public void onClick(View v) { manageAcl(); }
         });
 
-        addSection("其他");
-        addItem("关于 WatchSend", "v2.0.0", new View.OnClickListener() {
+        addSection(I18nManager.get("other"));
+        addItem(I18nManager.get("about"), "v2.0.0", new View.OnClickListener() {
             public void onClick(View v) { aboutDialog(); }
         });
     }
@@ -279,7 +279,7 @@ public class WatchSettingsActivity extends Activity {
         });
         layout.addView(sb);
 
-        WatchUiUtils.createBaseDialog(this, "无级缩放 UI", layout, "确定", null, null, null).show();
+        WatchUiUtils.createBaseDialog(this, I18nManager.get("ui_scale_dialog_title"), layout, I18nManager.get("confirm"), null, null, null).show();
     }
 
     private int dp(int val) { return (int)(val * getResources().getDisplayMetrics().density); }
@@ -293,7 +293,7 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void editPin() {
-        WatchUiUtils.showInput(this, "修改 PIN", prefs().getString("pin_code", "0000"), new WatchUiUtils.OnInputListener() {
+        WatchUiUtils.showInput(this, I18nManager.get("modify_pin"), prefs().getString("pin_code", "0000"), new WatchUiUtils.OnInputListener() {
             public void onInput(String text) {
                 if (text.length() > 0) { prefs().edit().putString("pin_code", text).commit(); recreate(); }
             }
@@ -301,7 +301,7 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void editPort() {
-        WatchUiUtils.showInput(this, "端口", String.valueOf(prefs().getInt("port", 53317)), new WatchUiUtils.OnInputListener() {
+        WatchUiUtils.showInput(this, I18nManager.get("port_dialog_title"), String.valueOf(prefs().getInt("port", 53317)), new WatchUiUtils.OnInputListener() {
             public void onInput(String text) {
                 try { prefs().edit().putInt("port", Integer.parseInt(text)).commit(); recreate(); } catch (Exception ignored) {}
             }
@@ -309,7 +309,7 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void editTimeout() {
-        WatchUiUtils.showInput(this, "搜索超时(ms)", String.valueOf(prefs().getInt("timeout", 500)), new WatchUiUtils.OnInputListener() {
+        WatchUiUtils.showInput(this, I18nManager.get("timeout_dialog_title"), String.valueOf(prefs().getInt("timeout", 500)), new WatchUiUtils.OnInputListener() {
             public void onInput(String text) {
                 try { prefs().edit().putInt("timeout", Integer.parseInt(text)).commit(); recreate(); } catch (Exception ignored) {}
             }
@@ -317,13 +317,13 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void editFilter() {
-        WatchUiUtils.showInput(this, "拦截后缀", OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new WatchUiUtils.OnInputListener() {
+        WatchUiUtils.showInput(this, I18nManager.get("filter_dialog_title"), OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new WatchUiUtils.OnInputListener() {
             public void onInput(String text) { prefs().edit().putString("filter_ext", text.replace(" ","").toLowerCase()).commit(); recreate(); }
         });
     }
 
     private void editName() {
-        WatchUiUtils.showInput(this, "设备名称", OldSendService.getAlias(this), new WatchUiUtils.OnInputListener() {
+        WatchUiUtils.showInput(this, I18nManager.get("device_name_title"), OldSendService.getAlias(this), new WatchUiUtils.OnInputListener() {
             public void onInput(String text) {
                 if (text.length() > 0) { OldSendService.setAlias(WatchSettingsActivity.this, text); recreate(); }
             }
@@ -332,7 +332,7 @@ public class WatchSettingsActivity extends Activity {
 
     private void pickLang() {
         final String[] items = {"跟随系统","简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
-        WatchUiUtils.showList(this, "语言设置", items, new WatchUiUtils.OnItemSelectListener() {
+        WatchUiUtils.showList(this, I18nManager.get("lang_title"), items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
                 String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
                 prefs().edit().putString("app_lang", codes[pos]).commit();
@@ -343,8 +343,8 @@ public class WatchSettingsActivity extends Activity {
     }
 
     private void manageAcl() {
-        String[] items = {"查看白名单", "查看黑名单", "清空所有"};
-        WatchUiUtils.showList(this, "黑白名单", items, new WatchUiUtils.OnItemSelectListener() {
+        String[] items = {I18nManager.get("view_whitelist"), I18nManager.get("view_blacklist"), I18nManager.get("clear_all")};
+        WatchUiUtils.showList(this, I18nManager.get("acl_dialog_title"), items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
                 if (pos == 2) { prefs().edit().remove("whitelist").remove("blacklist").commit(); recreate(); }
                 else showSpecificList(pos == 0 ? "whitelist" : "blacklist");
@@ -354,9 +354,9 @@ public class WatchSettingsActivity extends Activity {
 
     private void showSpecificList(final String key) {
         String s = OldSendService.getPrefStringGlobal(key, "");
-        if (s.trim().isEmpty()) { Toast.makeText(this, "名单为空", Toast.LENGTH_SHORT).show(); return; }
+        if (s.trim().isEmpty()) { Toast.makeText(this, I18nManager.get("list_empty"), Toast.LENGTH_SHORT).show(); return; }
         final String[] arr = s.split(",");
-        WatchUiUtils.showList(this, key.equals("whitelist") ? "白名单" : "黑名单", arr, new WatchUiUtils.OnItemSelectListener() {
+        WatchUiUtils.showList(this, key.equals("whitelist") ? I18nManager.get("whitelist_title") : I18nManager.get("blacklist_title"), arr, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
                 String cur = OldSendService.getPrefStringGlobal(key, "");
                 cur = cur.replace(arr[pos] + ",", "").replace(arr[pos], "");
@@ -370,7 +370,7 @@ public class WatchSettingsActivity extends Activity {
         TextView tv = new TextView(this);
         tv.setText("WatchSend · Watch Edition\nv2.0.0\n\n作者: styisme\nAI 辅助生成\nMIT License\n\n兼容 LocalSend v2.2");
         tv.setTextSize(13); tv.setTextColor(0xFFE0E0E0); tv.setLineSpacing(0, 1.3f);
-        WatchUiUtils.createBaseDialog(this, "关于", tv, "确定", null, null, null).show();
+        WatchUiUtils.createBaseDialog(this, I18nManager.get("about_title"), tv, I18nManager.get("confirm"), null, null, null).show();
     }
 
 
