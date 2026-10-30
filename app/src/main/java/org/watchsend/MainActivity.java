@@ -46,7 +46,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     public static List<Uri> pendingUris = new ArrayList<Uri>();
 
-    private TextView status, statusIp, emptyHint;
+    private TextView status, statusIp, emptyHint, tvSelectedFile;
+    private LinearLayout layoutSelectedFiles;
+    private Button btnEditFiles, btnAddFilesMore;
     private Button toggleBtn, btnSend, btnHistory, btnCrossNet, btnSettings, btnLog, scanBtn, manualIpBtn;
     private ListView deviceList;
     private DeviceAdapter adapter;
@@ -90,6 +92,25 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         scanBtn = (Button) findViewById(R.id.scan);
         manualIpBtn = (Button) findViewById(R.id.btn_manual_ip);
         deviceList = (ListView) findViewById(R.id.devices);
+
+        
+        layoutSelectedFiles = (LinearLayout) findViewById(R.id.layout_selected_files);
+        tvSelectedFile = (TextView) findViewById(R.id.tv_selected_file);
+        btnEditFiles = (Button) findViewById(R.id.btn_edit_files);
+        btnAddFilesMore = (Button) findViewById(R.id.btn_add_files_more);
+
+        if (btnEditFiles != null) {
+            btnEditFiles.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, SelectListActivity.class));
+                }
+            });
+        }
+        if (btnAddFilesMore != null) {
+            btnAddFilesMore.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) { showSendTypeDialog(true); } // true 代表追加模式
+            });
+        }
 
         adapter = new DeviceAdapter(this);
         historyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
@@ -191,19 +212,21 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         toggleBtn.setText(running ? I18nManager.get("stop") : I18nManager.get("start"));
     }
 
-    private void showSendTypeDialog() {
+    private void showSendTypeDialog() { showSendTypeDialog(false); }
+    private void showSendTypeDialog(final boolean isAppend) {
         final String[] items = {
             I18nManager.get("file"), I18nManager.get("media"), I18nManager.get("app"),
             I18nManager.get("folder"), I18nManager.get("text"), I18nManager.get("clipboard")
         };
-        WatchUiUtils.showList(this, I18nManager.get("send"), items, new WatchUiUtils.OnItemSelectListener() {
+        WatchUiUtils.showList(this, isAppend ? "追加文件" : I18nManager.get("send"), items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
-                if (pos == 0) pickFile(false, false);
-                else if (pos == 1) pickFile(true, false);
-                else if (pos == 2) pickApp(false);
-                else if (pos == 3) pickFolder(false);
-                else if (pos == 4) showSendTextDialog();
-                else if (pos == 5) sendClipboard();
+                pendingAppend = isAppend;
+                if (pos == 0) pickFile(false, isAppend);
+                else if (pos == 1) pickFile(true, isAppend);
+                else if (pos == 2) pickApp(isAppend);
+                else if (pos == 3) pickFolder(isAppend);
+                else if (pos == 4) showSendTextDialog(isAppend);
+                else if (pos == 5) sendClipboard(isAppend);
             }
         }).show();
     }
@@ -277,7 +300,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         for (File f : fs) { if (f.isDirectory()) getAllFiles(f, out); else out.add(f); }
     }
 
-    private void showSendTextDialog() {
+    private void showSendTextDialog(final boolean append) {
         WatchUiUtils.showInput(this, I18nManager.get("input_text"), "",
             new WatchUiUtils.OnInputListener() {
                 public void onInput(String text) {
@@ -286,14 +309,15 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                         File f = new File(getCacheDir(), "text_" + System.currentTimeMillis() + ".txt");
                         FileOutputStream fos = new FileOutputStream(f);
                         fos.write(text.getBytes("UTF-8")); fos.close();
-                        pendingUris.clear(); pendingUris.add(Uri.fromFile(f));
+                        if (!append) pendingUris.clear();
+                        pendingUris.add(Uri.fromFile(f));
                         onFilesPicked();
                     } catch (Exception e) { toast("失败"); }
                 }
             }).show();
     }
 
-    private void sendClipboard() {
+    private void sendClipboard(final boolean append) {
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = cm.getPrimaryClip();
         if (clip != null && clip.getItemCount() > 0) {
@@ -303,7 +327,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                     File f = new File(getCacheDir(), "clip_" + System.currentTimeMillis() + ".txt");
                     FileOutputStream fos = new FileOutputStream(f);
                     fos.write(text.toString().getBytes("UTF-8")); fos.close();
-                    pendingUris.clear(); pendingUris.add(Uri.fromFile(f));
+                    if (!append) pendingUris.clear();
+                    pendingUris.add(Uri.fromFile(f));
                     onFilesPicked();
                     return;
                 } catch (Exception ignored) {}
@@ -314,7 +339,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     private void onFilesPicked() {
         if (historyMode) exitHistoryMode();
-        toast("已选 " + pendingUris.size() + " 个文件，点设备发送");
+        updateSelectedFilesUI();
         log("Selected " + pendingUris.size() + " files");
     }
 
@@ -580,6 +605,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         }
         
         applyThemeToViews();
+        updateSelectedFilesUI();
         if (!historyMode) refreshDevices();
         updateStatus();
     }
@@ -643,7 +669,39 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (btnSettings != null) { btnSettings.setBackgroundResource(bgSec); btnSettings.setTextColor(colorAccent); }
 
         // 底部日志按钮
+        
+        // 适配新加的已选文件卡片
+        if (layoutSelectedFiles != null) {
+            layoutSelectedFiles.setBackground(WatchUiUtils.getPillBackground(this));
+        }
+        if (tvSelectedFile != null) tvSelectedFile.setTextColor(colorMain);
+        if (btnEditFiles != null) btnEditFiles.setTextColor(colorSec);
+
         if (btnLog != null) btnLog.setTextColor(colorSec);
+    }
+
+
+    private void updateSelectedFilesUI() {
+        if (pendingUris == null || pendingUris.isEmpty()) {
+            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
+        } else {
+            if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
+            long totalSize = 0;
+            for (Uri u : pendingUris) {
+                try {
+                    android.database.Cursor c = getContentResolver().query(u, null, null, null, null);
+                    if (c != null && c.moveToFirst()) {
+                        int sizeIdx = c.getColumnIndex(android.provider.OpenableColumns.SIZE);
+                        if (sizeIdx != -1) totalSize += c.getLong(sizeIdx);
+                        c.close();
+                    }
+                } catch (Exception ignored) {}
+            }
+            String sizeStr = totalSize > 1024*1024 ? String.format(java.util.Locale.US, "%.1f MB", totalSize/1024.0/1024.0) : String.format(java.util.Locale.US, "%.1f KB", totalSize/1024.0);
+            if (tvSelectedFile != null) {
+                tvSelectedFile.setText("已选择 " + pendingUris.size() + " 个文件 (" + (totalSize > 0 ? sizeStr : "未知") + ")");
+            }
+        }
     }
 
 }

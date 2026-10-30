@@ -45,6 +45,26 @@
                 android:text="发送文件" android:textSize="14sp" android:textColor="#FFFFFF"
                 android:background="@drawable/watch_btn_send" android:layout_marginBottom="6dp" />
 
+            <LinearLayout android:id="@+id/layout_selected_files"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:background="@drawable/watch_card"
+                android:padding="12dp" android:layout_marginBottom="6dp" android:visibility="gone">
+                <TextView android:id="@+id/tv_selected_file"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textSize="13sp" android:textColor="#1C1B1F" android:layout_marginBottom="8dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="end">
+                    <Button android:id="@+id/btn_edit_files"
+                        android:layout_width="wrap_content" android:layout_height="32dp"
+                        android:text="编辑" android:textSize="11sp" android:textColor="#666"
+                        android:background="@android:color/transparent" android:minHeight="0dp" android:layout_marginRight="8dp"/>
+                    <Button android:id="@+id/btn_add_files_more"
+                        android:layout_width="wrap_content" android:layout_height="32dp"
+                        android:text="+ 追加" android:textSize="11sp" android:textColor="#FFFFFF"
+                        android:background="@drawable/watch_btn_primary" android:minHeight="0dp" android:paddingLeft="12dp" android:paddingRight="12dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <Button android:id="@+id/btn_history"
                 android:layout_width="match_parent" android:layout_height="46dp"
                 android:text="接收记录" android:textSize="13sp" android:textColor="#1B5E20"
