@@ -148,6 +148,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         applyI18n();
         checkAndRequestPermission();
         handleIntent(getIntent());
+        applyThemeToViews();
         recordConfigState();
     }
 
@@ -574,10 +575,11 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         float curScale = sp.getFloat("ui_scale", 1.0f);
         
         if (!curLang.equals(lastLang) || curDark != lastDark || curRound != lastRound || curScale != lastScale) {
-            recreate(); // 配置变了，原地重建
+            recreate(); 
             return;
         }
         
+        applyThemeToViews();
         if (!historyMode) refreshDevices();
         updateStatus();
     }
@@ -603,6 +605,45 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         lastDark = sp.getBoolean("dark_mode", false);
         lastRound = sp.getBoolean("round_screen_opt", false);
         lastScale = sp.getFloat("ui_scale", 1.0f);
+    }
+
+
+    private void applyThemeToViews() {
+        boolean isDark = ThemeUtils.isDarkMode(this);
+        int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
+        int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
+        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        
+        // 彻底修复左右灰边：直接涂黑窗口底层
+        getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(isDark ? 0xFF000000 : 0xFFF4F6F8));
+
+        // 状态卡片
+        View statusCard = (View) status.getParent();
+        statusCard.setBackground(WatchUiUtils.getPillBackground(this));
+        status.setTextColor(colorMain);
+        statusIp.setTextColor(colorSec);
+
+        // 附近设备标题
+        View nearbyTitle = findViewById(R.id.tv_nearby_title);
+        if (nearbyTitle != null && nearbyTitle instanceof TextView) {
+            ((TextView) nearbyTitle).setTextColor(colorMain);
+        }
+
+        // 设备列表区
+        View deviceListParent = (View) deviceList.getParent();
+        deviceListParent.setBackground(WatchUiUtils.getPillBackground(this));
+        emptyHint.setTextColor(colorSec);
+
+        // 次级按钮 (接收记录, 跨网, 扫描, +IP, 设置)
+        int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+        if (btnHistory != null) { btnHistory.setBackgroundResource(bgSec); btnHistory.setTextColor(colorAccent); }
+        if (btnCrossNet != null) { btnCrossNet.setBackgroundResource(bgSec); btnCrossNet.setTextColor(colorAccent); }
+        if (scanBtn != null) { scanBtn.setBackgroundResource(bgSec); scanBtn.setTextColor(colorAccent); }
+        if (manualIpBtn != null) { manualIpBtn.setBackgroundResource(bgSec); manualIpBtn.setTextColor(colorAccent); }
+        if (btnSettings != null) { btnSettings.setBackgroundResource(bgSec); btnSettings.setTextColor(colorAccent); }
+
+        // 底部日志按钮
+        if (btnLog != null) btnLog.setTextColor(colorSec);
     }
 
 }
