@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 底层：深绿色圆角矩形背景 -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="#2E7D32"/>
-            <corners android:radius="16dp"/>
-        </shape>
-    </item>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
     
-    <!-- 上层：白色的发送/纸飞机图标 -->
-    <item
-        android:drawable="@android:drawable/ic_menu_send"
-        android:gravity="center"
-        android:width="64dp"
-        android:height="64dp" />
-</layer-list>
+    <!-- 纯黑背景圆 -->
+    <path
+        android:fillColor="#1A1A1A"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0" />
+        
+    <!-- 极客绿外圈边框 -->
+    <path
+        android:strokeColor="#81C784"
+        android:strokeWidth="4"
+        android:fillColor="#00000000"
+        android:pathData="M54,54m-46,0a46,46 0,1 1,92 0a46,46 0,1 1,-92 0" />
+
+    <!-- 上方的绿色箭头 (发送) -->
+    <path
+        android:fillColor="#81C784"
+        android:pathData="M32,44 L54,28 L54,38 L76,38 L76,50 L54,50 L54,60 Z" />
+        
+    <!-- 下方的白色箭头 (接收) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M76,64 L54,80 L54,70 L32,70 L32,58 L54,58 L54,48 Z" />
+</vector>
