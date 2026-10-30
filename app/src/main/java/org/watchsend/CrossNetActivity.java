@@ -304,7 +304,7 @@ public class CrossNetActivity extends Activity {
 
     // ====== 辅助 UI 方法 ======
     
-    private View layoutDirectIp;
+    private LinearLayout layoutDirectIp;
     private LinearLayout layoutSelectedFiles;
 
     private void addCardItem(String title, View subtitleView, View rightView) {
