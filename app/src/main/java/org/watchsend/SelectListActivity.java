@@ -29,6 +29,7 @@ public class SelectListActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_list);
+        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
 
         listContainer = (LinearLayout) findViewById(R.id.list_container);

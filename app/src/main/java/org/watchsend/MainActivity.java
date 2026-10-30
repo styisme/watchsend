@@ -63,6 +63,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
         View root = findViewById(R.id.main_root);
         root.setBackgroundColor(ThemeUtils.isDarkMode(this) ? 0xFF000000 : 0xFFF4F6F8);

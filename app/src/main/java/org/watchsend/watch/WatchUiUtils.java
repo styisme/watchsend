@@ -352,4 +352,23 @@ public class WatchUiUtils {
         }
         return false;
     }
+
+    // 6. 从中间放大的入场动画
+    public static void applyEntryAnimation(android.app.Activity activity) {
+        activity.overridePendingTransition(0, 0); // 关掉系统默认的转场
+        final View root = activity.findViewById(android.R.id.content);
+        if (root == null) return;
+        
+        root.setScaleX(0.6f);
+        root.setScaleY(0.6f);
+        root.setAlpha(0f);
+        
+        root.animate()
+            .scaleX(1.0f)
+            .scaleY(1.0f)
+            .alpha(1.0f)
+            .setDuration(250)
+            .setInterpolator(new android.view.animation.DecelerateInterpolator())
+            .start();
+    }
 }

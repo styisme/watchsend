@@ -31,6 +31,7 @@ public class WatchSettingsActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
+        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         
         // 如果开启了圆屏优化，隐藏顶部标题和返回按钮
         boolean isRoundOpt = getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("round_screen_opt", false);

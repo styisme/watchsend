@@ -50,6 +50,7 @@ public class CrossNetActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cross_net);
+        org.watchsend.watch.WatchUiUtils.applyEntryAnimation(this);
         ThemeUtils.applyTheme(this);
 
         if (ThemeUtils.isDarkMode(this)) {
