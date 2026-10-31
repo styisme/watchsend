@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
 
@@ -11,6 +10,19 @@ android {
         targetSdkVersion 28
         versionCode 20
         versionName "2.0.0"
+    }
+
+    // ⭐ 核心修复：读取环境变量进行签名
+    signingConfigs {
+        release {
+            def envStoreFile = System.getenv("NAS_KEYSTORE_PATH")
+            if (envStoreFile != null) {
+                storeFile file(envStoreFile)
+                storePassword System.getenv("NAS_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("NAS_KEY_ALIAS")
+                keyPassword System.getenv("NAS_KEY_PASSWORD")
+            }
+        }
     }
 
     compileOptions {
@@ -27,12 +39,15 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            // 如果环境变量存在，则使用正式签名；否则用 debug 签名兜底
+            if (System.getenv("NAS_KEYSTORE_PATH") != null) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
     }
 }
 
 dependencies {
-    
 }
-
-

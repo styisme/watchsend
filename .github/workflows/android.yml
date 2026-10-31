@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1. 使用 JDK 17 初始化 SDK (适配现代 sdkmanager)
+      # 1. 使用 JDK 17 初始化 SDK
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -28,7 +28,7 @@ jobs:
         with:
           packages: 'platforms;android-28 build-tools;28.0.3 platform-tools'
 
-      # 2. 切换回古早的 JDK 8 (WatchSend 的专属构建环境)
+      # 2. 切换回古早的 JDK 8
       - name: Set up JDK 8 Zulu
         uses: actions/setup-java@v4
         with:
@@ -42,12 +42,19 @@ jobs:
             echo "JAVA_HOME=$JAVA_HOME_8_X64" >> $GITHUB_ENV
           fi
 
+      # 3. 配置 Gradle 5.6.4
+      - name: Setup Gradle 5.6.4
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-5.6.4-bin.zip
+          unzip -q gradle-5.6.4-bin.zip
+          echo "$PWD/gradle-5.6.4/bin" >> $GITHUB_PATH
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      # 3. 解码签名密钥
+      # 4. 解码签名密钥
       - name: Decode Release Keystore
         env:
           KEYSTORE_B64: ${{ secrets.NAS_KEYSTORE_BASE64 }}
@@ -59,7 +66,7 @@ jobs:
             echo "WARN: NAS_KEYSTORE_BASE64 not set, fallback to debug signing"
           fi
 
-      # 4. 同步版本号并编译 Release APK
+      # 5. 同步版本号并编译 (用全局 gradle 替代 ./gradlew)
       - name: Sync Version & Build
         env:
           NAS_KEYSTORE_PATH: ${{ github.workspace }}/release.keystore
@@ -71,25 +78,17 @@ jobs:
           python sync_version.py
           VERSION=$(grep -oP '##\s*\[?v?\K\d+\.\d+\.\d+' CHANGELOG.md | head -1)
           
-          # 配置 Gradle 签名
-          if [ -f "$NAS_KEYSTORE_PATH" ]; then
-            sed -i "s/storeFile\s*.*/storeFile file('$NAS_KEYSTORE_PATH')/" app/build.gradle || true
-            sed -i "s/storePassword\s*.*/storePassword '$NAS_KEYSTORE_PASSWORD'/" app/build.gradle || true
-            sed -i "s/keyAlias\s*.*/keyAlias '$NAS_KEY_ALIAS'/" app/build.gradle || true
-            sed -i "s/keyPassword\s*.*/keyPassword '$NAS_KEY_PASSWORD'/" app/build.gradle || true
-          fi
+          # 直接执行全局 gradle，无需 chmod gradlew
+          gradle assembleRelease --no-daemon
           
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
-          
-          # 重命名文件
+          # 重命名文件 (寻找已签名的 release 包)
           find app/build/outputs/apk/release/ -name "*.apk" -not -name "*unaligned*" | head -n 1 | xargs -I {} mv {} app/build/outputs/apk/release/WatchSend-v${VERSION}.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: watchsend-apk
-          path: app/build/outputs/apk/release/*.apk
+          path: app/build/outputs/apk/release/WatchSend-v*.apk
 
   auto-release:
     needs: build-watch
@@ -130,9 +129,8 @@ jobs:
         if: steps.check_tag.outputs.skip_release == 'false'
         run: |
           mkdir -p release_files
-          VERSION="${{ steps.check_tag.outputs.version }}"
-          find ./all_artifacts/watchsend-apk -type f -name "*.apk" -exec cp {} release_files/WatchSend-$VERSION.apk \;
-          
+          find ./all_artifacts/watchsend-apk -type f -name "*.apk" -exec cp {} release_files/ \;
+
       - name: Create GitHub Release
         if: steps.check_tag.outputs.skip_release == 'false'
         uses: softprops/action-gh-release@v2
