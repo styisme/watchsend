@@ -58,6 +58,14 @@ jobs:
           rm -rf ~/.gradle/caches/transforms-* || true
           rm -rf app/build build || true
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Sync Version for Debug
+        run: python sync_version.py
+
       - name: Build Debug APK
         run: |
           set -o pipefail

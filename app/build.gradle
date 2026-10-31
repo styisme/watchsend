@@ -37,6 +37,13 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-preview"
+            resValue "string", "app_name", "WatchSend Preview"
+        }
+
         release {
             minifyEnabled false
             // 如果环境变量存在，则使用正式签名；否则用 debug 签名兜底
