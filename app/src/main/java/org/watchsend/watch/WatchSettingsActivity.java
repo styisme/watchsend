@@ -129,7 +129,6 @@ public class WatchSettingsActivity extends Activity {
         });
         addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
         addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
-        addSwitch(I18nManager.get("receive_notif"), I18nManager.get("receive_notif_desc"), OldSendService.getPrefBooleanGlobal("receive_notif", false), saveTo("receive_notif"));
         addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
         });
@@ -351,12 +350,6 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             }
         });
     }
-
-    private void editTimeout() {
-        WatchUiUtils.showInput(this, I18nManager.get("timeout"), String.valueOf(prefs().getInt("timeout", 500)), new WatchUiUtils.OnInputListener() {
-            public void onInput(String text) {
-                try { prefs().edit().putInt("timeout", Integer.parseInt(text)).commit(); recreate(); } catch (Exception ignored) {}
-            }
         });
     }
 
