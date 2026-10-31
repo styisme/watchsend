@@ -345,8 +345,6 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             }
         });
     }
-        });
-    }
 
     private void editFilter() {
         WatchUiUtils.showInput(this, I18nManager.get("filter_ext_title"), OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new WatchUiUtils.OnInputListener() {
