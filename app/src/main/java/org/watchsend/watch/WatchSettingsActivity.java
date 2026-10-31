@@ -80,6 +80,13 @@ public class WatchSettingsActivity extends Activity {
             public void onClick(View v) { pickShape(); }
         });
 
+        // 动态取色 (仅在 Android 12+ 显示)
+        if (android.os.Build.VERSION.SDK_INT >= 31) {
+            addSwitch(I18nManager.get("dynamic_color"), I18nManager.get("dynamic_color_desc"), prefs().getBoolean("dynamic_color", true), new SwitchHandler() {
+                public void onChanged(boolean v) { prefs().edit().putBoolean("dynamic_color", v).commit(); recreate(); }
+            });
+        }
+
         // 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
         addSwitch(I18nManager.get("chin_padding"), I18nManager.get("chin_padding_desc"), prefs().getBoolean("chin_padding", false), saveTo("chin_padding"));
 
@@ -275,7 +282,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         final TextView tvValue = new TextView(this);
         tvValue.setText(String.format(Locale.US, "%.2f", currentScale) + "x");
         tvValue.setTextSize(18); tvValue.setGravity(Gravity.CENTER);
-        tvValue.setTextColor(0xFF388E3C);
+        tvValue.setTextColor(org.watchsend.util.ThemeUtils.getPrimaryColor(this));
         layout.addView(tvValue);
 
         SeekBar sb = new SeekBar(this);
@@ -288,14 +295,14 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         GradientDrawable bg = new GradientDrawable();
         bg.setCornerRadius(dp(3)); bg.setColor(0xFF3E3E3E); bg.setSize(0, dp(6));
         GradientDrawable progress = new GradientDrawable();
-        progress.setCornerRadius(dp(3)); progress.setColor(0xFF388E3C); progress.setSize(0, dp(6));
+        progress.setCornerRadius(dp(3)); progress.setColor(org.watchsend.util.ThemeUtils.getPrimaryColor(this)); progress.setSize(0, dp(6));
         ClipDrawable clip = new ClipDrawable(progress, Gravity.LEFT, ClipDrawable.HORIZONTAL);
         LayerDrawable ld = new LayerDrawable(new Drawable[]{bg, clip});
         ld.setId(0, android.R.id.background); ld.setId(1, android.R.id.progress);
         sb.setProgressDrawable(ld);
 
         GradientDrawable thumb = new GradientDrawable();
-        thumb.setShape(GradientDrawable.OVAL); thumb.setColor(0xFFFFFFFF); thumb.setStroke(dp(3), 0xFF388E3C); thumb.setSize(thumbSize, thumbSize);
+        thumb.setShape(GradientDrawable.OVAL); thumb.setColor(0xFFFFFFFF); thumb.setStroke(dp(3), org.watchsend.util.ThemeUtils.getPrimaryColor(this)); thumb.setSize(thumbSize, thumbSize);
         sb.setThumb(thumb);
         sb.setSplitTrack(false);
         sb.setPadding(thumbSize/2, 0, thumbSize/2, 0);

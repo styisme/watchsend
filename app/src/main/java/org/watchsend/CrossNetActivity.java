@@ -68,7 +68,7 @@ public class CrossNetActivity extends Activity {
         isDark = ThemeUtils.isDarkMode(this);
         colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
-        colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        colorAccent = org.watchsend.util.ThemeUtils.getAccentColor(this);
         bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
 
         View rootCn = findViewById(R.id.root_cross_net);

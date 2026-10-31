@@ -35,7 +35,7 @@ public class Md3DialogUtils {
         if (title != null) title.setTextColor(Color.parseColor("#E0E0E0"));
         
         TextView btnPos = (TextView) dialog.findViewById(R.id.dlg_btn_positive);
-        if (btnPos != null) btnPos.setTextColor(Color.parseColor("#81C784"));
+        if (btnPos != null) btnPos.setTextColor(org.watchsend.util.ThemeUtils.getAccentColor(ctx));
         
         TextView btnNeg = (TextView) dialog.findViewById(R.id.dlg_btn_negative);
         if (btnNeg != null) btnNeg.setTextColor(Color.parseColor("#AAAAAA"));

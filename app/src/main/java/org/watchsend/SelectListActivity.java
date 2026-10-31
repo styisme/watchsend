@@ -78,7 +78,7 @@ public class SelectListActivity extends Activity {
         boolean isDark = ThemeUtils.isDarkMode(this);
         int colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         int colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
-        int colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        int colorAccent = org.watchsend.util.ThemeUtils.getAccentColor(this);
 
         // ===== 顶部：文件数量与总大小 =====
         LinearLayout headerCard = new LinearLayout(this);

@@ -10,6 +10,36 @@ import android.widget.TextView;
 import org.watchsend.R;
 
 public class ThemeUtils {
+    public static boolean isDynamicColorEnabled(Context ctx) {
+        // 仅在 Android 12 (API 31) 及以上开启
+        return android.os.Build.VERSION.SDK_INT >= 31 &&
+               ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("dynamic_color", true);
+    }
+
+    public static int getSystemColor(Context ctx, String resName, int fallback) {
+        try {
+            int colorId = ctx.getResources().getIdentifier(resName, "color", "android");
+            if (colorId != 0) return ctx.getResources().getColor(colorId);
+        } catch (Exception ignored) {}
+        return fallback;
+    }
+
+    public static int getPrimaryColor(Context ctx) {
+        if (isDynamicColorEnabled(ctx)) {
+            return getSystemColor(ctx, "system_accent1_600", 0xFF388E3C);
+        }
+        return 0xFF388E3C;
+    }
+
+    public static int getAccentColor(Context ctx) {
+        boolean isDark = isDarkMode(ctx);
+        if (isDynamicColorEnabled(ctx)) {
+            return getSystemColor(ctx, isDark ? "system_accent1_200" : "system_accent1_800", 
+                                 isDark ? 0xFF81C784 : 0xFF1B5E20);
+        }
+        return isDark ? 0xFF81C784 : 0xFF1B5E20;
+    }
+
     public static boolean isDarkMode(Context ctx) {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("dark_mode", false);
     }

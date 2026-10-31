@@ -107,7 +107,7 @@ public class TransferActivity extends Activity {
         isDark = ThemeUtils.isDarkMode(this);
         colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
         colorSec = isDark ? 0xFFAAAAAA : 0xFF666666;
-        colorAccent = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        colorAccent = org.watchsend.util.ThemeUtils.getAccentColor(this);
 
         View root = findViewById(R.id.root_transfer);
         root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
