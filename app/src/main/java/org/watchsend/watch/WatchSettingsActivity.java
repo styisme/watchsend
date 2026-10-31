@@ -151,8 +151,7 @@ public class WatchSettingsActivity extends Activity {
 
 
         addSection(I18nManager.get("other"));
-        addSwitch(I18nManager.get("anim"), prefs().getBoolean("use_anim", true), saveTo("use_anim"));
-        addItem(I18nManager.get("backup"), new View.OnClickListener() {
+addItem(I18nManager.get("backup"), new View.OnClickListener() {
             public void onClick(View v) { backupDialog(); }
         });
         addItem(I18nManager.get("about"), new View.OnClickListener() {
