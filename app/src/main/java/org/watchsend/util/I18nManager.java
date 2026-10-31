@@ -181,6 +181,7 @@ public class I18nManager {
         zh.put("nearby_devices", "附近的设备"); zh.put("scan", "扫描"); zh.put("edit", "编辑"); zh.put("add", "追加");
         zh.put("empty_scanning", "扫描中..."); zh.put("add_ip", "加IP"); zh.put("no_device_scan", "暂无设备，请点击扫描");
     
+zh.put("lang_switched", "语言已切换");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -294,6 +295,7 @@ dict.put("zh", zh);
         zhTW.put("nearby_devices", "附近的設備"); zhTW.put("scan", "掃描"); zhTW.put("edit", "編輯"); zhTW.put("add", "追加");
         zhTW.put("empty_scanning", "掃描中..."); zhTW.put("add_ip", "加IP"); zhTW.put("no_device_scan", "暫無設備，請點擊掃描");
     
+zhTW.put("lang_switched", "語言已切換");
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -467,6 +469,7 @@ dict.put("zh_TW", zhTW);
         en.put("nearby_devices", "Nearby Devices"); en.put("scan", "Scan"); en.put("edit", "Edit"); en.put("add", "Add");
         en.put("empty_scanning", "Scanning..."); en.put("add_ip", "Add IP"); en.put("no_device_scan", "No devices, tap to scan");
     
+en.put("lang_switched", "Language changed");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -584,6 +587,7 @@ dict.put("en", en);
         ja.put("nearby_devices", "近くのデバイス"); ja.put("scan", "スキャン"); ja.put("edit", "編集"); ja.put("add", "追加");
         ja.put("empty_scanning", "スキャン中..."); ja.put("add_ip", "IP追加"); ja.put("no_device_scan", "デバイスなし、スキャンしてください");
     
+ja.put("lang_switched", "言語を変更しました");
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -701,6 +705,7 @@ dict.put("ja", ja);
         ko.put("nearby_devices", "주변 기기"); ko.put("scan", "검색"); ko.put("edit", "편집"); ko.put("add", "추가");
         ko.put("empty_scanning", "스캔 중..."); ko.put("add_ip", "IP 추가"); ko.put("no_device_scan", "기기가 없습니다. 스캔하세요");
     
+ko.put("lang_switched", "언어가 변경되었습니다");
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -818,6 +823,7 @@ dict.put("ko", ko);
         de.put("nearby_devices", "Geräte in der Nähe"); de.put("scan", "Scannen"); de.put("edit", "Bearbeiten"); de.put("add", "Hinzufügen");
         de.put("empty_scanning", "Scannen..."); de.put("add_ip", "IP hinzufügen"); de.put("no_device_scan", "Keine Geräte, scannen");
     
+de.put("lang_switched", "Sprache geändert");
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -935,6 +941,7 @@ dict.put("de", de);
         fr.put("nearby_devices", "Appareils à proximité"); fr.put("scan", "Scanner"); fr.put("edit", "Modifier"); fr.put("add", "Ajouter");
         fr.put("empty_scanning", "Scan..."); fr.put("add_ip", "Ajouter IP"); fr.put("no_device_scan", "Aucun appareil, scannez");
     
+fr.put("lang_switched", "Langue modifiée");
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1052,6 +1059,7 @@ dict.put("fr", fr);
         es.put("nearby_devices", "Dispositivos cercanos"); es.put("scan", "Escanear"); es.put("edit", "Editar"); es.put("add", "Añadir");
         es.put("empty_scanning", "Escaneando..."); es.put("add_ip", "Añadir IP"); es.put("no_device_scan", "Sin dispositivos, escanea");
     
+es.put("lang_switched", "Idioma cambiado");
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1169,6 +1177,7 @@ dict.put("es", es);
         ru.put("nearby_devices", "Устройства рядом"); ru.put("scan", "Сканировать"); ru.put("edit", "Изменить"); ru.put("add", "Добавить");
         ru.put("empty_scanning", "Сканирование..."); ru.put("add_ip", "Добавить IP"); ru.put("no_device_scan", "Нет устройств, сканируйте");
     
+ru.put("lang_switched", "Язык изменен");
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1286,6 +1295,7 @@ dict.put("ru", ru);
         pt.put("nearby_devices", "Dispositivos próximos"); pt.put("scan", "Escanear"); pt.put("edit", "Editar"); pt.put("add", "Adicionar");
         pt.put("empty_scanning", "Escaneando..."); pt.put("add_ip", "Adicionar IP"); pt.put("no_device_scan", "Nenhum dispositivo, escaneie");
     
+pt.put("lang_switched", "Idioma alterado");
 dict.put("pt", pt);
     }
 

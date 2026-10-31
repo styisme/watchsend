@@ -337,7 +337,7 @@ public class WatchSettingsActivity extends Activity {
             public void onItemSelect(int pos) {
                 String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
                 prefs().edit().putString("app_lang", codes[pos]).commit();
-                Toast.makeText(WatchSettingsActivity.this, "语言已切换", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WatchSettingsActivity.this, I18nManager.get("lang_switched"), Toast.LENGTH_SHORT).show();
                 finish(); // 直接 finish 退回主页，主页面 onResume 会检测到并自动重建
             }
         }).show();

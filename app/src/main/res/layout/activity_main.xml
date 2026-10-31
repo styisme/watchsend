@@ -117,8 +117,7 @@
                 android:background="@drawable/watch_btn_secondary" android:layout_marginBottom="4dp" />
 
             <Button android:id="@+id/btn_log"
-                android:layout_width="match_parent" android:layout_height="36dp"
-                android:text="日志" android:textSize="11sp" android:textColor="#666"
+            android:text="" android:textSize="11sp" android:textColor="#666"
                 android:background="@android:color/transparent" android:minHeight="0dp" />
         </LinearLayout>
     </ScrollView>
