@@ -74,6 +74,7 @@ public class TransferActivity extends Activity {
         setContentView(R.layout.activity_transfer);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
+        org.watchsend.watch.WatchHardwareUtils.keepScreenOn(this, true);
 
         isDark = ThemeUtils.isDarkMode(this);
         colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
@@ -447,8 +448,7 @@ public class TransferActivity extends Activity {
         isDone = true;
 
         try {
-            android.os.Vibrator v = (android.os.Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            if (v != null) v.vibrate(100);
+            org.watchsend.watch.WatchHardwareUtils.vibrate(this, ok ? org.watchsend.watch.WatchHardwareUtils.HAPTIC_SUCCESS : org.watchsend.watch.WatchHardwareUtils.HAPTIC_ERROR);
         } catch (Exception ignored) {}
 
         btnCancel.setVisibility(View.GONE);

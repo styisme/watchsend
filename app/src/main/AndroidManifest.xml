@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.watchsend">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -56,5 +57,19 @@
         <activity android:name=".CrossNetActivity" android:theme="@android:style/Theme.NoTitleBar" />
             <activity android:name=".watch.WatchSettingsActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
+    
+        <!-- 仅针对 Android 7.0+ 的磁贴服务，老设备自动忽略 -->
+        <service
+            android:name=".watch.QuickScanTileService"
+            android:label="WatchSend"
+            android:icon="@drawable/ic_launcher"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        
     </application>
 </manifest>

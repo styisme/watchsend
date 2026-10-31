@@ -83,6 +83,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         LinearLayout mainContainer = (LinearLayout) findViewById(R.id.main_container);
         if (mainScroll != null && mainContainer != null) {
             WatchUiUtils.setupWheelScroll(mainScroll, mainContainer);
+            org.watchsend.watch.WatchHardwareUtils.bindRotaryEncoder(mainScroll);
         }
 
         status = (TextView) findViewById(R.id.status);
@@ -122,16 +123,16 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         DeviceStore.get().setListener(this);
 
         toggleBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { toggleService(); }
+            public void onClick(View v) { org.watchsend.watch.WatchHardwareUtils.vibrate(MainActivity.this, org.watchsend.watch.WatchHardwareUtils.HAPTIC_LIGHT); toggleService(); }
         });
         btnSend.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { showSendTypeDialog(false); }
+            public void onClick(View v) { org.watchsend.watch.WatchHardwareUtils.vibrate(MainActivity.this, org.watchsend.watch.WatchHardwareUtils.HAPTIC_LIGHT); showSendTypeDialog(false); }
         });
         btnHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { toggleHistory(); }
         });
         btnCrossNet.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { startActivity(new Intent(MainActivity.this, CrossNetActivity.class)); }
+            public void onClick(View v) { org.watchsend.watch.WatchHardwareUtils.vibrate(MainActivity.this, org.watchsend.watch.WatchHardwareUtils.HAPTIC_LIGHT); startActivity(new Intent(MainActivity.this, CrossNetActivity.class)); }
         });
         btnSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { startActivity(new Intent(MainActivity.this, WatchSettingsActivity.class)); }
