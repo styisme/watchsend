@@ -8,7 +8,7 @@
 
 ## ⚠️ 关于 AI 生成代码
 
-遵循 [AI 开发规范](https://github.com/styisme/ai-development-guidelines)，本项目的绝大多数代码由 **AI 辅助生成**（特别是 Wear OS 专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态药丸卡片布局）。
+遵循 [AI 开发规范](https://github.com/styisme/ai-development-guidelines)，本项目的绝大多数代码由 **AI 辅助生成**（特别是 Wear OS 专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态药丸卡片布局、以及硬件兼容性封装）。
 
 提交 PR 时请务必：
 - 说明改动是否由 AI 生成。
@@ -32,13 +32,14 @@
 ```bash
 git clone https://github.com/styisme/watchsend.git
 cd watchsend
+python sync_version.py   # 自动从 CHANGELOG 同步版本号
 gradle assembleDebug
 ```
 
-### 云端构建
-项目已配置 GitHub Actions：
-- Push 到 `main` 或 `master` 自动编译。
-- 编译产物在 **Artifacts** 区域下载，名称为 `watchsend-debug`。
+### 云端构建与自动发版
+项目已配置强大的 GitHub Actions 自动发版流水线：
+- 当 `CHANGELOG.md` 发生变更并 Push 到 `main` 或 `master` 时，自动触发。
+- CI 会自动提取版本号 -> 注入 Gradle -> 解密签名 -> 编译 Release APK -> 自动打 Tag 并发布到 GitHub Release。
 
 ---
 
@@ -55,12 +56,16 @@ watchsend/
 │   │   ├── transfer/     # 文件保存与上传逻辑
 │   │   ├── ui/           # 自定义控件（如 Md3Switch）与适配器
 │   │   ├── util/         # 工具类（多语言引擎 I18nManager, 深色主题 ThemeUtils 等）
-│   │   ├── watch/        # ⭐ 手表端专属 UI 工具
-│   │   │   ├── WatchUiUtils.java       # 3D滚轮、圆屏Padding、手势拦截、动画
-│   │   │   └── WatchSettingsActivity.java # 手表设置页
+│   │   ├── watch/        # ⭐ 手表端专属 UI 与硬件工具
+│   │   │   ├── WatchUiUtils.java           # 3D滚轮、圆屏Padding、手势拦截、动画
+│   │   │   ├── WatchHardwareUtils.java     # 表冠滑动、屏幕常亮、触觉反馈兼容封装
+│   │   │   ├── QuickScanTileService.java   # Wear OS 快捷磁贴 (API 24+)
+│   │   │   └── WatchSettingsActivity.java  # 手表设置页
 │   │   ├── MainActivity.java      # 主界面
 │   │   └── TransferActivity.java  # 全屏传输进度 UI
 │   └── src/main/res/     # 布局、图标、样式
+├── .github/workflows/    # CI/CD 自动化流水线
+└── sync_version.py       # 自动从 CHANGELOG 提取版本并注入项目的脚本
 ```
 
 ---
@@ -97,7 +102,7 @@ watchsend/
 ```
 feat(watch): 增加表冠滚动列表支持
 fix(ui): 修复深色模式下进度条背景为亮黄色的问题
-style(ui): 统一跨网页面与设置页面的药丸卡片风格
+ci: 接入全自动签名与发版流水线
 ```
 
 ---
@@ -162,7 +167,7 @@ Closes #123
 
 ---
 
-## 版本号规则
+## 版本号规则 (自动化强约束)
 
 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/)：
 
@@ -172,7 +177,8 @@ Closes #123
 | 向后兼容的新功能 | **MINOR** |
 | Bug 修复 | **PATCH** |
 
-在开发前，请更新 `CHANGELOG.md`，然后再修改 `app/build.gradle` 中的 `versionCode` 和 `versionName`。
+⚠️ **重要**：本项目已实现自动化版本号同步。**绝对不要手动修改 `app/build.gradle` 中的 `versionCode` 和 `versionName`**。
+只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.2.0] - 2026-11-01`），CI 会在编译前自动完成注入。
 
 ---
 
@@ -182,7 +188,7 @@ Closes #123
 A: 必须使用 JDK 8。GitHub Actions 已经固定使用 Zulu JDK 8。
 
 **Q: 编译报错 `error: duplicate attribute`？**
-A: 布局文件（如 `activity_main.xml`）中有重复的 `android:id` 或属性，检查是否用脚本批量替换时覆盖了。
+A: 布局文件（如 `activity_main.xml`）中有重复的 `android:id` 或属性，检查是否用正则批量替换时覆盖了。
 
 **Q: 发送端提示 `Cleartext HTTP traffic not permitted`？**
 A: Android 9.0+ 默认禁止明文 HTTP。请确保 `AndroidManifest.xml` 的 `<application>` 标签中包含了 `android:usesCleartextTraffic="true"`。
@@ -193,5 +199,11 @@ A: WatchSend 的所有 UI 都是纯 Java 动态生成的。请检查对应页面
 **Q: 滑动返回手势与系统返回冲突 / 卡死？**
 A: 请检查设置页的“拦截系统返回”开关是否开启。在底层，我们通过 `onBackPressed()` 拦截了系统原生返回，统一交由 `WatchUiUtils.handleSwipeBack()` 处理。
 
-**Q: 开启圆屏优化后，顶部标题栏消失，怎么返回？**
+**Q: 开启了圆屏优化后，顶部标题栏消失，怎么返回？**
 A: 这是刻意设计的沉浸式体验。在开启圆屏优化时，依赖**滑动屏幕返回**。如果滑动失效，请检查 `WatchUiUtils` 中的 `handleSwipeBack` 事件是否被当前页面的内部控件（如横向的 ScrollView）过度消费。
+
+**Q: 为什么自动发版构建出来的 APK 是 Debug 签名的？**
+A: 请检查仓库的 `Settings -> Secrets and variables -> Actions` 中是否正确配置了 `NAS_KEYSTORE_BASE64`、`NAS_KEYSTORE_PASSWORD` 等 4 个签名参数。如果未配置，CI 会打印警告并降级为 Debug 签名。
+
+**Q: 旧版手表（Wear OS 2.0 或 Android 7.0 以下）安装新版本后，磁贴功能无效？**
+A: 快捷磁贴 (`QuickScanTileService`) 和表冠事件 (API 26+) 需要系统级支持。代码中已做 API 版本兼容判断，低版本设备会自动忽略这些特性，不影响基础传输功能。

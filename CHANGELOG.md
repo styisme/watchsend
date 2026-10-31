@@ -8,7 +8,30 @@
 
 ### Planned
 - 基于 WebRTC 的手表端 NAT 打洞。
-- 表冠（Rotary Input）滑动列表支持。
+- 表盘 Complication（复杂功能）状态显示支持。
+
+---
+
+## [1.1.0] - 2026-10-31
+
+本次更新是 WatchSend 迈向“极致原生手表体验”的里程碑。全面接入 Wear OS 硬件交互能力，清理全应用死角硬编码，并实现了全自动化发版流水线。
+
+### Added
+- **表冠滑动支持 (Rotary Input)**：完美适配 Wear OS 3+ 旋转表冠，拨动表冠即可丝滑滚动列表。
+- **全局触觉反馈 (Haptic Feedback)**：对点击、成功、失败操作注入不同强度的震动反馈，提升盲操确认感。
+- **传输屏幕常亮**：传输进度页强制维持屏幕常亮，防止手表息屏打断传输，结束自动恢复。
+- **快捷磁贴 (Wear OS Tiles)**：支持下拉快捷面板一键唤起 App（API 24+ 生效，老设备自动忽略）。
+- **低性能模式**：新增开关，一键关闭 3D 滚轮、预测性返回等复杂动画，保障老旧设备流畅度。
+- **全自动 CI/CD 流水线**：集成自动提取版本号、自动注入签名、自动构建 Release 包并创建 GitHub Release 的完整发版机制。
+
+### Fixed
+- 彻底扫除了主界面、设置页、传输页及 Toast 提示中残留的中英韩混杂硬编码，实现了 10 国语言 100% 无缝覆盖。
+- 修复了清理 XML 节点属性时误删宽高导致的 App 启动闪退崩溃问题。
+- 修复了语言切换后主页不热更新、需重启生效的体验割裂问题。
+- 修复了深色模式下部分按钮“白底白字”及进度条刺眼的问题。
+
+### Changed
+- **编译产物**：Release APK 文件名统一规范为 `WatchSend-vX.X.X.apk`。
 
 ---
 
@@ -40,5 +63,6 @@
 
 ## 版本对比链接
 
-[Unreleased]: https://github.com/styisme/watchsend/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/styisme/watchsend/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/styisme/watchsend/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/styisme/watchsend/releases/tag/v1.0.0
