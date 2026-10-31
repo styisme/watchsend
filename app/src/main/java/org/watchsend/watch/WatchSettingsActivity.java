@@ -73,10 +73,7 @@ public class WatchSettingsActivity extends Activity {
 
         addSection(I18nManager.get("general"));
 
-        // ⭐ 核心恢复：圆屏优化强制开关 (手动覆盖自动检测)
-        addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
-            public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
-        });
+        
 
         // 屏幕形状选择 (自动/强制圆/强制方)
         addItem(I18nManager.get("screen_shape") + ": " + currentShapeLabel(), new View.OnClickListener() {
@@ -280,7 +277,9 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
 
         SeekBar sb = new SeekBar(this);
         sb.setMax(100);
-        sb.setProgress(Math.max(0, Math.min(100, (int)((currentScale - 0.5f) * 100))));
+        // 把当前比例映射到 0-100 的进度 (范围: 0.3f ~ 2.5f)
+        int currentProgress = (int) (((currentScale - 0.3f) / 2.2f) * 100f);
+        sb.setProgress(Math.max(0, Math.min(100, currentProgress)));
         
         int thumbSize = dp(24);
         GradientDrawable bg = new GradientDrawable();
@@ -300,11 +299,13 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         
         sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar seekBar, int p, boolean f) {
-                tvValue.setText(String.format(Locale.US, "%.2f", 0.5f + (p/100f)) + "x");
+                float newScale = 0.3f + (p / 100f) * 2.2f;
+                tvValue.setText(String.format(Locale.US, "%.2f", newScale) + "x");
             }
             public void onStartTrackingTouch(SeekBar seekBar) {}
             public void onStopTrackingTouch(SeekBar seekBar) {
-                prefs().edit().putFloat("ui_scale", 0.5f + (seekBar.getProgress()/100f)).commit();
+                float newScale = 0.3f + (seekBar.getProgress() / 100f) * 2.2f;
+                prefs().edit().putFloat("ui_scale", newScale).commit();
                 recreate();
             }
         });

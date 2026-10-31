@@ -182,7 +182,7 @@ public class I18nManager {
         zh.put("empty_scanning", "扫描中..."); zh.put("add_ip", "加IP"); zh.put("no_device_scan", "暂无设备，请点击扫描");
     
 zh.put("lang_switched", "语言已切换");
-zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "自动检测"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏");
+zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "圆屏优化(自动)"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -297,7 +297,7 @@ dict.put("zh", zh);
         zhTW.put("empty_scanning", "掃描中..."); zhTW.put("add_ip", "加IP"); zhTW.put("no_device_scan", "暫無設備，請點擊掃描");
     
 zhTW.put("lang_switched", "語言已切換");
-zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "自動偵測"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
+zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "圓屏優化(自動)"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -472,7 +472,7 @@ dict.put("zh_TW", zhTW);
         en.put("empty_scanning", "Scanning..."); en.put("add_ip", "Add IP"); en.put("no_device_scan", "No devices, tap to scan");
     
 en.put("lang_switched", "Language changed");
-en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Auto Detect"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square");
+en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Round Opt (Auto)"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
