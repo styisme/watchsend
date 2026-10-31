@@ -45,6 +45,11 @@ public class WatchSettingsActivity extends Activity {
         }
 
         container = (LinearLayout) findViewById(R.id.settings_container);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.settings_scroll);
+        if (scrollView != null && container != null) {
+            WatchUiUtils.setupWheelScroll(scrollView, container);
+            org.watchsend.watch.WatchHardwareUtils.bindRotaryEncoder(scrollView);
+        }
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { finish(); }
         });
@@ -68,7 +73,12 @@ public class WatchSettingsActivity extends Activity {
 
         addSection(I18nManager.get("general"));
 
-        // 屏幕形状
+        // ⭐ 核心恢复：圆屏优化强制开关 (手动覆盖自动检测)
+        addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
+            public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
+        });
+
+        // 屏幕形状选择 (自动/强制圆/强制方)
         addItem(I18nManager.get("screen_shape") + ": " + currentShapeLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickShape(); }
         });
