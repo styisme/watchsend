@@ -297,14 +297,16 @@ public class WatchUiUtils {
             case android.view.MotionEvent.ACTION_MOVE:
                 float deltaX = ev.getX() - startX;
                 float deltaY = ev.getY() - startY;
+                
+                // 低性能模式：直接判断，不跟手，不走下面的动画
                 if (isLowPerformance(activity)) {
                     if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-                        // 直接返回，无跟手
                         activity.finish();
                         return true;
                     }
-                    return false;
+                    break; // 修复不可达语句
                 }
+                
                 if (!isSwiping) {
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         isSwiping = true;
@@ -332,6 +334,30 @@ public class WatchUiUtils {
                     return true; 
                 }
                 break;
+                
+            case android.view.MotionEvent.ACTION_UP:
+            case android.view.MotionEvent.ACTION_CANCEL:
+                if (isSwiping) {
+                    isSwiping = false;
+                    float finalDeltaX = ev.getX() - startX;
+                    
+                    if (Math.abs(finalDeltaX) > screenWidth / 4) {
+                        float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
+                        root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
+                            public void run() {
+                                activity.finish();
+                                activity.overridePendingTransition(0, 0); 
+                                root.setTranslationX(0);
+                                root.setScaleX(1f);
+                                root.setScaleY(1f);
+                                root.setAlpha(1f);
+                            }
+                        }).start();
+                    } else {
+                        root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
+                    }
+                    return true;
+                }
                 break;
         }
         return false;
