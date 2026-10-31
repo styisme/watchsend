@@ -175,7 +175,11 @@ public class WatchSettingsActivity extends Activity {
         container.addView(tv);
     }
 
-    private void addSwitch(String label, String subLabel, boolean value, final SwitchHandler handler) {
+        private void addSwitch(String label, boolean value, final SwitchHandler handler) {
+        addSwitch(label, null, value, handler);
+    }
+
+private void addSwitch(String label, String subLabel, boolean value, final SwitchHandler handler) {
         boolean isDark = ThemeUtils.isDarkMode(this);
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
