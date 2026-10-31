@@ -73,8 +73,6 @@ public class WatchSettingsActivity extends Activity {
 
         addSection(I18nManager.get("general"));
 
-        
-
         // 屏幕形状选择 (自动/强制圆/强制方)
         addItem(I18nManager.get("screen_shape") + ": " + currentShapeLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickShape(); }
@@ -132,9 +130,6 @@ public class WatchSettingsActivity extends Activity {
         addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
         });
-        addItem(I18nManager.get("timeout") + ": " + prefs().getInt("timeout", 500), new View.OnClickListener() {
-            public void onClick(View v) { editTimeout(); }
-        });
 
 
         addSection(I18nManager.get("device_security"));
@@ -150,7 +145,7 @@ public class WatchSettingsActivity extends Activity {
 
 
         addSection(I18nManager.get("other"));
-addItem(I18nManager.get("backup"), new View.OnClickListener() {
+        addItem(I18nManager.get("backup"), new View.OnClickListener() {
             public void onClick(View v) { backupDialog(); }
         });
         addItem(I18nManager.get("about"), new View.OnClickListener() {
