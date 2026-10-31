@@ -10,12 +10,12 @@
 
 ---
 
-## ⚠️ AI Generation Disclosure / AI 生成声明
+## ⚠️ Divulgation sur l'IA
 Ce projet est fortement assisté par l'IA. Consultez [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md) pour plus de détails.
 
 ---
 
-## ✨ Core Features / 核心特性
+## ✨ Fonctionnalités Principales
 - **Entrée Rotative**: Parfaitement adapté à la couronne rotative de Wear OS 3+.
 - **Couleur Dynamique**: Intégration Material You (Android 12+).
 - **Mode Ambiant**: Interface minimale avec barre de progression écran éteint.
@@ -25,10 +25,10 @@ Ce projet est fortement assisté par l'IA. Consultez [AI_DISCLOSURE.md](docs/AI_
 
 ---
 
-## 🛠️ Building / 编译
+## 🛠️ Compilation
 Chaîne d'outils: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**. Compilation en un clic: `python build.py`.
 
 ---
 
-## 📜 License / 协议
+## 📜 Licence
 MIT License. Entièrement compatible avec les protocoles LocalSend.

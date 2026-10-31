@@ -10,12 +10,12 @@
 
 ---
 
-## ⚠️ AI Generation Disclosure / AI 生成声明
+## ⚠️ Offenlegung der KI-Generierung
 Dieses Projekt wird stark von KI unterstützt. Weitere Informationen finden Sie in [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md).
 
 ---
 
-## ✨ Core Features / 核心特性
+## ✨ Hauptfunktionen
 - **Rotary Input**: Perfekt angepasst an die Wear OS 3+ Drehkrone.
 - **Dynamische Farbe**: Android 12+ Material You Integration.
 - **Ambient-Modus**: Minimale Benutzeroberfläche mit Fortschrittsbalken bei ausgeschaltetem Bildschirm.
@@ -25,10 +25,10 @@ Dieses Projekt wird stark von KI unterstützt. Weitere Informationen finden Sie 
 
 ---
 
-## 🛠️ Building / 编译
+## 🛠️ Bauen
 Toolchain: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**. Ein-Klick-Build: `python build.py`.
 
 ---
 
-## 📜 License / 协议
+## 📜 Lizenz
 MIT License. Vollständig kompatibel mit LocalSend-Protokollen.

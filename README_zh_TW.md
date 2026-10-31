@@ -10,12 +10,12 @@
 
 ---
 
-## ⚠️ AI Generation Disclosure / AI 生成声明
+## ⚠️ AI 生成聲明
 本專案由 AI 輔助生成。詳細範圍請查閱 [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)。
 
 ---
 
-## ✨ Core Features / 核心特性
+## ✨ 核心特性
 - **錶冠滑動支援 (Rotary Input)**: 完美適配 Wear OS 3+ 旋轉錶冠。
 - **動態取色**: Android 12+ 接入 Material You。
 - **息屏微光模式**: 息屏僅保留進度條，抬腕恢復。
@@ -25,10 +25,10 @@
 
 ---
 
-## 🛠️ Building / 编译
+## 🛠️ 編譯
 本專案使用 **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**，提供一鍵編譯腳本 `python build.py`。
 
 ---
 
-## 📜 License / 协议
+## 📜 協議
 本專案使用 MIT License，完美相容 LocalSend 協議。

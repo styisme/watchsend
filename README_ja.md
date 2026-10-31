@@ -10,12 +10,12 @@
 
 ---
 
-## ⚠️ AI Generation Disclosure / AI 生成声明
+## ⚠️ AI生成の開示
 このプロジェクトはAIによって大幅に支援されています。詳細は [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md) をご覧ください。
 
 ---
 
-## ✨ Core Features / 核心特性
+## ✨ 主な機能
 - **リューズ入力**: Wear OS 3+の回転リューズに完全対応。
 - **ダイナミックカラー**: Android 12+のMaterial Youに対応。
 - **アンビエントモード**: 画面オフ時はプログレスバーのみ表示。
@@ -25,10 +25,10 @@
 
 ---
 
-## 🛠️ Building / 编译
+## 🛠️ ビルド
 ツールチェーン: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**。ワンクリックビルド: `python build.py`。
 
 ---
 
-## 📜 License / 协议
+## 📜 ライセンス
 MIT License。LocalSendプロトコルと完全に互換性があります。

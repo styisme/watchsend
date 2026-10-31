@@ -10,12 +10,12 @@
 
 ---
 
-## ⚠️ AI Generation Disclosure / AI 生成声明
+## ⚠️ AI 생성 공개
 이 프로젝트는 AI의 도움을 많이 받아 생성되었습니다. 자세한 내용은 [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)를 확인하세요.
 
 ---
 
-## ✨ Core Features / 核心特性
+## ✨ 핵심 기능
 - **로터리 입력**: Wear OS 3+ 회전 크라운에 완벽하게 적용.
 - **다이내믹 컬러**: Android 12+ Material You 통합.
 - **앰비언트 모드**: 화면이 꺼져 있을 때 진행률 표시줄만 표시.
@@ -25,10 +25,10 @@
 
 ---
 
-## 🛠️ Building / 编译
+## 🛠️ 빌드
 툴체인: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**. 원클릭 빌드: `python build.py`.
 
 ---
 
-## 📜 License / 协议
+## 📜 라이선스
 MIT License. LocalSend 프로토콜과 완벽하게 호환됩니다.
