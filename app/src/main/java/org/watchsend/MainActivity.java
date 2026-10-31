@@ -589,7 +589,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         float curScale = sp.getFloat("ui_scale", 1.0f);
         
         if (!curLang.equals(lastLang) || curDark != lastDark || curRound != lastRound || curScale != lastScale) {
-            recreate(); return;
+            new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
+                public void run() {
+                    recreate();
+                }
+            }, 100);
+            return;
         }
         
         applyI18n();
