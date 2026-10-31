@@ -44,13 +44,14 @@ public class WatchUiUtils {
         }
     }
 
+    // ⭐ 修复：正确传入 root 进行形状判断
     public static void applyRoundPadding(Context ctx, View root) {
         boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(root);
         boolean isChinOpt = WatchHardwareUtils.needChinPadding(ctx);
         float density = ctx.getResources().getDisplayMetrics().density;
         int pLeft = isRoundOpt ? (int)(24 * density) : (int)(12 * density);
         int pRight = isRoundOpt ? (int)(24 * density) : (int)(12 * density);
-        int pBottom = isChinOpt ? (int)(32 * density) : 0; // 底部下巴避让
+        int pBottom = isChinOpt ? (int)(32 * density) : 0;
         root.setPadding(pLeft, 0, pRight, pBottom);
     }
 
@@ -66,11 +67,12 @@ public class WatchUiUtils {
         return bg;
     }
 
+    // ⭐ 修复：正确传入 scrollView 进行形状判断
     public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
         final Context ctx = scrollView.getContext();
-        if (WatchUiUtils.isLowPerformance(ctx)) return; // 拦截低性能
+        if (isLowPerformance(ctx)) return;
 
-        boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(root);
+        boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(scrollView);
         scrollView.setClipToPadding(false); 
         scrollView.setVerticalScrollBarEnabled(false);
         
@@ -250,7 +252,7 @@ public class WatchUiUtils {
         return d;
     }
 
-    // 在输入弹窗中加入语音输入按钮
+    // ⭐ 修复：纯 Java 动态添加语音按钮，无需修改 XML
     public static Dialog showInput(final Context ctx, String title, String def, final OnInputListener listener) {
         final Dialog d = new Dialog(ctx);
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -262,22 +264,32 @@ public class WatchUiUtils {
         final EditText et = (EditText) d.findViewById(R.id.dlg_input);
         et.setText(def);
 
-        // 获取语音按钮 (需要修改 dialog_watch_input.xml 添加一个 btn_voice，这里做兼容处理)
-        View btnVoice = d.findViewById(R.id.dlg_btn_voice);
-        if (btnVoice != null) {
-            btnVoice.setVisibility(View.VISIBLE);
+        // 动态添加语音输入按钮
+        LinearLayout contentContainer = (LinearLayout) d.findViewById(R.id.dlg_content_container);
+        if (contentContainer != null) {
+            LinearLayout voiceRow = new LinearLayout(ctx);
+            voiceRow.setOrientation(LinearLayout.HORIZONTAL);
+            voiceRow.setGravity(Gravity.END);
+            voiceRow.setPadding(0, dp(8, ctx), 0, 0);
+
+            TextView btnVoice = new TextView(ctx);
+            btnVoice.setText("🎤 Voice");
+            btnVoice.setTextSize(12);
+            btnVoice.setTextColor(isDark(ctx) ? 0xFF81C784 : 0xFF1B5E20);
+            btnVoice.setPadding(dp(8, ctx), dp(4, ctx), dp(8, ctx), dp(4, ctx));
             btnVoice.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                     intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...");
                     try {
-                        ((Activity) ctx).startActivityForResult(intent, 9999); // 注意：需要在 Activity 中重写 onActivityResult
+                        ((Activity) ctx).startActivityForResult(intent, 9999);
                     } catch (Exception e) {
                         Toast.makeText(ctx, "Voice not supported", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+            voiceRow.addView(btnVoice);
+            contentContainer.addView(voiceRow);
         }
 
         d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
