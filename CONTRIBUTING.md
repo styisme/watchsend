@@ -1,5 +1,7 @@
 # 贡献指南
 
+**简体中文** | [English](CONTRIBUTING_EN.md)
+
 感谢参与 **WatchSend** 的开发！本项目采用轻量但明确的源代码管理规范：**Conventional Commits + SemVer 2.0.0 + CHANGELOG**。
 
 > **关于项目渊源**：WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分支。底层协议栈（LocalSend 兼容、跨网传输）继承自 OldSend，UI 层已针对 Wear OS 完全重构。相关文档导航：[README](README.md) | [CHANGELOG](CHANGELOG.md) | [AI 披露](docs/AI_DISCLOSURE.md) | [开发约束](docs/DEVELOPMENT_CONSTRAINTS.md)。
@@ -29,11 +31,12 @@
 
 ### 编译命令
 
+我们提供了基于 Python 的一键编译脚本，支持交互式签名注入与自动下载 Gradle 环境：
 ```bash
 git clone https://github.com/styisme/watchsend.git
 cd watchsend
 python sync_version.py   # 自动从 CHANGELOG 同步版本号
-gradle assembleDebug
+python build.py          # 使用一键编译脚本 (支持自动签名)
 ```
 
 ### 云端构建与自动发版
@@ -48,6 +51,7 @@ gradle assembleDebug
 ```
 watchsend/
 ├── app/
+│   ├── src/main/assets/index.html # WebShare 前端页面
 │   ├── src/main/java/org/watchsend/
 │   │   ├── api/          # HTTP API 处理
 │   │   ├── discovery/    # UDP 组播发现设备
@@ -65,6 +69,7 @@ watchsend/
 │   │   └── TransferActivity.java  # 全屏传输进度 UI
 │   └── src/main/res/     # 布局、图标、样式
 ├── .github/workflows/    # CI/CD 自动化流水线
+├── build.py              # 本地一键编译脚本
 └── sync_version.py       # 自动从 CHANGELOG 提取版本并注入项目的脚本
 ```
 

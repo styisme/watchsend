@@ -1,9 +1,11 @@
 # WatchSend
 
+**简体中文** | [English](README_EN.md)
+
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.1.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.2.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -24,7 +26,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.1.0**。
+当前版本：**v1.2.0**。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 
@@ -34,19 +36,22 @@
 
 ## ✨ 核心特性
 
-### ⌚ 深度手表硬件适配 (v1.1 独有)
+### ⌚ 深度手表硬件适配
 - **表冠滑动支持 (Rotary Input)**：完美适配 Wear OS 3+ 的旋转表冠，拨动表冠即可丝滑滚动列表，告别手指遮挡。
 - **全局触觉反馈 (Haptic)**：点击、传输成功、失败均有精细的震动反馈，无需时刻盯着屏幕确认状态。
 - **传输屏幕常亮**：文件传输期间强制屏幕常亮，传输结束自动恢复省电逻辑。
 - **快捷磁贴 (Tiles)**：支持下拉快捷面板一键唤起 WatchSend，适配 Android 7.0+（老设备自动降级忽略）。
-- **低性能模式**：一键关闭 3D 滚轮、预测性返回等特效，为极低端或老旧手表提供满帧体验。
+- **低性能模式**：一键关闭 3D 滚轮、预测性返回等复杂动画，保障老旧设备流畅度。
+- **动态取色**：Android 12+ 完美接入 Material You，随壁纸/表盘变色。
+- **息屏微光模式**：传输时息屏仅保留进度条，抬腕亮屏恢复。
+- **语音输入**：支持系统语音转文字输入。
 
 ### 🎨 极致的 Wear OS UI 交互
 - **3D 滚轮特效**：上下滑动时，边缘卡片自动缩小并降低透明度，还原原生物理滚轮感。
 - **圆屏沉浸优化**：一键开启后，界面自动向内收缩，避免文字与按钮被圆形表盘切割。
 - **跟手滑动返回 & 预测性返回**：支持全局滑动退出，卡片缩小浮起，模拟系统级 Predictive Back 动画。
-- **无级 UI 缩放**：内置滑动条，可在 0.5x ~ 1.5x 之间实时调整整个 App 的字体与控件大小。
-- **全量 10 国语言**：完美适配中、繁、英、日、韩、德、法、西、俄、葡，无死角覆盖。
+- **无级 UI 缩放**：内置滑动条，可在 0.3x ~ 2.5x 之间实时调整整个 App 的字体与控件大小。
+- **全量 10 种语言变体**：完美适配中、繁、英、日、韩、德、法、西、俄、葡，无死角覆盖。
 
 ### 🌐 跨网传输与穿透 (继承自 OldSend)
 - **6 位一次性密码**：无需公网 IP，跨广域网传文件。
@@ -80,7 +85,7 @@
 
 ### 🤖 全自动 CI/CD 流水线
 项目现已接入全自动的 GitHub Actions 发版流水线：
-1. 你只需要修改 `CHANGELOG.md` 顶部的版本号（如 `## [1.1.0]`）并 Push。
+1. 你只需要修改 `CHANGELOG.md` 顶部的版本号并 Push。
 2. CI 会自动提取版本号，注入到 `build.gradle` 和 App 的“关于”页面。
 3. 自动解密签名文件、编译出 Release APK。
 4. 自动打 Git Tag，并发布到 GitHub Release 页面供下载。
