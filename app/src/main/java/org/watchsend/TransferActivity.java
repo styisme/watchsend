@@ -55,11 +55,23 @@ public class TransferActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-                if (container != null) container.setVisibility(View.INVISIBLE); // 极简微光模式：隐藏复杂 UI
-                if (pbTotal != null) pbTotal.setVisibility(View.VISIBLE); // 仅保留进度条
+                // 微光模式：仅保留包含进度条的 totalCard
+                if (container != null) {
+                    for (int i = 0; i < container.getChildCount(); i++) {
+                        View child = container.getChildAt(i);
+                        boolean keep = false;
+                        if (child instanceof LinearLayout && pbTotal != null) {
+                            keep = ((LinearLayout) child).indexOfChild(pbTotal) >= 0;
+                        }
+                        child.setVisibility(keep ? View.VISIBLE : View.GONE);
+                    }
+                }
             } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
-                if (container != null) container.setVisibility(View.VISIBLE);
-                if (pbTotal != null) pbTotal.setVisibility(View.VISIBLE);
+                if (container != null) {
+                    for (int i = 0; i < container.getChildCount(); i++) {
+                        container.getChildAt(i).setVisibility(View.VISIBLE);
+                    }
+                }
             }
         }
     };

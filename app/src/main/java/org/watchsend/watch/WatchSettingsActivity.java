@@ -80,6 +80,9 @@ public class WatchSettingsActivity extends Activity {
             public void onClick(View v) { pickShape(); }
         });
 
+        // 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
+        addSwitch(I18nManager.get("chin_padding"), I18nManager.get("chin_padding_desc"), prefs().getBoolean("chin_padding", false), saveTo("chin_padding"));
+
         // 低性能模式
         addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
         

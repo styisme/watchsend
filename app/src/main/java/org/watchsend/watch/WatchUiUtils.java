@@ -30,18 +30,28 @@ public class WatchUiUtils {
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
     public static void applyScale(Context context) {
-        float scale = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getFloat("ui_scale", 1.0f);
-        if (scale != 1.0f) {
-            Configuration config = new Configuration();
-            config.updateFrom(context.getResources().getConfiguration());
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            if (metrics.densityDpi > 0 && metrics.densityDpi < 1000) {
-                metrics.density *= scale;
-                metrics.scaledDensity *= scale;
-                metrics.densityDpi = (int)(metrics.densityDpi * scale);
-                context.getResources().updateConfiguration(config, metrics);
-            }
+        // v1.2.1 修复：记录 base densityDpi，用 base*scale 重算，杜绝累积乘法
+        android.content.SharedPreferences sp = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE);
+        float scale = sp.getFloat("ui_scale", 1.0f);
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+
+        int baseDpi = sp.getInt("__base_density_dpi", 0);
+        if (baseDpi <= 0) {
+            baseDpi = metrics.densityDpi;
+            sp.edit().putInt("__base_density_dpi", baseDpi).commit();
         }
+
+        int targetDpi = (int)(baseDpi * scale);
+        if (targetDpi < 80) targetDpi = 80;
+        if (targetDpi > 960) targetDpi = 960;
+        if (targetDpi == metrics.densityDpi) return;
+
+        Configuration config = new Configuration();
+        config.updateFrom(context.getResources().getConfiguration());
+        metrics.density = targetDpi / 160f;
+        metrics.scaledDensity = targetDpi / 160f;
+        metrics.densityDpi = targetDpi;
+        context.getResources().updateConfiguration(config, metrics);
     }
 
     // ⭐ 修复：正确传入 root 进行形状判断

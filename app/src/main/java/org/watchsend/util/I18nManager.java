@@ -182,7 +182,7 @@ public class I18nManager {
         zh.put("empty_scanning", "扫描中..."); zh.put("add_ip", "加IP"); zh.put("no_device_scan", "暂无设备，请点击扫描");
     
 zh.put("lang_switched", "语言已切换");
-zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "圆屏优化(自动)"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏");
+zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "圆屏优化(自动)"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏"); zh.put("chin_padding", "底部避让"); zh.put("chin_padding_desc", "针对有下巴的圆表(如Moto 360)");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -298,6 +298,7 @@ dict.put("zh", zh);
     
 zhTW.put("lang_switched", "語言已切換");
 zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "圓屏優化(自動)"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
+zhTW.put("ui_size", "介面大小"); zhTW.put("ui_size_small", "小"); zhTW.put("ui_size_medium", "標準"); zhTW.put("ui_size_large", "大");
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -472,7 +473,7 @@ dict.put("zh_TW", zhTW);
         en.put("empty_scanning", "Scanning..."); en.put("add_ip", "Add IP"); en.put("no_device_scan", "No devices, tap to scan");
     
 en.put("lang_switched", "Language changed");
-en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Round Opt (Auto)"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square");
+en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Round Opt (Auto)"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square"); en.put("chin_padding", "Chin Padding"); en.put("chin_padding_desc", "For round watches with a chin (e.g. Moto 360)");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -592,6 +593,7 @@ dict.put("en", en);
     
 ja.put("lang_switched", "言語を変更しました");
 ja.put("screen_shape", "画面の形状"); ja.put("shape_auto", "自動検出"); ja.put("shape_round", "丸型を強制"); ja.put("shape_square", "角型を強制");
+ja.put("ui_size", "UIサイズ"); ja.put("ui_size_small", "小"); ja.put("ui_size_medium", "標準"); ja.put("ui_size_large", "大");
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -711,6 +713,7 @@ dict.put("ja", ja);
     
 ko.put("lang_switched", "언어가 변경되었습니다");
 ko.put("screen_shape", "화면 모양"); ko.put("shape_auto", "자동 감지"); ko.put("shape_round", "원형 강제"); ko.put("shape_square", "사각형 강제");
+ko.put("ui_size", "UI 크기"); ko.put("ui_size_small", "작게"); ko.put("ui_size_medium", "보통"); ko.put("ui_size_large", "크게");
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -830,6 +833,7 @@ dict.put("ko", ko);
     
 de.put("lang_switched", "Sprache geändert");
 de.put("screen_shape", "Bildschirmform"); de.put("shape_auto", "Auto-Erkennung"); de.put("shape_round", "Rund erzwingen"); de.put("shape_square", "Eckig erzwingen");
+de.put("ui_size", "UI-Größe"); de.put("ui_size_small", "Klein"); de.put("ui_size_medium", "Mittel"); de.put("ui_size_large", "Groß");
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -949,6 +953,7 @@ dict.put("de", de);
     
 fr.put("lang_switched", "Langue modifiée");
 fr.put("screen_shape", "Forme de l'écran"); fr.put("shape_auto", "Détection auto"); fr.put("shape_round", "Forcer rond"); fr.put("shape_square", "Forcer carré");
+fr.put("ui_size", "Taille de l'UI"); fr.put("ui_size_small", "Petit"); fr.put("ui_size_medium", "Moyen"); fr.put("ui_size_large", "Grand");
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1068,6 +1073,7 @@ dict.put("fr", fr);
     
 es.put("lang_switched", "Idioma cambiado");
 es.put("screen_shape", "Forma de pantalla"); es.put("shape_auto", "Detección automática"); es.put("shape_round", "Forzar redonda"); es.put("shape_square", "Forzar cuadrada");
+es.put("ui_size", "Tamaño de IU"); es.put("ui_size_small", "Pequeño"); es.put("ui_size_medium", "Mediano"); es.put("ui_size_large", "Grande");
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1187,6 +1193,7 @@ dict.put("es", es);
     
 ru.put("lang_switched", "Язык изменен");
 ru.put("screen_shape", "Форма экрана"); ru.put("shape_auto", "Авто-определение"); ru.put("shape_round", "Круглый принудительно"); ru.put("shape_square", "Квадратный принудительно");
+ru.put("ui_size", "Размер интерфейса"); ru.put("ui_size_small", "Маленький"); ru.put("ui_size_medium", "Средний"); ru.put("ui_size_large", "Большой");
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1306,6 +1313,7 @@ dict.put("ru", ru);
     
 pt.put("lang_switched", "Idioma alterado");
 pt.put("screen_shape", "Forma da tela"); pt.put("shape_auto", "Detecção automática"); pt.put("shape_round", "Forçar redonda"); pt.put("shape_square", "Forçar quadrada");
+pt.put("ui_size", "Tamanho da UI"); pt.put("ui_size_small", "Pequeno"); pt.put("ui_size_medium", "Médio"); pt.put("ui_size_large", "Grande");
 dict.put("pt", pt);
     }
 
