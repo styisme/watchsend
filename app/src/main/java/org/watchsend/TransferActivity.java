@@ -22,6 +22,7 @@ import org.watchsend.transfer.Uploader;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
 import org.watchsend.watch.WatchUiUtils;
+import org.watchsend.watch.WatchHardwareUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,6 +49,20 @@ public class TransferActivity extends Activity {
     private TextView tvFileName, tvFileIcon, tvFileStatus, tvPercent, tvSpeedSize;
     private ProgressBar pbFile, pbTotal;
     private Button btnAccept, btnReject, btnCancel, btnDone;
+    
+    // 息屏模式监听
+    private BroadcastReceiver screenReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+                if (container != null) container.setVisibility(View.INVISIBLE); // 极简微光模式：隐藏复杂 UI
+                if (pbTotal != null) pbTotal.setVisibility(View.VISIBLE); // 仅保留进度条
+            } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
+                if (container != null) container.setVisibility(View.VISIBLE);
+                if (pbTotal != null) pbTotal.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -74,7 +89,8 @@ public class TransferActivity extends Activity {
         setContentView(R.layout.activity_transfer);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
-        org.watchsend.watch.WatchHardwareUtils.keepScreenOn(this, true);
+        
+        WatchHardwareUtils.keepScreenOn(this, true);
 
         isDark = ThemeUtils.isDarkMode(this);
         colorMain = isDark ? 0xFFE0E0E0 : 0xFF1C1B1F;
@@ -83,15 +99,20 @@ public class TransferActivity extends Activity {
 
         View root = findViewById(R.id.root_transfer);
         root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
-        
-        // 应用圆屏边距（会覆盖XML里的默认16dp）
         WatchUiUtils.applyRoundPadding(this, root);
 
         container = (LinearLayout) findViewById(R.id.transfer_container);
         ScrollView scrollView = (ScrollView) findViewById(R.id.transfer_scroll);
-        
-        // 初始化滚轮特效
-        WatchUiUtils.setupWheelScroll(scrollView, container);
+        if (scrollView != null && container != null) {
+            WatchUiUtils.setupWheelScroll(scrollView, container);
+            WatchHardwareUtils.bindRotaryEncoder(scrollView);
+        }
+
+        // 注册息屏监听
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(screenReceiver, filter);
 
         handleIntent(getIntent());
     }
@@ -99,7 +120,7 @@ public class TransferActivity extends Activity {
     private void handleIntent(Intent intent) {
         mode = intent.getIntExtra("mode", 0);
         isDone = false;
-        container.removeAllViews();
+        if (container != null) container.removeAllViews();
 
         if (mode == 1) {
             buildReceiveRequestUI(intent);
@@ -107,8 +128,6 @@ public class TransferActivity extends Activity {
             buildTransferProgressUI(intent);
         }
     }
-
-    // ================== UI 构建 ==================
 
     private void buildReceiveRequestUI(Intent intent) {
         String senderName = intent.getStringExtra("senderName");
@@ -153,6 +172,7 @@ public class TransferActivity extends Activity {
         btnAccept.setLayoutParams(accLp);
         btnAccept.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                WatchHardwareUtils.vibrate(TransferActivity.this, WatchHardwareUtils.HAPTIC_LIGHT);
                 if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(true); ReceiveManager.pendingCallback = null; }
                 Intent i = getIntent();
                 i.putExtra("mode", 2);
@@ -168,6 +188,7 @@ public class TransferActivity extends Activity {
         btnReject.setLayoutParams(rejLp);
         btnReject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                WatchHardwareUtils.vibrate(TransferActivity.this, WatchHardwareUtils.HAPTIC_LIGHT);
                 if (ReceiveManager.pendingCallback != null) { ReceiveManager.pendingCallback.onResult(false); ReceiveManager.pendingCallback = null; }
                 finish();
             }
@@ -268,7 +289,10 @@ public class TransferActivity extends Activity {
         cancelLp.bottomMargin = dp(8);
         btnCancel.setLayoutParams(cancelLp);
         btnCancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { finish(); }
+            public void onClick(View v) { 
+                WatchHardwareUtils.vibrate(TransferActivity.this, WatchHardwareUtils.HAPTIC_LIGHT);
+                finish(); 
+            }
         });
         container.addView(btnCancel);
 
@@ -288,8 +312,6 @@ public class TransferActivity extends Activity {
         }
         startTime = System.currentTimeMillis();
     }
-
-    // ================== 辅助方法 ==================
 
     private void addMainTitle(String title) {
         TextView tv = new TextView(this);
@@ -362,8 +384,6 @@ public class TransferActivity extends Activity {
     }
 
     private int dp(float val) { return (int)(val * getResources().getDisplayMetrics().density); }
-
-    // ================== 业务逻辑 ==================
 
     private String getIconForFile(String name) {
         String lower = name.toLowerCase();
@@ -439,7 +459,7 @@ public class TransferActivity extends Activity {
             pbFile.setProgress(pct);
             
             tvPercent.setText(pct + "%");
-            tvSpeedSize.setText(I18nManager.get("size") + ": " + formatSize(current) + " / " + formatSize(total) + "\n速度: " + speedStr);
+            tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(current) + " / " + formatSize(total) + "\n" + I18nManager.get("speed") + ": " + speedStr);
         }
     }
 
@@ -447,9 +467,7 @@ public class TransferActivity extends Activity {
         if (isDone) return;
         isDone = true;
 
-        try {
-            org.watchsend.watch.WatchHardwareUtils.vibrate(this, ok ? org.watchsend.watch.WatchHardwareUtils.HAPTIC_SUCCESS : org.watchsend.watch.WatchHardwareUtils.HAPTIC_ERROR);
-        } catch (Exception ignored) {}
+        WatchHardwareUtils.vibrate(this, ok ? WatchHardwareUtils.HAPTIC_SUCCESS : WatchHardwareUtils.HAPTIC_ERROR);
 
         btnCancel.setVisibility(View.GONE);
         btnDone.setVisibility(View.VISIBLE);
@@ -495,6 +513,13 @@ public class TransferActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        try { unregisterReceiver(screenReceiver); } catch (Exception ignored) {}
+        WatchHardwareUtils.keepScreenOn(this, false);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
         if (WatchUiUtils.handleSwipeBack(this, ev)) return true;
         return super.dispatchTouchEvent(ev);
@@ -503,7 +528,7 @@ public class TransferActivity extends Activity {
     @Override
     public void onBackPressed() {
         if (WatchUiUtils.isSystemBackBlocked(this)) {
-            Toast.makeText(this, "请滑动屏幕返回", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, I18nManager.get("swipe_back_toast"), Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressed();
         }

@@ -1,11 +1,14 @@
 package org.watchsend.watch;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.speech.RecognizerIntent;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -17,6 +20,8 @@ import org.watchsend.R;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
 
+import java.util.ArrayList;
+
 public class WatchUiUtils {
 
     public interface OnItemSelectListener { void onItemSelect(int position); }
@@ -24,7 +29,6 @@ public class WatchUiUtils {
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
-    // 1. UI 缩放
     public static void applyScale(Context context) {
         float scale = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getFloat("ui_scale", 1.0f);
         if (scale != 1.0f) {
@@ -40,16 +44,16 @@ public class WatchUiUtils {
         }
     }
 
-    // 2. 圆屏边距
     public static void applyRoundPadding(Context ctx, View root) {
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        boolean isChinOpt = WatchHardwareUtils.needChinPadding(ctx);
         float density = ctx.getResources().getDisplayMetrics().density;
         int pLeft = isRoundOpt ? (int)(24 * density) : (int)(12 * density);
         int pRight = isRoundOpt ? (int)(24 * density) : (int)(12 * density);
-        root.setPadding(pLeft, 0, pRight, 0);
+        int pBottom = isChinOpt ? (int)(32 * density) : 0; // 底部下巴避让
+        root.setPadding(pLeft, 0, pRight, pBottom);
     }
 
-    // 3. 药丸卡片背景
     public static GradientDrawable getPillBackground(Context ctx) {
         boolean isDark = isDark(ctx);
         GradientDrawable bg = new GradientDrawable();
@@ -62,10 +66,10 @@ public class WatchUiUtils {
         return bg;
     }
 
-    // 4. 3D 滚轮特效
     public static void setupWheelScroll(final ScrollView scrollView, final LinearLayout container) {
-        if (isLowPerformance(scrollView.getContext())) return;
         final Context ctx = scrollView.getContext();
+        if (WatchUiUtils.isLowPerformance(ctx)) return; // 拦截低性能
+
         boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
         scrollView.setClipToPadding(false); 
         scrollView.setVerticalScrollBarEnabled(false);
@@ -114,7 +118,11 @@ public class WatchUiUtils {
 
     private static int dp(int val, Context ctx) { return (int)(val * ctx.getResources().getDisplayMetrics().density); }
 
-    // ================= Dialog 核心 (纯黑/白动态) =================
+    public static boolean isLowPerformance(Context ctx) {
+        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("low_perf_mode", false);
+    }
+
+    // ================= Dialog 核心 =================
     private static void setupWindow(Context ctx, Dialog d) {
         Window w = d.getWindow();
         if (w != null) {
@@ -242,7 +250,8 @@ public class WatchUiUtils {
         return d;
     }
 
-    public static Dialog showInput(Context ctx, String title, String def, final OnInputListener listener) {
+    // 在输入弹窗中加入语音输入按钮
+    public static Dialog showInput(final Context ctx, String title, String def, final OnInputListener listener) {
         final Dialog d = new Dialog(ctx);
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setContentView(R.layout.dialog_watch_input);
@@ -252,6 +261,24 @@ public class WatchUiUtils {
         ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
         final EditText et = (EditText) d.findViewById(R.id.dlg_input);
         et.setText(def);
+
+        // 获取语音按钮 (需要修改 dialog_watch_input.xml 添加一个 btn_voice，这里做兼容处理)
+        View btnVoice = d.findViewById(R.id.dlg_btn_voice);
+        if (btnVoice != null) {
+            btnVoice.setVisibility(View.VISIBLE);
+            btnVoice.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...");
+                    try {
+                        ((Activity) ctx).startActivityForResult(intent, 9999); // 注意：需要在 Activity 中重写 onActivityResult
+                    } catch (Exception e) {
+                        Toast.makeText(ctx, "Voice not supported", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
 
         d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { d.dismiss(); }
@@ -278,13 +305,22 @@ public class WatchUiUtils {
         return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
     }
 
-    // ================= 5. 预测性返回手势 =================
+    public static void applyEntryAnimation(Activity activity) {
+        if (isLowPerformance(activity)) return;
+        activity.overridePendingTransition(0, 0);
+        final View root = activity.findViewById(android.R.id.content);
+        if (root == null) return;
+        root.setScaleX(0.6f); root.setScaleY(0.6f); root.setAlpha(0f);
+        root.animate().scaleX(1.0f).scaleY(1.0f).alpha(1.0f).setDuration(250).setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
+    }
+
+    // ====== 滑动返回 ======
     private static float startX = 0;
     private static float startY = 0;
     private static boolean isSwiping = false;
 
-    public static boolean handleSwipeBack(final android.app.Activity activity, android.view.MotionEvent ev) {
-        final android.view.View root = activity.findViewById(android.R.id.content);
+    public static boolean handleSwipeBack(final Activity activity, android.view.MotionEvent ev) {
+        final View root = activity.findViewById(android.R.id.content);
         final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
         
         switch (ev.getAction()) {
@@ -298,13 +334,12 @@ public class WatchUiUtils {
                 float deltaX = ev.getX() - startX;
                 float deltaY = ev.getY() - startY;
                 
-                // 低性能模式：直接判断，不跟手，不走下面的动画
                 if (isLowPerformance(activity)) {
                     if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         activity.finish();
                         return true;
                     }
-                    break; // 修复不可达语句
+                    break; 
                 }
                 
                 if (!isSwiping) {
@@ -363,28 +398,7 @@ public class WatchUiUtils {
         return false;
     }
 
-    // 6. 从中间放大的入场动画
-    public static void applyEntryAnimation(android.app.Activity activity) {
-        activity.overridePendingTransition(0, 0);
-        final View root = activity.findViewById(android.R.id.content);
-        if (root == null) return;
-        
-        if (isLowPerformance(activity)) {
-            root.setScaleX(1.0f); root.setScaleY(1.0f); root.setAlpha(1.0f);
-            return;
-        }
-        
-        root.setScaleX(0.6f); root.setScaleY(0.6f); root.setAlpha(0f);
-        root.animate().scaleX(1.0f).scaleY(1.0f).alpha(1.0f).setDuration(250).setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
-    }
-
-    // 检查是否开启了拦截系统返回
     public static boolean isSystemBackBlocked(Context ctx) {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("block_system_back", true);
     }
-
-    public static boolean isLowPerformance(Context ctx) {
-        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("low_perf_mode", false);
-    }
-
 }
