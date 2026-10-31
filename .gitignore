@@ -4,3 +4,7 @@
 build/
 local.properties
 *.apk
+
+.local_gradle/
+sign.ini
+*.keystore
