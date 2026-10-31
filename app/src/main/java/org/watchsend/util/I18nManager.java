@@ -182,6 +182,7 @@ public class I18nManager {
         zh.put("empty_scanning", "扫描中..."); zh.put("add_ip", "加IP"); zh.put("no_device_scan", "暂无设备，请点击扫描");
     
 zh.put("lang_switched", "语言已切换");
+zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "自动检测"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏");
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -296,6 +297,7 @@ dict.put("zh", zh);
         zhTW.put("empty_scanning", "掃描中..."); zhTW.put("add_ip", "加IP"); zhTW.put("no_device_scan", "暫無設備，請點擊掃描");
     
 zhTW.put("lang_switched", "語言已切換");
+zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "自動偵測"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
 dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -470,6 +472,7 @@ dict.put("zh_TW", zhTW);
         en.put("empty_scanning", "Scanning..."); en.put("add_ip", "Add IP"); en.put("no_device_scan", "No devices, tap to scan");
     
 en.put("lang_switched", "Language changed");
+en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Auto Detect"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square");
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -588,6 +591,7 @@ dict.put("en", en);
         ja.put("empty_scanning", "スキャン中..."); ja.put("add_ip", "IP追加"); ja.put("no_device_scan", "デバイスなし、スキャンしてください");
     
 ja.put("lang_switched", "言語を変更しました");
+ja.put("screen_shape", "画面の形状"); ja.put("shape_auto", "自動検出"); ja.put("shape_round", "丸型を強制"); ja.put("shape_square", "角型を強制");
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -706,6 +710,7 @@ dict.put("ja", ja);
         ko.put("empty_scanning", "스캔 중..."); ko.put("add_ip", "IP 추가"); ko.put("no_device_scan", "기기가 없습니다. 스캔하세요");
     
 ko.put("lang_switched", "언어가 변경되었습니다");
+ko.put("screen_shape", "화면 모양"); ko.put("shape_auto", "자동 감지"); ko.put("shape_round", "원형 강제"); ko.put("shape_square", "사각형 강제");
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -824,6 +829,7 @@ dict.put("ko", ko);
         de.put("empty_scanning", "Scannen..."); de.put("add_ip", "IP hinzufügen"); de.put("no_device_scan", "Keine Geräte, scannen");
     
 de.put("lang_switched", "Sprache geändert");
+de.put("screen_shape", "Bildschirmform"); de.put("shape_auto", "Auto-Erkennung"); de.put("shape_round", "Rund erzwingen"); de.put("shape_square", "Eckig erzwingen");
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -942,6 +948,7 @@ dict.put("de", de);
         fr.put("empty_scanning", "Scan..."); fr.put("add_ip", "Ajouter IP"); fr.put("no_device_scan", "Aucun appareil, scannez");
     
 fr.put("lang_switched", "Langue modifiée");
+fr.put("screen_shape", "Forme de l'écran"); fr.put("shape_auto", "Détection auto"); fr.put("shape_round", "Forcer rond"); fr.put("shape_square", "Forcer carré");
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1060,6 +1067,7 @@ dict.put("fr", fr);
         es.put("empty_scanning", "Escaneando..."); es.put("add_ip", "Añadir IP"); es.put("no_device_scan", "Sin dispositivos, escanea");
     
 es.put("lang_switched", "Idioma cambiado");
+es.put("screen_shape", "Forma de pantalla"); es.put("shape_auto", "Detección automática"); es.put("shape_round", "Forzar redonda"); es.put("shape_square", "Forzar cuadrada");
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1178,6 +1186,7 @@ dict.put("es", es);
         ru.put("empty_scanning", "Сканирование..."); ru.put("add_ip", "Добавить IP"); ru.put("no_device_scan", "Нет устройств, сканируйте");
     
 ru.put("lang_switched", "Язык изменен");
+ru.put("screen_shape", "Форма экрана"); ru.put("shape_auto", "Авто-определение"); ru.put("shape_round", "Круглый принудительно"); ru.put("shape_square", "Квадратный принудительно");
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1296,6 +1305,7 @@ dict.put("ru", ru);
         pt.put("empty_scanning", "Escaneando..."); pt.put("add_ip", "Adicionar IP"); pt.put("no_device_scan", "Nenhum dispositivo, escaneie");
     
 pt.put("lang_switched", "Idioma alterado");
+pt.put("screen_shape", "Forma da tela"); pt.put("shape_auto", "Detecção automática"); pt.put("shape_round", "Forçar redonda"); pt.put("shape_square", "Forçar quadrada");
 dict.put("pt", pt);
     }
 

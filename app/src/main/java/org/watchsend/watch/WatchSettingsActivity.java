@@ -76,9 +76,7 @@ public class WatchSettingsActivity extends Activity {
         addSection(I18nManager.get("general"));
 
         addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
-        addSwitch(I18nManager.get("round_screen_opt"), I18nManager.get("round_screen_opt_desc"), prefs().getBoolean("round_screen_opt", false), new SwitchHandler() {
-            public void onChanged(boolean v) { prefs().edit().putBoolean("round_screen_opt", v).commit(); recreate(); }
-        });
+        
 
         addSwitch(I18nManager.get("block_system_back"), I18nManager.get("block_system_back_desc"), prefs().getBoolean("block_system_back", true), saveTo("block_system_back"));
         addSwitch(I18nManager.get("dark_mode"), I18nManager.get("dark_mode_desc"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
@@ -391,4 +389,22 @@ public class WatchSettingsActivity extends Activity {
             super.onBackPressed();
         }
     }
+
+    private String currentShapeLabel() {
+        int shape = prefs().getInt("screen_shape", 0);
+        if (shape == 1) return I18nManager.get("shape_round");
+        if (shape == 2) return I18nManager.get("shape_square");
+        return I18nManager.get("shape_auto");
+    }
+
+    private void pickShape() {
+        final String[] items = {I18nManager.get("shape_auto"), I18nManager.get("shape_round"), I18nManager.get("shape_square")};
+        WatchUiUtils.showList(this, I18nManager.get("screen_shape"), items, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                prefs().edit().putInt("screen_shape", pos).commit();
+                recreate();
+            }
+        }).show();
+    }
+
 }

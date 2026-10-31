@@ -79,4 +79,32 @@ public class WatchHardwareUtils {
     public static boolean needChinPadding(Context ctx) {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("chin_padding", false);
     }
+
+    // 自动检测屏幕形状 (0=自动, 1=强制圆屏, 2=强制方屏)
+    public static boolean isRoundScreen(android.view.View view) {
+        if (view == null) return false;
+        android.content.Context ctx = view.getContext();
+        int shapeMode = ctx.getSharedPreferences("oldsend", android.content.Context.MODE_PRIVATE).getInt("screen_shape", 0);
+        
+        if (shapeMode == 1) return true;
+        if (shapeMode == 2) return false;
+
+        // API 28+ 原生检测
+        if (Build.VERSION.SDK_INT >= 28) {
+            try {
+                android.view.WindowInsets insets = view.getRootWindowInsets();
+                if (insets != null) return insets.isRound();
+            } catch (Exception ignored) {}
+        }
+        
+        // 降级检测：宽高比接近 1:1 (0.95 - 1.05)
+        try {
+            android.util.DisplayMetrics dm = ctx.getResources().getDisplayMetrics();
+            float ratio = (float) dm.widthPixels / dm.heightPixels;
+            return ratio >= 0.95f && ratio <= 1.05f;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

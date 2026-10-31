@@ -45,7 +45,7 @@ public class WatchUiUtils {
     }
 
     public static void applyRoundPadding(Context ctx, View root) {
-        boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(root);
         boolean isChinOpt = WatchHardwareUtils.needChinPadding(ctx);
         float density = ctx.getResources().getDisplayMetrics().density;
         int pLeft = isRoundOpt ? (int)(24 * density) : (int)(12 * density);
@@ -70,7 +70,7 @@ public class WatchUiUtils {
         final Context ctx = scrollView.getContext();
         if (WatchUiUtils.isLowPerformance(ctx)) return; // 拦截低性能
 
-        boolean isRoundOpt = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("round_screen_opt", false);
+        boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(root);
         scrollView.setClipToPadding(false); 
         scrollView.setVerticalScrollBarEnabled(false);
         
