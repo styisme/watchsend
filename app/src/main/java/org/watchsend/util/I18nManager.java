@@ -171,15 +171,16 @@ public class I18nManager {
         zh.put("remove_whitelist", "移除白名单"); zh.put("add_blacklist", "加入黑名单"); zh.put("remove_blacklist", "移除黑名单");
     
 
-        zh.put("edit_btn", "编辑"); zh.put("add_btn", "+ 追加"); zh.put("nearby_devices", "附近的设备");
-        zh.put("files_count_fmt", "%d 个文件"); zh.put("total_size_fmt", "共 %s"); zh.put("swipe_back_toast", "请滑动屏幕返回");
+        zh.put("edit_btn", "编辑"); zh.put("add_btn", "+ 追加");         zh.put("files_count_fmt", "%d 个文件"); zh.put("total_size_fmt", "共 %s"); zh.put("swipe_back_toast", "请滑动屏幕返回");
         zh.put("selected_files_fmt", "已选择 %d 个文件 (%s)");
     
 
         zh.put("low_perf_mode", "低性能模式"); zh.put("low_perf_desc", "减弱或关闭UI动画特效");
     
-zh.put("empty_scanning", "扫描中...");
-zh.put("scan", "扫描"); zh.put("log", "日志");
+
+        zh.put("nearby_devices", "附近的设备"); zh.put("scan", "扫描"); zh.put("edit", "编辑"); zh.put("add", "追加");
+        zh.put("empty_scanning", "扫描中..."); zh.put("add_ip", "加IP"); zh.put("no_device_scan", "暂无设备，请点击扫描");
+    
 dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -283,12 +284,15 @@ dict.put("zh", zh);
         zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單"); zhTW.put("remove_blacklist", "移除黑名單");
     
 
-        zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加"); zhTW.put("nearby_devices", "附近的設備");
-        zhTW.put("files_count_fmt", "%d 個檔案"); zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
+        zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加");         zhTW.put("files_count_fmt", "%d 個檔案"); zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
         zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)");
     
 
         zhTW.put("low_perf_mode", "低效能模式"); zhTW.put("low_perf_desc", "減弱或關閉UI動畫特效");
+    
+
+        zhTW.put("nearby_devices", "附近的設備"); zhTW.put("scan", "掃描"); zhTW.put("edit", "編輯"); zhTW.put("add", "追加");
+        zhTW.put("empty_scanning", "掃描中..."); zhTW.put("add_ip", "加IP"); zhTW.put("no_device_scan", "暫無設備，請點擊掃描");
     
 dict.put("zh_TW", zhTW);
 
@@ -453,15 +457,16 @@ dict.put("zh_TW", zhTW);
         en.put("remove_whitelist", "Remove Whitelist"); en.put("add_blacklist", "Add Blacklist"); en.put("remove_blacklist", "Remove Blacklist");
     
 
-        en.put("edit_btn", "Edit"); en.put("add_btn", "+ Add"); en.put("nearby_devices", "Nearby Devices");
-        en.put("files_count_fmt", "%d Files"); en.put("total_size_fmt", "Total %s"); en.put("swipe_back_toast", "Swipe to go back");
+        en.put("edit_btn", "Edit"); en.put("add_btn", "+ Add");         en.put("files_count_fmt", "%d Files"); en.put("total_size_fmt", "Total %s"); en.put("swipe_back_toast", "Swipe to go back");
         en.put("selected_files_fmt", "Selected %d files (%s)");
     
 
         en.put("low_perf_mode", "Low Performance"); en.put("low_perf_desc", "Reduce UI animations");
     
-en.put("empty_scanning", "Scanning...");
-en.put("scan", "Scan"); en.put("log", "Log");
+
+        en.put("nearby_devices", "Nearby Devices"); en.put("scan", "Scan"); en.put("edit", "Edit"); en.put("add", "Add");
+        en.put("empty_scanning", "Scanning..."); en.put("add_ip", "Add IP"); en.put("no_device_scan", "No devices, tap to scan");
+    
 dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -569,12 +574,15 @@ dict.put("en", en);
         ja.put("remove_whitelist", "ホワイトリストから削除"); ja.put("add_blacklist", "ブラックリストに追加"); ja.put("remove_blacklist", "ブラックリストから削除");
     
 
-        ja.put("edit_btn", "編集"); ja.put("add_btn", "+ 追加"); ja.put("nearby_devices", "近くのデバイス");
-        ja.put("files_count_fmt", "%d 個のファイル"); ja.put("total_size_fmt", "合計 %s"); ja.put("swipe_back_toast", "スワイプして戻る");
+        ja.put("edit_btn", "編集"); ja.put("add_btn", "+ 追加");         ja.put("files_count_fmt", "%d 個のファイル"); ja.put("total_size_fmt", "合計 %s"); ja.put("swipe_back_toast", "スワイプして戻る");
         ja.put("selected_files_fmt", "%d 個のファイルを選択 (%s)");
     
 
         ja.put("low_perf_mode", "低パフォーマンス"); ja.put("low_perf_desc", "UIアニメーションを減らす");
+    
+
+        ja.put("nearby_devices", "近くのデバイス"); ja.put("scan", "スキャン"); ja.put("edit", "編集"); ja.put("add", "追加");
+        ja.put("empty_scanning", "スキャン中..."); ja.put("add_ip", "IP追加"); ja.put("no_device_scan", "デバイスなし、スキャンしてください");
     
 dict.put("ja", ja);
 
@@ -683,12 +691,15 @@ dict.put("ja", ja);
         ko.put("remove_whitelist", "화이트리스트 제거"); ko.put("add_blacklist", "블랙리스트 추가"); ko.put("remove_blacklist", "블랙리스트 제거");
     
 
-        ko.put("edit_btn", "편집"); ko.put("add_btn", "+ 추가"); ko.put("nearby_devices", "주변 기기");
-        ko.put("files_count_fmt", "%d개 파일"); ko.put("total_size_fmt", "총 %s"); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
+        ko.put("edit_btn", "편집"); ko.put("add_btn", "+ 추가");         ko.put("files_count_fmt", "%d개 파일"); ko.put("total_size_fmt", "총 %s"); ko.put("swipe_back_toast", "스와이프하여 돌아가기");
         ko.put("selected_files_fmt", "%d개 파일 선택됨 (%s)");
     
 
         ko.put("low_perf_mode", "저성능 모드"); ko.put("low_perf_desc", "UI 애니메이션 감소");
+    
+
+        ko.put("nearby_devices", "주변 기기"); ko.put("scan", "검색"); ko.put("edit", "편집"); ko.put("add", "추가");
+        ko.put("empty_scanning", "스캔 중..."); ko.put("add_ip", "IP 추가"); ko.put("no_device_scan", "기기가 없습니다. 스캔하세요");
     
 dict.put("ko", ko);
 
@@ -797,12 +808,15 @@ dict.put("ko", ko);
         de.put("remove_whitelist", "Von Whitelist entfernen"); de.put("add_blacklist", "Zur Blacklist"); de.put("remove_blacklist", "Von Blacklist entfernen");
     
 
-        de.put("edit_btn", "Bearbeiten"); de.put("add_btn", "+ Hinzufügen"); de.put("nearby_devices", "Geräte in der Nähe");
-        de.put("files_count_fmt", "%d Dateien"); de.put("total_size_fmt", "Gesamt %s"); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
+        de.put("edit_btn", "Bearbeiten"); de.put("add_btn", "+ Hinzufügen");         de.put("files_count_fmt", "%d Dateien"); de.put("total_size_fmt", "Gesamt %s"); de.put("swipe_back_toast", "Wischen zum Zurückgehen");
         de.put("selected_files_fmt", "%d Dateien ausgewählt (%s)");
     
 
         de.put("low_perf_mode", "Geringe Leistung"); de.put("low_perf_desc", "UI-Animationen reduzieren");
+    
+
+        de.put("nearby_devices", "Geräte in der Nähe"); de.put("scan", "Scannen"); de.put("edit", "Bearbeiten"); de.put("add", "Hinzufügen");
+        de.put("empty_scanning", "Scannen..."); de.put("add_ip", "IP hinzufügen"); de.put("no_device_scan", "Keine Geräte, scannen");
     
 dict.put("de", de);
 
@@ -911,12 +925,15 @@ dict.put("de", de);
         fr.put("remove_whitelist", "Retirer de la liste blanche"); fr.put("add_blacklist", "Ajouter à la liste noire"); fr.put("remove_blacklist", "Retirer de la liste noire");
     
 
-        fr.put("edit_btn", "Modifier"); fr.put("add_btn", "+ Ajouter"); fr.put("nearby_devices", "Appareils à proximité");
-        fr.put("files_count_fmt", "%d fichiers"); fr.put("total_size_fmt", "Total %s"); fr.put("swipe_back_toast", "Glissez pour revenir");
+        fr.put("edit_btn", "Modifier"); fr.put("add_btn", "+ Ajouter");         fr.put("files_count_fmt", "%d fichiers"); fr.put("total_size_fmt", "Total %s"); fr.put("swipe_back_toast", "Glissez pour revenir");
         fr.put("selected_files_fmt", "%d fichiers sélectionnés (%s)");
     
 
         fr.put("low_perf_mode", "Basses performances"); fr.put("low_perf_desc", "Réduire les animations");
+    
+
+        fr.put("nearby_devices", "Appareils à proximité"); fr.put("scan", "Scanner"); fr.put("edit", "Modifier"); fr.put("add", "Ajouter");
+        fr.put("empty_scanning", "Scan..."); fr.put("add_ip", "Ajouter IP"); fr.put("no_device_scan", "Aucun appareil, scannez");
     
 dict.put("fr", fr);
 
@@ -1025,12 +1042,15 @@ dict.put("fr", fr);
         es.put("remove_whitelist", "Quitar de lista blanca"); es.put("add_blacklist", "Añadir a lista negra"); es.put("remove_blacklist", "Quitar de lista negra");
     
 
-        es.put("edit_btn", "Editar"); es.put("add_btn", "+ Añadir"); es.put("nearby_devices", "Dispositivos cercanos");
-        es.put("files_count_fmt", "%d archivos"); es.put("total_size_fmt", "Total %s"); es.put("swipe_back_toast", "Desliza para volver");
+        es.put("edit_btn", "Editar"); es.put("add_btn", "+ Añadir");         es.put("files_count_fmt", "%d archivos"); es.put("total_size_fmt", "Total %s"); es.put("swipe_back_toast", "Desliza para volver");
         es.put("selected_files_fmt", "%d archivos seleccionados (%s)");
     
 
         es.put("low_perf_mode", "Bajo rendimiento"); es.put("low_perf_desc", "Reducir animaciones");
+    
+
+        es.put("nearby_devices", "Dispositivos cercanos"); es.put("scan", "Escanear"); es.put("edit", "Editar"); es.put("add", "Añadir");
+        es.put("empty_scanning", "Escaneando..."); es.put("add_ip", "Añadir IP"); es.put("no_device_scan", "Sin dispositivos, escanea");
     
 dict.put("es", es);
 
@@ -1139,12 +1159,15 @@ dict.put("es", es);
         ru.put("remove_whitelist", "Из белого списка"); ru.put("add_blacklist", "В черный список"); ru.put("remove_blacklist", "Из черного списка");
     
 
-        ru.put("edit_btn", "Изменить"); ru.put("add_btn", "+ Добавить"); ru.put("nearby_devices", "Устройства рядом");
-        ru.put("files_count_fmt", "%d файлов"); ru.put("total_size_fmt", "Всего %s"); ru.put("swipe_back_toast", "Свайп для возврата");
+        ru.put("edit_btn", "Изменить"); ru.put("add_btn", "+ Добавить");         ru.put("files_count_fmt", "%d файлов"); ru.put("total_size_fmt", "Всего %s"); ru.put("swipe_back_toast", "Свайп для возврата");
         ru.put("selected_files_fmt", "Выбрано %d файлов (%s)");
     
 
         ru.put("low_perf_mode", "Низкая производительность"); ru.put("low_perf_desc", "Меньше анимаций");
+    
+
+        ru.put("nearby_devices", "Устройства рядом"); ru.put("scan", "Сканировать"); ru.put("edit", "Изменить"); ru.put("add", "Добавить");
+        ru.put("empty_scanning", "Сканирование..."); ru.put("add_ip", "Добавить IP"); ru.put("no_device_scan", "Нет устройств, сканируйте");
     
 dict.put("ru", ru);
 
@@ -1253,12 +1276,15 @@ dict.put("ru", ru);
         pt.put("remove_whitelist", "Remover da lista branca"); pt.put("add_blacklist", "Adicionar à lista negra"); pt.put("remove_blacklist", "Remover da lista negra");
     
 
-        pt.put("edit_btn", "Editar"); pt.put("add_btn", "+ Adicionar"); pt.put("nearby_devices", "Dispositivos próximos");
-        pt.put("files_count_fmt", "%d arquivos"); pt.put("total_size_fmt", "Total %s"); pt.put("swipe_back_toast", "Deslize para voltar");
+        pt.put("edit_btn", "Editar"); pt.put("add_btn", "+ Adicionar");         pt.put("files_count_fmt", "%d arquivos"); pt.put("total_size_fmt", "Total %s"); pt.put("swipe_back_toast", "Deslize para voltar");
         pt.put("selected_files_fmt", "%d arquivos selecionados (%s)");
     
 
         pt.put("low_perf_mode", "Baixo desempenho"); pt.put("low_perf_desc", "Reduzir animações");
+    
+
+        pt.put("nearby_devices", "Dispositivos próximos"); pt.put("scan", "Escanear"); pt.put("edit", "Editar"); pt.put("add", "Adicionar");
+        pt.put("empty_scanning", "Escaneando..."); pt.put("add_ip", "Adicionar IP"); pt.put("no_device_scan", "Nenhum dispositivo, escaneie");
     
 dict.put("pt", pt);
     }

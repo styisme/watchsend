@@ -80,12 +80,12 @@
                 android:orientation="horizontal" android:gravity="center_vertical"
                 android:layout_marginBottom="4dp">
                 <TextView android:id="@+id/tv_nearby_title" android:layout_width="0dp" android:layout_weight="1"
-                    android:layout_height="wrap_content" android:text="附近的设备"
+                    android:layout_height="wrap_content" android:text=""
                     android:textSize="12sp" android:textStyle="bold" android:textColor="#1C1B1F"
                     android:layout_marginLeft="6dp" />
                 <Button android:id="@+id/scan"
                     android:layout_width="wrap_content" android:layout_height="30dp"
-                    android:text="扫描" android:textSize="11sp" android:textColor="#1B5E20"
+                    android:text="" android:textSize="11sp" android:textColor="#1B5E20"
                     android:background="@drawable/watch_btn_secondary"
                     android:minHeight="0dp" android:minWidth="44dp"
                     android:paddingLeft="8dp" android:paddingRight="8dp" />
