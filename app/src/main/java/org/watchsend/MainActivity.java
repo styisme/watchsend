@@ -85,8 +85,17 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             org.watchsend.watch.WatchHardwareUtils.bindRotaryEncoder(mainScroll);
         }
 
+        View statusCard = findViewById(R.id.status_card);
+        if (statusCard != null) {
+            statusCard.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
+        }
+
         status = (TextView) findViewById(R.id.status);
         statusIp = (TextView) findViewById(R.id.status_ip);
+        
+        // 强制动态颜色，防止被 ThemeUtils 的白底白字逻辑误伤
+        if (status != null) status.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        if (statusIp != null) statusIp.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
         statusIp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (running) {
@@ -199,7 +208,13 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void applyI18n() {
+        boolean isDark = ThemeUtils.isDarkMode(this);
         if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+        if (btnHistory != null) btnHistory.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (btnCrossNet != null) btnCrossNet.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (btnSettings != null) btnSettings.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (scanBtn != null) scanBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (manualIpBtn != null) manualIpBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
         if (btnHistory != null) btnHistory.setText(I18nManager.get("record"));
         if (btnCrossNet != null) btnCrossNet.setText(I18nManager.get("cross_net"));
         if (btnSettings != null) btnSettings.setText(I18nManager.get("settings"));
@@ -365,7 +380,13 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void updateSelectedFilesUI() {
         if (pendingUris == null || pendingUris.isEmpty()) {
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
-            if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+            boolean isDark = ThemeUtils.isDarkMode(this);
+        if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+        if (btnHistory != null) btnHistory.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (btnCrossNet != null) btnCrossNet.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (btnSettings != null) btnSettings.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (scanBtn != null) scanBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        if (manualIpBtn != null) manualIpBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
         } else {
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
             long totalSize = 0;
