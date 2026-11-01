@@ -74,7 +74,7 @@ public class UploadHandler implements Router.Handler {
         } finally { try { fos.close(); } catch (Exception ignored) {} }
 
         OldSendService.log("接收完成: " + entry.fileName + " (" + written + " 字节)");
-        OldSendService.getContext().sendBroadcast(new android.content.Intent("org.watchsend.TRANSFER_DONE").putExtra("ok", true));
+        OldSendService.getContext().sendBroadcast(new android.content.Intent("org.watchsend.TRANSFER_DONE").putExtra("ok", true).putExtra("savedFile", target.getAbsolutePath()));
         
         // 记录到历史
         String timeStr = new java.text.SimpleDateFormat("HH:mm").format(new java.util.Date());

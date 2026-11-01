@@ -40,6 +40,7 @@ public class TransferActivity extends Activity {
     private long totalSize = 0;
     private long startTime;
     private boolean isDone = false;
+    private String receivedFilePath = null;
     private Handler handler = new Handler();
     
     private boolean isDark;
@@ -87,6 +88,7 @@ public class TransferActivity extends Activity {
                 updateProgress(current, total, fName);
             } else if (ACTION_TRANSFER_DONE.equals(intent.getAction())) {
                 boolean ok = intent.getBooleanExtra("ok", false);
+                receivedFilePath = intent.getStringExtra("savedFile");
                 transferDone(ok);
             }
         }
@@ -490,22 +492,30 @@ public class TransferActivity extends Activity {
             tvFileStatus.setTextColor(0xFF388E3C);
             pbTotal.setProgress(100);
             pbFile.setProgress(100);
+            
+            // 修复总进度卡在 0% 的 Bug
+            if (tvSpeedSize != null && tvPercent != null) {
+                tvPercent.setText("100%");
+                if (mode == 1 || mode == 2) {
+                    tvSpeedSize.setText(I18nManager.get("completed"));
+                } else {
+                    tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(totalSize) + " / " + formatSize(totalSize) + "
+" + I18nManager.get("speed") + ": --");
+                }
+            }
 
-            // v1.3.0 快捷操作注入
-            if (mode == 2 && filePaths != null && !filePaths.isEmpty()) {
-                final File recvFile = new File(filePaths.get(0));
-                if (recvFile.getName().toLowerCase().endsWith(".txt")) {
-                    tvFileStatus.setText(tvFileStatus.getText() + " (已复制)");
-                } else if (recvFile.exists()) {
-                    final boolean isApk = recvFile.getName().toLowerCase().endsWith(".apk");
-                    String btnText = isApk ? "📦 " + I18nManager.get("install_apk") : "📂 " + I18nManager.get("open_file");
-                    int btnColor = isApk ? 0xFF1976D2 : 0xFF388E3C; // APK 用蓝色，普通文件用绿色
-                    
-                    Button btnOpen = createButton(btnText, isDark ? 0xFF2C2C2E : 0xFFEEEEEE, btnColor);
-                    LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
-                    openLp.bottomMargin = dp(8);
-                    btnOpen.setLayoutParams(openLp);
-                    // 注入解压按钮
+            // 获取当前完成的文件路径 (接收端用 receivedFilePath，发送端用 filePaths.get(0))
+            String currentFilePath = null;
+            if (mode == 1 || mode == 2) {
+                currentFilePath = receivedFilePath;
+            } else if (filePaths != null && !filePaths.isEmpty()) {
+                currentFilePath = filePaths.get(0);
+            }
+
+            if (currentFilePath != null) {
+                final File recvFile = new File(currentFilePath);
+                if (recvFile.exists()) {
+                    // 1. 如果是 ZIP，注入解压按钮
                     if (recvFile.getName().toLowerCase().endsWith(".zip")) {
                         Button btnUnzip = createButton("📦 " + I18nManager.get("unzip"), isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFF1976D2);
                         LinearLayout.LayoutParams unzipLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
@@ -516,10 +526,10 @@ public class TransferActivity extends Activity {
                                 Toast.makeText(TransferActivity.this, I18nManager.get("unzipping"), Toast.LENGTH_SHORT).show();
                                 new Thread(new Runnable() {
                                     public void run() {
-                                        final boolean ok = org.watchsend.util.ZipUtils.unzip(recvFile, recvFile.getParentFile());
+                                        final boolean unzipOk = org.watchsend.util.ZipUtils.unzip(recvFile, recvFile.getParentFile());
                                         handler.post(new Runnable() {
                                             public void run() {
-                                                Toast.makeText(TransferActivity.this, ok ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(TransferActivity.this, unzipOk ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail"), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
@@ -530,28 +540,31 @@ public class TransferActivity extends Activity {
                         container.addView(btnUnzip, idxUnzip);
                     }
 
+                    // 2. 如果是 APK 或普通文件，注入打开/安装按钮
+                    final boolean isApk = recvFile.getName().toLowerCase().endsWith(".apk");
+                    String btnText = isApk ? "📦 " + I18nManager.get("install_apk") : "📂 " + I18nManager.get("open_file");
+                    int btnColor = isApk ? 0xFF1976D2 : 0xFF388E3C;
+                    
+                    Button btnOpen = createButton(btnText, isDark ? 0xFF2C2C2E : 0xFFEEEEEE, btnColor);
+                    LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+                    openLp.bottomMargin = dp(8);
+                    btnOpen.setLayoutParams(openLp);
                     btnOpen.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             if (isApk && getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("silent_install", false)) {
                                 String cmd = "pm install -r " + recvFile.getAbsolutePath();
-                                
-                                // 1. 优先走 Root 静默安装
                                 if (org.watchsend.util.ShellUtils.isRootAvailable()) {
                                     if (org.watchsend.util.ShellUtils.execRootCommand(cmd)) {
                                         Toast.makeText(TransferActivity.this, "Root 静默安装已启动", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 }
-                                
-                                // 2. 走 Shizuku 纯手写 API 静默安装
                                 if (org.watchsend.util.ShizukuHelper.isRunning()) {
                                     if (org.watchsend.util.ShizukuHelper.execShell(cmd)) {
                                         Toast.makeText(TransferActivity.this, "Shizuku 静默安装已启动", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                 }
-                                
-                                // 3. 都失败，降级为普通弹窗安装
                                 Toast.makeText(TransferActivity.this, "静默安装失败，降级为普通安装", Toast.LENGTH_SHORT).show();
                             }
                             
@@ -559,7 +572,6 @@ public class TransferActivity extends Activity {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
                                 if (isApk) {
                                     i.setDataAndType(android.net.Uri.fromFile(recvFile), "application/vnd.android.package-archive");
-                                    // 兼容高版本 Android 的安装权限（由于没依赖 AndroidX，部分高版本可能需要手动允许“安装未知应用”）
                                 } else {
                                     i.setDataAndType(android.net.Uri.fromFile(recvFile), "*/*");
                                 }
@@ -570,9 +582,8 @@ public class TransferActivity extends Activity {
                             }
                         }
                     });
-                    // 插到 Done 按钮前面
-                    int idx = container.indexOfChild(btnDone);
-                    container.addView(btnOpen, idx);
+                    int idxOpen = container.indexOfChild(btnDone);
+                    container.addView(btnOpen, idxOpen);
                 }
             }
         } else {
