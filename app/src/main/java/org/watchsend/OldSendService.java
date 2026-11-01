@@ -24,6 +24,7 @@ import org.watchsend.model.HistoryStore;
 import org.watchsend.util.I18nManager;
 
 public class OldSendService extends Service {
+    public static boolean isServiceRunning = false;
     public interface LogSink { void log(String msg); }
     private static LogSink sink;
     public static void setSink(LogSink s) { sink = s; }
@@ -169,6 +170,8 @@ public class OldSendService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        isServiceRunning = true;
+        if (getContext() != null) QuickWidgetProvider.sendUpdateBroadcast(getContext());
         if (httpServer != null && multicastListener != null) {
             log("服务已在运行中");
             return START_STICKY;
@@ -228,6 +231,8 @@ public class OldSendService extends Service {
 
     @Override
     public void onDestroy() {
+        isServiceRunning = false;
+        if (getContext() != null) QuickWidgetProvider.sendUpdateBroadcast(getContext());
         try { if (httpServer != null) httpServer.stop(); } catch (Exception ignored) {}
         try { if (multicastListener != null) multicastListener.stop(); } catch (Exception ignored) {}
         try { if (multicastLock != null) multicastLock.release(); } catch (Exception ignored) {}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/watch_card"
+    android:padding="16dp">
+
+    <!-- 顶部：状态与图标（点击打开App） -->
+    <LinearLayout
+        android:id="@+id/widget_launch"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_launcher" />
+            
+        <TextView
+            android:id="@+id/widget_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已停止"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+    <!-- 底部：一键开关按钮 -->
+    <TextView
+        android:id="@+id/widget_toggle_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="启动服务"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="@drawable/watch_btn_primary"
+        android:layout_marginTop="12dp" />
+</LinearLayout>
