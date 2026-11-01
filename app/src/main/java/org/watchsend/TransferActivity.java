@@ -499,8 +499,7 @@ public class TransferActivity extends Activity {
                 if (mode == 1 || mode == 2) {
                     tvSpeedSize.setText(I18nManager.get("completed"));
                 } else {
-                    tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(totalSize) + " / " + formatSize(totalSize) + "
-" + I18nManager.get("speed") + ": --");
+                    tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(totalSize) + " / " + formatSize(totalSize) + "\n" + I18nManager.get("speed") + ": --");
                 }
             }
 
