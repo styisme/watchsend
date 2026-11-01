@@ -561,15 +561,14 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showHistoryMenu(final int pos) {
-        File historyFile = new File(historyPaths.get(pos));
-        boolean isZip = historyFile.exists() && historyFile.getName().toLowerCase().endsWith(".zip");
+        final File f = new File(historyPaths.get(pos));
+        final boolean isZip = f.exists() && f.getName().toLowerCase().endsWith(".zip");
         
         String[] items = isZip ? 
             new String[]{I18nManager.get("unzip"), I18nManager.get("share_file"), I18nManager.get("delete_record")} :
             new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
         WatchUiUtils.showList(this, historyAdapter.getItem(pos).split("\n")[0], items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int p) {
-                File f = new File(historyPaths.get(pos));
                 int shareIdx = isZip ? 1 : 0;
                 int delIdx = isZip ? 2 : 1;
 
