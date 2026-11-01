@@ -490,6 +490,34 @@ public class TransferActivity extends Activity {
             tvFileStatus.setTextColor(0xFF388E3C);
             pbTotal.setProgress(100);
             pbFile.setProgress(100);
+
+            // v1.3.0 快捷操作注入
+            if (mode == 2 && filePaths != null && !filePaths.isEmpty()) {
+                final File recvFile = new File(filePaths.get(0));
+                if (recvFile.getName().toLowerCase().endsWith(".txt")) {
+                    tvFileStatus.setText(tvFileStatus.getText() + " (已复制)");
+                } else if (recvFile.exists()) {
+                    Button btnOpen = createButton("📂 " + I18nManager.get("open_file"), isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFF388E3C);
+                    LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+                    openLp.bottomMargin = dp(8);
+                    btnOpen.setLayoutParams(openLp);
+                    btnOpen.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            try {
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setDataAndType(android.net.Uri.fromFile(recvFile), "*/*");
+                                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(i);
+                            } catch (Exception ignored) {
+                                Toast.makeText(TransferActivity.this, "No app to open", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    // 插到 Done 按钮前面
+                    int idx = container.indexOfChild(btnDone);
+                    container.addView(btnOpen, idx);
+                }
+            }
         } else {
             addMainTitle(I18nManager.get("send_failed"));
             tvFileStatus.setText(I18nManager.get("interrupted"));

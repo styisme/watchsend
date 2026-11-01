@@ -32,7 +32,8 @@ public class QuickScanTileService extends TileService {
 
         // 拉起 App
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("auto_scan", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityAndCollapse(intent);
     }
 

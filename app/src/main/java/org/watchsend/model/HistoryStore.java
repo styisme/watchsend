@@ -62,6 +62,24 @@ public class HistoryStore {
         }
     }
 
+    public void remove(Context ctx, String path) {
+        synchronized (records) {
+            for (int i = 0; i < records.size(); i++) {
+                if (records.get(i).path.equals(path)) { records.remove(i); break; }
+            }
+            try {
+                JSONArray arr = new JSONArray();
+                for (Record rec : records) {
+                    JSONObject o = new JSONObject();
+                    o.put("name", rec.fileName); o.put("path", rec.path);
+                    o.put("size", rec.size); o.put("time", rec.time); o.put("isRecv", rec.isReceive);
+                    arr.put(o);
+                }
+                ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putString(KEY_HISTORY, arr.toString()).commit();
+            } catch (Exception ignored) {}
+        }
+    }
+
     public List<Record> snapshot() {
         synchronized (records) { return new ArrayList<Record>(records); }
     }

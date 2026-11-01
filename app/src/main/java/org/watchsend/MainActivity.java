@@ -87,6 +87,11 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
         status = (TextView) findViewById(R.id.status);
         statusIp = (TextView) findViewById(R.id.status_ip);
+        statusIp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (running) showQrCodeDialog();
+            }
+        });
         emptyHint = (TextView) findViewById(R.id.empty_hint);
         toggleBtn = (Button) findViewById(R.id.toggle);
         btnSend = (Button) findViewById(R.id.btn_send);
@@ -157,7 +162,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         });
         deviceList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-                if (historyMode) return false;
+                if (historyMode) {
+                    showHistoryMenu(pos);
+                    return true;
+                }
                 showAclMenu(adapter.getItem(pos));
                 return true;
             }
@@ -168,6 +176,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         checkAndRequestPermission();
         handleIntent(getIntent());
         recordConfigState();
+        if (getIntent() != null && getIntent().getBooleanExtra("auto_scan", false)) doScan();
     }
 
     private void recordConfigState() {
@@ -510,6 +519,57 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             i.setDataAndType(Uri.fromFile(f), "application/*");
             startActivity(i);
         } catch (Exception e) { toast(I18nManager.get("cannot_open")); }
+    }
+
+
+    private void showQrCodeDialog() {
+        String ip = OldSendService.getLocalIp();
+        String url = "http://" + ip + ":53317";
+        android.graphics.Bitmap qr = org.watchsend.util.QRCodeUtils.generateQR(url, 400);
+        if (qr == null) return;
+        
+        ImageView iv = new ImageView(this);
+        iv.setImageBitmap(qr);
+        iv.setAdjustViewBounds(true);
+        iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(16, 16, 16, 16);
+        layout.addView(iv);
+        
+        TextView tv = new TextView(this);
+        tv.setText(url);
+        tv.setTextColor(0xFF388E3C);
+        tv.setGravity(android.view.Gravity.CENTER);
+        tv.setPadding(0, 16, 0, 0);
+        layout.addView(tv);
+
+        WatchUiUtils.createBaseDialog(this, I18nManager.get("web_qr"), layout, I18nManager.get("confirm"), null, null, null).show();
+    }
+
+    private void showHistoryMenu(final int pos) {
+        String[] items = new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
+        WatchUiUtils.showList(this, historyAdapter.getItem(pos).split("\n")[0], items, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int p) {
+                if (p == 0) {
+                    File f = new File(historyPaths.get(pos));
+                    if (f.exists()) {
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("*/*");
+                        i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
+                        startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
+                    } else toast(I18nManager.get("file_not_found"));
+                } else {
+                    WatchUiUtils.showConfirm(MainActivity.this, I18nManager.get("delete_record"), I18nManager.get("delete_confirm"), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface d, int w) {
+                            HistoryStore.get().remove(MainActivity.this, historyPaths.get(pos));
+                            refreshHistory();
+                        }
+                    }).show();
+                }
+            }
+        }).show();
     }
 
     private void showLogDialog() {
