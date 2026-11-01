@@ -89,7 +89,19 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         statusIp = (TextView) findViewById(R.id.status_ip);
         statusIp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (running) showQrCodeDialog();
+                if (running) {
+                    String ip = OldSendService.getLocalIp();
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setPrimaryClip(ClipData.newPlainText("WatchSend", "http://" + ip + ":53317"));
+                    toast(I18nManager.get("copied_hint"));
+                    org.watchsend.watch.WatchHardwareUtils.vibrate(MainActivity.this, org.watchsend.watch.WatchHardwareUtils.HAPTIC_LIGHT);
+                }
+            }
+        });
+        statusIp.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View v) {
+                if (running) showBigUrlDialog();
+                return true;
             }
         });
         emptyHint = (TextView) findViewById(R.id.empty_hint);
@@ -522,28 +534,28 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
 
-    private void showQrCodeDialog() {
+    private void showBigUrlDialog() {
         String ip = OldSendService.getLocalIp();
         String url = "http://" + ip + ":53317";
-        android.graphics.Bitmap qr = org.watchsend.util.QRCodeUtils.generateQR(url, 400);
-        if (qr == null) return;
         
-        ImageView iv = new ImageView(this);
-        iv.setImageBitmap(qr);
-        iv.setAdjustViewBounds(true);
-        iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        TextView tvUrl = new TextView(this);
+        tvUrl.setText(url);
+        tvUrl.setTextSize(22);
+        tvUrl.setTypeface(null, android.graphics.Typeface.BOLD);
+        tvUrl.setTextColor(0xFF388E3C);
+        tvUrl.setGravity(android.view.Gravity.CENTER);
+        tvUrl.setPadding(16, 24, 16, 24);
         
+        TextView tvDesc = new TextView(this);
+        tvDesc.setText(I18nManager.get("web_qr_desc"));
+        tvDesc.setTextSize(12);
+        tvDesc.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
+        tvDesc.setGravity(android.view.Gravity.CENTER);
+
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(16, 16, 16, 16);
-        layout.addView(iv);
-        
-        TextView tv = new TextView(this);
-        tv.setText(url);
-        tv.setTextColor(0xFF388E3C);
-        tv.setGravity(android.view.Gravity.CENTER);
-        tv.setPadding(0, 16, 0, 0);
-        layout.addView(tv);
+        layout.addView(tvUrl);
+        layout.addView(tvDesc);
 
         WatchUiUtils.createBaseDialog(this, I18nManager.get("web_qr"), layout, I18nManager.get("confirm"), null, null, null).show();
     }
