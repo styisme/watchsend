@@ -497,7 +497,7 @@ public class TransferActivity extends Activity {
                 if (recvFile.getName().toLowerCase().endsWith(".txt")) {
                     tvFileStatus.setText(tvFileStatus.getText() + " (已复制)");
                 } else if (recvFile.exists()) {
-                    boolean isApk = recvFile.getName().toLowerCase().endsWith(".apk");
+                    final boolean isApk = recvFile.getName().toLowerCase().endsWith(".apk");
                     String btnText = isApk ? "📦 " + I18nManager.get("install_apk") : "📂 " + I18nManager.get("open_file");
                     int btnColor = isApk ? 0xFF1976D2 : 0xFF388E3C; // APK 用蓝色，普通文件用绿色
                     
