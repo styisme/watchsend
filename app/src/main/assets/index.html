@@ -100,126 +100,16 @@
     <script>
         // ==================== 全 10 语种字典 ====================
         const i18n = {
-            zh: {
-                title: "WatchSend WebShare", sync_clip: "同步手机剪贴板",
-                tab_send: "📤 发文件", tab_recv: "📥 收文件", tab_text: "📝 发文本",
-                drop_title: "点击 / 拖拽 / 粘贴文件", drop_desc: "支持多文件并发、文本自动转 TXT",
-                loading_files: "正在拉取文件列表...", text_placeholder: "在此输入文本，点击发送后，文本将同步到手表剪贴板...",
-                btn_send_text: "发送到手表", phone_prefix: "手机: ",
-                msg_copied: "已复制手机剪贴板内容", msg_clip_err: "浏览器拒绝访问剪贴板",
-                msg_txt_to_file: "已自动将文本转为 TXT 发送", msg_pasted: "已粘贴图片",
-                msg_all_done: "全部传输完成！", msg_no_files: "手表端暂无文件", msg_load_fail: "加载失败",
-                msg_input_empty: "请输入文本", msg_sent_to_watch: "已发送到手表剪贴板", msg_send_fail: "发送失败", msg_net_err: "网络错误",
-                btn_download: "下载", status_done: "✅ 完成", status_fail: "❌ 失败", status_err: "❌ 出错"
-            },
-            zh_TW: {
-                title: "WatchSend WebShare", sync_clip: "同步手機剪貼簿",
-                tab_send: "📤 發檔案", tab_recv: "📥 收檔案", tab_text: "📝 發文字",
-                drop_title: "點擊 / 拖曳 / 貼上檔案", drop_desc: "支援多檔案並行、文字自動轉 TXT",
-                loading_files: "正在拉取檔案列表...", text_placeholder: "在此輸入文字，點擊發送後，文字將同步到手機剪貼簿...",
-                btn_send_text: "發送到手錶", phone_prefix: "手機: ",
-                msg_copied: "已複製手機剪貼簿內容", msg_clip_err: "瀏覽器拒絕存取剪貼簿",
-                msg_txt_to_file: "已自動將文字轉為 TXT 發送", msg_pasted: "已貼上圖片",
-                msg_all_done: "全部傳輸完成！", msg_no_files: "手錶端暫無檔案", msg_load_fail: "載入失敗",
-                msg_input_empty: "請輸入文字", msg_sent_to_watch: "已發送到手錶剪貼簿", msg_send_fail: "發送失敗", msg_net_err: "網路錯誤",
-                btn_download: "下載", status_done: "✅ 完成", status_fail: "❌ 失敗", status_err: "❌ 出錯"
-            },
-            en: {
-                title: "WatchSend WebShare", sync_clip: "Sync Phone Clipboard",
-                tab_send: "📤 Send Files", tab_recv: "📥 Receive Files", tab_text: "📝 Send Text",
-                drop_title: "Click / Drag / Paste Files", drop_desc: "Supports multi-file, text auto-converts to TXT",
-                loading_files: "Fetching file list...", text_placeholder: "Type text here, click send to sync to watch clipboard...",
-                btn_send_text: "Send to Watch", phone_prefix: "Phone: ",
-                msg_copied: "Copied phone clipboard", msg_clip_err: "Browser denied clipboard access",
-                msg_txt_to_file: "Text auto-converted to TXT", msg_pasted: "Image pasted",
-                msg_all_done: "All transfers complete!", msg_no_files: "No files on watch", msg_load_fail: "Load failed",
-                msg_input_empty: "Please enter text", msg_sent_to_watch: "Sent to watch clipboard", msg_send_fail: "Send failed", msg_net_err: "Network error",
-                btn_download: "Download", status_done: "✅ Done", status_fail: "❌ Failed", status_err: "❌ Error"
-            },
-            ja: {
-                title: "WatchSend WebShare", sync_clip: "スマホのクリップボードを同期",
-                tab_send: "📤 ファイル送信", tab_recv: "📥 ファイル受信", tab_text: "📝 テキスト送信",
-                drop_title: "クリック / ドラッグ / 貼り付け", drop_desc: "複数ファイル対応、テキストはTXTに変換",
-                loading_files: "ファイルリストを取得中...", text_placeholder: "ここにテキストを入力し、送信するとスマホのクリップボードに同期されます...",
-                btn_send_text: "スマホに送信", phone_prefix: "スマホ: ",
-                msg_copied: "スマホのクリップボードをコピーしました", msg_clip_err: "ブラウザがクリップボードへのアクセスを拒否しました",
-                msg_txt_to_file: "テキストをTXTファイルとして送信します", msg_pasted: "画像を貼り付けました",
-                msg_all_done: "すべての転送が完了しました！", msg_no_files: "スマホ側にファイルがありません", msg_load_fail: "読み込み失敗",
-                msg_input_empty: "テキストを入力してください", msg_sent_to_watch: "スマホのクリップボードに送信しました", msg_send_fail: "送信失敗", msg_net_err: "ネットワークエラー",
-                btn_download: "ダウンロード", status_done: "✅ 完了", status_fail: "❌ 失敗", status_err: "❌ エラー"
-            },
-            ko: {
-                title: "WatchSend WebShare", sync_clip: "휴대폰 클립보드 동기화",
-                tab_send: "📤 파일 보내기", tab_recv: "📥 파일 받기", tab_text: "📝 텍스트 보내기",
-                drop_title: "클릭 / 드래그 / 붙여넣기", drop_desc: "다중 파일 지원, 텍스트는 TXT로 자동 변환",
-                loading_files: "파일 목록을 가져오는 중...", text_placeholder: "여기에 텍스트를 입력하고 보내기를 클릭하면 워치 클립보드에 동기화됩니다...",
-                btn_send_text: "워치로 보내기", phone_prefix: "휴대폰: ",
-                msg_copied: "휴대폰 클립보드가 복사되었습니다", msg_clip_err: "브라우저가 클립보드 접근을 거부했습니다",
-                msg_txt_to_file: "텍스트가 TXT로 변환되어 전송됩니다", msg_pasted: "이미지가 붙여넣기 되었습니다",
-                msg_all_done: "모든 전송이 완료되었습니다!", msg_no_files: "워치에 파일이 없습니다", msg_load_fail: "로드 실패",
-                msg_input_empty: "텍스트를 입력하세요", msg_sent_to_watch: "워치 클립보드로 전송되었습니다", msg_send_fail: "전송 실패", msg_net_err: "네트워크 오류",
-                btn_download: "다운로드", status_done: "✅ 완료", status_fail: "❌ 실패", status_err: "❌ 오류"
-            },
-            de: {
-                title: "WatchSend WebShare", sync_clip: "Handy-Zwischenablage synchronisieren",
-                tab_send: "📤 Dateien senden", tab_recv: "📥 Dateien empfangen", tab_text: "📝 Text senden",
-                drop_title: "Klicken / Ziehen / Einfügen", drop_desc: "Mehrere Dateien möglich, Text wird in TXT umgewandelt",
-                loading_files: "Dateiliste wird abgerufen...", text_placeholder: "Text hier eingeben, klicken Sie auf Senden, um ihn in die Uhr-Zwischenablage zu kopieren...",
-                btn_send_text: "An Uhr senden", phone_prefix: "Handy: ",
-                msg_copied: "Handy-Zwischenablage kopiert", msg_clip_err: "Browser verweigert Zugriff auf Zwischenablage",
-                msg_txt_to_file: "Text automatisch in TXT umgewandelt", msg_pasted: "Bild eingefügt",
-                msg_all_done: "Alle Übertragungen abgeschlossen!", msg_no_files: "Keine Dateien auf der Uhr", msg_load_fail: "Laden fehlgeschlagen",
-                msg_input_empty: "Bitte Text eingeben", msg_sent_to_watch: "An Uhr-Zwischenablage gesendet", msg_send_fail: "Senden fehlgeschlagen", msg_net_err: "Netzwerkfehler",
-                btn_download: "Herunterladen", status_done: "✅ Fertig", status_fail: "❌ Fehler", status_err: "❌ Fehler"
-            },
-            fr: {
-                title: "WatchSend WebShare", sync_clip: "Sync presse-papiers du téléphone",
-                tab_send: "📤 Envoyer fichiers", tab_recv: "📥 Recevoir fichiers", tab_text: "📝 Envoyer texte",
-                drop_title: "Cliquer / Glisser / Coller", drop_desc: "Multi-fichiers, texte converti en TXT",
-                loading_files: "Récupération de la liste...", text_placeholder: "Saisissez du texte ici, cliquez sur envoyer pour le synchroniser avec la montre...",
-                btn_send_text: "Envoyer à la montre", phone_prefix: "Tél : ",
-                msg_copied: "Presse-papiers du téléphone copié", msg_clip_err: "Accès au presse-papiers refusé par le navigateur",
-                msg_txt_to_file: "Texte converti en TXT", msg_pasted: "Image collée",
-                msg_all_done: "Tous les transferts terminés !", msg_no_files: "Aucun fichier sur la montre", msg_load_fail: "Échec du chargement",
-                msg_input_empty: "Veuillez saisir du texte", msg_sent_to_watch: "Envoyé au presse-papiers de la montre", msg_send_fail: "Échec de l'envoi", msg_net_err: "Erreur réseau",
-                btn_download: "Télécharger", status_done: "✅ Terminé", status_fail: "❌ Échec", status_err: "❌ Erreur"
-            },
-            es: {
-                title: "WatchSend WebShare", sync_clip: "Sincronizar portapapeles",
-                tab_send: "📤 Enviar archivos", tab_recv: "📥 Recibir archivos", tab_text: "📝 Enviar texto",
-                drop_title: "Clic / Arrastrar / Pegar", drop_desc: "Múltiples archivos, texto convertido a TXT",
-                loading_files: "Obteniendo lista de archivos...", text_placeholder: "Escribe texto aquí, haz clic en enviar para sincronizar al portapapeles del reloj...",
-                btn_send_text: "Enviar al reloj", phone_prefix: "Móvil: ",
-                msg_copied: "Portapapeles del móvil copiado", msg_clip_err: "Navegador denegó acceso al portapapeles",
-                msg_txt_to_file: "Texto convertido automáticamente a TXT", msg_pasted: "Imagen pegada",
-                msg_all_done: "¡Todas las transferencias completadas!", msg_no_files: "No hay archivos en el reloj", msg_load_fail: "Error al cargar",
-                msg_input_empty: "Por favor ingrese texto", msg_sent_to_watch: "Enviado al portapapeles del reloj", msg_send_fail: "Error al enviar", msg_net_err: "Error de red",
-                btn_download: "Descargar", status_done: "✅ Hecho", status_fail: "❌ Fallido", status_err: "❌ Error"
-            },
-            ru: {
-                title: "WatchSend WebShare", sync_clip: "Синхронизировать буфер обмена",
-                tab_send: "📤 Отправить файлы", tab_recv: "📥 Получить файлы", tab_text: "📝 Отправить текст",
-                drop_title: "Клик / Перетаскивание / Вставка", drop_desc: "Поддержка нескольких файлов, текст в TXT",
-                loading_files: "Получение списка файлов...", text_placeholder: "Введите текст здесь, нажмите отправить, чтобы синхронизировать с буфером обмена часов...",
-                btn_send_text: "Отправить на часы", phone_prefix: "Телефон: ",
-                msg_copied: "Буфер обмена телефона скопирован", msg_clip_err: "Браузер запретил доступ к буферу обмена",
-                msg_txt_to_file: "Текст преобразован в TXT", msg_pasted: "Изображение вставлено",
-                msg_all_done: "Все передачи завершены!", msg_no_files: "На часах нет файлов", msg_load_fail: "Ошибка загрузки",
-                msg_input_empty: "Пожалуйста, введите текст", msg_sent_to_watch: "Отправлено в буфер обмена часов", msg_send_fail: "Ошибка отправки", msg_net_err: "Ошибка сети",
-                btn_download: "Скачать", status_done: "✅ Готово", status_fail: "❌ Ошибка", status_err: "❌ Ошибка"
-            },
-            pt: {
-                title: "WatchSend WebShare", sync_clip: "Sincronizar área de transferência",
-                tab_send: "📤 Enviar arquivos", tab_recv: "📥 Receber arquivos", tab_text: "📝 Enviar texto",
-                drop_title: "Clique / Arraste / Cole", drop_desc: "Múltiplos arquivos, texto convertido para TXT",
-                loading_files: "Obtendo lista de arquivos...", text_placeholder: "Digite o texto aqui, clique em enviar para sincronizar com a área de transferência do relógio...",
-                btn_send_text: "Enviar para o relógio", phone_prefix: "Celular: ",
-                msg_copied: "Área de transferência do celular copiada", msg_clip_err: "Navegador negou acesso à área de transferência",
-                msg_txt_to_file: "Texto convertido em TXT", msg_pasted: "Imagem colada",
-                msg_all_done: "Todas as transferências concluídas!", msg_no_files: "Nenhum arquivo no relógio", msg_load_fail: "Falha ao carregar",
-                msg_input_empty: "Por favor insira o texto", msg_sent_to_watch: "Enviado para a área de transferência do relógio", msg_send_fail: "Falha ao enviar", msg_net_err: "Erro de rede",
-                btn_download: "Baixar", status_done: "✅ Concluído", status_fail: "❌ Falhou", status_err: "❌ Erro"
-            }
+            zh: { title: "WatchSend WebShare", sync_clip: "同步手机剪贴板", tab_send: "📤 发文件", tab_recv: "📥 收文件", tab_text: "📝 发文本", drop_title: "点击 / 拖拽 / 粘贴文件", drop_desc: "支持多文件并发、文本自动转 TXT", loading_files: "正在拉取文件列表...", text_placeholder: "在此输入文本，点击发送后，文本将同步到手表剪贴板...", btn_send_text: "发送到手表", phone_prefix: "手机: ", msg_copied: "已复制手机剪贴板内容", msg_clip_err: "浏览器拒绝访问剪贴板", msg_txt_to_file: "已自动将文本转为 TXT 发送", msg_pasted: "已粘贴图片", msg_all_done: "全部传输完成！", msg_no_files: "手表端暂无文件", msg_load_fail: "加载失败", msg_input_empty: "请输入文本", msg_sent_to_watch: "已发送到手表剪贴板", msg_send_fail: "发送失败", msg_net_err: "网络错误", btn_download: "下载", status_done: "✅ 完成", status_fail: "❌ 失败", status_err: "❌ 出错" },
+            zh_TW: { title: "WatchSend WebShare", sync_clip: "同步手機剪貼簿", tab_send: "📤 發檔案", tab_recv: "📥 收檔案", tab_text: "📝 發文字", drop_title: "點擊 / 拖曳 / 貼上檔案", drop_desc: "支援多檔案並行、文字自動轉 TXT", loading_files: "正在拉取檔案列表...", text_placeholder: "在此輸入文字，點擊發送後，文字將同步到手機剪貼簿...", btn_send_text: "發送到手錶", phone_prefix: "手機: ", msg_copied: "已複製手機剪貼簿內容", msg_clip_err: "瀏覽器拒絕存取剪貼簿", msg_txt_to_file: "已自動將文字轉為 TXT 發送", msg_pasted: "已貼上圖片", msg_all_done: "全部傳輸完成！", msg_no_files: "手錶端暫無檔案", msg_load_fail: "載入失敗", msg_input_empty: "請輸入文字", msg_sent_to_watch: "已發送到手錶剪貼簿", msg_send_fail: "發送失敗", msg_net_err: "網路錯誤", btn_download: "下載", status_done: "✅ 完成", status_fail: "❌ 失敗", status_err: "❌ 出錯" },
+            en: { title: "WatchSend WebShare", sync_clip: "Sync Phone Clipboard", tab_send: "📤 Send Files", tab_recv: "📥 Receive Files", tab_text: "📝 Send Text", drop_title: "Click / Drag / Paste Files", drop_desc: "Supports multi-file, text auto-converts to TXT", loading_files: "Fetching file list...", text_placeholder: "Type text here, click send to sync to watch clipboard...", btn_send_text: "Send to Watch", phone_prefix: "Phone: ", msg_copied: "Copied phone clipboard", msg_clip_err: "Browser denied clipboard access", msg_txt_to_file: "Text auto-converted to TXT", msg_pasted: "Image pasted", msg_all_done: "All transfers complete!", msg_no_files: "No files on watch", msg_load_fail: "Load failed", msg_input_empty: "Please enter text", msg_sent_to_watch: "Sent to watch clipboard", msg_send_fail: "Send failed", msg_net_err: "Network error", btn_download: "Download", status_done: "✅ Done", status_fail: "❌ Failed", status_err: "❌ Error" },
+            ja: { title: "WatchSend WebShare", sync_clip: "スマホのクリップボードを同期", tab_send: "📤 ファイル送信", tab_recv: "📥 ファイル受信", tab_text: "📝 テキスト送信", drop_title: "クリック / ドラッグ / 貼り付け", drop_desc: "複数ファイル対応、テキストはTXTに変換", loading_files: "ファイルリストを取得中...", text_placeholder: "ここにテキストを入力し、送信するとスマホのクリップボードに同期されます...", btn_send_text: "スマホに送信", phone_prefix: "スマホ: ", msg_copied: "スマホのクリップボードをコピーしました", msg_clip_err: "ブラウザがクリップボードへのアクセスを拒否しました", msg_txt_to_file: "テキストをTXTファイルとして送信します", msg_pasted: "画像を貼り付けました", msg_all_done: "すべての転送が完了しました！", msg_no_files: "スマホ側にファイルがありません", msg_load_fail: "読み込み失敗", msg_input_empty: "テキストを入力してください", msg_sent_to_watch: "スマホのクリップボードに送信しました", msg_send_fail: "送信失敗", msg_net_err: "ネットワークエラー", btn_download: "ダウンロード", status_done: "✅ 完了", status_fail: "❌ 失敗", status_err: "❌ エラー" },
+            ko: { title: "WatchSend WebShare", sync_clip: "휴대폰 클립보드 동기화", tab_send: "📤 파일 보내기", tab_recv: "📥 파일 받기", tab_text: "📝 텍스트 보내기", drop_title: "클릭 / 드래그 / 붙여넣기", drop_desc: "다중 파일 지원, 텍스트는 TXT로 자동 변환", loading_files: "파일 목록을 가져오는 중...", text_placeholder: "여기에 텍스트를 입력하고 보내기를 클릭하면 워치 클립보드에 동기화됩니다...", btn_send_text: "워치로 보내기", phone_prefix: "휴대폰: ", msg_copied: "휴대폰 클립보드가 복사되었습니다", msg_clip_err: "브라우저가 클립보드 접근을 거부했습니다", msg_txt_to_file: "텍스트가 TXT로 변환되어 전송됩니다", msg_pasted: "이미지가 붙여넣기 되었습니다", msg_all_done: "모든 전송이 완료되었습니다!", msg_no_files: "워치에 파일이 없습니다", msg_load_fail: "로드 실패", msg_input_empty: "텍스트를 입력하세요", msg_sent_to_watch: "워치 클립보드로 전송되었습니다", msg_send_fail: "전송 실패", msg_net_err: "네트워크 오류", btn_download: "다운로드", status_done: "✅ 완료", status_fail: "❌ 실패", status_err: "❌ 오류" },
+            de: { title: "WatchSend WebShare", sync_clip: "Handy-Zwischenablage synchronisieren", tab_send: "📤 Dateien senden", tab_recv: "📥 Dateien empfangen", tab_text: "📝 Text senden", drop_title: "Klicken / Ziehen / Einfügen", drop_desc: "Mehrere Dateien möglich, Text wird in TXT umgewandelt", loading_files: "Dateiliste wird abgerufen...", text_placeholder: "Text hier eingeben, klicken Sie auf Senden, um ihn in die Uhr-Zwischenablage zu kopieren...", btn_send_text: "An Uhr senden", phone_prefix: "Handy: ", msg_copied: "Handy-Zwischenablage kopiert", msg_clip_err: "Browser verweigert Zugriff auf Zwischenablage", msg_txt_to_file: "Text automatisch in TXT umgewandelt", msg_pasted: "Bild eingefügt", msg_all_done: "Alle Übertragungen abgeschlossen!", msg_no_files: "Keine Dateien auf der Uhr", msg_load_fail: "Laden fehlgeschlagen", msg_input_empty: "Bitte Text eingeben", msg_sent_to_watch: "An Uhr-Zwischenablage gesendet", msg_send_fail: "Senden fehlgeschlagen", msg_net_err: "Netzwerkfehler", btn_download: "Herunterladen", status_done: "✅ Fertig", status_fail: "❌ Fehler", status_err: "❌ Fehler" },
+            fr: { title: "WatchSend WebShare", sync_clip: "Sync presse-papiers du téléphone", tab_send: "📤 Envoyer fichiers", tab_recv: "📥 Recevoir fichiers", tab_text: "📝 Envoyer texte", drop_title: "Cliquer / Glisser / Coller", drop_desc: "Multi-fichiers, texte converti en TXT", loading_files: "Récupération de la liste...", text_placeholder: "Saisissez du texte ici, cliquez sur envoyer pour le synchroniser avec la montre...", btn_send_text: "Envoyer à la montre", phone_prefix: "Tél : ", msg_copied: "Presse-papiers du téléphone copié", msg_clip_err: "Accès au presse-papiers refusé par le navigateur", msg_txt_to_file: "Texte converti en TXT", msg_pasted: "Image collée", msg_all_done: "Tous les transferts terminés !", msg_no_files: "Aucun fichier sur la montre", msg_load_fail: "Échec du chargement", msg_input_empty: "Veuillez saisir du texte", msg_sent_to_watch: "Envoyé au presse-papiers de la montre", msg_send_fail: "Échec de l'envoi", msg_net_err: "Erreur réseau", btn_download: "Télécharger", status_done: "✅ Terminé", status_fail: "❌ Échec", status_err: "❌ Erreur" },
+            es: { title: "WatchSend WebShare", sync_clip: "Sincronizar portapapeles", tab_send: "📤 Enviar archivos", tab_recv: "📥 Recibir archivos", tab_text: "📝 Enviar texto", drop_title: "Clic / Arrastrar / Pegar", drop_desc: "Múltiples archivos, texto convertido a TXT", loading_files: "Obteniendo lista de archivos...", text_placeholder: "Escribe texto aquí, haz clic en enviar para sincronizar al portapapeles del reloj...", btn_send_text: "Enviar al reloj", phone_prefix: "Móvil: ", msg_copied: "Portapapeles del móvil copiado", msg_clip_err: "Navegador denegó acceso al portapapeles", msg_txt_to_file: "Texto convertido automáticamente a TXT", msg_pasted: "Imagen pegada", msg_all_done: "¡Todas las transferencias completadas!", msg_no_files: "No hay archivos en el reloj", msg_load_fail: "Error al cargar", msg_input_empty: "Por favor ingrese texto", msg_sent_to_watch: "Enviado al portapapeles del reloj", msg_send_fail: "Error al enviar", msg_net_err: "Error de red", btn_download: "Descargar", status_done: "✅ Hecho", status_fail: "❌ Fallido", status_err: "❌ Error" },
+            ru: { title: "WatchSend WebShare", sync_clip: "Синхронизировать буфер обмена", tab_send: "📤 Отправить файлы", tab_recv: "📥 Получить файлы", tab_text: "📝 Отправить текст", drop_title: "Клик / Перетаскивание / Вставка", drop_desc: "Поддержка нескольких файлов, текст в TXT", loading_files: "Получение списка файлов...", text_placeholder: "Введите текст здесь, нажмите отправить, чтобы синхронизировать с буфером обмена часов...", btn_send_text: "Отправить на часы", phone_prefix: "Телефон: ", msg_copied: "Буфер обмена телефона скопирован", msg_clip_err: "Браузер запретил доступ к буферу обмена", msg_txt_to_file: "Текст преобразован в TXT", msg_pasted: "Изображение вставлено", msg_all_done: "Все передачи завершены!", msg_no_files: "На часах нет файлов", msg_load_fail: "Ошибка загрузки", msg_input_empty: "Пожалуйста, введите текст", msg_sent_to_watch: "Отправлено в буфер обмена часов", msg_send_fail: "Ошибка отправки", msg_net_err: "Ошибка сети", btn_download: "Скачать", status_done: "✅ Готово", status_fail: "❌ Ошибка", status_err: "❌ Ошибка" },
+            pt: { title: "WatchSend WebShare", sync_clip: "Sincronizar área de transferência", tab_send: "📤 Enviar arquivos", tab_recv: "📥 Receber arquivos", tab_text: "📝 Enviar texto", drop_title: "Clique / Arraste / Cole", drop_desc: "Múltiplos arquivos, texto convertido para TXT", loading_files: "Obtendo lista de arquivos...", text_placeholder: "Digite o texto aqui, clique em enviar para sincronizar com a área de transferência do relógio...", btn_send_text: "Enviar para o relógio", phone_prefix: "Celular: ", msg_copied: "Área de transferência do celular copiada", msg_clip_err: "Navegador negou acesso à área de transferência", msg_txt_to_file: "Texto convertido em TXT", msg_pasted: "Imagem colada", msg_all_done: "Todas as transferências concluídas!", msg_no_files: "Nenhum arquivo no relógio", msg_load_fail: "Falha ao carregar", msg_input_empty: "Por favor insira o texto", msg_sent_to_watch: "Enviado para a área de transferência do relógio", msg_send_fail: "Falha ao enviar", msg_net_err: "Erro de rede", btn_download: "Baixar", status_done: "✅ Concluído", status_fail: "❌ Falhou", status_err: "❌ Erro" }
         };
 
         let curLang = 'zh';
@@ -340,13 +230,15 @@
                     const i = index++;
                     const f = files[i];
                     const div = document.createElement('div'); div.className = 'file-item';
-                    div.innerHTML = `<div class="file-icon">${getIcon(f.name)}</div>
-                        <div class="file-info">
-                            <div class="file-name">${f.name}</div>
-                            <div class="file-size">${formatSize(f.size)}</div>
-                            <div class="progress-bar"><div class="progress-fill" id="p-${i}"></div></div>
-                        </div>
-                        <div id="s-${i}" style="font-size:12px; font-weight:bold; color:var(--text-sec); margin-left:10px;">0%</div>`;
+                    // 采用最稳妥的字符串 + 拼接
+                    div.innerHTML = '<div class="file-icon">' + getIcon(f.name) + '</div>' +
+                        '<div class="file-info">' +
+                            '<div class="file-name">' + f.name + '</div>' +
+                            '<div class="file-size">' + formatSize(f.size) + '</div>' +
+                            '<div class="progress-bar"><div class="progress-fill" id="p-' + i + '"></div></div>' +
+                        '</div>' +
+                        '<div id="s-' + i + '" style="font-size:12px; font-weight:bold; color:var(--text-sec); margin-left:10px;">0%</div>';
+                    
                     list.appendChild(div);
                     
                     await new Promise(resolve => {
@@ -372,24 +264,24 @@
 
         function loadFiles() {
             const list = document.getElementById('download-list');
-            list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">${t('loading_files')}</p>`;
+            list.innerHTML = '<p style="text-align:center; color:var(--text-sec); font-size:14px;">' + t('loading_files') + '</p>';
             fetch('/web/files').then(r => {
                 if (!r.ok) throw new Error("HTTP " + r.status);
                 return r.json();
             }).then(data => {
-                if(data.length===0) { list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">${t('msg_no_files')}</p>`; return; }
+                if(data.length===0) { list.innerHTML = '<p style="text-align:center; color:var(--text-sec); font-size:14px;">' + t('msg_no_files') + '</p>'; return; }
                 list.innerHTML = '';
                 data.forEach(f => {
                     const div = document.createElement('div'); div.className = 'file-item';
-                    div.innerHTML = `<div class="file-icon">${getIcon(f.name)}</div>
-                        <div class="file-info">
-                            <div class="file-name">${f.name}</div>
-                            <div class="file-size">${formatSize(f.size)}</div>
-                        </div>
-                        <a href="/web/download?name=${encodeURIComponent(f.name)}" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">${t('btn_download')}</a>`;
+                    div.innerHTML = '<div class="file-icon">' + getIcon(f.name) + '</div>' +
+                        '<div class="file-info">' +
+                            '<div class="file-name">' + f.name + '</div>' +
+                            '<div class="file-size">' + formatSize(f.size) + '</div>' +
+                        '</div>' +
+                        '<a href="/web/download?name=' + encodeURIComponent(f.name) + '" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">' + t('btn_download') + '</a>';
                     list.appendChild(div);
                 });
-            }).catch(()=>{ list.innerHTML = `<p style="text-align:center; color:red;">${t('msg_load_fail')}</p>`; });
+            }).catch(()=>{ list.innerHTML = '<p style="text-align:center; color:red;">' + t('msg_load_fail') + '</p>'; });
         }
 
         function sendText() {
