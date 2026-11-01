@@ -505,6 +505,31 @@ public class TransferActivity extends Activity {
                     LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
                     openLp.bottomMargin = dp(8);
                     btnOpen.setLayoutParams(openLp);
+                    // 注入解压按钮
+                    if (recvFile.getName().toLowerCase().endsWith(".zip")) {
+                        Button btnUnzip = createButton("📦 " + I18nManager.get("unzip"), isDark ? 0xFF2C2C2E : 0xFFEEEEEE, 0xFF1976D2);
+                        LinearLayout.LayoutParams unzipLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
+                        unzipLp.bottomMargin = dp(8);
+                        btnUnzip.setLayoutParams(unzipLp);
+                        btnUnzip.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                Toast.makeText(TransferActivity.this, I18nManager.get("unzipping"), Toast.LENGTH_SHORT).show();
+                                new Thread(new Runnable() {
+                                    public void run() {
+                                        final boolean ok = org.watchsend.util.ZipUtils.unzip(recvFile, recvFile.getParentFile());
+                                        handler.post(new Runnable() {
+                                            public void run() {
+                                                Toast.makeText(TransferActivity.this, ok ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail"), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }).start();
+                            }
+                        });
+                        int idxUnzip = container.indexOfChild(btnDone);
+                        container.addView(btnUnzip, idxUnzip);
+                    }
+
                     btnOpen.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             if (isApk && getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("silent_install", false)) {

@@ -167,7 +167,7 @@ public class I18nManager {
         zh.put("back_prev", "返回上一页"); zh.put("save_to_dir", "保存目录: "); zh.put("ip_prefix", "IP ");
     
 
-        zh.put("web_qr", "网页端地址"); zh.put("web_qr_desc", "请在电脑浏览器输入此地址"); zh.put("open_file", "打开文件"); zh.put("install_apk", "一键安装"); zh.put("geek_mode", "极客模式"); zh.put("silent_install", "静默安装"); zh.put("silent_install_desc", "需 Root 或 Shizuku"); zh.put("share_file", "分享文件"); zh.put("delete_record", "删除记录"); zh.put("delete_confirm", "确认删除这条记录吗？"); zh.put("copied_hint", "已复制到剪贴板");
+        zh.put("web_qr", "网页端地址"); zh.put("web_qr_desc", "请在电脑浏览器输入此地址"); zh.put("open_file", "打开文件"); zh.put("install_apk", "一键安装"); zh.put("unzip", "解压到当前目录"); zh.put("unzipping", "正在后台解压..."); zh.put("unzip_ok", "解压完成"); zh.put("unzip_fail", "解压失败"); zh.put("geek_mode", "极客模式"); zh.put("silent_install", "静默安装"); zh.put("silent_install_desc", "需 Root 或 Shizuku"); zh.put("share_file", "分享文件"); zh.put("delete_record", "删除记录"); zh.put("delete_confirm", "确认删除这条记录吗？"); zh.put("copied_hint", "已复制到剪贴板");
 zh.put("settings_title", "设置"); zh.put("clear_all_files_btn", "清空所有文件"); zh.put("add_whitelist", "加入白名单");
         zh.put("remove_whitelist", "移除白名单"); zh.put("add_blacklist", "加入黑名单"); zh.put("remove_blacklist", "移除黑名单");
     
@@ -283,7 +283,7 @@ dict.put("zh", zh);
         zhTW.put("back_prev", "返回上一頁"); zhTW.put("save_to_dir", "儲存目錄: "); zhTW.put("ip_prefix", "IP ");
     
 
-        zhTW.put("web_qr", "網頁端網址"); zhTW.put("web_qr_desc", "請在電腦瀏覽器輸入此網址"); zhTW.put("open_file", "開啟檔案"); zhTW.put("install_apk", "一鍵安裝"); zhTW.put("geek_mode", "極客模式"); zhTW.put("silent_install", "靜默安裝"); zhTW.put("silent_install_desc", "需 Root 或 Shizuku"); zhTW.put("share_file", "分享檔案"); zhTW.put("delete_record", "刪除記錄"); zhTW.put("delete_confirm", "確認刪除這條記錄嗎？"); zhTW.put("copied_hint", "已複製到剪貼簿");
+        zhTW.put("web_qr", "網頁端網址"); zhTW.put("web_qr_desc", "請在電腦瀏覽器輸入此網址"); zhTW.put("open_file", "開啟檔案"); zhTW.put("install_apk", "一鍵安裝"); zhTW.put("unzip", "解壓縮"); zhTW.put("unzipping", "正在解壓縮..."); zhTW.put("unzip_ok", "解壓縮完成"); zhTW.put("unzip_fail", "解壓縮失敗"); zhTW.put("geek_mode", "極客模式"); zhTW.put("silent_install", "靜默安裝"); zhTW.put("silent_install_desc", "需 Root 或 Shizuku"); zhTW.put("share_file", "分享檔案"); zhTW.put("delete_record", "刪除記錄"); zhTW.put("delete_confirm", "確認刪除這條記錄嗎？"); zhTW.put("copied_hint", "已複製到剪貼簿");
 zhTW.put("settings_title", "設定"); zhTW.put("clear_all_files_btn", "清空所有檔案"); zhTW.put("add_whitelist", "加入白名單");
         zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單"); zhTW.put("remove_blacklist", "移除黑名單");
     
@@ -460,7 +460,7 @@ dict.put("zh_TW", zhTW);
         en.put("back_prev", "Go Back"); en.put("save_to_dir", "Save to: "); en.put("ip_prefix", "IP ");
     
 
-        en.put("web_qr", "Web URL"); en.put("web_qr_desc", "Type this URL in your PC browser"); en.put("open_file", "Open File"); en.put("install_apk", "Install"); en.put("geek_mode", "Geek Mode"); en.put("silent_install", "Silent Install"); en.put("silent_install_desc", "Requires Root/Shizuku"); en.put("share_file", "Share File"); en.put("delete_record", "Delete Record"); en.put("delete_confirm", "Delete this record?"); en.put("copied_hint", "Copied to clipboard");
+        en.put("web_qr", "Web URL"); en.put("web_qr_desc", "Type this URL in your PC browser"); en.put("open_file", "Open File"); en.put("install_apk", "Install"); en.put("unzip", "Unzip to current dir"); en.put("unzipping", "Unzipping..."); en.put("unzip_ok", "Unzip success"); en.put("unzip_fail", "Unzip failed"); en.put("geek_mode", "Geek Mode"); en.put("silent_install", "Silent Install"); en.put("silent_install_desc", "Requires Root/Shizuku"); en.put("share_file", "Share File"); en.put("delete_record", "Delete Record"); en.put("delete_confirm", "Delete this record?"); en.put("copied_hint", "Copied to clipboard");
 en.put("settings_title", "Settings"); en.put("clear_all_files_btn", "Clear All Files"); en.put("add_whitelist", "Add Whitelist");
         en.put("remove_whitelist", "Remove Whitelist"); en.put("add_blacklist", "Add Blacklist"); en.put("remove_blacklist", "Remove Blacklist");
     
@@ -580,7 +580,7 @@ dict.put("en", en);
         ja.put("back_prev", "戻る"); ja.put("save_to_dir", "保存先: "); ja.put("ip_prefix", "IP ");
     
 
-        ja.put("web_qr", "Web URL"); ja.put("web_qr_desc", "Open in PC browser"); ja.put("open_file", "Open"); ja.put("install_apk", "Install"); ja.put("geek_mode", "Geek Mode"); ja.put("silent_install", "Silent Install"); ja.put("silent_install_desc", "Requires Root/Shizuku"); ja.put("share_file", "Share"); ja.put("delete_record", "Delete"); ja.put("delete_confirm", "Confirm delete?"); ja.put("copied_hint", "Copied");
+        ja.put("web_qr", "Web URL"); ja.put("web_qr_desc", "Open in PC browser"); ja.put("open_file", "Open"); ja.put("install_apk", "Install"); ja.put("unzip", "Unzip"); ja.put("unzipping", "Unzipping..."); ja.put("unzip_ok", "Success"); ja.put("unzip_fail", "Failed"); ja.put("geek_mode", "Geek Mode"); ja.put("silent_install", "Silent Install"); ja.put("silent_install_desc", "Requires Root/Shizuku"); ja.put("share_file", "Share"); ja.put("delete_record", "Delete"); ja.put("delete_confirm", "Confirm delete?"); ja.put("copied_hint", "Copied");
 ja.put("settings_title", "設定"); ja.put("clear_all_files_btn", "すべてのファイルを消去"); ja.put("add_whitelist", "ホワイトリストに追加");
         ja.put("remove_whitelist", "ホワイトリストから削除"); ja.put("add_blacklist", "ブラックリストに追加"); ja.put("remove_blacklist", "ブラックリストから削除");
     
@@ -701,7 +701,7 @@ dict.put("ja", ja);
         ko.put("back_prev", "뒤로 가기"); ko.put("save_to_dir", "저장 위치: "); ko.put("ip_prefix", "IP ");
     
 
-        ko.put("web_qr", "Web URL"); ko.put("web_qr_desc", "Open in PC browser"); ko.put("open_file", "Open"); ko.put("install_apk", "Install"); ko.put("geek_mode", "Geek Mode"); ko.put("silent_install", "Silent Install"); ko.put("silent_install_desc", "Requires Root/Shizuku"); ko.put("share_file", "Share"); ko.put("delete_record", "Delete"); ko.put("delete_confirm", "Confirm delete?"); ko.put("copied_hint", "Copied");
+        ko.put("web_qr", "Web URL"); ko.put("web_qr_desc", "Open in PC browser"); ko.put("open_file", "Open"); ko.put("install_apk", "Install"); ko.put("unzip", "Unzip"); ko.put("unzipping", "Unzipping..."); ko.put("unzip_ok", "Success"); ko.put("unzip_fail", "Failed"); ko.put("geek_mode", "Geek Mode"); ko.put("silent_install", "Silent Install"); ko.put("silent_install_desc", "Requires Root/Shizuku"); ko.put("share_file", "Share"); ko.put("delete_record", "Delete"); ko.put("delete_confirm", "Confirm delete?"); ko.put("copied_hint", "Copied");
 ko.put("settings_title", "설정"); ko.put("clear_all_files_btn", "모든 파일 삭제"); ko.put("add_whitelist", "화이트리스트 추가");
         ko.put("remove_whitelist", "화이트리스트 제거"); ko.put("add_blacklist", "블랙리스트 추가"); ko.put("remove_blacklist", "블랙리스트 제거");
     
@@ -822,7 +822,7 @@ dict.put("ko", ko);
         de.put("back_prev", "Zurück"); de.put("save_to_dir", "Speichern unter: "); de.put("ip_prefix", "IP ");
     
 
-        de.put("web_qr", "Web URL"); de.put("web_qr_desc", "Open in PC browser"); de.put("open_file", "Open"); de.put("install_apk", "Install"); de.put("geek_mode", "Geek Mode"); de.put("silent_install", "Silent Install"); de.put("silent_install_desc", "Requires Root/Shizuku"); de.put("share_file", "Share"); de.put("delete_record", "Delete"); de.put("delete_confirm", "Confirm delete?"); de.put("copied_hint", "Copied");
+        de.put("web_qr", "Web URL"); de.put("web_qr_desc", "Open in PC browser"); de.put("open_file", "Open"); de.put("install_apk", "Install"); de.put("unzip", "Unzip"); de.put("unzipping", "Unzipping..."); de.put("unzip_ok", "Success"); de.put("unzip_fail", "Failed"); de.put("geek_mode", "Geek Mode"); de.put("silent_install", "Silent Install"); de.put("silent_install_desc", "Requires Root/Shizuku"); de.put("share_file", "Share"); de.put("delete_record", "Delete"); de.put("delete_confirm", "Confirm delete?"); de.put("copied_hint", "Copied");
 de.put("settings_title", "Einstellungen"); de.put("clear_all_files_btn", "Alle Dateien löschen"); de.put("add_whitelist", "Zur Whitelist");
         de.put("remove_whitelist", "Von Whitelist entfernen"); de.put("add_blacklist", "Zur Blacklist"); de.put("remove_blacklist", "Von Blacklist entfernen");
     
@@ -943,7 +943,7 @@ dict.put("de", de);
         fr.put("back_prev", "Retour"); fr.put("save_to_dir", "Enregistrer dans : "); fr.put("ip_prefix", "IP ");
     
 
-        fr.put("web_qr", "Web URL"); fr.put("web_qr_desc", "Open in PC browser"); fr.put("open_file", "Open"); fr.put("install_apk", "Install"); fr.put("geek_mode", "Geek Mode"); fr.put("silent_install", "Silent Install"); fr.put("silent_install_desc", "Requires Root/Shizuku"); fr.put("share_file", "Share"); fr.put("delete_record", "Delete"); fr.put("delete_confirm", "Confirm delete?"); fr.put("copied_hint", "Copied");
+        fr.put("web_qr", "Web URL"); fr.put("web_qr_desc", "Open in PC browser"); fr.put("open_file", "Open"); fr.put("install_apk", "Install"); fr.put("unzip", "Unzip"); fr.put("unzipping", "Unzipping..."); fr.put("unzip_ok", "Success"); fr.put("unzip_fail", "Failed"); fr.put("geek_mode", "Geek Mode"); fr.put("silent_install", "Silent Install"); fr.put("silent_install_desc", "Requires Root/Shizuku"); fr.put("share_file", "Share"); fr.put("delete_record", "Delete"); fr.put("delete_confirm", "Confirm delete?"); fr.put("copied_hint", "Copied");
 fr.put("settings_title", "Paramètres"); fr.put("clear_all_files_btn", "Effacer tous les fichiers"); fr.put("add_whitelist", "Ajouter à la liste blanche");
         fr.put("remove_whitelist", "Retirer de la liste blanche"); fr.put("add_blacklist", "Ajouter à la liste noire"); fr.put("remove_blacklist", "Retirer de la liste noire");
     
@@ -1064,7 +1064,7 @@ dict.put("fr", fr);
         es.put("back_prev", "Volver"); es.put("save_to_dir", "Guardar en: "); es.put("ip_prefix", "IP ");
     
 
-        es.put("web_qr", "Web URL"); es.put("web_qr_desc", "Open in PC browser"); es.put("open_file", "Open"); es.put("install_apk", "Install"); es.put("geek_mode", "Geek Mode"); es.put("silent_install", "Silent Install"); es.put("silent_install_desc", "Requires Root/Shizuku"); es.put("share_file", "Share"); es.put("delete_record", "Delete"); es.put("delete_confirm", "Confirm delete?"); es.put("copied_hint", "Copied");
+        es.put("web_qr", "Web URL"); es.put("web_qr_desc", "Open in PC browser"); es.put("open_file", "Open"); es.put("install_apk", "Install"); es.put("unzip", "Unzip"); es.put("unzipping", "Unzipping..."); es.put("unzip_ok", "Success"); es.put("unzip_fail", "Failed"); es.put("geek_mode", "Geek Mode"); es.put("silent_install", "Silent Install"); es.put("silent_install_desc", "Requires Root/Shizuku"); es.put("share_file", "Share"); es.put("delete_record", "Delete"); es.put("delete_confirm", "Confirm delete?"); es.put("copied_hint", "Copied");
 es.put("settings_title", "Ajustes"); es.put("clear_all_files_btn", "Borrar todos los archivos"); es.put("add_whitelist", "Añadir a lista blanca");
         es.put("remove_whitelist", "Quitar de lista blanca"); es.put("add_blacklist", "Añadir a lista negra"); es.put("remove_blacklist", "Quitar de lista negra");
     
@@ -1185,7 +1185,7 @@ dict.put("es", es);
         ru.put("back_prev", "Назад"); ru.put("save_to_dir", "Сохранить в: "); ru.put("ip_prefix", "IP ");
     
 
-        ru.put("web_qr", "Web URL"); ru.put("web_qr_desc", "Open in PC browser"); ru.put("open_file", "Open"); ru.put("install_apk", "Install"); ru.put("geek_mode", "Geek Mode"); ru.put("silent_install", "Silent Install"); ru.put("silent_install_desc", "Requires Root/Shizuku"); ru.put("share_file", "Share"); ru.put("delete_record", "Delete"); ru.put("delete_confirm", "Confirm delete?"); ru.put("copied_hint", "Copied");
+        ru.put("web_qr", "Web URL"); ru.put("web_qr_desc", "Open in PC browser"); ru.put("open_file", "Open"); ru.put("install_apk", "Install"); ru.put("unzip", "Unzip"); ru.put("unzipping", "Unzipping..."); ru.put("unzip_ok", "Success"); ru.put("unzip_fail", "Failed"); ru.put("geek_mode", "Geek Mode"); ru.put("silent_install", "Silent Install"); ru.put("silent_install_desc", "Requires Root/Shizuku"); ru.put("share_file", "Share"); ru.put("delete_record", "Delete"); ru.put("delete_confirm", "Confirm delete?"); ru.put("copied_hint", "Copied");
 ru.put("settings_title", "Настройки"); ru.put("clear_all_files_btn", "Очистить все файлы"); ru.put("add_whitelist", "В белый список");
         ru.put("remove_whitelist", "Из белого списка"); ru.put("add_blacklist", "В черный список"); ru.put("remove_blacklist", "Из черного списка");
     
@@ -1306,7 +1306,7 @@ dict.put("ru", ru);
         pt.put("back_prev", "Voltar"); pt.put("save_to_dir", "Salvar em: "); pt.put("ip_prefix", "IP ");
     
 
-        pt.put("web_qr", "Web URL"); pt.put("web_qr_desc", "Open in PC browser"); pt.put("open_file", "Open"); pt.put("install_apk", "Install"); pt.put("geek_mode", "Geek Mode"); pt.put("silent_install", "Silent Install"); pt.put("silent_install_desc", "Requires Root/Shizuku"); pt.put("share_file", "Share"); pt.put("delete_record", "Delete"); pt.put("delete_confirm", "Confirm delete?"); pt.put("copied_hint", "Copied");
+        pt.put("web_qr", "Web URL"); pt.put("web_qr_desc", "Open in PC browser"); pt.put("open_file", "Open"); pt.put("install_apk", "Install"); pt.put("unzip", "Unzip"); pt.put("unzipping", "Unzipping..."); pt.put("unzip_ok", "Success"); pt.put("unzip_fail", "Failed"); pt.put("geek_mode", "Geek Mode"); pt.put("silent_install", "Silent Install"); pt.put("silent_install_desc", "Requires Root/Shizuku"); pt.put("share_file", "Share"); pt.put("delete_record", "Delete"); pt.put("delete_confirm", "Confirm delete?"); pt.put("copied_hint", "Copied");
 pt.put("settings_title", "Configurações"); pt.put("clear_all_files_btn", "Limpar todos os arquivos"); pt.put("add_whitelist", "Adicionar à lista branca");
         pt.put("remove_whitelist", "Remover da lista branca"); pt.put("add_blacklist", "Adicionar à lista negra"); pt.put("remove_blacklist", "Remover da lista negra");
     

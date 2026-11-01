@@ -561,18 +561,36 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showHistoryMenu(final int pos) {
-        String[] items = new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
+        File historyFile = new File(historyPaths.get(pos));
+        boolean isZip = historyFile.exists() && historyFile.getName().toLowerCase().endsWith(".zip");
+        
+        String[] items = isZip ? 
+            new String[]{I18nManager.get("unzip"), I18nManager.get("share_file"), I18nManager.get("delete_record")} :
+            new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
         WatchUiUtils.showList(this, historyAdapter.getItem(pos).split("\n")[0], items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int p) {
-                if (p == 0) {
-                    File f = new File(historyPaths.get(pos));
+                File f = new File(historyPaths.get(pos));
+                int shareIdx = isZip ? 1 : 0;
+                int delIdx = isZip ? 2 : 1;
+
+                if (isZip && p == 0) {
+                    toast(I18nManager.get("unzipping"));
+                    new Thread(new Runnable() {
+                        public void run() {
+                            final boolean ok = org.watchsend.util.ZipUtils.unzip(f, f.getParentFile());
+                            handler.post(new Runnable() {
+                                public void run() { toast(ok ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail")); }
+                            });
+                        }
+                    }).start();
+                } else if (p == shareIdx) {
                     if (f.exists()) {
                         Intent i = new Intent(Intent.ACTION_SEND);
                         i.setType("*/*");
                         i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
                         startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
                     } else toast(I18nManager.get("file_not_found"));
-                } else {
+                } else if (p == delIdx) {
                     WatchUiUtils.showConfirm(MainActivity.this, I18nManager.get("delete_record"), I18nManager.get("delete_confirm"), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface d, int w) {
                             HistoryStore.get().remove(MainActivity.this, historyPaths.get(pos));
