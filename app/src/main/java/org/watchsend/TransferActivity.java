@@ -507,6 +507,17 @@ public class TransferActivity extends Activity {
                     btnOpen.setLayoutParams(openLp);
                     btnOpen.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
+                            if (isApk && getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("silent_install", false)) {
+                                // 走静默安装逻辑
+                                String cmd = "pm install -r " + recvFile.getAbsolutePath();
+                                if (org.watchsend.util.ShellUtils.execRootCommand(cmd)) {
+                                    Toast.makeText(TransferActivity.this, "安装指令已发送", Toast.LENGTH_SHORT).show();
+                                    return;
+                                } else {
+                                    Toast.makeText(TransferActivity.this, "静默安装失败，请检查权限", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            
                             try {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
                                 if (isApk) {
