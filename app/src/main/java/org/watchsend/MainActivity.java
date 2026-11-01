@@ -527,7 +527,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         ScrollView sv = new ScrollView(this); sv.addView(dialogLogView);
         logDialog = WatchUiUtils.createBaseDialog(this, I18nManager.get("log"), sv,
             I18nManager.get("confirm"), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface d, int w) { dialogLogView = null; }
+                public void onClick(DialogInterface d, int w) { dialogLogView = null; d.dismiss(); }
             }, null, null);
         logDialog.show();
     }

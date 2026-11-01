@@ -42,6 +42,12 @@ public class WatchSettingsActivity extends Activity {
         if (root != null) {
             root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
             WatchUiUtils.applyRoundPadding(this, root);
+            
+            // 在圆屏模式下隐藏顶部返回栏，依赖滑动返回
+            View header = findViewById(R.id.settings_header);
+            if (header != null && org.watchsend.watch.WatchHardwareUtils.isRoundScreen(root)) {
+                header.setVisibility(View.GONE);
+            }
         }
 
         container = (LinearLayout) findViewById(R.id.settings_container);
