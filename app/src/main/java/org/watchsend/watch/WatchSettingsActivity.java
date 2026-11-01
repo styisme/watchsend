@@ -83,6 +83,8 @@ public class WatchSettingsActivity extends Activity {
         addItem(I18nManager.get("screen_shape") + ": " + currentShapeLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickShape(); }
         });
+// 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
+        addSwitch(I18nManager.get("chin_padding"), I18nManager.get("chin_padding_desc"), prefs().getBoolean("chin_padding", false), saveTo("chin_padding"));
 
         // 动态取色 (仅在 Android 12+ 显示)
         if (android.os.Build.VERSION.SDK_INT >= 31) {
@@ -90,9 +92,6 @@ public class WatchSettingsActivity extends Activity {
                 public void onChanged(boolean v) { prefs().edit().putBoolean("dynamic_color", v).commit(); recreate(); }
             });
         }
-
-        // 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
-        addSwitch(I18nManager.get("chin_padding"), I18nManager.get("chin_padding_desc"), prefs().getBoolean("chin_padding", false), saveTo("chin_padding"));
 
         // 低性能模式
         addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
