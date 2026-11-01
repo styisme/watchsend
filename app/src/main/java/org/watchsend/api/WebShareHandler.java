@@ -112,19 +112,30 @@ public class WebShareHandler implements Router.Handler {
         // 反向索要文件列表
         if (req.path.equals("/web/files") && req.method.equalsIgnoreCase("GET")) {
             JSONArray arr = new JSONArray();
-            File[] dirs = {
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "OldSend"),
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend"),
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend")
-            };
-            for (File dir : dirs) {
-                if (dir.exists() && dir.isDirectory()) {
-                    File[] list = dir.listFiles();
-                    if (list != null) for (File f : list) if (f.isFile()) {
-                        JSONObject obj = new JSONObject();
-                        obj.put("name", f.getName()); obj.put("size", f.length()); arr.put(obj);
+            try {
+                File[] dirs = {
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "OldSend"),
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend"),
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend"),
+                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "OldSend")
+                };
+                for (File dir : dirs) {
+                    if (dir != null && dir.exists() && dir.isDirectory()) {
+                        File[] list = dir.listFiles();
+                        if (list != null) {
+                            for (File f : list) {
+                                if (f != null && f.isFile()) {
+                                    JSONObject obj = new JSONObject();
+                                    obj.put("name", f.getName()); 
+                                    obj.put("size", f.length()); 
+                                    arr.put(obj);
+                                }
+                            }
+                        }
                     }
                 }
+            } catch (Throwable t) {
+                OldSendService.log("Web files error: " + t.getMessage());
             }
             return HttpResponse.json(arr.toString());
         }
