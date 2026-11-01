@@ -30,8 +30,9 @@ public class FileSaver {
         else if (lower.endsWith(".mp4") || lower.endsWith(".mkv") || lower.endsWith(".avi")) {
             return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend");
         } 
-        // 音频进 Music
-        else if (lower.endsWith(".mp3") || lower.endsWith(".wav")) {
+        // 音频与歌词进 Music (直接在根目录或 OldSend 目录均可，这里进 OldSend 以便管理)
+        else if (lower.endsWith(".mp3") || lower.endsWith(".wav") || lower.endsWith(".flac") || 
+                 lower.endsWith(".m4a") || lower.endsWith(".aac") || lower.endsWith(".lrc")) {
             return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "OldSend");
         }
         // 其他所有文件（包括 apk、txt、zip）默认进系统的 Download/OldSend 目录
