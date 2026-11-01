@@ -598,6 +598,23 @@ ja.put("settings_title", "設定"); ja.put("clear_all_files_btn", "すべての�
 ja.put("lang_switched", "言語を変更しました");
 ja.put("screen_shape", "画面の形状"); ja.put("shape_auto", "自動検出"); ja.put("shape_round", "丸型を強制"); ja.put("shape_square", "角型を強制");
 ja.put("ui_size", "UIサイズ"); ja.put("ui_size_small", "小"); ja.put("ui_size_medium", "標準"); ja.put("ui_size_large", "大");
+        ja.put("dynamic_color", "ダイナミックカラー");
+        ja.put("dynamic_color_desc", "システムの壁紙の色に従う");
+        ja.put("web_qr", "ウェブアドレス");
+        ja.put("web_qr_desc", "PCのブラウザでこのアドレスを入力してください");
+        ja.put("open_file", "ファイルを開く");
+        ja.put("install_apk", "インストール");
+        ja.put("unzip", "解凍");
+        ja.put("unzipping", "解凍中...");
+        ja.put("unzip_ok", "解凍完了");
+        ja.put("unzip_fail", "解凍失敗");
+        ja.put("share_file", "ファイルを共有");
+        ja.put("delete_record", "記録を削除");
+        ja.put("delete_confirm", "この記録を削除しますか？");
+        ja.put("copied_hint", "クリップボードにコピーしました");
+        ja.put("geek_mode", "ギークモード");
+        ja.put("silent_install", "サイレントインストール");
+        ja.put("silent_install_desc", "RootまたはShizukuが必要");
 dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -719,6 +736,23 @@ ko.put("settings_title", "설정"); ko.put("clear_all_files_btn", "모든 파일
 ko.put("lang_switched", "언어가 변경되었습니다");
 ko.put("screen_shape", "화면 모양"); ko.put("shape_auto", "자동 감지"); ko.put("shape_round", "원형 강제"); ko.put("shape_square", "사각형 강제");
 ko.put("ui_size", "UI 크기"); ko.put("ui_size_small", "작게"); ko.put("ui_size_medium", "보통"); ko.put("ui_size_large", "크게");
+        ko.put("dynamic_color", "다이내믹 컬러");
+        ko.put("dynamic_color_desc", "시스템 배경 화면 색상 따르기");
+        ko.put("web_qr", "웹 주소");
+        ko.put("web_qr_desc", "PC 브라우저에 이 주소를 입력하세요");
+        ko.put("open_file", "파일 열기");
+        ko.put("install_apk", "설치");
+        ko.put("unzip", "압축 해제");
+        ko.put("unzipping", "압축 해제 중...");
+        ko.put("unzip_ok", "압축 해제 완료");
+        ko.put("unzip_fail", "압축 해제 실패");
+        ko.put("share_file", "파일 공유");
+        ko.put("delete_record", "기록 삭제");
+        ko.put("delete_confirm", "이 기록을 삭제하시겠습니까?");
+        ko.put("copied_hint", "클립보드에 복사됨");
+        ko.put("geek_mode", "긱 모드");
+        ko.put("silent_install", "자동 설치");
+        ko.put("silent_install_desc", "Root 또는 Shizuku 필요");
 dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -840,6 +874,23 @@ de.put("settings_title", "Einstellungen"); de.put("clear_all_files_btn", "Alle D
 de.put("lang_switched", "Sprache geändert");
 de.put("screen_shape", "Bildschirmform"); de.put("shape_auto", "Auto-Erkennung"); de.put("shape_round", "Rund erzwingen"); de.put("shape_square", "Eckig erzwingen");
 de.put("ui_size", "UI-Größe"); de.put("ui_size_small", "Klein"); de.put("ui_size_medium", "Mittel"); de.put("ui_size_large", "Groß");
+        de.put("dynamic_color", "Dynamische Farbe");
+        de.put("dynamic_color_desc", "Systemhintergrundfarben folgen");
+        de.put("web_qr", "Web-Adresse");
+        de.put("web_qr_desc", "Geben Sie diese Adresse im PC-Browser ein");
+        de.put("open_file", "Datei öffnen");
+        de.put("install_apk", "Installieren");
+        de.put("unzip", "Entpacken");
+        de.put("unzipping", "Entpacken...");
+        de.put("unzip_ok", "Entpacken erfolgreich");
+        de.put("unzip_fail", "Entpacken fehlgeschlagen");
+        de.put("share_file", "Datei teilen");
+        de.put("delete_record", "Eintrag löschen");
+        de.put("delete_confirm", "Diesen Eintrag löschen?");
+        de.put("copied_hint", "In Zwischenablage kopiert");
+        de.put("geek_mode", "Geek-Modus");
+        de.put("silent_install", "Stille Installation");
+        de.put("silent_install_desc", "Root oder Shizuku erforderlich");
 dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -961,6 +1012,23 @@ fr.put("settings_title", "Paramètres"); fr.put("clear_all_files_btn", "Effacer 
 fr.put("lang_switched", "Langue modifiée");
 fr.put("screen_shape", "Forme de l'écran"); fr.put("shape_auto", "Détection auto"); fr.put("shape_round", "Forcer rond"); fr.put("shape_square", "Forcer carré");
 fr.put("ui_size", "Taille de l'UI"); fr.put("ui_size_small", "Petit"); fr.put("ui_size_medium", "Moyen"); fr.put("ui_size_large", "Grand");
+        fr.put("dynamic_color", "Couleur dynamique");
+        fr.put("dynamic_color_desc", "Suivre les couleurs du fond d'écran");
+        fr.put("web_qr", "Adresse Web");
+        fr.put("web_qr_desc", "Entrez cette adresse dans le navigateur PC");
+        fr.put("open_file", "Ouvrir le fichier");
+        fr.put("install_apk", "Installer");
+        fr.put("unzip", "Décompresser");
+        fr.put("unzipping", "Décompression...");
+        fr.put("unzip_ok", "Décompression réussie");
+        fr.put("unzip_fail", "Échec de la décompression");
+        fr.put("share_file", "Partager le fichier");
+        fr.put("delete_record", "Supprimer l'enregistrement");
+        fr.put("delete_confirm", "Supprimer cet enregistrement ?");
+        fr.put("copied_hint", "Copié dans le presse-papiers");
+        fr.put("geek_mode", "Mode Geek");
+        fr.put("silent_install", "Installation silencieuse");
+        fr.put("silent_install_desc", "Nécessite Root ou Shizuku");
 dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1082,6 +1150,23 @@ es.put("settings_title", "Ajustes"); es.put("clear_all_files_btn", "Borrar todos
 es.put("lang_switched", "Idioma cambiado");
 es.put("screen_shape", "Forma de pantalla"); es.put("shape_auto", "Detección automática"); es.put("shape_round", "Forzar redonda"); es.put("shape_square", "Forzar cuadrada");
 es.put("ui_size", "Tamaño de IU"); es.put("ui_size_small", "Pequeño"); es.put("ui_size_medium", "Mediano"); es.put("ui_size_large", "Grande");
+        es.put("dynamic_color", "Color dinámico");
+        es.put("dynamic_color_desc", "Seguir colores del fondo de pantalla");
+        es.put("web_qr", "Dirección Web");
+        es.put("web_qr_desc", "Ingrese esta dirección en el navegador de PC");
+        es.put("open_file", "Abrir archivo");
+        es.put("install_apk", "Instalar");
+        es.put("unzip", "Descomprimir");
+        es.put("unzipping", "Descomprimiendo...");
+        es.put("unzip_ok", "Descompresión exitosa");
+        es.put("unzip_fail", "Error al descomprimir");
+        es.put("share_file", "Compartir archivo");
+        es.put("delete_record", "Eliminar registro");
+        es.put("delete_confirm", "¿Eliminar este registro?");
+        es.put("copied_hint", "Copiado al portapapeles");
+        es.put("geek_mode", "Modo Geek");
+        es.put("silent_install", "Instalación silenciosa");
+        es.put("silent_install_desc", "Requiere Root o Shizuku");
 dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1203,6 +1288,23 @@ ru.put("settings_title", "Настройки"); ru.put("clear_all_files_btn", "�
 ru.put("lang_switched", "Язык изменен");
 ru.put("screen_shape", "Форма экрана"); ru.put("shape_auto", "Авто-определение"); ru.put("shape_round", "Круглый принудительно"); ru.put("shape_square", "Квадратный принудительно");
 ru.put("ui_size", "Размер интерфейса"); ru.put("ui_size_small", "Маленький"); ru.put("ui_size_medium", "Средний"); ru.put("ui_size_large", "Большой");
+        ru.put("dynamic_color", "Динамический цвет");
+        ru.put("dynamic_color_desc", "Следовать цветам обоев системы");
+        ru.put("web_qr", "Веб-адрес");
+        ru.put("web_qr_desc", "Введите этот адрес в браузере ПК");
+        ru.put("open_file", "Открыть файл");
+        ru.put("install_apk", "Установить");
+        ru.put("unzip", "Распаковать");
+        ru.put("unzipping", "Распаковка...");
+        ru.put("unzip_ok", "Успешно распаковано");
+        ru.put("unzip_fail", "Ошибка распаковки");
+        ru.put("share_file", "Поделиться файлом");
+        ru.put("delete_record", "Удалить запись");
+        ru.put("delete_confirm", "Удалить эту запись?");
+        ru.put("copied_hint", "Скопировано в буфер обмена");
+        ru.put("geek_mode", "Гик-режим");
+        ru.put("silent_install", "Тихая установка");
+        ru.put("silent_install_desc", "Требуется Root или Shizuku");
 dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1324,6 +1426,23 @@ pt.put("settings_title", "Configurações"); pt.put("clear_all_files_btn", "Limp
 pt.put("lang_switched", "Idioma alterado");
 pt.put("screen_shape", "Forma da tela"); pt.put("shape_auto", "Detecção automática"); pt.put("shape_round", "Forçar redonda"); pt.put("shape_square", "Forçar quadrada");
 pt.put("ui_size", "Tamanho da UI"); pt.put("ui_size_small", "Pequeno"); pt.put("ui_size_medium", "Médio"); pt.put("ui_size_large", "Grande");
+        pt.put("dynamic_color", "Cor dinâmica");
+        pt.put("dynamic_color_desc", "Seguir cores do papel de parede");
+        pt.put("web_qr", "Endereço Web");
+        pt.put("web_qr_desc", "Digite este endereço no navegador do PC");
+        pt.put("open_file", "Abrir arquivo");
+        pt.put("install_apk", "Instalar");
+        pt.put("unzip", "Descompactar");
+        pt.put("unzipping", "Descompactando...");
+        pt.put("unzip_ok", "Descompactado com sucesso");
+        pt.put("unzip_fail", "Falha ao descompactar");
+        pt.put("share_file", "Compartilhar arquivo");
+        pt.put("delete_record", "Excluir registro");
+        pt.put("delete_confirm", "Excluir este registro?");
+        pt.put("copied_hint", "Copiado para a área de transferência");
+        pt.put("geek_mode", "Modo Geek");
+        pt.put("silent_install", "Instalação silenciosa");
+        pt.put("silent_install_desc", "Requer Root ou Shizuku");
 dict.put("pt", pt);
     }
 
