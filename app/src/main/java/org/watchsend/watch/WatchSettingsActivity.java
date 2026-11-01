@@ -153,7 +153,7 @@ public class WatchSettingsActivity extends Activity {
         // 极客模式 (Root/Shizuku)
         if (org.watchsend.util.ShellUtils.isRootAvailable() || org.watchsend.util.ShellUtils.isShizukuAvailable()) {
             addSection(I18nManager.get("geek_mode"));
-            addSwitch(I18nManager.get("silent_install"), I18nManager.get("silent_install_desc"), prefs().getBoolean("silent_install", false), saveTo("silent_install"));
+            addSwitch(I18nManager.get("silent_install") + " (Beta)", I18nManager.get("silent_install_desc"), prefs().getBoolean("silent_install", false), saveTo("silent_install"));
         }
 
         addSection(I18nManager.get("other"));

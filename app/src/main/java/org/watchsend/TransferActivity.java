@@ -508,14 +508,26 @@ public class TransferActivity extends Activity {
                     btnOpen.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             if (isApk && getSharedPreferences("oldsend", MODE_PRIVATE).getBoolean("silent_install", false)) {
-                                // 走静默安装逻辑
                                 String cmd = "pm install -r " + recvFile.getAbsolutePath();
-                                if (org.watchsend.util.ShellUtils.execRootCommand(cmd)) {
-                                    Toast.makeText(TransferActivity.this, "安装指令已发送", Toast.LENGTH_SHORT).show();
-                                    return;
-                                } else {
-                                    Toast.makeText(TransferActivity.this, "静默安装失败，请检查权限", Toast.LENGTH_SHORT).show();
+                                
+                                // 1. 优先走 Root 静默安装
+                                if (org.watchsend.util.ShellUtils.isRootAvailable()) {
+                                    if (org.watchsend.util.ShellUtils.execRootCommand(cmd)) {
+                                        Toast.makeText(TransferActivity.this, "Root 静默安装已启动", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
                                 }
+                                
+                                // 2. 走 Shizuku 纯手写 API 静默安装
+                                if (org.watchsend.util.ShizukuHelper.isRunning()) {
+                                    if (org.watchsend.util.ShizukuHelper.execShell(cmd)) {
+                                        Toast.makeText(TransferActivity.this, "Shizuku 静默安装已启动", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                }
+                                
+                                // 3. 都失败，降级为普通弹窗安装
+                                Toast.makeText(TransferActivity.this, "静默安装失败，降级为普通安装", Toast.LENGTH_SHORT).show();
                             }
                             
                             try {
