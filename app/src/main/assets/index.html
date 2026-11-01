@@ -340,13 +340,13 @@
                     const i = index++;
                     const f = files[i];
                     const div = document.createElement('div'); div.className = 'file-item';
-                    div.innerHTML = `<div class="file-icon">\${getIcon(f.name)}</div>
+                    div.innerHTML = `<div class="file-icon">${getIcon(f.name)}</div>
                         <div class="file-info">
-                            <div class="file-name">\${f.name}</div>
-                            <div class="file-size">\${formatSize(f.size)}</div>
-                            <div class="progress-bar"><div class="progress-fill" id="p-\${i}"></div></div>
+                            <div class="file-name">${f.name}</div>
+                            <div class="file-size">${formatSize(f.size)}</div>
+                            <div class="progress-bar"><div class="progress-fill" id="p-${i}"></div></div>
                         </div>
-                        <div id="s-\${i}" style="font-size:12px; font-weight:bold; color:var(--text-sec); margin-left:10px;">0%</div>`;
+                        <div id="s-${i}" style="font-size:12px; font-weight:bold; color:var(--text-sec); margin-left:10px;">0%</div>`;
                     list.appendChild(div);
                     
                     await new Promise(resolve => {
@@ -372,24 +372,24 @@
 
         function loadFiles() {
             const list = document.getElementById('download-list');
-            list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">\${t('loading_files')}</p>`;
+            list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">${t('loading_files')}</p>`;
             fetch('/web/files').then(r => {
                 if (!r.ok) throw new Error("HTTP " + r.status);
                 return r.json();
             }).then(data => {
-                if(data.length===0) { list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">\${t('msg_no_files')}</p>`; return; }
+                if(data.length===0) { list.innerHTML = `<p style="text-align:center; color:var(--text-sec); font-size:14px;">${t('msg_no_files')}</p>`; return; }
                 list.innerHTML = '';
                 data.forEach(f => {
                     const div = document.createElement('div'); div.className = 'file-item';
-                    div.innerHTML = `<div class="file-icon">\${getIcon(f.name)}</div>
+                    div.innerHTML = `<div class="file-icon">${getIcon(f.name)}</div>
                         <div class="file-info">
-                            <div class="file-name">\${f.name}</div>
-                            <div class="file-size">\${formatSize(f.size)}</div>
+                            <div class="file-name">${f.name}</div>
+                            <div class="file-size">${formatSize(f.size)}</div>
                         </div>
-                        <a href="/web/download?name=\${encodeURIComponent(f.name)}" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">\${t('btn_download')}</a>`;
+                        <a href="/web/download?name=${encodeURIComponent(f.name)}" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">${t('btn_download')}</a>`;
                     list.appendChild(div);
                 });
-            }).catch(()=>{ list.innerHTML = `<p style="text-align:center; color:red;">\${t('msg_load_fail')}</p>`; });
+            }).catch(()=>{ list.innerHTML = `<p style="text-align:center; color:red;">${t('msg_load_fail')}</p>`; });
         }
 
         function sendText() {
