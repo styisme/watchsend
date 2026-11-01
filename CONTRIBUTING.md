@@ -48,10 +48,10 @@ python build.py          # 使用一键编译脚本 (支持自动签名)
 
 ## 项目结构
 
-```
+```text
 watchsend/
 ├── app/
-│   ├── src/main/assets/index.html # WebShare 前端页面
+│   ├── src/main/assets/index.html # WebShare 前端页面 (内置 10 语种自适应)
 │   ├── src/main/java/org/watchsend/
 │   │   ├── api/          # HTTP API 处理
 │   │   ├── discovery/    # UDP 组播发现设备
@@ -59,10 +59,15 @@ watchsend/
 │   │   ├── model/        # 数据模型与历史记录
 │   │   ├── transfer/     # 文件保存与上传逻辑
 │   │   ├── ui/           # 自定义控件（如 Md3Switch）与适配器
-│   │   ├── util/         # 工具类（多语言引擎 I18nManager, 深色主题 ThemeUtils 等）
+│   │   ├── util/         # 工具类 (含以下核心极客工具)
+│   │   │   ├── I18nManager.java    # 多语言引擎
+│   │   │   ├── ThemeUtils.java     # 深色主题与动态取色
+│   │   │   ├── ZipUtils.java       # 纯 Java 原生 ZIP 解压 (防 Zip Slip)
+│   │   │   ├── ShellUtils.java     # Root 权限检测与执行
+│   │   │   └── ShizukuHelper.java  # 纯手写 Binder 代理的 Shizuku 支持
 │   │   ├── watch/        # ⭐ 手表端专属 UI 与硬件工具
 │   │   │   ├── WatchUiUtils.java           # 3D滚轮、圆屏Padding、手势拦截、动画
-│   │   │   ├── WatchHardwareUtils.java     # 表冠滑动、屏幕常亮、触觉反馈兼容封装
+│   │   │   ├── WatchHardwareUtils.java     # 表冠滑动、屏幕常亮、触觉反馈封装
 │   │   │   ├── QuickScanTileService.java   # Wear OS 快捷磁贴 (API 24+)
 │   │   │   └── WatchSettingsActivity.java  # 手表设置页
 │   │   ├── MainActivity.java      # 主界面
@@ -102,6 +107,7 @@ watchsend/
 - `http`: HTTP 服务端/客户端
 - `discovery`: 组播与设备发现
 - `transfer`: 文件收发
+- `web`: WebShare 网页端相关
 
 ### 示例
 ```
@@ -183,7 +189,7 @@ Closes #123
 | Bug 修复 | **PATCH** |
 
 ⚠️ **重要**：本项目已实现自动化版本号同步。**绝对不要手动修改 `app/build.gradle` 中的 `versionCode` 和 `versionName`**。
-只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.2.0] - 2026-11-01`），CI 会在编译前自动完成注入。
+只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.3.0] - 2026-11-02`），CI 会在编译前自动完成注入。
 
 ---
 
@@ -212,3 +218,9 @@ A: 请检查仓库的 `Settings -> Secrets and variables -> Actions` 中是否�
 
 **Q: 旧版手表（Wear OS 2.0 或 Android 7.0 以下）安装新版本后，磁贴功能无效？**
 A: 快捷磁贴 (`QuickScanTileService`) 和表冠事件 (API 26+) 需要系统级支持。代码中已做 API 版本兼容判断，低版本设备会自动忽略这些特性，不影响基础传输功能。
+
+**Q: 极客模式里的 Shizuku 静默安装为什么失败？**
+A: 因为项目坚持无第三方依赖，采用了纯手写 Binder IPC 代理。请确保设备上 Shizuku 正在运行，并且已经通过 Shizuku 授权给 WatchSend（需在 Shizuku 内部授权管理里操作）。如果遇到非标准 ROM，可能会被系统拦截并降级为普通安装弹窗。
+
+**Q: 网页端（WebShare）打开报错或界面白屏？**
+A: 网页端代码已完全剥离至 `app/src/main/assets/index.html`，内置了 10 语种字典和完整的 API 路由。请确保 `OldSendService` 中完整注册了 `/web/info`、`/web/files` 等所有路由。如果在开发中修改了前端，清空浏览器缓存后再试。

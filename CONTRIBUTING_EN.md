@@ -48,10 +48,10 @@ The project is equipped with a powerful GitHub Actions auto-release pipeline:
 
 ## Project Structure
 
-```
+```text
 watchsend/
 ├── app/
-│   ├── src/main/assets/index.html # WebShare Frontend UI
+│   ├── src/main/assets/index.html # WebShare Frontend UI (Built-in 10-lang i18n)
 │   ├── src/main/java/org/watchsend/
 │   │   ├── api/          # HTTP API Handlers
 │   │   ├── discovery/    # UDP Multicast Device Discovery
@@ -59,7 +59,12 @@ watchsend/
 │   │   ├── model/        # Data Models & History
 │   │   ├── transfer/     # File Save & Upload Logic
 │   │   ├── ui/           # Custom Widgets (e.g., Md3Switch) & Adapters
-│   │   ├── util/         # Utilities (I18nManager, ThemeUtils, etc.)
+│   │   ├── util/         # Utilities (Core Geek Tools)
+│   │   │   ├── I18nManager.java    # Multi-language Engine
+│   │   │   ├── ThemeUtils.java     # Dark Mode & Dynamic Color
+│   │   │   ├── ZipUtils.java       # Native Java ZIP extraction (Zip Slip prevention)
+│   │   │   ├── ShellUtils.java     # Root detection and execution
+│   │   │   └── ShizukuHelper.java  # Hand-written Binder proxy for Shizuku
 │   │   ├── watch/        # ⭐ Watch-exclusive UI & Hardware Utils
 │   │   │   ├── WatchUiUtils.java           # 3D Wheel, Round Padding, Gestures, Animations
 │   │   │   ├── WatchHardwareUtils.java     # Rotary Input, Screen On, Haptics wrapper
@@ -102,6 +107,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 - `http`: HTTP server/client
 - `discovery`: Multicast & device discovery
 - `transfer`: File sending/receiving
+- `web`: WebShare frontend related
 
 ### Examples
 ```
@@ -183,7 +189,7 @@ Follow [Semantic Versioning 2.0.0](https://semver.org/):
 | Bug fixes | **PATCH** |
 
 ⚠️ **IMPORTANT**: This project has automated version synchronization. **NEVER manually edit `versionCode` or `versionName` in `app/build.gradle`**.
-Simply add a new version in `CHANGELOG.md` (e.g., `## [1.2.0] - 2026-11-01`), and CI will inject it automatically before building.
+Simply add a new version in `CHANGELOG.md` (e.g., `## [1.3.0] - 2026-11-02`), and CI will inject it automatically before building.
 
 ---
 
@@ -212,3 +218,9 @@ A: Check if the 4 signing parameters (`NAS_KEYSTORE_BASE64`, `NAS_KEYSTORE_PASSW
 
 **Q: Older watches (Wear OS 2.0 or below Android 7.0) find the Tile feature non-functional after installing the new version?**
 A: Quick Settings Tiles (`QuickScanTileService`) and rotary events (API 26+) require system-level support. The code includes API version compatibility checks; lower-version devices will automatically ignore these features, without affecting basic transfer functionality.
+
+**Q: Why does Shizuku silent installation fail in Geek Mode?**
+A: Because the project strictly avoids third-party dependencies, it uses a hand-written Binder IPC proxy. Ensure Shizuku is running on your device and has authorized WatchSend in its internal permission manager. If the ROM is non-standard, the system may intercept it and fall back to the standard installation dialog.
+
+**Q: WebShare (Web UI) fails to load or shows a blank screen?**
+A: The web frontend is completely isolated in `app/src/main/assets/index.html`, featuring built-in 10-language dictionaries and full API routes. Ensure that all routes like `/web/info` and `/web/files` are registered in `OldSendService`. If you modified the frontend during development, clear your browser cache and try again.

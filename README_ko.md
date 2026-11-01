@@ -1,11 +1,11 @@
 # WatchSend
 
-[简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | **한국어** | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
+[简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [**한국어**](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
 > OldSend의 워치 진화 버전. 모든 하드코어 전송 기능을 유지하면서 UI를 Wear OS 네이티브 '3D 휠' 및 '필 카드'로 완전히 재구성했습니다.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.2.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -18,10 +18,8 @@
 ## ✨ 핵심 기능
 - **로터리 입력**: Wear OS 3+ 회전 크라운에 완벽하게 적용.
 - **다이내믹 컬러**: Android 12+ Material You 통합.
-- **앰비언트 모드**: 화면이 꺼져 있을 때 진행률 표시줄만 표시.
-- **음성 입력**: 시스템 `RecognizerIntent` 지원.
-- **무한 UI 스케일링**: 0.3x에서 2.5x까지 크기 조정 가능.
-- **크로스 네트워크**: 6자리 PIN, P2P, UPnP / STUN / IPv6.
+- **긱 툴박스 (v1.3.0)**: Shizuku/Root 자동 설치, 기본 ZIP 압축 해제, 기록 빠른 관리를 지원합니다.
+- **웹 10개 언어**: 브라우저 언어를 자동으로 감지하고 드래그 앤 드롭 업로드를 지원합니다.
 
 ---
 

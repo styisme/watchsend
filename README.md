@@ -5,7 +5,7 @@
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.2.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -17,7 +17,7 @@
 > **本项目由 AI 辅助生成。**
 > 
 > 遵循 [AI 开发规范](https://github.com/styisme/ai-development-guidelines)，在此明确披露：
-> - **AI 深度参与部分**：手表专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态渲染的药丸卡片布局、硬件适配逻辑及完整的 CI/CD 流水线。
+> - **AI 深度参与部分**：手表专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态渲染的药丸卡片布局、硬件适配逻辑、Shizuku 纯手写 Binder 代理以及完整的 CI/CD 流水线。
 > - **开发者负责部分**：需求定义、真机测试（手表/手机）、功能验收、Bug 定位与最终发布决策。所有 AI 生成的代码均经过人工审阅与真机调优。
 > 
 > 关于 AI 参与的详细范围与比例，请务必查阅 [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)。
@@ -26,7 +26,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.2.0**。
+当前版本：**v1.3.0**。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 
@@ -45,6 +45,12 @@
 - **动态取色**：Android 12+ 完美接入 Material You，随壁纸/表盘变色。
 - **息屏微光模式**：传输时息屏仅保留进度条，抬腕亮屏恢复。
 - **语音输入**：支持系统语音转文字输入。
+
+### 🛠️ 极客专属工具箱 (v1.3.0 新增)
+- **静默安装 (Beta)**：支持通过 Root 或 Shizuku 权限，在接收 APK 后实现无感后台安装（纯手写 Binder IPC 代理）。
+- **原生 ZIP 解压**：收到压缩包无需导出，在接收完成页或历史记录长按，直接调用纯 Java 引擎安全解压（内置防路径穿越漏洞）。
+- **网页端 10 语种自适应**：内置 WebShare 前端已全面支持 10 国语言，自动识别浏览器语言，支持拖拽上传与剪贴板同步。
+- **历史快捷管理**：长按接收记录可快速分享文件或删除记录，ZIP 文件自动显示 📦 标识。
 
 ### 🎨 极致的 Wear OS UI 交互
 - **3D 滚轮特效**：上下滑动时，边缘卡片自动缩小并降低透明度，还原原生物理滚轮感。
@@ -71,7 +77,7 @@
 打开 App，确保与对方处于同一 Wi-Fi 或已配置好跨网通道。点击“启动”后，列表会自动发现设备，点击设备即可发送文件。
 
 ### 2. 网页端传文件
-在电脑浏览器输入 App 首页显示的局域网 IP 及端口（如 `http://192.168.1.100:53317`），直接拖拽文件即可上传至手表。
+在电脑浏览器输入 App 首页显示的局域网 IP 及端口（如 `http://192.168.1.100:53317`），即可打开极简网页端。支持拖拽上传、多文件并发进度条、手机剪贴板同步。主界面点击 IP 可快速复制链接。
 
 ### 3. 跨网传输
 - **密码模式**：发送端生成 6 位密码，接收端输入密码即可连接。
@@ -96,7 +102,7 @@
 
 ## 🚧 架构局限性与风险提示（极度重要）
 
-1. **极客实验性质**：跨网功能依赖第三方公共设施（ntfy.sh）或用户的公网配置，稳定性不保证。
+1. **极客实验性质**：跨网功能依赖第三方公共设施（ntfy.sh）或用户的公网配置，稳定性不保证；Shizuku 静默安装受限于不同 ROM 的限制，部分设备可能被拦截降级。
 2. **硬件代沟**：部分老旧设备不具备震动马达或旋转表冠；快捷磁贴仅支持 Android 7.0+，系统会自动忽略不支持的组件。
 3. **TLS 代沟**：Android 2.3 原生仅支持 TLS 1.0，开启 HTTPS 会导致旧设备握手失败。
 4. **手表算力瓶颈**：3D 滚轮特效与预测性返回动画对 GPU 有一定要求，极低端手表请务必开启“低性能模式”。
