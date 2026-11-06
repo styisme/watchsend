@@ -20,7 +20,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:allowBackup="true"
-        android:theme="@android:style/Theme.DeviceDefault.DayNight">
+        android:theme="@android:style/Theme.DeviceDefault">
 
         <activity android:name=".MainActivity" android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name">
@@ -53,11 +53,11 @@
         </intent-filter>
     </receiver>
         <activity android:name=".TransferActivity" android:exported="true"
-            android:launchMode="singleTop" android:theme="@android:style/Theme.DeviceDefault.DayNight.NoTitleBar" />
-        <activity android:name=".SelectListActivity" android:theme="@android:style/Theme.DeviceDefault.DayNight.NoTitleBar" />
-        <activity android:name=".CrossNetActivity" android:theme="@android:style/Theme.DeviceDefault.DayNight.NoTitleBar" />
+            android:launchMode="singleTop" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <activity android:name=".SelectListActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <activity android:name=".CrossNetActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
             <activity android:name=".watch.WatchSettingsActivity"
-            android:theme="@android:style/Theme.DeviceDefault.DayNight.NoTitleBar" />
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
     
         <!-- 仅针对 Android 7.0+ 的磁贴服务，老设备自动忽略 -->
         <service
