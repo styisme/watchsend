@@ -114,6 +114,14 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
         });
         emptyHint = (TextView) findViewById(R.id.empty_hint);
+        if (emptyHint != null) {
+            // 向上找父容器 FrameLayout，强制替换背景
+            android.view.View parent = (android.view.View) emptyHint.getParent();
+            if (parent != null) {
+                parent.setBackgroundResource(isDark ? R.drawable.watch_card_dark : R.drawable.watch_card);
+            }
+            emptyHint.setTextColor(isDark ? 0xFFAAAAAA : 0xFF999999);
+        }
         toggleBtn = (Button) findViewById(R.id.toggle);
         btnSend = (Button) findViewById(R.id.btn_send);
         btnHistory = (Button) findViewById(R.id.btn_history);

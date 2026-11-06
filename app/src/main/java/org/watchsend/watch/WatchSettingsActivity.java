@@ -320,7 +320,11 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             public void onStopTrackingTouch(SeekBar seekBar) {
                 float newScale = 0.3f + (seekBar.getProgress() / 100f) * 2.2f;
                 prefs().edit().putFloat("ui_scale", newScale).commit();
-                recreate();
+                // 强制重启整个 Activity 以应用新的 Resources
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
         layout.addView(sb);

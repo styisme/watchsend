@@ -30,27 +30,27 @@ public class WatchUiUtils {
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
     public static void applyScale(Context context) {
-        // v1.2.1 修复：记录 base densityDpi，用 base*scale 重算，杜绝累积乘法
         android.content.SharedPreferences sp = context.getSharedPreferences("oldsend", Context.MODE_PRIVATE);
         float scale = sp.getFloat("ui_scale", 1.0f);
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-
-        int baseDpi = sp.getInt("__base_density_dpi", 0);
-        if (baseDpi <= 0) {
-            baseDpi = metrics.densityDpi;
-            sp.edit().putInt("__base_density_dpi", baseDpi).commit();
-        }
+        
+        // 每次都用系统默认的基准 DPI，不要从 sp 里读，防止多次缩放后被污染
+        android.util.DisplayMetrics sysMetrics = android.content.res.Resources.getSystem().getDisplayMetrics();
+        int baseDpi = sysMetrics.densityDpi;
+        if (baseDpi == 0) baseDpi = 160;
 
         int targetDpi = (int)(baseDpi * scale);
         if (targetDpi < 80) targetDpi = 80;
         if (targetDpi > 960) targetDpi = 960;
-        if (targetDpi == metrics.densityDpi) return;
 
-        Configuration config = new Configuration();
+        android.content.res.Configuration config = new android.content.res.Configuration();
         config.updateFrom(context.getResources().getConfiguration());
+        
+        android.util.DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         metrics.density = targetDpi / 160f;
         metrics.scaledDensity = targetDpi / 160f;
         metrics.densityDpi = targetDpi;
+        
+        // 暴力应用
         context.getResources().updateConfiguration(config, metrics);
     }
 
