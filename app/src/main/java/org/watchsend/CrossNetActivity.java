@@ -38,6 +38,13 @@ import java.util.zip.ZipOutputStream;
 import android.util.Base64;
 
 public class CrossNetActivity extends Activity {
+
+    @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
+    }
+
+
     private static final String NTFY_URL = "https://ntfy.sh/oldsend_cross_";
     
     private LinearLayout container;
@@ -57,7 +64,7 @@ public class CrossNetActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this);
+        
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

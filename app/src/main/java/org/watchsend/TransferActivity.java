@@ -31,6 +31,13 @@ import java.util.Locale;
 
 public class TransferActivity extends Activity {
 
+    @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
+    }
+
+
+
     public static final String ACTION_UPDATE_PROGRESS = "org.watchsend.UPDATE_PROGRESS";
     public static final String ACTION_TRANSFER_DONE = "org.watchsend.TRANSFER_DONE";
 
@@ -96,7 +103,7 @@ public class TransferActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this);
+        
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

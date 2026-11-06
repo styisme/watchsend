@@ -23,11 +23,18 @@ import java.util.List;
 import java.util.Locale;
 
 public class SelectListActivity extends Activity {
+
+    @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
+    }
+
+
     private LinearLayout listContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this);
+        
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_list);

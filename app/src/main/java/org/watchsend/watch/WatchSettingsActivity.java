@@ -25,11 +25,18 @@ import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
 
 public class WatchSettingsActivity extends Activity {
+
+    @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
+    }
+
+
     private LinearLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this);
+        
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
