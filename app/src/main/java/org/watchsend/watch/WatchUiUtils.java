@@ -29,6 +29,10 @@ public class WatchUiUtils {
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
+    public static void applyScale(android.content.Context context) {
+        // Deprecated: 缩放逻辑已迁移至 attachBaseContext
+    }
+
     public static android.content.Context wrapScale(android.content.Context base) {
         android.content.SharedPreferences sp = base.getSharedPreferences("oldsend", android.content.Context.MODE_PRIVATE);
         float scale = sp.getFloat("ui_scale", 1.0f);
