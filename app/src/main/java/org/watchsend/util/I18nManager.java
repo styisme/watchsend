@@ -615,7 +615,8 @@ ja.put("ui_size", "UIサイズ"); ja.put("ui_size_small", "小"); ja.put("ui_siz
         ja.put("geek_mode", "ギークモード");
         ja.put("silent_install", "サイレントインストール");
         ja.put("silent_install_desc", "RootまたはShizukuが必要");
-dict.put("ja", ja);
+ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360など、画面下部に黒い縁がある丸型時計用");
+        dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
         Map<String, String> ko = new HashMap<>(en);
@@ -753,7 +754,8 @@ ko.put("ui_size", "UI 크기"); ko.put("ui_size_small", "작게"); ko.put("ui_si
         ko.put("geek_mode", "긱 모드");
         ko.put("silent_install", "자동 설치");
         ko.put("silent_install_desc", "Root 또는 Shizuku 필요");
-dict.put("ko", ko);
+ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360과 같이 화면 하단에 검은색 테두리가 있는 원형 시계용");
+        dict.put("ko", ko);
 
         // ============ 德语 (de) ============
         Map<String, String> de = new HashMap<>(en);
@@ -891,7 +893,8 @@ de.put("ui_size", "UI-Größe"); de.put("ui_size_small", "Klein"); de.put("ui_si
         de.put("geek_mode", "Geek-Modus");
         de.put("silent_install", "Stille Installation");
         de.put("silent_install_desc", "Root oder Shizuku erforderlich");
-dict.put("de", de);
+de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für runde Uhren mit einem Kinn (z.B. Moto 360)");
+        dict.put("de", de);
 
         // ============ 法语 (fr) ============
         Map<String, String> fr = new HashMap<>(en);
@@ -1029,7 +1032,8 @@ fr.put("ui_size", "Taille de l'UI"); fr.put("ui_size_small", "Petit"); fr.put("u
         fr.put("geek_mode", "Mode Geek");
         fr.put("silent_install", "Installation silencieuse");
         fr.put("silent_install_desc", "Nécessite Root ou Shizuku");
-dict.put("fr", fr);
+fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Pour les montres rondes avec un menton (ex: Moto 360)");
+        dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
         Map<String, String> es = new HashMap<>(en);
@@ -1167,7 +1171,8 @@ es.put("ui_size", "Tamaño de IU"); es.put("ui_size_small", "Pequeño"); es.put(
         es.put("geek_mode", "Modo Geek");
         es.put("silent_install", "Instalación silenciosa");
         es.put("silent_install_desc", "Requiere Root o Shizuku");
-dict.put("es", es);
+es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para relojes redondos con mentón (ej. Moto 360)");
+        dict.put("es", es);
 
         // ============ 俄语 (ru) ============
         Map<String, String> ru = new HashMap<>(en);
@@ -1305,7 +1310,8 @@ ru.put("ui_size", "Размер интерфейса"); ru.put("ui_size_small", 
         ru.put("geek_mode", "Гик-режим");
         ru.put("silent_install", "Тихая установка");
         ru.put("silent_install_desc", "Требуется Root или Shizuku");
-dict.put("ru", ru);
+ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "Для круглых часов с подбородком (например, Moto 360)");
+        dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
         Map<String, String> pt = new HashMap<>(en);
@@ -1443,7 +1449,8 @@ pt.put("ui_size", "Tamanho da UI"); pt.put("ui_size_small", "Pequeno"); pt.put("
         pt.put("geek_mode", "Modo Geek");
         pt.put("silent_install", "Instalação silenciosa");
         pt.put("silent_install_desc", "Requer Root ou Shizuku");
-dict.put("pt", pt);
+pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "Para relógios redondos com queixo (ex: Moto 360)");
+        dict.put("pt", pt);
     }
 
     public static void init(Context ctx) {

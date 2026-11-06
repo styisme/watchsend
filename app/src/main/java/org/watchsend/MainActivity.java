@@ -210,11 +210,15 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void applyI18n() {
         boolean isDark = ThemeUtils.isDarkMode(this);
         if (btnSend != null) btnSend.setText(I18nManager.get("send"));
-        if (btnHistory != null) btnHistory.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (btnCrossNet != null) btnCrossNet.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (btnSettings != null) btnSettings.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (scanBtn != null) scanBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (manualIpBtn != null) manualIpBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        int txtColor = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        int bgRes = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+        
+        if (btnHistory != null) { btnHistory.setTextColor(txtColor); btnHistory.setBackgroundResource(bgRes); }
+        if (btnCrossNet != null) { btnCrossNet.setTextColor(txtColor); btnCrossNet.setBackgroundResource(bgRes); }
+        if (btnSettings != null) { btnSettings.setTextColor(txtColor); btnSettings.setBackgroundResource(bgRes); }
+        if (scanBtn != null) { scanBtn.setTextColor(txtColor); scanBtn.setBackgroundResource(bgRes); }
+        if (manualIpBtn != null) { manualIpBtn.setTextColor(txtColor); manualIpBtn.setBackgroundResource(bgRes); }
+        if (btnLog != null) { btnLog.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666); }
         if (btnHistory != null) btnHistory.setText(I18nManager.get("record"));
         if (btnCrossNet != null) btnCrossNet.setText(I18nManager.get("cross_net"));
         if (btnSettings != null) btnSettings.setText(I18nManager.get("settings"));
@@ -382,11 +386,15 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
             boolean isDark = ThemeUtils.isDarkMode(this);
         if (btnSend != null) btnSend.setText(I18nManager.get("send"));
-        if (btnHistory != null) btnHistory.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (btnCrossNet != null) btnCrossNet.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (btnSettings != null) btnSettings.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (scanBtn != null) scanBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
-        if (manualIpBtn != null) manualIpBtn.setTextColor(isDark ? 0xFF81C784 : 0xFF1B5E20);
+        int txtColor = isDark ? 0xFF81C784 : 0xFF1B5E20;
+        int bgRes = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
+        
+        if (btnHistory != null) { btnHistory.setTextColor(txtColor); btnHistory.setBackgroundResource(bgRes); }
+        if (btnCrossNet != null) { btnCrossNet.setTextColor(txtColor); btnCrossNet.setBackgroundResource(bgRes); }
+        if (btnSettings != null) { btnSettings.setTextColor(txtColor); btnSettings.setBackgroundResource(bgRes); }
+        if (scanBtn != null) { scanBtn.setTextColor(txtColor); scanBtn.setBackgroundResource(bgRes); }
+        if (manualIpBtn != null) { manualIpBtn.setTextColor(txtColor); manualIpBtn.setBackgroundResource(bgRes); }
+        if (btnLog != null) { btnLog.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666); }
         } else {
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
             long totalSize = 0;
