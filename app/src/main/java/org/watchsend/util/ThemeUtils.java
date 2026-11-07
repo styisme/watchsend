@@ -41,7 +41,21 @@ public class ThemeUtils {
     }
 
     public static boolean isDarkMode(Context ctx) {
-        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("dark_mode", false);
+        if (ctx == null) return false;
+        android.content.SharedPreferences sp = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE);
+        
+        // 兼容旧数据：如果存了 dark_mode = true 并且没有 theme_mode，默认转为深色
+        if (!sp.contains("theme_mode") && sp.getBoolean("dark_mode", false)) {
+            sp.edit().putString("theme_mode", "dark").apply();
+        }
+        
+        String mode = sp.getString("theme_mode", "auto");
+        if ("dark".equals(mode)) return true;
+        if ("light".equals(mode)) return false;
+        
+        // auto 模式：检查系统深色模式
+        int uiMode = ctx.getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+        return uiMode == android.content.res.Configuration.UI_MODE_NIGHT_YES;
     }
 
     public static void applyTheme(Activity activity) {

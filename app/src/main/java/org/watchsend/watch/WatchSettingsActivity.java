@@ -103,11 +103,12 @@ public class WatchSettingsActivity extends Activity {
         // 低性能模式
         addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
         
-        // 深色模式
-        addSwitch(I18nManager.get("dark_mode"), I18nManager.get("dark_mode_desc"), prefs().getBoolean("dark_mode", false), new SwitchHandler() {
-            public void onChanged(boolean v) { prefs().edit().putBoolean("dark_mode", v).commit(); recreate(); }
+
+        // 主题模式 (深/浅/自动)
+        addItem(I18nManager.get("theme_mode") + ": " + currentThemeLabel(), new View.OnClickListener() {
+            public void onClick(View v) { pickTheme(); }
         });
-        
+
         // 语言
         addItem(I18nManager.get("language") + ": " + currentLangLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickLang(); }
@@ -183,6 +184,25 @@ public class WatchSettingsActivity extends Activity {
         if (scale <= 0.85f) return I18nManager.get("ui_size_small");
         if (scale >= 1.15f) return I18nManager.get("ui_size_large");
         return I18nManager.get("ui_size_medium");
+    }
+
+
+    private String currentThemeLabel() {
+        String mode = prefs().getString("theme_mode", "auto");
+        if ("dark".equals(mode)) return I18nManager.get("theme_dark");
+        if ("light".equals(mode)) return I18nManager.get("theme_light");
+        return I18nManager.get("theme_auto");
+    }
+
+    private void pickTheme() {
+        final String[] items = {I18nManager.get("theme_auto"), I18nManager.get("theme_light"), I18nManager.get("theme_dark")};
+        WatchUiUtils.showList(this, I18nManager.get("theme_mode"), items, new WatchUiUtils.OnItemSelectListener() {
+            public void onItemSelect(int pos) {
+                String[] modes = {"auto", "light", "dark"};
+                prefs().edit().putString("theme_mode", modes[pos]).commit();
+                recreate();
+            }
+        }).show();
     }
 
     private String currentLangLabel() {
