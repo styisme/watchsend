@@ -35,7 +35,7 @@ zh.put("dark_mode", "深色模式"); zh.put("dynamic_color", "动态取色"); zh
         zh.put("sending", "正在发送文件"); zh.put("send_failed", "发送失败"); zh.put("send_success", "发送完成");
         zh.put("sending_title", "正在发送文件"); zh.put("receiving_title", "正在接收文件"); zh.put("total_progress", "总进度");
         zh.put("size", "大小"); zh.put("speed", "速度"); zh.put("received", "已接收");
-        zh.put("completed", "已完成"); zh.put("failed", "已失败"); zh.put("save_to_dir", "已保存到相册/下载目录");
+        zh.put("completed", "已完成"); zh.put("failed", "已失败"); 
         zh.put("enter_pin", "请输入接收方 PIN 码"); zh.put("pin_incorrect", "PIN 码错误，请重试");
         zh.put("modify_pin", "修改 PIN 码"); zh.put("pin_code", "PIN 码");
         
@@ -56,7 +56,7 @@ zh.put("dark_mode", "深色模式"); zh.put("dynamic_color", "动态取色"); zh
         zh.put("stun_ok", "NAT公网地址: "); zh.put("stun_probe", "STUN探测");
         zh.put("stun_tip", "NAT公网地址: 点击右侧探测"); zh.put("advanced_tip", "高级玩法：可配合 FRP/Ngrok 或 ZeroTier 组网后，将生成的公网地址填入下方极速直连。");
         
-        zh.put("file_count", "文件: %d"); zh.put("size_label", "大小: %s"); zh.put("unknown_size", "未知大小");
+        zh.put("file_count", "文件: %d");  zh.put("unknown_size", "未知大小");
         zh.put("manage", "管理"); zh.put("clear_all", "清空所有名单");
         zh.put("view_whitelist", "查看/移除 白名单"); zh.put("view_blacklist", "查看/移除 黑名单");
         zh.put("all_deleted", "已全部删除");
@@ -165,7 +165,7 @@ zh.put("dark_mode", "深色模式"); zh.put("dynamic_color", "动态取色"); zh
         zh.put("cannot_open", "无法打开"); zh.put("no_app", "无应用"); zh.put("empty_folder", "空文件夹");
         zh.put("add_files", "追加文件"); zh.put("select_folder_send", ">> [发送此文件夹] <<"); zh.put("unknown_file", "未知文件");
         zh.put("files_count_prefix", "文件: "); zh.put("size_label", "大小: "); zh.put("clear_all_files", "全部删除");
-        zh.put("back_prev", "返回上一页"); zh.put("save_to_dir", "保存目录: "); zh.put("ip_prefix", "IP ");
+        zh.put("back_prev", "返回上一页");  zh.put("ip_prefix", "IP ");
     
 
         zh.put("web_qr", "网页端地址"); zh.put("web_qr_desc", "请在电脑浏览器输入此地址"); zh.put("open_file", "打开文件"); zh.put("install_apk", "一键安装"); zh.put("unzip", "解压到当前目录"); zh.put("unzipping", "正在后台解压..."); zh.put("unzip_ok", "解压完成"); zh.put("unzip_fail", "解压失败"); zh.put("geek_mode", "极客模式"); zh.put("silent_install", "静默安装"); zh.put("silent_install_desc", "需 Root 或 Shizuku"); zh.put("share_file", "分享文件"); zh.put("delete_record", "删除记录"); zh.put("delete_confirm", "确认删除这条记录吗？"); zh.put("copied_hint", "已复制到剪贴板");
@@ -185,7 +185,10 @@ zh.put("settings_title", "设置"); zh.put("clear_all_files_btn", "清空所有�
     
 zh.put("lang_switched", "语言已切换");
 zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "圆屏优化(自动)"); zh.put("shape_round", "强制圆屏"); zh.put("shape_square", "强制方屏"); zh.put("chin_padding", "底部避让"); zh.put("chin_padding_desc", "针对有下巴的圆表(如Moto 360)");
-dict.put("zh", zh);
+zh.put("save_dir_label", "保存目录: ");
+        zh.put("saved_to_dir_toast", "已保存到相册/下载目录");
+        zh.put("size_label", "大小: ");
+        dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
         Map<String, String> zhTW = new HashMap<>(zh);
@@ -213,7 +216,7 @@ dict.put("zh", zh);
         zhTW.put("stun_wait", "STUN 探測中..."); zhTW.put("stun_fail", "NAT 穿透失敗 (對稱型NAT)");
         zhTW.put("stun_ok", "NAT公網位址: "); zhTW.put("stun_probe", "STUN探測");
         zhTW.put("stun_tip", "NAT公網位址: 點擊右側探測"); zhTW.put("advanced_tip", "高級玩法：可配合 FRP/Ngrok 或 ZeroTier 組網後，將生成的公網位址填入下方極速直連。");
-        zhTW.put("file_count", "檔案: %d"); zhTW.put("size_label", "大小: %s"); zhTW.put("unknown_size", "未知大小");
+        zhTW.put("file_count", "檔案: %d");  zhTW.put("unknown_size", "未知大小");
         zhTW.put("manage", "管理"); zhTW.put("clear_all", "清空所有名單");
         zhTW.put("view_whitelist", "查看/移除 白名單"); zhTW.put("view_blacklist", "查看/移除 黑名單");
         zhTW.put("all_deleted", "已全部刪除"); zhTW.put("export_log", "匯出日誌");
@@ -281,7 +284,7 @@ dict.put("zh", zh);
         zhTW.put("cannot_open", "無法開啟"); zhTW.put("no_app", "無應用"); zhTW.put("empty_folder", "空資料夾");
         zhTW.put("add_files", "追加檔案"); zhTW.put("select_folder_send", ">> [傳送此資料夾] <<"); zhTW.put("unknown_file", "未知檔案");
         zhTW.put("files_count_prefix", "檔案: "); zhTW.put("size_label", "大小: "); zhTW.put("clear_all_files", "全部刪除");
-        zhTW.put("back_prev", "返回上一頁"); zhTW.put("save_to_dir", "儲存目錄: "); zhTW.put("ip_prefix", "IP ");
+        zhTW.put("back_prev", "返回上一頁");  zhTW.put("ip_prefix", "IP ");
     
 
         zhTW.put("web_qr", "網頁端網址"); zhTW.put("web_qr_desc", "請在電腦瀏覽器輸入此網址"); zhTW.put("open_file", "開啟檔案"); zhTW.put("install_apk", "一鍵安裝"); zhTW.put("unzip", "解壓縮"); zhTW.put("unzipping", "正在解壓縮..."); zhTW.put("unzip_ok", "解壓縮完成"); zhTW.put("unzip_fail", "解壓縮失敗"); zhTW.put("geek_mode", "極客模式"); zhTW.put("silent_install", "靜默安裝"); zhTW.put("silent_install_desc", "需 Root 或 Shizuku"); zhTW.put("share_file", "分享檔案"); zhTW.put("delete_record", "刪除記錄"); zhTW.put("delete_confirm", "確認刪除這條記錄嗎？"); zhTW.put("copied_hint", "已複製到剪貼簿");
@@ -302,7 +305,18 @@ zhTW.put("settings_title", "設定"); zhTW.put("clear_all_files_btn", "清空所
 zhTW.put("lang_switched", "語言已切換");
 zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "圓屏優化(自動)"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
 zhTW.put("ui_size", "介面大小"); zhTW.put("ui_size_small", "小"); zhTW.put("ui_size_medium", "標準"); zhTW.put("ui_size_large", "大");
-dict.put("zh_TW", zhTW);
+
+        zhTW.put("theme_mode", "主題模式"); zhTW.put("theme_auto", "跟隨系統"); zhTW.put("theme_light", "淺色模式"); zhTW.put("theme_dark", "深色模式");
+        zhTW.put("backup_title", "備份與恢復"); zhTW.put("backup_export", "匯出設定至剪貼簿"); zhTW.put("backup_import", "從剪貼簿匯入設定");
+        zhTW.put("dynamic_color", "動態取色"); zhTW.put("dynamic_color_desc", "跟隨系統桌布顏色"); zhTW.put("https_enable", "啟用 HTTPS 加密");
+        zhTW.put("enter_pin", "請輸入接收方 PIN 碼"); zhTW.put("pin_incorrect", "PIN 碼錯誤，請重試"); zhTW.put("modify_pin", "修改 PIN 碼"); zhTW.put("pin_code", "PIN 碼");
+        zhTW.put("sending", "正在傳送檔案"); zhTW.put("send_failed", "傳送失敗"); zhTW.put("send_success", "傳送完成");
+        zhTW.put("sending_title", "正在傳送檔案"); zhTW.put("receiving_title", "正在接收檔案"); zhTW.put("total_progress", "總進度");
+        zhTW.put("device_mobile", "手機"); zhTW.put("device_desktop", "電腦"); zhTW.put("device_web", "網頁");
+        zhTW.put("chin_padding", "底部避讓"); zhTW.put("chin_padding_desc", "針對有下巴的圓錶(如Moto 360)");
+        zhTW.put("view_whitelist", "查看/移除 白名單"); zhTW.put("view_blacklist", "查看/移除 黑名單"); zhTW.put("clear_all", "清空所有名單");
+        zhTW.put("add_files", "加入檔案"); zhTW.put("list_empty", "當前名單為空");
+        dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
         Map<String, String> en = new HashMap<>();
@@ -329,7 +343,7 @@ en.put("dark_mode", "Dark Mode"); en.put("dynamic_color", "Dynamic Color"); en.p
         en.put("sending", "Sending..."); en.put("send_failed", "Send Failed"); en.put("send_success", "Sent");
         en.put("sending_title", "Sending File"); en.put("receiving_title", "Receiving File"); en.put("total_progress", "Progress");
         en.put("size", "Size"); en.put("speed", "Speed"); en.put("received", "Received");
-        en.put("completed", "Completed"); en.put("failed", "Failed"); en.put("save_to_dir", "Saved to Album/Downloads");
+        en.put("completed", "Completed"); en.put("failed", "Failed"); 
         en.put("enter_pin", "Enter Receiver PIN"); en.put("pin_incorrect", "Incorrect PIN, try again");
         en.put("modify_pin", "Modify PIN"); en.put("pin_code", "PIN Code");
         
@@ -350,7 +364,7 @@ en.put("dark_mode", "Dark Mode"); en.put("dynamic_color", "Dynamic Color"); en.p
         en.put("stun_ok", "NAT Public Addr: "); en.put("stun_probe", "STUN Probe");
         en.put("stun_tip", "NAT Addr: Click probe on the right"); en.put("advanced_tip", "Pro Tip: Combine with FRP/Ngrok or ZeroTier, and fill the generated public address into Direct Connect.");
         
-        en.put("file_count", "Files: %d"); en.put("size_label", "Size: %s"); en.put("unknown_size", "Unknown Size");
+        en.put("file_count", "Files: %d");  en.put("unknown_size", "Unknown Size");
         en.put("manage", "Manage"); en.put("clear_all", "Clear all lists");
         en.put("view_whitelist", "View/Remove Whitelist"); en.put("view_blacklist", "View/Remove Blacklist");
         en.put("all_deleted", "All cleared");
@@ -459,7 +473,7 @@ en.put("dark_mode", "Dark Mode"); en.put("dynamic_color", "Dynamic Color"); en.p
         en.put("cannot_open", "Cannot open"); en.put("no_app", "No apps"); en.put("empty_folder", "Empty folder");
         en.put("add_files", "Append Files"); en.put("select_folder_send", ">> [Send this folder] <<"); en.put("unknown_file", "Unknown file");
         en.put("files_count_prefix", "Files: "); en.put("size_label", "Size: "); en.put("clear_all_files", "Delete All");
-        en.put("back_prev", "Go Back"); en.put("save_to_dir", "Save to: "); en.put("ip_prefix", "IP ");
+        en.put("back_prev", "Go Back");  en.put("ip_prefix", "IP ");
     
 
         en.put("web_qr", "Web URL"); en.put("web_qr_desc", "Type this URL in your PC browser"); en.put("open_file", "Open File"); en.put("install_apk", "Install"); en.put("unzip", "Unzip to current dir"); en.put("unzipping", "Unzipping..."); en.put("unzip_ok", "Unzip success"); en.put("unzip_fail", "Unzip failed"); en.put("geek_mode", "Geek Mode"); en.put("silent_install", "Silent Install"); en.put("silent_install_desc", "Requires Root/Shizuku"); en.put("share_file", "Share File"); en.put("delete_record", "Delete Record"); en.put("delete_confirm", "Delete this record?"); en.put("copied_hint", "Copied to clipboard");
@@ -479,7 +493,10 @@ en.put("settings_title", "Settings"); en.put("clear_all_files_btn", "Clear All F
     
 en.put("lang_switched", "Language changed");
 en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Round Opt (Auto)"); en.put("shape_round", "Force Round"); en.put("shape_square", "Force Square"); en.put("chin_padding", "Chin Padding"); en.put("chin_padding_desc", "For round watches with a chin (e.g. Moto 360)");
-dict.put("en", en);
+en.put("save_dir_label", "Save to: ");
+        en.put("saved_to_dir_toast", "Saved to Album/Downloads");
+        en.put("size_label", "Size: ");
+        dict.put("en", en);
 
         // ============ 日语 (ja) ============
         Map<String, String> ja = new HashMap<>(en);
@@ -618,6 +635,10 @@ ja.put("ui_size", "UIサイズ"); ja.put("ui_size_small", "小"); ja.put("ui_siz
         ja.put("silent_install", "サイレントインストール");
         ja.put("silent_install_desc", "RootまたはShizukuが必要");
 ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360など、画面下部に黒い縁がある丸型時計用");
+                ja.put("theme_mode", "テーマモード"); ja.put("theme_auto", "システムに従う"); ja.put("theme_light", "ライトモード"); ja.put("theme_dark", "ダークモード");
+        ja.put("save_dir_label", "保存先: "); ja.put("saved_to_dir_toast", "アルバム/ダウンロードに保存しました");
+        ja.put("backup_title", "バックアップと復元"); ja.put("backup_export", "クリップボードにエクスポート"); ja.put("backup_import", "クリップボードからインポート");
+        ja.put("enter_pin", "受信者のPINを入力"); ja.put("pin_incorrect", "PINが間違っています"); ja.put("modify_pin", "PINを変更");
         dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -757,6 +778,10 @@ ko.put("ui_size", "UI 크기"); ko.put("ui_size_small", "작게"); ko.put("ui_si
         ko.put("silent_install", "자동 설치");
         ko.put("silent_install_desc", "Root 또는 Shizuku 필요");
 ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360과 같이 화면 하단에 검은색 테두리가 있는 원형 시계용");
+                ko.put("theme_mode", "테마 모드"); ko.put("theme_auto", "시스템 설정 따름"); ko.put("theme_light", "라이트 모드"); ko.put("theme_dark", "다크 모드");
+        ko.put("save_dir_label", "저장 위치: "); ko.put("saved_to_dir_toast", "앨범/다운로드에 저장됨");
+        ko.put("backup_title", "백업 및 복원"); ko.put("backup_export", "클립보드로 내보내기"); ko.put("backup_import", "클립보드에서 가져오기");
+        ko.put("enter_pin", "수신자 PIN 입력"); ko.put("pin_incorrect", "PIN이 잘못되었습니다"); ko.put("modify_pin", "PIN 변경");
         dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -896,6 +921,10 @@ de.put("ui_size", "UI-Größe"); de.put("ui_size_small", "Klein"); de.put("ui_si
         de.put("silent_install", "Stille Installation");
         de.put("silent_install_desc", "Root oder Shizuku erforderlich");
 de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für runde Uhren mit einem Kinn (z.B. Moto 360)");
+                de.put("theme_mode", "Design-Modus"); de.put("theme_auto", "Systemeinstellung"); de.put("theme_light", "Heller Modus"); de.put("theme_dark", "Dunkler Modus");
+        de.put("save_dir_label", "Speichern unter: "); de.put("saved_to_dir_toast", "In Album/Downloads gespeichert");
+        de.put("backup_title", "Sichern & Wiederherstellen"); de.put("backup_export", "In Zwischenablage exportieren"); de.put("backup_import", "Aus Zwischenablage importieren");
+        de.put("enter_pin", "Empfänger-PIN eingeben"); de.put("pin_incorrect", "Falsche PIN"); de.put("modify_pin", "PIN ändern");
         dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -1035,6 +1064,10 @@ fr.put("ui_size", "Taille de l'UI"); fr.put("ui_size_small", "Petit"); fr.put("u
         fr.put("silent_install", "Installation silencieuse");
         fr.put("silent_install_desc", "Nécessite Root ou Shizuku");
 fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Pour les montres rondes avec un menton (ex: Moto 360)");
+                fr.put("theme_mode", "Mode de thème"); fr.put("theme_auto", "Suivre le système"); fr.put("theme_light", "Mode clair"); fr.put("theme_dark", "Mode sombre");
+        fr.put("save_dir_label", "Enregistrer dans : "); fr.put("saved_to_dir_toast", "Enregistré dans l'album/Téléchargements");
+        fr.put("backup_title", "Sauvegarde & Restauration"); fr.put("backup_export", "Exporter vers le presse-papiers"); fr.put("backup_import", "Importer du presse-papiers");
+        fr.put("enter_pin", "Entrez le PIN du destinataire"); fr.put("pin_incorrect", "PIN incorrect"); fr.put("modify_pin", "Modifier le PIN");
         dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1174,6 +1207,10 @@ es.put("ui_size", "Tamaño de IU"); es.put("ui_size_small", "Pequeño"); es.put(
         es.put("silent_install", "Instalación silenciosa");
         es.put("silent_install_desc", "Requiere Root o Shizuku");
 es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para relojes redondos con mentón (ej. Moto 360)");
+                es.put("theme_mode", "Modo de tema"); es.put("theme_auto", "Seguir sistema"); es.put("theme_light", "Modo claro"); es.put("theme_dark", "Modo oscuro");
+        es.put("save_dir_label", "Guardar en: "); es.put("saved_to_dir_toast", "Guardado en Álbum/Descargas");
+        es.put("backup_title", "Copia y Restauración"); es.put("backup_export", "Exportar al portapapeles"); es.put("backup_import", "Importar del portapapeles");
+        es.put("enter_pin", "Ingrese PIN del receptor"); es.put("pin_incorrect", "PIN incorrecto"); es.put("modify_pin", "Modificar PIN");
         dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1313,6 +1350,10 @@ ru.put("ui_size", "Размер интерфейса"); ru.put("ui_size_small", 
         ru.put("silent_install", "Тихая установка");
         ru.put("silent_install_desc", "Требуется Root или Shizuku");
 ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "Для круглых часов с подбородком (например, Moto 360)");
+                ru.put("theme_mode", "Режим темы"); ru.put("theme_auto", "Следовать системе"); ru.put("theme_light", "Светлая тема"); ru.put("theme_dark", "Темная тема");
+        ru.put("save_dir_label", "Сохранить в: "); ru.put("saved_to_dir_toast", "Сохранено в Альбом/Загрузки");
+        ru.put("backup_title", "Резервное копирование"); ru.put("backup_export", "Экспорт в буфер"); ru.put("backup_import", "Импорт из буфера");
+        ru.put("enter_pin", "Введите PIN получателя"); ru.put("pin_incorrect", "Неверный PIN"); ru.put("modify_pin", "Изменить PIN");
         dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1452,6 +1493,10 @@ pt.put("ui_size", "Tamanho da UI"); pt.put("ui_size_small", "Pequeno"); pt.put("
         pt.put("silent_install", "Instalação silenciosa");
         pt.put("silent_install_desc", "Requer Root ou Shizuku");
 pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "Para relógios redondos com queixo (ex: Moto 360)");
+                pt.put("theme_mode", "Modo de Tema"); pt.put("theme_auto", "Seguir Sistema"); pt.put("theme_light", "Modo Claro"); pt.put("theme_dark", "Modo Escuro");
+        pt.put("save_dir_label", "Salvar em: "); pt.put("saved_to_dir_toast", "Salvo em Álbum/Downloads");
+        pt.put("backup_title", "Backup e Restauração"); pt.put("backup_export", "Exportar para área de transferência"); pt.put("backup_import", "Importar da área de transferência");
+        pt.put("enter_pin", "Digite o PIN do destinatário"); pt.put("pin_incorrect", "PIN incorreto"); pt.put("modify_pin", "Modificar PIN");
         dict.put("pt", pt);
     }
 
@@ -1473,9 +1518,19 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
     }
 
     public static String get(String key) {
+        // 1. 当前语言
         if (dict.containsKey(currentLang) && dict.get(currentLang).containsKey(key)) {
             return dict.get(currentLang).get(key);
         }
-        return dict.get("en").containsKey(key) ? dict.get("en").get(key) : key;
+        // 2. 英文兜底
+        if (dict.containsKey("en") && dict.get("en").containsKey(key)) {
+            return dict.get("en").get(key);
+        }
+        // 3. 中文兜底
+        if (dict.containsKey("zh") && dict.get("zh").containsKey(key)) {
+            return dict.get("zh").get(key);
+        }
+        // 4. 返回 key 本身
+        return key;
     }
 }
