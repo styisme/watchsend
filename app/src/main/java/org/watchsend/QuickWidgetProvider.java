@@ -26,6 +26,7 @@ public class QuickWidgetProvider extends AppWidgetProvider {
         // 1. 点击图标区域拉起 App
         Intent launchIntent = new Intent(context, MainActivity.class);
         int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= 23) flags |= 67108864; // FLAG_IMMUTABLE 数值，防止某些版本找不到符号
         if (Build.VERSION.SDK_INT >= 23) flags |= PendingIntent.FLAG_IMMUTABLE;
         PendingIntent piLaunch = PendingIntent.getActivity(context, 0, launchIntent, flags);
         views.setOnClickPendingIntent(R.id.widget_launch, piLaunch);
