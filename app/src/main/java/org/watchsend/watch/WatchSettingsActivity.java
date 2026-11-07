@@ -207,6 +207,7 @@ public class WatchSettingsActivity extends Activity {
 
     private String currentLangLabel() {
         String lang = prefs().getString("app_lang", "system");
+        if ("key".equals(lang)) return "debug_keys";
         String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
         String[] names = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
         for (int i = 0; i < codes.length; i++) if (codes[i].equals(lang)) return names[i];
@@ -360,10 +361,10 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
     }
 
     private void pickLang() {
-        final String[] items = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
+        final String[] items = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português", "debug_keys"};
         WatchUiUtils.showList(this, I18nManager.get("language"), items, new WatchUiUtils.OnItemSelectListener() {
             public void onItemSelect(int pos) {
-                String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
+                String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt", "key"};
                 prefs().edit().putString("app_lang", codes[pos]).commit();
                 Toast.makeText(WatchSettingsActivity.this, I18nManager.get("lang_switched"), Toast.LENGTH_SHORT).show();
                 finish();

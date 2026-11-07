@@ -1518,6 +1518,10 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
     }
 
     public static String get(String key) {
+        // 开发者模式：直接显示 Key
+        if ("key".equals(currentLang)) {
+            return key;
+        }
         // 1. 当前语言
         if (dict.containsKey(currentLang) && dict.get(currentLang).containsKey(key)) {
             return dict.get(currentLang).get(key);
