@@ -27,7 +27,7 @@
 |---|---|
 | JDK | 8（必须使用 JDK 8 保证 Android 2.3 旧版编译） |
 | Gradle | 5.6.4 |
-| Android SDK | compileSdk 28, buildTools 28.0.3 |
+| Android SDK | compileSdk 30, buildTools 30.0.3 |
 
 ### 编译命令
 
@@ -61,12 +61,12 @@ watchsend/
 │   │   ├── ui/           # 自定义控件（如 Md3Switch）与适配器
 │   │   ├── util/         # 工具类 (含以下核心极客工具)
 │   │   │   ├── I18nManager.java    # 多语言引擎
-│   │   │   ├── ThemeUtils.java     # 深色主题与动态取色
+│   │   │   ├── ThemeUtils.java     # 深色主题与动态取色 (支持三态切换)
 │   │   │   ├── ZipUtils.java       # 纯 Java 原生 ZIP 解压 (防 Zip Slip)
 │   │   │   ├── ShellUtils.java     # Root 权限检测与执行
 │   │   │   └── ShizukuHelper.java  # 纯手写 Binder 代理的 Shizuku 支持
 │   │   ├── watch/        # ⭐ 手表端专属 UI 与硬件工具
-│   │   │   ├── WatchUiUtils.java           # 3D滚轮、圆屏Padding、手势拦截、动画
+│   │   │   ├── WatchUiUtils.java           # 3D滚轮、圆屏Padding、物理级缩放、动画
 │   │   │   ├── WatchHardwareUtils.java     # 表冠滑动、屏幕常亮、触觉反馈封装
 │   │   │   ├── QuickScanTileService.java   # Wear OS 快捷磁贴 (API 24+)
 │   │   │   └── WatchSettingsActivity.java  # 手表设置页
@@ -189,7 +189,7 @@ Closes #123
 | Bug 修复 | **PATCH** |
 
 ⚠️ **重要**：本项目已实现自动化版本号同步。**绝对不要手动修改 `app/build.gradle` 中的 `versionCode` 和 `versionName`**。
-只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.3.0] - 2026-11-02`），CI 会在编译前自动完成注入。
+只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.4.0] - 2026-11-07`），CI 会在编译前自动完成注入。
 
 ---
 
@@ -207,6 +207,15 @@ A: Android 9.0+ 默认禁止明文 HTTP。请确保 `AndroidManifest.xml` 的 `<
 **Q: 开启深色模式后，部分页面依然白底白字 / 出现刺眼颜色？**
 A: WatchSend 的所有 UI 都是纯 Java 动态生成的。请检查对应页面的 `onCreate` 方法，确保调用了 `WatchUiUtils.getPillBackground(this)`，且文字颜色使用了 `isDark ? 0xFFE0E0E0 : 0xFF1C1B1F` 动态赋值。
 
+**Q: UI 缩放调整后没有效果？**
+A: 从 v1.4.0 开始，由于 Android 11+ 拦截了 `updateConfiguration`，缩放逻辑已彻底迁移至 `attachBaseContext` 中的 `createConfigurationContext`。请确保所有 Activity 都重写了 `attachBaseContext`，并调用了 `WatchUiUtils.wrapScale(newBase)`。
+
+**Q: 为什么在 Android 12+ 上取不到 Material You 动态颜色？**
+A: 请确保 `AndroidManifest.xml` 中使用的主题不是死板的 `Theme.Light`，需要设置为 `@android:style/Theme.DeviceDefault.NoActionBar`，且 `targetSdkVersion` 不能太低（目前为 30），系统才会下发动态色板。
+
+**Q: 找不全多语言缺漏的 key？**
+A: 在设置 -> 语言列表中，滑到最底部选择 `debug_keys`。全界面文字将直接显示原始 Key，极速定位排版溢出或漏翻问题。
+
 **Q: 滑动返回手势与系统返回冲突 / 卡死？**
 A: 请检查设置页的“拦截系统返回”开关是否开启。在底层，我们通过 `onBackPressed()` 拦截了系统原生返回，统一交由 `WatchUiUtils.handleSwipeBack()` 处理。
 
@@ -220,7 +229,7 @@ A: 请检查仓库的 `Settings -> Secrets and variables -> Actions` 中是否�
 A: 快捷磁贴 (`QuickScanTileService`) 和表冠事件 (API 26+) 需要系统级支持。代码中已做 API 版本兼容判断，低版本设备会自动忽略这些特性，不影响基础传输功能。
 
 **Q: 极客模式里的 Shizuku 静默安装为什么失败？**
-A: 因为项目坚持无第三方依赖，采用了纯手写 Binder IPC 代理。请确保设备上 Shizuku 正在运行，并且已经通过 Shizuku 授权给 WatchSend（需在 Shizuku 内部授权管理里操作）。如果遇到非标准 ROM，可能会被系统拦截并降级为普通安装弹窗。
+A: 因为项目坚持无第三方依赖，采用了纯手写 Binder IPC 代理。请确保设备上 Shizuku 正在运行，并且已经通过 Shizuku 授权给 WatchSend。如果遇到非标准 ROM，可能会被系统拦截并降级为普通安装弹窗。
 
 **Q: 网页端（WebShare）打开报错或界面白屏？**
 A: 网页端代码已完全剥离至 `app/src/main/assets/index.html`，内置了 10 语种字典和完整的 API 路由。请确保 `OldSendService` 中完整注册了 `/web/info`、`/web/files` 等所有路由。如果在开发中修改了前端，清空浏览器缓存后再试。

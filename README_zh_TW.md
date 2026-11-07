@@ -5,7 +5,7 @@
 > OldSend 的手錶進化版。保留全部硬核傳輸能力，將 UI 徹底重塑為 Wear OS 原生的「3D 滾輪」與「藥丸卡片」形態。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -17,8 +17,10 @@
 
 ## ✨ 核心特性
 - **錶冠滑動 (Rotary Input)**: 完美適配 Wear OS 3+ 旋轉錶冠。
-- **動態取色**: Android 12+ 接入 Material You。
-- **極客工具箱 (v1.3.0)**: 支援 Shizuku/Root 靜默安裝、原生 ZIP 解壓、歷史記錄快捷管理。
+- **物理級 UI 縮放**: 重構底層 Context，0.3x ~ 2.5x 完美繞過 Android 11+ 限制。
+- **主題三態切換**: 支援跟隨系統、強制淺色、強制深色模式。
+- **動態取色**: Android 12+ 完美接入 Material You。
+- **極客工具箱**: 支援 Shizuku/Root 靜默安裝、原生 ZIP 解壓、歷史記錄快捷管理。
 - **Web 端 10 語種**: 自動識別瀏覽器語言，支援拖拽上傳。
 
 ---

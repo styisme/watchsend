@@ -12,6 +12,26 @@
 
 ---
 
+## [1.4.0] - 2026-11-07
+
+本次更新彻底攻克了 Android 11+ 的系统级限制，重构了底层 UI 缩放机制，并解锁了现代 Android 的极致视觉效果。
+
+### Added
+- **深色模式三态切换**：设置中新增「跟随系统 / 浅色模式 / 深色模式」选项，完美适配系统日夜切换。
+- **开发者 Debug Keys 模式**：语言列表中新增极客选项，选择后全界面文字直接显示原始 Key，极速排查多语言缺漏。
+- **Web 端多语言自适应补全**：网页端补齐剩余 7 国语言字典，支持自动识别 10 种语言变体。
+
+### Fixed
+- **物理级 UI 缩放重构**：彻底废弃被 Android 11+ 拦截的 `updateConfiguration` 方法，改用 `attachBaseContext` 全局重写 Context，完美解决高版本系统（如 Android 16）缩放失效问题。
+- **深色模式视觉灾难**：修复主界面、设置页部分卡片和按钮在深色模式下“白底白字”或残留浅色背景的问题。
+- **Material You 取色失效**：将 Application 主题从死板的 `Theme.Light` 升级为 `Theme.DeviceDefault.NoActionBar`，配合 `targetSdk` 升级，成功解锁 Android 12+ 的动态取色。
+- 修复了多语言字典中 `size_label` 和 `save_to_dir` 键值冲突、繁体中文未全量覆盖，以及德语/日语等语种核心词条缺失的问题。
+
+### Changed
+- **SDK 版本升级**：`compileSdk` 与 `targetSdk` 从 28 升级至 30，全面拥抱现代 Android 存储及组件规范（开启 `requestLegacyExternalStorage` 保证老设备兼容）。
+
+---
+
 ## [1.3.0] - 2026-11-02
 
 本次更新是极客功能的大爆发，全面强化了本地文件管理、Web 端多语言适配以及底层系统权限的利用。
@@ -101,7 +121,8 @@
 
 ## 版本对比链接
 
-[Unreleased]: https://github.com/styisme/watchsend/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/styisme/watchsend/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/styisme/watchsend/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/styisme/watchsend/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/styisme/watchsend/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/styisme/watchsend/compare/v1.0.0...v1.1.0

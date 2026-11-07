@@ -5,7 +5,7 @@
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -17,7 +17,7 @@
 > **本项目由 AI 辅助生成。**
 > 
 > 遵循 [AI 开发规范](https://github.com/styisme/ai-development-guidelines)，在此明确披露：
-> - **AI 深度参与部分**：手表专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态渲染的药丸卡片布局、硬件适配逻辑、Shizuku 纯手写 Binder 代理以及完整的 CI/CD 流水线。
+> - **AI 深度参与部分**：手表专属的 3D 滚轮算法、预测性返回动画、纯 Java 动态渲染的药丸卡片布局、硬件适配逻辑、Shizuku 纯手写 Binder 代理、物理级 UI 缩放重构以及完整的 CI/CD 流水线。
 > - **开发者负责部分**：需求定义、真机测试（手表/手机）、功能验收、Bug 定位与最终发布决策。所有 AI 生成的代码均经过人工审阅与真机调优。
 > 
 > 关于 AI 参与的详细范围与比例，请务必查阅 [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)。
@@ -26,7 +26,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.3.0**。
+当前版本：**v1.4.0**。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 
@@ -42,21 +42,23 @@
 - **传输屏幕常亮**：文件传输期间强制屏幕常亮，传输结束自动恢复省电逻辑。
 - **快捷磁贴 (Tiles)**：支持下拉快捷面板一键唤起 WatchSend，适配 Android 7.0+（老设备自动降级忽略）。
 - **低性能模式**：一键关闭 3D 滚轮、预测性返回等复杂动画，保障老旧设备流畅度。
-- **动态取色**：Android 12+ 完美接入 Material You，随壁纸/表盘变色。
 - **息屏微光模式**：传输时息屏仅保留进度条，抬腕亮屏恢复。
 - **语音输入**：支持系统语音转文字输入。
 
-### 🛠️ 极客专属工具箱 (v1.3.0 新增)
+### 🛠️ 极客专属工具箱
 - **静默安装 (Beta)**：支持通过 Root 或 Shizuku 权限，在接收 APK 后实现无感后台安装（纯手写 Binder IPC 代理）。
 - **原生 ZIP 解压**：收到压缩包无需导出，在接收完成页或历史记录长按，直接调用纯 Java 引擎安全解压（内置防路径穿越漏洞）。
 - **网页端 10 语种自适应**：内置 WebShare 前端已全面支持 10 国语言，自动识别浏览器语言，支持拖拽上传与剪贴板同步。
 - **历史快捷管理**：长按接收记录可快速分享文件或删除记录，ZIP 文件自动显示 📦 标识。
+- **Debug Keys 模式**：设置中可选的语言选项，切换后全界面直接显示底层词条 Key，极客查缺补漏神器。
 
 ### 🎨 极致的 Wear OS UI 交互
+- **物理级 UI 缩放**：重构底层 Context，内置滑动条，可在 0.3x ~ 2.5x 之间实时调整整个 App 的字体与控件大小，完美绕过 Android 11+ 系统限制。
+- **深色模式三态切换**：支持「跟随系统 / 强制浅色 / 强制深色」模式，完美适配系统日夜切换。
+- **动态取色 (Material You)**：升级系统主题配置，成功解锁 Android 12+ 的动态取色，随壁纸/表盘变色。
 - **3D 滚轮特效**：上下滑动时，边缘卡片自动缩小并降低透明度，还原原生物理滚轮感。
 - **圆屏沉浸优化**：一键开启后，界面自动向内收缩，避免文字与按钮被圆形表盘切割。
 - **跟手滑动返回 & 预测性返回**：支持全局滑动退出，卡片缩小浮起，模拟系统级 Predictive Back 动画。
-- **无级 UI 缩放**：内置滑动条，可在 0.3x ~ 2.5x 之间实时调整整个 App 的字体与控件大小。
 - **全量 10 种语言变体**：完美适配中、繁、英、日、韩、德、法、西、俄、葡，无死角覆盖。
 
 ### 🌐 跨网传输与穿透 (继承自 OldSend)
@@ -87,7 +89,7 @@
 
 ## 🛠️ 自行编译与自动发版
 
-与 OldSend 保持一致，本项目使用 **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** 的古早工具链，以维持对 `minSdkVersion 10` 的支持。
+与 OldSend 保持一致，本项目使用 **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** 的古早工具链，以维持对 `minSdkVersion 10` 的支持（compileSdk 与 targetSdk 已提升至 30 以适配现代规范）。
 
 ### 🤖 全自动 CI/CD 流水线
 项目现已接入全自动的 GitHub Actions 发版流水线：

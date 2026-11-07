@@ -5,7 +5,7 @@
 > OldSend의 워치 진화 버전. 모든 하드코어 전송 기능을 유지하면서 UI를 Wear OS 네이티브 '3D 휠' 및 '필 카드'로 완전히 재구성했습니다.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -17,8 +17,10 @@
 
 ## ✨ 핵심 기능
 - **로터리 입력**: Wear OS 3+ 회전 크라운에 완벽하게 적용.
+- **물리적 UI 크기 조정**: 기본 Context를 재구성하여 Android 11+ 제한을 우회하고 0.3x~2.5x 조정 지원.
+- **테마 3단계 전환**: 시스템 설정 따름, 라이트, 다크 모드 지원.
 - **다이내믹 컬러**: Android 12+ Material You 통합.
-- **긱 툴박스 (v1.3.0)**: Shizuku/Root 자동 설치, 기본 ZIP 압축 해제, 기록 빠른 관리를 지원합니다.
+- **긱 툴박스**: Shizuku/Root 자동 설치, 기본 ZIP 압축 해제, 기록 관리를 지원합니다.
 - **웹 10개 언어**: 브라우저 언어를 자동으로 감지하고 드래그 앤 드롭 업로드를 지원합니다.
 
 ---

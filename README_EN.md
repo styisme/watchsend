@@ -5,7 +5,7 @@
 > The watch evolution of OldSend. Retaining all hardcore transfer capabilities, the UI has been completely reshaped into Wear OS native "3D Wheel" and "Pill Cards", designed for small and round screens.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -19,7 +19,7 @@
 ---
 
 ## 📦 Version & Origin
-Current Version: **v1.3.0**.
+Current Version: **v1.4.0**.
 
 This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). Core protocols, HTTP server, and cross-network features are inherited from OldSend, while the UI and package name (`org.watchsend`) are completely rewritten.
 
@@ -30,28 +30,31 @@ This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). 
 ### ⌚ Deep Wear OS Integration
 - **Rotary Input**: Perfectly adapted for Wear OS 3+ rotating crown.
 - **Haptic Feedback**: Fine-tuned vibrations for actions.
-- **Dynamic Color**: Android 12+ Material You integration, following watch faces/wallpapers.
 - **Ambient/Idle Mode**: Transfers continue with minimal UI when screen is off.
 - **Voice Input**: Built-in system `RecognizerIntent` support.
 - **Low Performance Mode**: Disables 3D effects for older watches.
 
-### 🛠️ Geek Toolbox (v1.3.0 New)
+### 🛠️ Geek Toolbox
 - **Silent Install (Beta)**: Supports Root or Shizuku to install APKs seamlessly in the background (via hand-written Binder IPC proxy).
 - **Native ZIP Extraction**: Unzip files directly from the transfer completion page or history long-press menu, powered by a pure Java engine (built-in Zip Slip prevention).
-- **Web 10-Language Adaptive**: The WebShare frontend automatically detects browser language across 10 languages, supporting drag-and-drop and clipboard sync.
-- **History Quick Management**: Long-press records to share or delete files. ZIP files are marked with a 📦 icon for quick extraction.
+- **Web 10-Language Adaptive**: The WebShare frontend automatically detects browser language across 10 variants, supporting drag-and-drop and clipboard sync.
+- **History Quick Management**: Long-press records to share or delete files. ZIP files are marked with a 📦 icon.
+- **Debug Keys Mode**: A developer option in language settings that displays raw i18n keys across the entire UI, making it a perfect tool for spotting missing translations.
 
 ### 🎨 Extreme UI Experience
+- **Physical-level UI Scaling**: Reconstructed the base Context to bypass Android 11+ restrictions. Adjust font and control sizes from `0.3x` to `2.5x` seamlessly.
+- **Tri-state Theme**: Toggle between "Follow System", "Light Mode", and "Dark Mode".
+- **Dynamic Color**: Upgraded the base app theme to unlock Android 12+ Material You integration, following watch faces/wallpapers.
 - **3D Wheel Effect**: Cards scale down and fade out at the edges while scrolling.
 - **Round Screen Optimization**: Dynamic paddings to prevent text cutoff.
 - **Predictive Back**: Simulates system-level predictive back animations.
-- **Infinite UI Scaling**: Adjust font and control sizes from `0.3x` to `2.5x`.
 - **10 Language Variants**: Supports zh, zh_TW, en, ja, ko, de, fr, es, ru, pt.
 
 ### 🌐 Cross-network Transfer
 - **6-digit PIN**: Transfer files over WAN without a public IP.
 - **Public P2P**: Supports FRP/Ngrok/ZeroTier.
 - **UPnP / STUN / IPv6**: Native network traversal support.
+- **Extreme Compatibility**: Fully compatible with LocalSend v1/v2.2 protocols. Supports Android 2.3 (API 10) minimum.
 
 ---
 
@@ -71,7 +74,7 @@ Open a browser on your PC and enter the IP shown on the watch (e.g., `http://192
 
 ## 🛠️ Building & CI/CD
 
-Toolchain: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** (to maintain `minSdkVersion 10`).
+Toolchain: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** (to maintain `minSdkVersion 10`, while `compileSdk` and `targetSdk` have been upgraded to 30 for modern Android compliance).
 
 ### 🤖 Automated CI/CD
 1. Update the version in `CHANGELOG.md` and push.

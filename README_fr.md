@@ -5,7 +5,7 @@
 > L'évolution montre de OldSend. Conservant toutes les capacités de transfert hardcore, l'interface utilisateur a été complètement remodelée en '3D Wheel' et 'Pill Cards' natifs de Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.3.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -17,8 +17,10 @@ Ce projet est fortement assisté par l'IA. Consultez [AI_DISCLOSURE.md](docs/AI_
 
 ## ✨ Fonctionnalités Principales
 - **Entrée Rotative**: Parfaitement adapté à la couronne rotative de Wear OS 3+.
+- **Mise à l'échelle physique de l'UI**: Reconstruction du Context de base pour contourner les restrictions d'Android 11+ et supporter de 0.3x à 2.5x.
+- **Thème à 3 états**: Suivre le système, Clair, Sombre.
 - **Couleur Dynamique**: Intégration Material You (Android 12+).
-- **Boîte à outils Geek (v1.3.0)**: Prend en charge l'installation silencieuse Shizuku/Root, l'extraction ZIP native et la gestion rapide de l'historique.
+- **Boîte à outils Geek**: Installation silencieuse Shizuku/Root, extraction ZIP native et gestion rapide de l'historique.
 - **Web 10 langues**: Détecte automatiquement la langue du navigateur et prend en charge le téléchargement par glisser-déposer.
 
 ---

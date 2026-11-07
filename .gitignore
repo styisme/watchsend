@@ -8,3 +8,5 @@ local.properties
 .local_gradle/
 sign.ini
 *.keystore
+
+*.bak

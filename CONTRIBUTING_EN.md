@@ -27,7 +27,7 @@ When submitting a PR, you must:
 |---|---|
 | JDK | 8 (Must use JDK 8 to ensure legacy Android 2.3 compilation) |
 | Gradle | 5.6.4 |
-| Android SDK | compileSdk 28, buildTools 28.0.3 |
+| Android SDK | compileSdk 30, buildTools 30.0.3 |
 
 ### Build Commands
 
@@ -61,12 +61,12 @@ watchsend/
 │   │   ├── ui/           # Custom Widgets (e.g., Md3Switch) & Adapters
 │   │   ├── util/         # Utilities (Core Geek Tools)
 │   │   │   ├── I18nManager.java    # Multi-language Engine
-│   │   │   ├── ThemeUtils.java     # Dark Mode & Dynamic Color
+│   │   │   ├── ThemeUtils.java     # Dark Mode & Dynamic Color (Tri-state)
 │   │   │   ├── ZipUtils.java       # Native Java ZIP extraction (Zip Slip prevention)
 │   │   │   ├── ShellUtils.java     # Root detection and execution
 │   │   │   └── ShizukuHelper.java  # Hand-written Binder proxy for Shizuku
 │   │   ├── watch/        # ⭐ Watch-exclusive UI & Hardware Utils
-│   │   │   ├── WatchUiUtils.java           # 3D Wheel, Round Padding, Gestures, Animations
+│   │   │   ├── WatchUiUtils.java           # 3D Wheel, Round Padding, Physical Scaling, Animations
 │   │   │   ├── WatchHardwareUtils.java     # Rotary Input, Screen On, Haptics wrapper
 │   │   │   ├── QuickScanTileService.java   # Wear OS Tile (API 24+)
 │   │   │   └── WatchSettingsActivity.java  # Watch Settings Page
@@ -189,7 +189,7 @@ Follow [Semantic Versioning 2.0.0](https://semver.org/):
 | Bug fixes | **PATCH** |
 
 ⚠️ **IMPORTANT**: This project has automated version synchronization. **NEVER manually edit `versionCode` or `versionName` in `app/build.gradle`**.
-Simply add a new version in `CHANGELOG.md` (e.g., `## [1.3.0] - 2026-11-02`), and CI will inject it automatically before building.
+Simply add a new version in `CHANGELOG.md` (e.g., `## [1.4.0] - 2026-11-07`), and CI will inject it automatically before building.
 
 ---
 
@@ -206,6 +206,15 @@ A: Android 9.0+ blocks cleartext HTTP by default. Ensure the `<application>` tag
 
 **Q: After enabling dark mode, some pages still have white-on-white text / harsh colors?**
 A: All UI in WatchSend is dynamically generated in pure Java. Check the `onCreate` method of the corresponding page to ensure it calls `WatchUiUtils.getPillBackground(this)` and text colors use dynamic assignment like `isDark ? 0xFFE0E0E0 : 0xFF1C1B1F`.
+
+**Q: UI scaling has no effect after adjustment?**
+A: Starting from v1.4.0, because Android 11+ intercepts `updateConfiguration`, the scaling logic has been migrated to `createConfigurationContext` within `attachBaseContext`. Please ensure all Activities override `attachBaseContext` and call `WatchUiUtils.wrapScale(newBase)`.
+
+**Q: Why can't I get Material You dynamic colors on Android 12+?**
+A: Ensure the theme in `AndroidManifest.xml` is not a hardcoded `Theme.Light`, but set to `@android:style/Theme.DeviceDefault.NoActionBar`, and `targetSdkVersion` is not too low (currently 30) so the system can provide dynamic color palettes.
+
+**Q: How to find missing i18n keys?**
+A: In Settings -> Language list, scroll to the bottom and select `debug_keys`. The UI will directly display the raw keys instead of translated text, making it extremely fast to locate missing translations or layout overflow issues.
 
 **Q: Swipe back gesture conflicts with system back / freezes?**
 A: Check if the "Block System Back" switch is enabled in Settings. Internally, we intercept native back via `onBackPressed()` and delegate everything to `WatchUiUtils.handleSwipeBack()`.

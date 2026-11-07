@@ -44,6 +44,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - [x] **版本号自动化约束** —— *（通过 `sync_version.py` 强制读取 `CHANGELOG.md`，开发者无需也无法手动修改 Gradle 版本号）*
 - [x] **自动化签名与发布** —— *（CI 自动解析 Secrets 中的密钥，编译 Release APK 并自动打 Tag、创建 GitHub Release）*
 - [x] **UI 风格与多语言代码级强审查** —— *（人工严格把关了所有卡片必须使用 `WatchUiUtils.getPillBackground`，文本必须走 `I18nManager.get()`，防止出现白底白字或中英韩混排）*
+- [x] **底层 API 与系统机制强审查** —— *（强制废弃已被 Android 11+ 拦截的 `updateConfiguration`，改用 `attachBaseContext`；彻底清理不兼容的残留 Theme，确保动态取色生效）*
 - [x] **前端多语言与资源强隔离** —— *（网页端代码剥离至 `assets`，前端 JS 字典强制覆盖 10 种语言）*
 
 ### 测试
@@ -52,6 +53,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - [x] **交互与动画测试** —— *（重点验证了 3D 滚轮滑动、卡片预测性推拉返回手势、圆屏边距避让）*
 - [x] **硬件接口测试** —— *（验证了传输页屏幕常亮、震动反馈、旧设备 API 隔离降级）*
 - [x] **网页端跨浏览器测试** —— *（在 PC Chrome、移动端 Via 浏览器验证了拖拽、剪贴板同步与多语言识别）*
+- [x] **高版本系统兼容测试** —— *（验证了 Android 16 上的物理级 UI 缩放与 Material You 取色，修复了 DayNight 主题导致的 AAPT 崩溃）*
 - [ ] **表冠真机测试** —— *（受限于测试设备，部分无表冠设备仅验证了代码兼容性）*
 - [ ] 模拟器测试（无物理设备条件下）
 - [ ] **未测试**（见下方诚实声明）
@@ -66,7 +68,8 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 
 - **关于真机测试**：本仓库的核心 UI 与传输功能已在数台老旧安卓设备（包括智能手表）上通过真机验证。但受限于物理设备数量，部分冷门 API（如 Wear OS 3+ 的表冠阻尼、特定系统的磁贴拉起）的边缘场景尚未完全覆盖。
 - **关于云端编译**：CI 编译通过仅代表语法与依赖正确，不代表所有功能在您的特定设备上绝对可用。
-- **关于 AI 生成与正则补丁**：本项目属于极端的 AI 辅助驱动开发。在 v1.1.0 到 v1.3.0 的迭代中，AI 使用了大量 Python 正则脚本直接修改源码，导致了多次灾难性错误（如误删 XML 的 `layout_width` 导致 App 闪退，大括号吞噬导致 CI 彻底崩溃，网页端模板字符串转义失败导致变量原样输出，甚至因 JDK 8 内部类未加 `final` 导致连篇报错）。最终完全依赖云端 CI 报错日志和人肉排查才修复。请在使用前自行评估风险。
+- **关于 AI 生成与正则补丁**：本项目属于极端的 AI 辅助驱动开发。在 v1.1.0 到 v1.3.0 的迭代中，AI 使用了大量 Python 正则脚本直接修改源码，导致了多次灾难性错误（如误删 XML 的 `layout_width` 导致 App 闪退，大括号吞噬导致 CI 彻底崩溃，网页端模板字符串转义失败导致变量原样输出，甚至因 JDK 8 内部类未加 `final` 导致连篇报错）。最终完全依赖云端 CI 报错日志和人肉排查才修复。
+- **关于 AI 系统适配的滞后性 (v1.4.0 新增)**：在重构 UI 缩放时，AI 盲目使用了早已被 Android 11+ 废弃拦截的 `updateConfiguration` 方法，导致高版本系统（如 Android 16）缩放彻底失效；后通过人类真机测试反馈，逼迫 AI 改用 `attachBaseContext` 物理级包装才得以解决。在升级 targetSdk 30 时，AI 也曾因为写出了系统不存在的 `Theme.DeviceDefault.DayNight.NoTitleBar` 导致 AAPT 编译灾难。这说明人类开发者的真机反馈与报错纠偏是不可替代的。
 - **关于极客底层操作**：Shizuku 静默安装采用纯手写 Binder IPC，在不同 ROM 下可能因权限校验被拦截，代码已做防闪退降级处理（失败则拉起系统安装器）。
 
 ---
@@ -77,7 +80,8 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 
 | 模块 | 验证状态 |
 |---|---|
-| `WatchUiUtils.java`（3D滚轮、圆屏避让、预测性返回手势） | ✅ 真机测试（滑动阻尼感、动画连贯性良好） |
+| `WatchUiUtils.java`（3D滚轮、圆屏避让、**物理级缩放**） | ✅ 真机测试（滑动阻尼感良好，Android 16 缩放完美生效） |
+| `ThemeUtils.java`（**三态深色主题与动态取色**） | ✅ 真机测试（跟随系统日夜切换正常，MD3 取色解锁） |
 | `WatchHardwareUtils.java`（表冠滑动、屏幕常亮、触觉反馈） | ⚠️ 部分真机测试（震动与常亮已验证，表冠受限于硬件） |
 | `QuickScanTileService.java`（Wear OS 快捷磁贴） | ⚠️ 仅 CI 编译 / 局部真机（严格隔离 API 24+） |
 | `TransferActivity.java`（发送/接收进度、APK安装、ZIP解压） | ✅ 真机测试（接收请求弹窗、进度条与按钮动态渲染正常） |
