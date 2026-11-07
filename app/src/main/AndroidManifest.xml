@@ -75,7 +75,11 @@
     
         
     
-        <receiver android:name=".QuickWidgetProvider"
+        
+    
+        <receiver android:name="org.watchsend.QuickWidgetProvider"
+            android:label="WatchSend"
+            android:icon="@drawable/ic_launcher"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
