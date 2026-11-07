@@ -36,6 +36,11 @@ import org.watchsend.watch.WatchUiUtils;
 import org.watchsend.watch.WatchSettingsActivity;
 
 public class MainActivity extends Activity implements OldSendService.LogSink, DeviceStore.Listener {
+    @Override
+    protected void attachBaseContext(android.content.Context newBase) {
+        super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
+    }
+
     private static final int REQ_FILE = 1001;
     private static final int REQ_MEDIA = 1002;
 
@@ -63,7 +68,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        WatchUiUtils.applyScale(this);
+        
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
