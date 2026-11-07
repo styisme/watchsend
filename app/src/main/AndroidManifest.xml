@@ -77,6 +77,8 @@
     
         
     
+        
+    
         <receiver android:name="org.watchsend.QuickWidgetProvider"
             android:label="WatchSend"
             android:icon="@drawable/ic_launcher"
