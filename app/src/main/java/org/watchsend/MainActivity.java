@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
             if (toggleBtn != null) {
                 android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-                bg.setCornerRadius(dp(26));
+                bg.setCornerRadius((int)(26 * getResources().getDisplayMetrics().density));
                 bg.setColor(primaryColor);
                 toggleBtn.setBackground(bg);
             }
@@ -287,7 +287,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
             if (toggleBtn != null) {
                 android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-                bg.setCornerRadius(dp(26));
+                bg.setCornerRadius((int)(26 * getResources().getDisplayMetrics().density));
                 bg.setColor(primaryColor);
                 toggleBtn.setBackground(bg);
             }
@@ -782,4 +782,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             super.onBackPressed();
         }
     }
+
+    private int dp(int val) {
+        return (int)(val * getResources().getDisplayMetrics().density);
+    }
 }
+
