@@ -138,7 +138,13 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         deviceList = (ListView) findViewById(R.id.devices);
         
         layoutSelectedFiles = (LinearLayout) findViewById(R.id.layout_selected_files);
+        if (layoutSelectedFiles != null && isDark) {
+            layoutSelectedFiles.setBackgroundResource(R.drawable.watch_card_dark);
+        }
         tvSelectedFile = (TextView) findViewById(R.id.tv_selected_file);
+        if (tvSelectedFile != null && isDark) {
+            tvSelectedFile.setTextColor(0xFFE0E0E0);
+        }
         btnAddFilesMore = (Button) findViewById(R.id.btn_add_files_more);
         btnEditFiles = (Button) findViewById(R.id.btn_edit_files);
 
@@ -205,6 +211,18 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
         });
 
+
+        // 强制应用 MD3 动态色到主操作按钮
+        int primaryColor = ThemeUtils.getPrimaryColor(this);
+        if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
+            if (toggleBtn != null) {
+                android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+                bg.setCornerRadius(dp(26));
+                bg.setColor(primaryColor);
+                toggleBtn.setBackground(bg);
+            }
+        }
+
         updateStatus();
         applyI18n();
         checkAndRequestPermission();
@@ -263,6 +281,18 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void toggleService() {
         if (running) { stopService(new Intent(this, OldSendService.class)); running = false; }
         else { startService(new Intent(this, OldSendService.class)); running = true; }
+
+        // 强制应用 MD3 动态色到主操作按钮
+        int primaryColor = ThemeUtils.getPrimaryColor(this);
+        if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
+            if (toggleBtn != null) {
+                android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+                bg.setCornerRadius(dp(26));
+                bg.setColor(primaryColor);
+                toggleBtn.setBackground(bg);
+            }
+        }
+
         updateStatus();
         applyI18n();
     }

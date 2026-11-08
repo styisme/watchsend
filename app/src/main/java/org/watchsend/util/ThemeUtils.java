@@ -26,7 +26,17 @@ public class ThemeUtils {
 
     public static int getPrimaryColor(Context ctx) {
         if (isDynamicColorEnabled(ctx)) {
-            return getSystemColor(ctx, "system_accent1_600", 0xFF388E3C);
+            // 更稳的方式：直接解析主题里的 colorAccent，而不是死磕 system_accent1 反射
+            try {
+                android.util.TypedValue tv = new android.util.TypedValue();
+                if (ctx.getTheme().resolveAttribute(android.R.attr.colorAccent, tv, true)) {
+                    if (tv.resourceId != 0) return ctx.getColor(tv.resourceId);
+                    if (tv.data != 0) return tv.data;
+                }
+            } catch (Exception ignored) {}
+            // Fallback 到原来的反射
+            int color = getSystemColor(ctx, "system_accent1_600", 0);
+            if (color != 0) return color;
         }
         return 0xFF388E3C;
     }
