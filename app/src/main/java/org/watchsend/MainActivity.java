@@ -712,7 +712,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         startActivity(intent);
     }
     
-    /* 原有对话框保留但废弃
+    
     private void showLogDialogOld() {
         dialogLogView = new TextView(this);
         dialogLogView.setTextSize(10);
