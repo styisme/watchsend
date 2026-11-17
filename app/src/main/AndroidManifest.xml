@@ -90,5 +90,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+            <activity android:name="org.watchsend.uikit.UikitFullListActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+            <activity android:name="org.watchsend.uikit.UikitFullInputActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+            <activity android:name="org.watchsend.uikit.UikitFullTextActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+            <activity android:name="org.watchsend.uikit.UikitFullConfirmActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+            <activity android:name="org.watchsend.uikit.UikitPickerActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
     </application>
 </manifest>

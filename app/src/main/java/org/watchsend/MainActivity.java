@@ -302,17 +302,17 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             I18nManager.get("file"), I18nManager.get("media"), I18nManager.get("app"),
             I18nManager.get("folder"), I18nManager.get("text"), I18nManager.get("clipboard")
         };
-        WatchUiUtils.showList(this, isAppend ? I18nManager.get("add_files") : I18nManager.get("send"), items, new WatchUiUtils.OnItemSelectListener() {
-            public void onItemSelect(int pos) {
-                pendingAppend = isAppend;
-                if (pos == 0) pickFile(false, isAppend);
-                else if (pos == 1) pickFile(true, isAppend);
-                else if (pos == 2) pickApp(isAppend);
-                else if (pos == 3) pickFolder(isAppend);
-                else if (pos == 4) showSendTextDialog(isAppend);
-                else if (pos == 5) sendClipboard(isAppend);
-            }
-        }).show();
+        ArrayList<UikitListItemModel> listItems = new ArrayList<>();
+        for (String item : items) {
+            listItems.add(new UikitListItemModel(item, null));
+        }
+        
+        Intent intent = new UikitFullListActivity.IntentBuilder(this)
+                .setTitle(isAppend ? I18nManager.get("add_files") : I18nManager.get("send"))
+                .setItems(listItems)
+                .setRequestCode(5001) // 自定义 RequestCode
+                .createIntent();
+        startActivityForResult(intent, 5001);
     }
 
     private void pickFile(boolean isMedia, boolean append) {
@@ -458,8 +458,38 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         }
     }
 
+    private boolean currentAppendState = false;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5002 && resultCode == RESULT_OK) {
+            return; // Log 界面不需要后续处理
+        }
+        if (requestCode == 5001 && resultCode == RESULT_OK) {
+            int pos = data.getIntExtra(org.watchsend.uikit.UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos >= 0) {
+                if (pos == 0) pickFile(false, currentAppendState);
+                else if (pos == 1) pickFile(true, currentAppendState);
+                else if (pos == 2) pickApp(currentAppendState);
+                else if (pos == 3) pickFolder(currentAppendState);
+                else if (pos == 4) showSendTextDialog(currentAppendState);
+                else if (pos == 5) sendClipboard(currentAppendState);
+            }
+            return;
+        }
+        if (requestCode == 5001 && resultCode == RESULT_OK) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos >= 0) {
+                pendingAppend = false; // 外部状态重置，这里假设如果是追加，在外面会重新赋值，或者用类变量保存
+                if (pos == 0) pickFile(false, pendingAppend);
+                else if (pos == 1) pickFile(true, pendingAppend);
+                else if (pos == 2) pickApp(pendingAppend);
+                else if (pos == 3) pickFolder(pendingAppend);
+                else if (pos == 4) showSendTextDialog(pendingAppend);
+                else if (pos == 5) sendClipboard(pendingAppend);
+            }
+            return;
+        }
         if ((requestCode != REQ_FILE && requestCode != REQ_MEDIA) || resultCode != RESULT_OK || data == null) return;
         if (!pendingAppend) pendingUris.clear();
         if (data.getClipData() != null) {
@@ -674,7 +704,16 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showLogDialog() {
-        if (logDialog != null && logDialog.isShowing()) return;
+        Intent intent = new UikitFullTextActivity.IntentBuilder(this)
+                .setTitle("Log")
+                .setMessage(logCache.toString())
+                .setPositiveText("确认")
+                .createIntent();
+        startActivity(intent);
+    }
+    
+    /* 原有对话框保留但废弃
+    private void showLogDialogOld() {
         dialogLogView = new TextView(this);
         dialogLogView.setTextSize(10);
         dialogLogView.setTypeface(android.graphics.Typeface.MONOSPACE);
