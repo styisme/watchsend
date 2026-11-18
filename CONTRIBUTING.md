@@ -44,6 +44,34 @@ python build.py          # 使用一键编译脚本 (支持自动签名)
 - 当 `CHANGELOG.md` 发生变更并 Push 到 `main` 或 `master` 时，自动触发。
 - CI 会自动提取版本号 -> 注入 Gradle -> 解密签名 -> 编译 Release APK -> 自动打 Tag 并发布到 GitHub Release。
 
+### 国内网络下的本地构建
+
+直连下载在这边会慢到超时（实测 JDK 8 只有约 9 KB/s、Maven 依赖卡在 50 MB 不动）。v1.5.0 实测可用的镜像组合：
+
+| 资源 | 推荐来源 |
+|---|---|
+| JDK 8 | 清华 Adoptium 镜像（`mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/windows/`） |
+| Gradle 5.6.4 | 腾讯云镜像（`mirrors.cloud.tencent.com/gradle/gradle-5.6.4-bin.zip`） |
+| Maven 依赖（AGP、fastutil 等） | 腾讯云 `mirrors.cloud.tencent.com/nexus/repository/maven-public/`（同时聚合 google 与 central） |
+
+Maven 镜像**不需要改动仓库里的 `build.gradle`**（避免影响 CI），用一个 init 脚本即可：
+
+```groovy
+// mirror-init.gradle
+gradle.projectsLoaded {
+    gradle.rootProject.allprojects { p ->
+        p.buildscript.repositories.clear()
+        p.buildscript.repositories { maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' } }
+        p.repositories.clear()
+        p.repositories { maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' } }
+    }
+}
+```
+
+```bash
+JAVA_HOME=/path/to/jdk-8 gradle assembleDebug --no-daemon -I mirror-init.gradle
+```
+
 ---
 
 ## 项目结构
@@ -59,6 +87,11 @@ watchsend/
 │   │   ├── model/        # 数据模型与历史记录
 │   │   ├── transfer/     # 文件保存与上传逻辑
 │   │   ├── ui/           # 自定义控件（如 Md3Switch）与适配器
+│   │   ├── uikit/        # ⭐ Wear-Uikit 原生控件库（v1.5.0 引入，44 个类）
+│   │   │   ├── UikitUi.java               # 控件统一渲染入口
+│   │   │   ├── UikitTheme.java            # 主题预设与动态取色
+│   │   │   ├── UikitButton/CheckBox/Slider...  # 单个控件实现
+│   │   │   └── UikitFull*Activity.java    # 全屏列表/输入/文本/确认/选择/日期容器
 │   │   ├── util/         # 工具类 (含以下核心极客工具)
 │   │   │   ├── I18nManager.java    # 多语言引擎
 │   │   │   ├── ThemeUtils.java     # 深色主题与动态取色 (支持三态切换)
@@ -189,7 +222,7 @@ Closes #123
 | Bug 修复 | **PATCH** |
 
 ⚠️ **重要**：本项目已实现自动化版本号同步。**绝对不要手动修改 `app/build.gradle` 中的 `versionCode` 和 `versionName`**。
-只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.4.0] - 2026-11-07`），CI 会在编译前自动完成注入。
+只需在 `CHANGELOG.md` 中按格式添加新版本（如 `## [1.5.0] - 2026-11-18`），CI 会在编译前自动完成注入。
 
 ---
 

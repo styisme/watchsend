@@ -49,6 +49,7 @@ This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). 
 - **Round Screen Optimization**: Dynamic paddings to prevent text cutoff.
 - **Predictive Back**: Simulates system-level predictive back animations.
 - **10 Language Variants**: Supports zh, zh_TW, en, ja, ko, de, fr, es, ru, pt.
+- **Wear-Uikit Library (v1.5.0)**: 44 dependency-free native Java widgets (buttons, switches, sliders, steppers, progress rings, skeletons, bottom sheets, ...) plus 6 fullscreen containers, with theme and dynamic color driven by `UikitTheme`.
 
 ### 🌐 Cross-network Transfer
 - **6-digit PIN**: Transfer files over WAN without a public IP.

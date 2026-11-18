@@ -44,6 +44,34 @@ The project is equipped with a powerful GitHub Actions auto-release pipeline:
 - Triggered automatically when `CHANGELOG.md` changes and is pushed to `main` or `master`.
 - CI automatically extracts version -> injects into Gradle -> decrypts signing keys -> compiles Release APK -> automatically tags and publishes to GitHub Release.
 
+### Local Build on Slow Networks (CN)
+
+Direct downloads can stall badly (measured: JDK 8 at ~9 KB/s, Maven deps stuck at 50 MB). Mirrors that worked for v1.5.0:
+
+| Resource | Recommended source |
+|---|---|
+| JDK 8 | TUNA Adoptium mirror (`mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/windows/`) |
+| Gradle 5.6.4 | Tencent Cloud mirror (`mirrors.cloud.tencent.com/gradle/gradle-5.6.4-bin.zip`) |
+| Maven deps (AGP, fastutil, ...) | Tencent Cloud `mirrors.cloud.tencent.com/nexus/repository/maven-public/` (aggregates google + central) |
+
+The Maven mirror **does not require editing `build.gradle`** (which would affect CI); use an init script instead:
+
+```groovy
+// mirror-init.gradle
+gradle.projectsLoaded {
+    gradle.rootProject.allprojects { p ->
+        p.buildscript.repositories.clear()
+        p.buildscript.repositories { maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' } }
+        p.repositories.clear()
+        p.repositories { maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' } }
+    }
+}
+```
+
+```bash
+JAVA_HOME=/path/to/jdk-8 gradle assembleDebug --no-daemon -I mirror-init.gradle
+```
+
 ---
 
 ## Project Structure
@@ -59,6 +87,11 @@ watchsend/
 │   │   ├── model/        # Data Models & History
 │   │   ├── transfer/     # File Save & Upload Logic
 │   │   ├── ui/           # Custom Widgets (e.g., Md3Switch) & Adapters
+│   │   ├── uikit/        # ⭐ Wear-Uikit native widget library (v1.5.0, 44 classes)
+│   │   │   ├── UikitUi.java               # Unified widget rendering entry
+│   │   │   ├── UikitTheme.java            # Theme presets & dynamic color
+│   │   │   ├── UikitButton/CheckBox/Slider...  # Individual widgets
+│   │   │   └── UikitFull*Activity.java    # Fullscreen list/input/text/confirm/picker/date
 │   │   ├── util/         # Utilities (Core Geek Tools)
 │   │   │   ├── I18nManager.java    # Multi-language Engine
 │   │   │   ├── ThemeUtils.java     # Dark Mode & Dynamic Color (Tri-state)
@@ -189,7 +222,7 @@ Follow [Semantic Versioning 2.0.0](https://semver.org/):
 | Bug fixes | **PATCH** |
 
 ⚠️ **IMPORTANT**: This project has automated version synchronization. **NEVER manually edit `versionCode` or `versionName` in `app/build.gradle`**.
-Simply add a new version in `CHANGELOG.md` (e.g., `## [1.4.0] - 2026-11-07`), and CI will inject it automatically before building.
+Simply add a new version in `CHANGELOG.md` (e.g., `## [1.5.0] - 2026-11-18`), and CI will inject it automatically before building.
 
 ---
 
