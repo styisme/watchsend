@@ -464,7 +464,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
 
     private void aboutDialog() {
         TextView tv = new TextView(this);
-        tv.setText("WatchSend · Watch Edition\nv1.1.0\n\n" + I18nManager.get("author") + ": styisme\nAI " + I18nManager.get("contributors") + "\nMIT License\n\n" + I18nManager.get("about_desc"));
+        tv.setText("WatchSend · Watch Edition\nv1.5.0\n\n" + I18nManager.get("author") + ": styisme\nAI " + I18nManager.get("contributors") + "\nMIT License\n\n" + I18nManager.get("about_desc"));
         tv.setTextSize(12);
         tv.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFE0E0E0 : 0xFF333333);
         tv.setLineSpacing(0, 1.3f);

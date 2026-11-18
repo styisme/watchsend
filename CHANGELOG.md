@@ -12,6 +12,27 @@
 
 ---
 
+## [1.5.0] - 2026-11-18
+
+本次更新把整套 **Wear-Uikit** 组件库引入手表端，并修复了引入过程中暴露的一连串编译崩溃，`assembleDebug` / `assembleRelease` 均已恢复可稳定出包。
+
+### Added
+- **Wear-Uikit 组件库**：新增 `uikit` 包共 44 个纯 Java 控件与工具类，涵盖按钮、图标按钮、复选框、开关、单选框、滑块、步进器、进度条/进度环/圆形计时器、加载态、骨架屏、空视图、分割线、标签徽章、底部弹窗、跑马灯文本、分页列表、列表项模型等，零第三方依赖，最低兼容 Android 2.3。
+- **Uikit 全屏页面**：新增列表选择（`UikitFullListActivity`）、文本输入（`UikitFullInputActivity`）、长文本阅读（`UikitFullTextActivity`）、二次确认（`UikitFullConfirmActivity`）、滚轮选择器（`UikitPickerActivity`）与日期选择（`UikitDatePickerActivity`）六个全屏容器，并全部在 `AndroidManifest.xml` 注册。
+- **Uikit 主题系统**：新增 `UikitTheme` / `UikitThemePresets` / `UikitColor` / `UikitColorMixer`，支持预设主题叠加动态取色。
+- **Uikit 对话框模板**：新增 `dialog_uikit_base` / `dialog_uikit_input` / `dialog_uikit_list` 三套布局与 36 个 `ic_uikit_*` 矢量图标。
+
+### Fixed
+- **构建阻断修复**：补齐布局中引用但从未创建的 `uikit_dlg_btn_pos`、`uikit_dlg_btn_neg`、`uikit_input_bg` 三个 drawable，AAPT 不再报 `resource not found`，Debug/Release 构建重新可用。
+- 修复 `MainActivity` 因缺少 `dp()` 方法导致的编译报错。
+- 修复 `MainActivity` 中未闭合的废弃注释、以及历史代码注入残留引发的 Java 编译崩溃，并补齐相关导入。
+- 修复深色模式下部分页面残留浅色背景的「白底白字」问题，以及 Android 16 上 MD3 动态取色失效。
+
+### Changed
+- `versionCode` / `versionName` 与 CHANGELOG 同步（`versionCode 10500` / `versionName 1.5.0`），「关于」界面版本号同步更新。
+
+---
+
 ## [1.4.0] - 2026-11-07
 
 本次更新彻底攻克了 Android 11+ 的系统级限制，重构了底层 UI 缩放机制，并解锁了现代 Android 的极致视觉效果。
