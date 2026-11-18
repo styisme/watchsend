@@ -1,6 +1,9 @@
 package org.watchsend;
 
 import android.app.Activity;
+import org.watchsend.uikit.UikitFullTextActivity;
+import org.watchsend.uikit.UikitFullListActivity;
+import org.watchsend.uikit.UikitListItemModel;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -36,6 +39,8 @@ import org.watchsend.watch.WatchUiUtils;
 import org.watchsend.watch.WatchSettingsActivity;
 
 public class MainActivity extends Activity implements OldSendService.LogSink, DeviceStore.Listener {
+    private boolean currentAppendState = false;
+
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
         super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
@@ -453,12 +458,26 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         }
     }
 
-    private boolean currentAppendState = false;
+    
 
-        private boolean currentAppendState = false;
+        
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5002) return; // Log 界面不需要处理
+
+        if (requestCode == 5001 && resultCode == RESULT_OK) {
+            int pos = data.getIntExtra(org.watchsend.uikit.UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos >= 0) {
+                if (pos == 0) pickFile(false, currentAppendState);
+                else if (pos == 1) pickFile(true, currentAppendState);
+                else if (pos == 2) pickApp(currentAppendState);
+                else if (pos == 3) pickFolder(currentAppendState);
+                else if (pos == 4) showSendTextDialog(currentAppendState);
+                else if (pos == 5) sendClipboard(currentAppendState);
+            }
+            return;
+        }
         if (requestCode == 5002) return; // Log 界面不需要处理
 
         if (requestCode == 5001 && resultCode == RESULT_OK) {

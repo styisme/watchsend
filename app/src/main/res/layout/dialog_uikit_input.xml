@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dlg_root"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="24dp" android:paddingBottom="24dp"
+    android:paddingLeft="16dp" android:paddingRight="16dp">
+
+    <TextView android:id="@+id/dlg_title"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textSize="16sp" android:textStyle="bold"
+        android:textColor="#FFFFFFFF" android:gravity="center" />
+
+    <EditText android:id="@+id/dlg_input"
+        android:layout_width="match_parent" android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/uikit_input_bg"
+        android:paddingLeft="16dp" android:paddingRight="16dp"
+        android:textSize="16sp" android:textColor="#FFFFFFFF"
+        android:singleLine="true" />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center" android:layout_marginTop="20dp">
+
+        <TextView android:id="@+id/dlg_btn_negative"
+            android:layout_width="52dp" android:layout_height="52dp"
+            android:background="@drawable/uikit_dlg_btn_neg" android:gravity="center"
+            android:text="&#215;" android:textColor="#FFFFFFFF" android:textSize="28sp"
+            android:clickable="true" android:focusable="true"/>
+
+        <View android:layout_width="24dp" android:layout_height="1dp" />
+
+        <TextView android:id="@+id/dlg_btn_positive"
+            android:layout_width="52dp" android:layout_height="52dp"
+            android:background="@drawable/uikit_dlg_btn_pos" android:gravity="center"
+            android:text="&#10003;" android:textColor="#FFFFFFFF" android:textSize="28sp"
+            android:clickable="true" android:focusable="true"/>
+    </LinearLayout>
+</LinearLayout>
