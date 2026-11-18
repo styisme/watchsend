@@ -1,5 +1,7 @@
 package org.watchsend.uikit;
 
+import org.watchsend.R;
+
 import java.io.Serializable;
 
 public class UikitListItemModel implements Serializable {

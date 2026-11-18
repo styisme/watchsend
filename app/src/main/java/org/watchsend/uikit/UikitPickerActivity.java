@@ -1,5 +1,7 @@
 package org.watchsend.uikit;
 
+import org.watchsend.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

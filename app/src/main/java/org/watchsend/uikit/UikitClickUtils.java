@@ -1,4 +1,6 @@
 package org.watchsend.uikit;
+
+import org.watchsend.R;
 public final class UikitClickUtils {
     private static long lastClickTime = 0;
     public static final int MIN_DELAY = 600; // 默认 600ms 内不重复触发

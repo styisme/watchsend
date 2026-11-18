@@ -1,5 +1,7 @@
 package org.watchsend.uikit;
 
+import org.watchsend.R;
+
 public final class UikitThemePresets {
     private UikitThemePresets() {}
     

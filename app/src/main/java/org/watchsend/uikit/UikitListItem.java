@@ -1,5 +1,7 @@
 package org.watchsend.uikit;
 
+import org.watchsend.R;
+
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;

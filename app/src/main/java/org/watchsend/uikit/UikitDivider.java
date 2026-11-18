@@ -1,4 +1,6 @@
 package org.watchsend.uikit;
+
+import org.watchsend.R;
 import android.content.Context;
 import android.view.View;
 public class UikitDivider extends View {

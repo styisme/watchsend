@@ -1,5 +1,7 @@
 package org.watchsend.uikit;
 
+import org.watchsend.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
