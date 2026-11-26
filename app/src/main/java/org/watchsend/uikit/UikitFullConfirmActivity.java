@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 public class UikitFullConfirmActivity extends Activity {
     public static final String EXTRA_TITLE = "uikit_title";
@@ -30,11 +31,18 @@ public class UikitFullConfirmActivity extends Activity {
         int density = (int) getResources().getDisplayMetrics().density;
         int bgColor = dark ? 0xFF000000 : 0xFFF4F6F8;
         getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(bgColor));
+        ScrollView scroll = new ScrollView(this);
+        scroll.setBackgroundColor(bgColor);
+        scroll.setFillViewport(true);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(bgColor);
-        setContentView(root);
+        root.setLayoutParams(new ScrollView.LayoutParams(
+                ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
+        scroll.addView(root);
+        setContentView(scroll);
         UikitUi.applyRoundPadding(this, root);
+        UikitUi.setupWheelScroll(scroll, root);
         // 中间文字
         LinearLayout centerBox = new LinearLayout(this);
         centerBox.setOrientation(LinearLayout.VERTICAL);

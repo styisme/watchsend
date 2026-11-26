@@ -12,7 +12,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
 import org.watchsend.watch.WatchUiUtils;
+import org.watchsend.uikit.UikitCompatSwitch;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +50,7 @@ public class CrossNetActivity extends Activity {
     private LinearLayout container;
     private TextView tvStatus, tvPinDisplay, tvFileInfo, tvIpv6Info, tvStunInfo;
     private EditText etPin, etDirectIp;
-    private org.watchsend.ui.Md3Switch cbUseDirect;
+    private UikitCompatSwitch cbUseDirect;
     private Button btnGen, btnRecv, btnStunProbe, btnUpnpPunch;
     
     private Handler handler = new Handler();
@@ -155,7 +155,7 @@ public class CrossNetActivity extends Activity {
         addCardItem(I18nManager.get("nat_addr"), tvStunInfo, btnStunProbe);
 
         // 卡片3：极速直连
-        cbUseDirect = new org.watchsend.ui.Md3Switch(this);
+        cbUseDirect = new UikitCompatSwitch(this);
         cbUseDirect.setLayoutParams(new LinearLayout.LayoutParams(dp(44), dp(26)));
         cbUseDirect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

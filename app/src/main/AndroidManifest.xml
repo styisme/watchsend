@@ -95,5 +95,6 @@
             <activity android:name="org.watchsend.uikit.UikitFullTextActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
             <activity android:name="org.watchsend.uikit.UikitFullConfirmActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
             <activity android:name="org.watchsend.uikit.UikitPickerActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+            <activity android:name="org.watchsend.uikit.UikitFullSliderActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
     </application>
 </manifest>

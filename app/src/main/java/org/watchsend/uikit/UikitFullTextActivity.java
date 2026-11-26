@@ -12,23 +12,37 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import java.lang.ref.WeakReference;
 
 public class UikitFullTextActivity extends Activity {
     public static final String EXTRA_TITLE = "uikit_title";
     public static final String EXTRA_MESSAGE = "uikit_message";
     public static final String EXTRA_POSITIVE_TEXT = "uikit_positive_text";
     public static final String EXTRA_AUTO_SPLIT = "uikit_auto_split";
+    public static final String EXTRA_LIVE = "uikit_live";
+
+    // 当前处于实时刷新模式的文本页实例（弱引用，避免 Activity 泄漏）
+    private static WeakReference<UikitFullTextActivity> sLiveRef;
+    private TextView tvBody;
+    private ScrollView mScroll;
+    private boolean liveHasContent;
 
     public static void show(Activity activity, String title, String message, String positiveText, int requestCode) {
-        show(activity, title, message, positiveText, false, requestCode);
+        show(activity, title, message, positiveText, false, false, requestCode);
     }
 
     public static void show(Activity activity, String title, String message, String positiveText, boolean autoSplit, int requestCode) {
+        show(activity, title, message, positiveText, autoSplit, false, requestCode);
+    }
+
+    public static void show(Activity activity, String title, String message, String positiveText,
+                             boolean autoSplit, boolean live, int requestCode) {
         Intent intent = new Intent(activity, UikitFullTextActivity.class);
         intent.putExtra(EXTRA_TITLE, title);
         intent.putExtra(EXTRA_MESSAGE, message);
         intent.putExtra(EXTRA_POSITIVE_TEXT, positiveText);
         intent.putExtra(EXTRA_AUTO_SPLIT, autoSplit);
+        intent.putExtra(EXTRA_LIVE, live);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -48,7 +62,8 @@ public class UikitFullTextActivity extends Activity {
         String message = getIntent().getStringExtra(EXTRA_MESSAGE);
         String posText = getIntent().getStringExtra(EXTRA_POSITIVE_TEXT);
         boolean autoSplit = getIntent().getBooleanExtra(EXTRA_AUTO_SPLIT, false);
-        
+        boolean live = getIntent().getBooleanExtra(EXTRA_LIVE, false);
+
         if (posText == null) posText = getString(android.R.string.ok);
 
         boolean dark = UikitTheme.isDarkMode(this);
@@ -67,6 +82,8 @@ public class UikitFullTextActivity extends Activity {
         
         scroll.addView(root);
         setContentView(scroll);
+        mScroll = scroll;
+        if (live) sLiveRef = new WeakReference<>(this);
 
         UikitUi.applyRoundPadding(this, root);
 
@@ -114,22 +131,38 @@ public class UikitFullTextActivity extends Activity {
                 
                 textContainer.addView(tvSentence);
             }
-            UikitUi.setupWheelScroll(scroll, textContainer);
         } else {
+            boolean empty = message == null || message.trim().isEmpty();
+            if (empty) message = org.watchsend.util.I18nManager.get("log_empty");
+            liveHasContent = !empty;
+
             TextView tvAllText = new TextView(this);
             tvAllText.setText(message);
-            tvAllText.setTextSize(16);
-            tvAllText.setTextColor(dark ? 0xFFE0E0E0 : 0xFF1C1B1F);
-            tvAllText.setGravity(Gravity.CENTER);
+            if (live) {
+                // 日志页：等宽字体、左对齐、小字号，便于逐行阅读
+                tvAllText.setTypeface(android.graphics.Typeface.MONOSPACE);
+                tvAllText.setTextSize(12);
+                tvAllText.setGravity(Gravity.START | Gravity.TOP);
+                tvAllText.setTextColor(dark ? 0xFFAAAAAA : 0xFF333333);
+                tvAllText.setBackgroundColor(dark ? 0xFF1E1E1E : 0xFFF5F5F5);
+            } else {
+                tvAllText.setTextSize(16);
+                tvAllText.setTextColor(dark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+                tvAllText.setGravity(Gravity.CENTER);
+                tvAllText.setBackground(UikitUi.getPillBackground(this));
+            }
             tvAllText.setLineSpacing(0, 1.5f);
             tvAllText.setPadding(16 * density, 16 * density, 16 * density, 16 * density);
-            tvAllText.setBackground(UikitUi.getPillBackground(this));
-            
+
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             tvAllText.setLayoutParams(lp);
             textContainer.addView(tvAllText);
+            tvBody = tvAllText;
         }
+
+        // 无论是否智能断句，统一挂载圆屏滚轮 / 回弹效果（作用于整个内容容器，与列表页一致）
+        UikitUi.setupWheelScroll(scroll, root);
 
         // 3. 底部按钮
         UikitButton btnOk = new UikitButton(this);
@@ -145,6 +178,27 @@ public class UikitFullTextActivity extends Activity {
             }
         });
         root.addView(btnOk);
+    }
+
+    /** 实时模式下追加一行文本并自动滚动到底部 */
+    public void appendLive(String line) {
+        if (tvBody == null || mScroll == null) return;
+        if (!liveHasContent) { tvBody.setText(line); liveHasContent = true; }
+        else tvBody.setText(tvBody.getText() + line);
+        mScroll.post(new Runnable() {
+            @Override public void run() { mScroll.fullScroll(ScrollView.FOCUS_DOWN); }
+        });
+    }
+
+    /** 获取当前处于实时刷新模式的文本页实例，不存在则返回 null */
+    public static UikitFullTextActivity getLiveInstance() {
+        return sLiveRef == null ? null : sLiveRef.get();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (sLiveRef != null && sLiveRef.get() == this) sLiveRef.clear();
+        super.onDestroy();
     }
 
     @Override

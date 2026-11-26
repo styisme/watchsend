@@ -1,6 +1,7 @@
 package org.watchsend.uikit;
 
 import org.watchsend.R;
+import org.watchsend.util.I18nManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,12 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.speech.RecognizerIntent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import java.util.ArrayList;
 
 public class UikitFullInputActivity extends Activity {
+    private static final int REQUEST_VOICE = 9999;
+    private EditText etInput;
     public static final String EXTRA_TITLE = "uikit_title";
     public static final String EXTRA_DEFAULT_TEXT = "uikit_default_text";
     public static final String EXTRA_HINT = "uikit_hint";
@@ -99,7 +104,7 @@ public class UikitFullInputActivity extends Activity {
         root.addView(tvTitle);
 
         // 2. 输入框
-        final EditText etInput = new EditText(this);
+        etInput = new EditText(this);
         etInput.setText(defaultText);
         etInput.setHint(hint);
         etInput.setTextSize(16);
@@ -121,6 +126,33 @@ public class UikitFullInputActivity extends Activity {
         etLp.bottomMargin = 16 * density;
         etInput.setLayoutParams(etLp);
         root.addView(etInput);
+
+        // 2.5 语音输入入口（保留旧版语音识别能力）
+        LinearLayout voiceRow = new LinearLayout(this);
+        voiceRow.setOrientation(LinearLayout.HORIZONTAL);
+        voiceRow.setGravity(Gravity.END);
+        voiceRow.setPadding(0, 0, 0, 12 * density);
+        TextView btnVoice = new TextView(this);
+        btnVoice.setText(I18nManager.get("voice_input"));
+        btnVoice.setTextSize(12);
+        btnVoice.setTextColor(dark ? 0xFF81C784 : 0xFF1B5E20);
+        int vpad = UikitScreenUtils.dp2px(this, 8);
+        btnVoice.setPadding(vpad, vpad / 2, vpad, vpad / 2);
+        btnVoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent voice = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                voice.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                try {
+                    startActivityForResult(voice, REQUEST_VOICE);
+                } catch (Exception e) {
+                    android.widget.Toast.makeText(UikitFullInputActivity.this,
+                            I18nManager.get("voice_unsupported"), android.widget.Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        voiceRow.addView(btnVoice);
+        root.addView(voiceRow);
 
         // 3. 按钮区
         LinearLayout btnRow = new LinearLayout(this);
@@ -166,6 +198,18 @@ public class UikitFullInputActivity extends Activity {
         root.addView(btnRow);
 
         etInput.requestFocus();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 语音识别结果回填到输入框
+        if (requestCode == REQUEST_VOICE && resultCode == RESULT_OK && data != null && etInput != null) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (results != null && !results.isEmpty()) {
+                etInput.setText(results.get(0));
+                etInput.setSelection(etInput.getText().length());
+            }
+        }
     }
 
     @Override

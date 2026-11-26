@@ -1,30 +1,17 @@
 package org.watchsend.uikit;
 
-import org.watchsend.R;
-
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public final class UikitUi {
-    public interface OnItemSelectListener { void onItemSelect(int position); }
-    public interface OnInputListener { void onInput(String text); }
     private UikitUi() {}
 
     public static Context wrapScale(Context base) {
@@ -69,7 +56,7 @@ public final class UikitUi {
         sv.setVerticalScrollBarEnabled(false);
         // 统一挂载回弹特效
         setupBounceEffect(sv, c);
-        
+
         if (!isRound) {
             for (int i = 0; i < c.getChildCount(); i++) {
                 View ch = c.getChildAt(i);
@@ -77,27 +64,41 @@ public final class UikitUi {
             }
             return;
         }
+        // 圆屏：等布局真正有高度后再安装滚轮，避免 onCreate 阶段 getHeight()==0 导致效果静默失效
         sv.post(new Runnable() {
-            @Override public void run() {
-                int h = sv.getHeight();
-                if (h > 0) {
-                    int pad = h/2 - dp(40, sv.getContext());
-                    c.setPadding(c.getPaddingLeft(), pad, c.getPaddingRight(), pad);
-                    sv.getViewTreeObserver().addOnScrollChangedListener(
-                        new ViewTreeObserver.OnScrollChangedListener() {
-                            @Override public void onScrollChanged() { applyWheelEffect(sv, c); }
-                        });
-                    applyWheelEffect(sv, c);
-                }
-            }
+            @Override public void run() { installWheel(sv, c, 0); }
         });
     }
+
+    /** 布局未完成时最多重试 6 次（约 300ms），保证滚轮效果一定会挂上 */
+    private static void installWheel(final ScrollView sv, final LinearLayout c, final int attempt) {
+        int h = sv.getHeight();
+        if (h <= 0) {
+            if (attempt < 6) {
+                sv.postDelayed(new Runnable() {
+                    @Override public void run() { installWheel(sv, c, attempt + 1); }
+                }, 50);
+            }
+            return;
+        }
+        int pad = h / 2 - dp(40, sv.getContext());
+        if (pad < 0) pad = 0;
+        c.setPadding(c.getPaddingLeft(), pad, c.getPaddingRight(), pad);
+        sv.getViewTreeObserver().addOnScrollChangedListener(
+            new ViewTreeObserver.OnScrollChangedListener() {
+                @Override public void onScrollChanged() { applyWheelEffect(sv, c); }
+            });
+        applyWheelEffect(sv, c);
+    }
     private static void applyWheelEffect(ScrollView sv, LinearLayout c) {
-        int centerY = sv.getHeight()/2;
+        int centerY = sv.getHeight() / 2;
+        if (centerY <= 0) return;
         int scrollY = sv.getScrollY();
         for (int i = 0; i < c.getChildCount(); i++) {
             View ch = c.getChildAt(i);
             if (ch.getVisibility() != View.VISIBLE) continue;
+            // 尚未测量完成的子 View 不参与缩放，否则会被误判为"远离中心"而整体变暗缩小
+            if (ch.getHeight() <= 0) continue;
             int cc = ch.getTop() + ch.getHeight()/2 - scrollY;
             float frac = Math.abs(centerY - cc) / (float) centerY;
             if (frac > 1f) frac = 1f;
@@ -115,269 +116,6 @@ public final class UikitUi {
         root.setScaleX(0.6f); root.setScaleY(0.6f); root.setAlpha(0f);
         root.animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(250)
             .setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
-    }
-    
-    private static void setupWindow(Context ctx, Dialog d) {
-        Window w = d.getWindow();
-        if (w != null) {
-            w.setBackgroundDrawableResource(android.R.color.transparent);
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(w.getAttributes());
-            
-            // 判断是否圆屏
-            android.util.DisplayMetrics dm = ctx.getResources().getDisplayMetrics();
-            float ratio = (float) dm.widthPixels / dm.heightPixels;
-            boolean isRound = (ratio >= 0.95f && ratio <= 1.05f);
-            
-            if (isRound) {
-                // 圆屏：宽度缩窄到 75%，避免左右切边
-                lp.width = (int)(dm.widthPixels * 0.75);
-                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            } else {
-                // 方屏：保持 90%
-                lp.width = (int)(dm.widthPixels * 0.9);
-                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            }
-            w.setAttributes(lp);
-        }
-    }
-
-    // ====== 修复核心：全局弹窗样式动态化 ======
-    private static void applyDialogStyle(Context ctx, Dialog d) {
-        boolean dark = UikitTheme.isDarkMode(ctx);
-        int density = (int) ctx.getResources().getDisplayMetrics().density;
-        
-        android.util.DisplayMetrics dm = ctx.getResources().getDisplayMetrics();
-        float ratio = (float) dm.widthPixels / dm.heightPixels;
-        boolean isRound = (ratio >= 0.95f && ratio <= 1.05f);
-        
-        // 1. 背景
-        View root = d.findViewById(R.id.dlg_root);
-        if (root != null) {
-            GradientDrawable bg = new GradientDrawable();
-            bg.setColor(dark ? 0xFF1A1A1A : 0xFFFFFFFF);
-            // 圆屏缩小圆角，避免视觉上太圆
-            bg.setCornerRadius((isRound ? 24 : 36) * density);
-            root.setBackground(bg);
-            
-            // 圆屏增加上下 padding 避让
-            if (isRound) {
-                root.setPadding(dp(16, ctx), dp(24, ctx), dp(16, ctx), dp(24, ctx));
-            }
-        }
-        
-        // 2. 限制 ScrollView 最大高度 (防止圆屏底部按钮被顶出屏幕)
-        try {
-            ScrollView scroll = (ScrollView) d.findViewById(R.id.dlg_root).findViewById(
-                    ctx.getResources().getIdentifier("dlg_scroll", "id", ctx.getPackageName()));
-            // 由于我们无法直接通过 ID 找到没有命名的 ScrollView，我们遍历 root
-            if (root instanceof ViewGroup) {
-                findAndLimitScrollView((ViewGroup) root, isRound ? 90 : 160, ctx);
-            }
-        } catch (Exception ignored) {}
-        
-        // 3. 标题
-        TextView title = (TextView) d.findViewById(R.id.dlg_title);
-        if (title != null) title.setTextColor(dark ? 0xFFFFFFFF : 0xFF1C1B1F);
-        
-        // 4. 输入框
-        EditText et = (EditText) d.findViewById(R.id.dlg_input);
-        if (et != null) {
-            GradientDrawable inputBg = new GradientDrawable();
-            inputBg.setCornerRadius(16 * density);
-            inputBg.setColor(dark ? 0xFF2C2C2E : 0xFFF0F0F0);
-            et.setBackground(inputBg);
-            et.setTextColor(dark ? 0xFFFFFFFF : 0xFF000000);
-        }
-        
-        // 5. 按钮排版 (圆屏改竖向)
-        View btnPos = d.findViewById(R.id.dlg_btn_positive);
-        View btnNeg = d.findViewById(R.id.dlg_btn_negative);
-        
-        if (btnPos != null && btnNeg != null) {
-            View parent = (View) btnPos.getParent();
-            if (parent instanceof LinearLayout) {
-                LinearLayout btnRow = (LinearLayout) parent;
-                if (isRound) {
-                    // 圆屏：竖向排列，按钮居中
-                    btnRow.setOrientation(LinearLayout.VERTICAL);
-                    btnRow.setGravity(Gravity.CENTER);
-                    LinearLayout.LayoutParams lpPos = (LinearLayout.LayoutParams) btnPos.getLayoutParams();
-                    lpPos.topMargin = dp(16, ctx);
-                    btnPos.setLayoutParams(lpPos);
-                } else {
-                    // 方屏：横向排列
-                    btnRow.setOrientation(LinearLayout.HORIZONTAL);
-                    btnRow.setGravity(Gravity.CENTER);
-                    LinearLayout.LayoutParams lpPos = (LinearLayout.LayoutParams) btnPos.getLayoutParams();
-                    lpPos.topMargin = 0;
-                    btnPos.setLayoutParams(lpPos);
-                }
-            }
-        }
-
-        if (btnPos != null) {
-            GradientDrawable posBg = new GradientDrawable();
-            posBg.setShape(GradientDrawable.OVAL);
-            posBg.setColor(UikitColor.getPrimaryColor(ctx));
-            btnPos.setBackground(posBg);
-            if (btnPos instanceof TextView) ((TextView) btnPos).setTextColor(UikitColor.getOnPrimaryColor(ctx));
-        }
-        
-        if (btnNeg != null) {
-            GradientDrawable negBg = new GradientDrawable();
-            negBg.setShape(GradientDrawable.OVAL);
-            negBg.setColor(dark ? 0xFF2C2C2E : 0xFFE0E0E0);
-            btnNeg.setBackground(negBg);
-            if (btnNeg instanceof TextView) ((TextView) btnNeg).setTextColor(dark ? 0xFFFFFFFF : 0xFF666666);
-        }
-    }
-    
-    private static void findAndLimitScrollView(ViewGroup group, int maxHeightDp, Context ctx) {
-        for (int i = 0; i < group.getChildCount(); i++) {
-            View child = group.getChildAt(i);
-            if (child instanceof ScrollView) {
-                child.getLayoutParams().height = dp(maxHeightDp, ctx);
-                child.requestLayout();
-            } else if (child instanceof ViewGroup) {
-                findAndLimitScrollView((ViewGroup) child, maxHeightDp, ctx);
-            }
-        }
-    }
-
-    public static Dialog createBaseDialog(Context ctx, String title, View content,
-                                          String positive, final DialogInterface.OnClickListener posL,
-                                          String negative, final DialogInterface.OnClickListener negL) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_uikit_base);
-        setupWindow(ctx, d);
-        applyDialogStyle(ctx, d);
-
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        LinearLayout c = (LinearLayout) d.findViewById(R.id.dlg_content_container);
-        if (content != null) c.addView(content);
-        
-        View bp = d.findViewById(R.id.dlg_btn_positive);
-        View bn = d.findViewById(R.id.dlg_btn_negative);
-        
-        if (positive != null) {
-            bp.setVisibility(View.VISIBLE);
-            bp.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    if (posL != null) posL.onClick(d, 0); else d.dismiss();
-                }
-            });
-        } else bp.setVisibility(View.GONE);
-        
-        if (negative != null) {
-            bn.setVisibility(View.VISIBLE);
-            bn.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    if (negL != null) negL.onClick(d, 0); else d.dismiss();
-                }
-            });
-        } else bn.setVisibility(View.GONE);
-        
-        return d;
-    }
-
-    /**
-     * @deprecated This non-fullscreen dialog is deprecated and will be removed in future versions.
-     * Please migrate to {@link UikitFullListActivity#show(Activity, String, java.util.ArrayList, int)} for better
-     * round-screen adaptation and 3D wheel scrolling support.
-     */
-    @Deprecated
-    public static Dialog showList(Context ctx, String title, String[] items, final OnItemSelectListener l) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_uikit_list);
-        setupWindow(ctx, d);
-        applyDialogStyle(ctx, d);
-        
-        boolean isDark = UikitTheme.isDarkMode(ctx);
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        LinearLayout c = (LinearLayout) d.findViewById(R.id.dlg_list_container);
-        c.removeAllViews();
-        
-        for (int i = 0; i < items.length; i++) {
-            final int idx = i;
-            TextView tv = new TextView(ctx);
-            tv.setText(items[i]);
-            tv.setTextSize(16);
-            tv.setPadding(16, 16, 16, 16);
-            tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF333333);
-            tv.setGravity(Gravity.CENTER);
-            android.util.TypedValue t = new android.util.TypedValue();
-            ctx.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, t, true);
-            if (t.resourceId != 0) tv.setBackgroundResource(t.resourceId);
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    d.dismiss();
-                    if (l != null) l.onItemSelect(idx);
-                }
-            });
-            c.addView(tv);
-        }
-        d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { d.dismiss(); }
-        });
-        return d;
-    }
-
-    /**
-     * @deprecated This non-fullscreen dialog is deprecated and will be removed in future versions.
-     * Please migrate to {@link UikitFullInputActivity#show(Activity, String, String, String, int)} for a better
-     * full-screen typing experience and keyboard adaptation.
-     */
-    @Deprecated
-    public static Dialog showInput(Context ctx, String title, String def, final OnInputListener l) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_uikit_input);
-        setupWindow(ctx, d);
-        applyDialogStyle(ctx, d); // 应用动态样式
-        
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        final EditText et = (EditText) d.findViewById(R.id.dlg_input);
-        et.setText(def);
-        
-        d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { d.dismiss(); }
-        });
-        d.findViewById(R.id.dlg_btn_positive).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                String s = et.getText().toString();
-                d.dismiss();
-                if (l != null) l.onInput(s);
-            }
-        });
-        d.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override public void onShow(DialogInterface x) {
-                et.requestFocus();
-                if (d.getWindow() != null)
-                    d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            }
-        });
-        return d;
-    }
-
-    /**
-     * @deprecated This non-fullscreen dialog is deprecated and will be removed in future versions.
-     * Please migrate to {@link UikitFullTextActivity#show(Activity, String, String, String, int)} for long texts
-     * with 3D wheel scrolling support.
-     */
-    @Deprecated
-    public static Dialog showConfirm(Context ctx, String title, String msg, final DialogInterface.OnClickListener pos) {
-        TextView tv = new TextView(ctx);
-        tv.setText(msg);
-        tv.setTextSize(15);
-        tv.setTextColor(UikitTheme.isDarkMode(ctx) ? 0xFFE0E0E0 : 0xFF49454F);
-        tv.setGravity(Gravity.CENTER);
-        tv.setPadding(16, 8, 16, 8);
-        return createBaseDialog(ctx, title, tv,
-                ctx.getString(R.string.uikit_ok), pos,
-                ctx.getString(R.string.uikit_cancel), null);
     }
 
     private static float sStartX = 0, sStartY = 0;
@@ -441,11 +179,11 @@ public final class UikitUi {
     private static void setupBounceEffect(final ScrollView sv, final View content) {
         sv.setOverScrollMode(View.OVER_SCROLL_NEVER); // 关闭系统自带发光
         sv.setClipChildren(false); // 允许越界绘制
-        
+
         sv.setOnTouchListener(new View.OnTouchListener() {
             float startY = 0;
             boolean isDragging = false;
-            
+
             @Override
             public boolean onTouch(View v, android.view.MotionEvent event) {
                 switch (event.getAction()) {
@@ -457,10 +195,10 @@ public final class UikitUi {
                         float deltaY = event.getY() - startY;
                         int scrollY = sv.getScrollY();
                         int maxScrollY = Math.max(0, content.getHeight() - sv.getHeight());
-                        
+
                         // 阻尼系数 0.35，最大拉伸 180dp
                         float maxDrag = UikitScreenUtils.dp2px(sv.getContext(), 180);
-                        
+
                         if (scrollY == 0 && deltaY > 0) {
                             // 顶部下拉
                             float translation = Math.min(deltaY * 0.35f, maxDrag);

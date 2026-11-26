@@ -1,31 +1,15 @@
 package org.watchsend.watch;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.speech.RecognizerIntent;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.*;
-import org.watchsend.R;
-import org.watchsend.util.I18nManager;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import org.watchsend.util.ThemeUtils;
 
-import java.util.ArrayList;
-
 public class WatchUiUtils {
-
-    public interface OnItemSelectListener { void onItemSelect(int position); }
-    public interface OnInputListener { void onInput(String text); }
 
     public static boolean isDark(Context ctx) { return ThemeUtils.isDarkMode(ctx); }
 
@@ -40,12 +24,12 @@ public class WatchUiUtils {
 
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.updateFrom(base.getResources().getConfiguration());
-        
+
         int sysDpi = android.content.res.Resources.getSystem().getDisplayMetrics().densityDpi;
         int targetDpi = (int)(sysDpi * scale);
         if (targetDpi < 80) targetDpi = 80;
         if (targetDpi > 960) targetDpi = 960;
-        
+
         config.densityDpi = targetDpi;
         return base.createConfigurationContext(config);
     }
@@ -79,9 +63,9 @@ public class WatchUiUtils {
         if (isLowPerformance(ctx)) return;
 
         boolean isRoundOpt = WatchHardwareUtils.isRoundScreen(scrollView);
-        scrollView.setClipToPadding(false); 
+        scrollView.setClipToPadding(false);
         scrollView.setVerticalScrollBarEnabled(false);
-        
+
         if (!isRoundOpt) {
             container.setPadding(container.getPaddingLeft(), 0, container.getPaddingRight(), 0);
             for (int i = 0; i < container.getChildCount(); i++) {
@@ -116,7 +100,7 @@ public class WatchUiUtils {
             int childCenterY = child.getTop() + (child.getHeight() / 2) - scrollY;
             int distance = Math.abs(centerY - childCenterY);
             float maxDistance = centerY;
-            float fraction = distance / maxDistance; 
+            float fraction = distance / maxDistance;
             if (fraction > 1.0f) fraction = 1.0f;
             float scale = 1.0f - (0.25f * fraction);
             float alpha = 1.0f - (0.7f * fraction);
@@ -128,199 +112,6 @@ public class WatchUiUtils {
 
     public static boolean isLowPerformance(Context ctx) {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("low_perf_mode", false);
-    }
-
-    // ================= Dialog 核心 =================
-    private static void setupWindow(Context ctx, Dialog d) {
-        Window w = d.getWindow();
-        if (w != null) {
-            w.setBackgroundDrawableResource(android.R.color.transparent);
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(w.getAttributes());
-            lp.width = (int) (ctx.getResources().getDisplayMetrics().widthPixels * 0.9);
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            w.setAttributes(lp);
-        }
-    }
-
-    private static void applyWearStyle(Context ctx, Dialog d, View root) {
-        boolean isDark = isDark(ctx);
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(isDark ? 0xFF1A1A1A : 0xFFFFFFFF); 
-        bg.setCornerRadius(36 * ctx.getResources().getDisplayMetrics().density); 
-        if (root != null) root.setBackground(bg);
-        
-        TextView title = (TextView) d.findViewById(R.id.dlg_title);
-        if (title != null) title.setTextColor(isDark ? Color.WHITE : Color.BLACK);
-        
-        TextView btnNeg = (TextView) d.findViewById(R.id.dlg_btn_negative);
-        if (btnNeg != null) {
-            if (isDark) {
-                btnNeg.setBackgroundResource(R.drawable.dlg_btn_neg); 
-                btnNeg.setTextColor(Color.WHITE);
-            } else {
-                GradientDrawable negBg = new GradientDrawable();
-                negBg.setColor(0xFFEEEEEE); 
-                negBg.setCornerRadius(18 * ctx.getResources().getDisplayMetrics().density);
-                btnNeg.setBackground(negBg);
-                btnNeg.setTextColor(Color.BLACK);
-            }
-        }
-        
-        EditText et = (EditText) d.findViewById(R.id.dlg_input);
-        if (et != null) {
-            if (isDark) {
-                et.setBackgroundResource(R.drawable.dlg_input_bg); 
-                et.setTextColor(Color.WHITE);
-            } else {
-                GradientDrawable inputBg = new GradientDrawable();
-                inputBg.setColor(0xFFF0F0F0); 
-                inputBg.setCornerRadius(16 * ctx.getResources().getDisplayMetrics().density);
-                et.setBackground(inputBg);
-                et.setTextColor(Color.BLACK);
-            }
-        }
-    }
-
-    public static Dialog createBaseDialog(Context ctx, String title, View contentView,
-                                          String positive, final DialogInterface.OnClickListener posListener,
-                                          String negative, final DialogInterface.OnClickListener negListener) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_watch_base);
-        setupWindow(ctx, d);
-        applyWearStyle(ctx, d, d.findViewById(R.id.dlg_root));
-
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        LinearLayout container = (LinearLayout) d.findViewById(R.id.dlg_content_container);
-        if (contentView != null) container.addView(contentView);
-
-        View btnPos = d.findViewById(R.id.dlg_btn_positive);
-        View btnNeg = d.findViewById(R.id.dlg_btn_negative);
-
-        if (positive != null) {
-            btnPos.setVisibility(View.VISIBLE);
-            btnPos.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (posListener != null) posListener.onClick(d, 0);
-                    else d.dismiss();
-                }
-            });
-        } else btnPos.setVisibility(View.GONE);
-
-        if (negative != null) {
-            btnNeg.setVisibility(View.VISIBLE);
-            btnNeg.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    if (negListener != null) negListener.onClick(d, 0);
-                    else d.dismiss();
-                }
-            });
-        } else btnNeg.setVisibility(View.GONE);
-
-        return d;
-    }
-
-    public static Dialog showList(Context ctx, String title, String[] items, final OnItemSelectListener listener) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_watch_list);
-        setupWindow(ctx, d);
-        applyWearStyle(ctx, d, d.findViewById(R.id.dlg_root));
-
-        boolean isDark = isDark(ctx);
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        LinearLayout container = (LinearLayout) d.findViewById(R.id.dlg_list_container);
-        container.removeAllViews();
-
-        for (int i = 0; i < items.length; i++) {
-            final int idx = i;
-            TextView tv = new TextView(ctx);
-            tv.setText(items[i]);
-            tv.setTextSize(15);
-            tv.setPadding(16, 16, 16, 16);
-            tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF333333);
-            tv.setGravity(Gravity.CENTER);
-            android.util.TypedValue tv2 = new android.util.TypedValue();
-            ctx.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, tv2, true);
-            tv.setBackgroundResource(tv2.resourceId);
-            tv.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    d.dismiss();
-                    if (listener != null) listener.onItemSelect(idx);
-                }
-            });
-            container.addView(tv);
-        }
-        d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { d.dismiss(); }
-        });
-        return d;
-    }
-
-    // ⭐ 修复：纯 Java 动态添加语音按钮，无需修改 XML
-    public static Dialog showInput(final Context ctx, String title, String def, final OnInputListener listener) {
-        final Dialog d = new Dialog(ctx);
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        d.setContentView(R.layout.dialog_watch_input);
-        setupWindow(ctx, d);
-        applyWearStyle(ctx, d, d.findViewById(R.id.dlg_root));
-
-        ((TextView) d.findViewById(R.id.dlg_title)).setText(title);
-        final EditText et = (EditText) d.findViewById(R.id.dlg_input);
-        et.setText(def);
-
-        // 动态添加语音输入按钮
-        LinearLayout contentContainer = (LinearLayout) d.findViewById(R.id.dlg_content_container);
-        if (contentContainer != null) {
-            LinearLayout voiceRow = new LinearLayout(ctx);
-            voiceRow.setOrientation(LinearLayout.HORIZONTAL);
-            voiceRow.setGravity(Gravity.END);
-            voiceRow.setPadding(0, dp(8, ctx), 0, 0);
-
-            TextView btnVoice = new TextView(ctx);
-            btnVoice.setText("🎤 Voice");
-            btnVoice.setTextSize(12);
-            btnVoice.setTextColor(isDark(ctx) ? 0xFF81C784 : 0xFF1B5E20);
-            btnVoice.setPadding(dp(8, ctx), dp(4, ctx), dp(8, ctx), dp(4, ctx));
-            btnVoice.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    try {
-                        ((Activity) ctx).startActivityForResult(intent, 9999);
-                    } catch (Exception e) {
-                        Toast.makeText(ctx, "Voice not supported", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            voiceRow.addView(btnVoice);
-            contentContainer.addView(voiceRow);
-        }
-
-        d.findViewById(R.id.dlg_btn_negative).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { d.dismiss(); }
-        });
-        d.findViewById(R.id.dlg_btn_positive).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String s = et.getText().toString();
-                d.dismiss();
-                if (listener != null) listener.onInput(s);
-            }
-        });
-        d.show();
-        et.requestFocus();
-        if (d.getWindow() != null) d.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        return d;
-    }
-
-    public static Dialog showConfirm(Context ctx, String title, String msg, final DialogInterface.OnClickListener positive) {
-        TextView tv = new TextView(ctx);
-        tv.setText(msg); tv.setTextSize(14);
-        tv.setTextColor(isDark(ctx) ? 0xFFE0E0E0 : 0xFF49454F);
-        tv.setGravity(Gravity.CENTER);
-        tv.setPadding(16, 8, 16, 8);
-        return createBaseDialog(ctx, title, tv, I18nManager.get("confirm"), positive, I18nManager.get("cancel"), null);
     }
 
     public static void applyEntryAnimation(Activity activity) {
@@ -340,26 +131,26 @@ public class WatchUiUtils {
     public static boolean handleSwipeBack(final Activity activity, android.view.MotionEvent ev) {
         final View root = activity.findViewById(android.R.id.content);
         final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
-        
+
         switch (ev.getAction()) {
             case android.view.MotionEvent.ACTION_DOWN:
                 startX = ev.getX();
                 startY = ev.getY();
                 isSwiping = false;
                 break;
-                
+
             case android.view.MotionEvent.ACTION_MOVE:
                 float deltaX = ev.getX() - startX;
                 float deltaY = ev.getY() - startY;
-                
+
                 if (isLowPerformance(activity)) {
                     if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         activity.finish();
                         return true;
                     }
-                    break; 
+                    break;
                 }
-                
+
                 if (!isSwiping) {
                     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
                         isSwiping = true;
@@ -376,7 +167,7 @@ public class WatchUiUtils {
                         }
                     }
                 }
-                
+
                 if (isSwiping) {
                     root.setTranslationX(deltaX);
                     float scale = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.25f;
@@ -384,22 +175,22 @@ public class WatchUiUtils {
                     root.setScaleY(scale);
                     float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.5f;
                     root.setAlpha(alpha);
-                    return true; 
+                    return true;
                 }
                 break;
-                
+
             case android.view.MotionEvent.ACTION_UP:
             case android.view.MotionEvent.ACTION_CANCEL:
                 if (isSwiping) {
                     isSwiping = false;
                     float finalDeltaX = ev.getX() - startX;
-                    
+
                     if (Math.abs(finalDeltaX) > screenWidth / 4) {
                         float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
                         root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
                             public void run() {
                                 activity.finish();
-                                activity.overridePendingTransition(0, 0); 
+                                activity.overridePendingTransition(0, 0);
                                 root.setTranslationX(0);
                                 root.setScaleX(1f);
                                 root.setScaleY(1f);

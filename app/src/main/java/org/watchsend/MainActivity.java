@@ -3,12 +3,12 @@ package org.watchsend;
 import android.app.Activity;
 import org.watchsend.uikit.UikitFullTextActivity;
 import org.watchsend.uikit.UikitFullListActivity;
-import org.watchsend.uikit.UikitListItemModel;
-import android.app.Dialog;
+import org.watchsend.uikit.UikitFullInputActivity;
+import org.watchsend.uikit.UikitFullConfirmActivity;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -41,6 +41,17 @@ import org.watchsend.watch.WatchSettingsActivity;
 public class MainActivity extends Activity implements OldSendService.LogSink, DeviceStore.Listener {
     private boolean currentAppendState = false;
 
+    // ===== uikit 全屏容器回调所需的上下文（异步 onActivityResult 恢复用）=====
+    private List<ApplicationInfo> pendingApps;
+    private File pendingFolderDir;
+    private List<File> pendingFolders;
+    private String pendingAclFp;
+    private boolean pendingAclIsWl;
+    private boolean pendingAclIsBl;
+    private File pendingHistoryFile;
+    private boolean pendingHistoryIsZip;
+    private int pendingHistoryPos;
+
     @Override
     protected void attachBaseContext(android.content.Context newBase) {
         super.attachBaseContext(org.watchsend.watch.WatchUiUtils.wrapScale(newBase));
@@ -63,8 +74,6 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private boolean running = false;
     private boolean pendingAppend = false;
     private boolean historyMode = false;
-    private Dialog logDialog;
-    private TextView dialogLogView;
     private StringBuilder logCache = new StringBuilder();
     
     private String lastLang;
@@ -303,16 +312,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showSendTypeDialog(final boolean isAppend) {
+        currentAppendState = isAppend;
         final String[] items = {
             I18nManager.get("file"), I18nManager.get("media"), I18nManager.get("app"),
             I18nManager.get("folder"), I18nManager.get("text"), I18nManager.get("clipboard")
         };
-        ArrayList<UikitListItemModel> listItems = new ArrayList<>();
-        for (String item : items) {
-            listItems.add(new UikitListItemModel(item, null));
-        }
-        
-        
+        UikitFullListActivity.show(this, I18nManager.get("send_file_title"), items, 5001);
     }
 
     private void pickFile(boolean isMedia, boolean append) {
@@ -337,13 +342,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
         }
         if (names.isEmpty()) { toast(I18nManager.get("no_app")); return; }
-        WatchUiUtils.showList(this, I18nManager.get("select_app"), names.toArray(new String[0]), new WatchUiUtils.OnItemSelectListener() {
-            public void onItemSelect(int pos) {
-                if (!pendingAppend) pendingUris.clear();
-                pendingUris.add(Uri.fromFile(new File(apps.get(pos).sourceDir)));
-                onFilesPicked();
-            }
-        }).show();
+        pendingApps = apps;
+        UikitFullListActivity.show(this, I18nManager.get("select_app"), names.toArray(new String[0]), 5010);
     }
 
     private void pickFolder(boolean append) {
@@ -363,18 +363,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                 folders.add(f);
             }
         }
-        WatchUiUtils.showList(this, dir.getName().isEmpty() ? "/" : dir.getName(), folderNames.toArray(new String[0]), new WatchUiUtils.OnItemSelectListener() {
-            public void onItemSelect(int pos) {
-                if (pos == 0) {
-                    List<File> all = new ArrayList<File>();
-                    getAllFiles(dir, all);
-                    if (all.isEmpty()) { toast(I18nManager.get("empty_folder")); return; }
-                    if (!pendingAppend) pendingUris.clear();
-                    for (File f : all) pendingUris.add(Uri.fromFile(f));
-                    onFilesPicked();
-                } else showFolderSelector(folders.get(pos - 1));
-            }
-        }).show();
+        pendingFolderDir = dir;
+        pendingFolders = folders;
+        UikitFullListActivity.show(this, dir.getName().isEmpty() ? "/" : dir.getName(), folderNames.toArray(new String[0]), 5011);
     }
 
     private void getAllFiles(File dir, List<File> out) {
@@ -383,19 +374,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showSendTextDialog(final boolean append) {
-        WatchUiUtils.showInput(this, I18nManager.get("input_text"), "", new WatchUiUtils.OnInputListener() {
-            public void onInput(String text) {
-                if (text == null || text.length() == 0) return;
-                try {
-                    File f = new File(getCacheDir(), "text_" + System.currentTimeMillis() + ".txt");
-                    FileOutputStream fos = new FileOutputStream(f);
-                    fos.write(text.getBytes("UTF-8")); fos.close();
-                    if (!append) pendingUris.clear();
-                    pendingUris.add(Uri.fromFile(f));
-                    onFilesPicked();
-                } catch (Exception e) { toast("失败"); }
-            }
-        }).show();
+        pendingAppend = append;
+        UikitFullInputActivity.show(this, I18nManager.get("input_text"), "", null, 5015);
     }
 
     private void sendClipboard(final boolean append) {
@@ -464,10 +444,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 5002) return; // Log 界面不需要处理
-
+        // 5001 主类型选择列表
         if (requestCode == 5001 && resultCode == RESULT_OK) {
-            int pos = data.getIntExtra(org.watchsend.uikit.UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
             if (pos >= 0) {
                 if (pos == 0) pickFile(false, currentAppendState);
                 else if (pos == 1) pickFile(true, currentAppendState);
@@ -478,25 +457,113 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             }
             return;
         }
-        if (requestCode == 5002) return; // Log 界面不需要处理
 
-        if (requestCode == 5001 && resultCode == RESULT_OK) {
-            int pos = data.getIntExtra(org.watchsend.uikit.UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
-            if (pos >= 0) {
-                if (pos == 0) pickFile(false, currentAppendState);
-                else if (pos == 1) pickFile(true, currentAppendState);
-                else if (pos == 2) pickApp(currentAppendState);
-                else if (pos == 3) pickFolder(currentAppendState);
-                else if (pos == 4) showSendTextDialog(currentAppendState);
-                else if (pos == 5) sendClipboard(currentAppendState);
+        // 5010 选择应用
+        if (requestCode == 5010 && resultCode == RESULT_OK) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos >= 0 && pendingApps != null && pos < pendingApps.size()) {
+                if (!pendingAppend) pendingUris.clear();
+                pendingUris.add(Uri.fromFile(new File(pendingApps.get(pos).sourceDir)));
+                onFilesPicked();
             }
             return;
         }
-        if (requestCode == 5002 && resultCode == RESULT_OK) {
-            return; // Log 界面不需要后续处理
+
+        // 5011 文件夹选择
+        if (requestCode == 5011 && resultCode == RESULT_OK) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos == 0) {
+                List<File> all = new ArrayList<File>();
+                getAllFiles(pendingFolderDir, all);
+                if (all.isEmpty()) { toast(I18nManager.get("empty_folder")); return; }
+                if (!pendingAppend) pendingUris.clear();
+                for (File f : all) pendingUris.add(Uri.fromFile(f));
+                onFilesPicked();
+            } else if (pos > 0 && pendingFolders != null && pos - 1 < pendingFolders.size()) {
+                showFolderSelector(pendingFolders.get(pos - 1));
+            }
+            return;
         }
-        
-        
+
+        // 5012 手动添加 IP
+        if (requestCode == 5012 && resultCode == RESULT_OK) {
+            String text = data.getStringExtra(UikitFullInputActivity.EXTRA_RESULT_TEXT);
+            if (text != null && text.length() > 0) {
+                String ip = text.trim();
+                if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
+                    toast(I18nManager.get("ip_format_error")); return;
+                }
+                Device d = new Device();
+                d.alias = I18nManager.get("manual_device");
+                d.ip = ip; d.port = 53317; d.https = false;
+                DeviceStore.get().addDevice(d);
+                log("Manual add: " + ip);
+            }
+            return;
+        }
+
+        // 5013 设备白/黑名单菜单
+        if (requestCode == 5013 && resultCode == RESULT_OK) {
+            int p = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            toggleList("whitelist", pendingAclFp, pendingAclIsWl);
+            if (p == 1) toggleList("blacklist", pendingAclFp, pendingAclIsBl);
+            return;
+        }
+
+        // 5014 历史记录菜单
+        if (requestCode == 5014 && resultCode == RESULT_OK) {
+            int p = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            int shareIdx = pendingHistoryIsZip ? 1 : 0;
+            int delIdx = pendingHistoryIsZip ? 2 : 1;
+            if (pendingHistoryIsZip && p == 0) {
+                toast(I18nManager.get("unzipping"));
+                new Thread(new Runnable() {
+                    public void run() {
+                        final boolean ok = org.watchsend.util.ZipUtils.unzip(pendingHistoryFile, pendingHistoryFile.getParentFile());
+                        handler.post(new Runnable() {
+                            public void run() { toast(ok ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail")); }
+                        });
+                    }
+                }).start();
+            } else if (p == shareIdx) {
+                if (pendingHistoryFile.exists()) {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("*/*");
+                    i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pendingHistoryFile));
+                    startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
+                } else toast(I18nManager.get("file_not_found"));
+            } else if (p == delIdx) {
+                UikitFullConfirmActivity.show(this, I18nManager.get("delete_record"), I18nManager.get("delete_confirm"), 5016);
+            }
+            return;
+        }
+
+        // 5015 发送文本
+        if (requestCode == 5015 && resultCode == RESULT_OK) {
+            String text = data.getStringExtra(UikitFullInputActivity.EXTRA_RESULT_TEXT);
+            if (text == null || text.length() == 0) return;
+            try {
+                File f = new File(getCacheDir(), "text_" + System.currentTimeMillis() + ".txt");
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(text.getBytes("UTF-8")); fos.close();
+                if (!pendingAppend) pendingUris.clear();
+                pendingUris.add(Uri.fromFile(f));
+                onFilesPicked();
+            } catch (Exception e) { toast(I18nManager.get("save_fail")); }
+            return;
+        }
+
+        // 5016 确认删除历史记录
+        if (requestCode == 5016 && resultCode == RESULT_OK) {
+            HistoryStore.get().remove(MainActivity.this, historyPaths.get(pendingHistoryPos));
+            refreshHistory();
+            return;
+        }
+
+        // 5002 日志 / 5017 URL 展示：纯展示，无需后续处理
+        if (requestCode == 5002 || requestCode == 5017) return;
+
+        // 原有系统文件选择
         if ((requestCode != REQ_FILE && requestCode != REQ_MEDIA) || resultCode != RESULT_OK || data == null) return;
         if (!pendingAppend) pendingUris.clear();
         if (data.getClipData() != null) {
@@ -560,36 +627,18 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showManualIpDialog() {
-        WatchUiUtils.showInput(this, I18nManager.get("input_address"), "", new WatchUiUtils.OnInputListener() {
-            public void onInput(String text) {
-                if (text == null || text.length() == 0) return;
-                String ip = text.trim();
-                if (!ip.matches("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")) {
-                    toast("IP Format Error"); return;
-                }
-                Device d = new Device();
-                d.alias = I18nManager.get("manual_device");
-                d.ip = ip; d.port = 53317; d.https = false;
-                DeviceStore.get().addDevice(d);
-                log("Manual add: " + ip);
-            }
-        }).show();
+        UikitFullInputActivity.show(this, I18nManager.get("input_address"), "", null, 5012);
     }
 
     private void showAclMenu(final Device d) {
-        final String fp = (d.fingerprint != null && d.fingerprint.length() > 0) ? d.fingerprint : d.ip;
-        final boolean isWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(fp);
-        final boolean isBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(fp);
+        pendingAclFp = (d.fingerprint != null && d.fingerprint.length() > 0) ? d.fingerprint : d.ip;
+        pendingAclIsWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(pendingAclFp);
+        pendingAclIsBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(pendingAclFp);
         String[] items = new String[]{
-            isWl ? I18nManager.get("remove_whitelist") : I18nManager.get("add_whitelist"),
-            isBl ? I18nManager.get("remove_blacklist") : I18nManager.get("add_blacklist")
+            pendingAclIsWl ? I18nManager.get("remove_whitelist") : I18nManager.get("add_whitelist"),
+            pendingAclIsBl ? I18nManager.get("remove_blacklist") : I18nManager.get("add_blacklist")
         };
-        WatchUiUtils.showList(this, d.alias, items, new WatchUiUtils.OnItemSelectListener() {
-            public void onItemSelect(int p) {
-                toggleList("whitelist", fp, isWl);
-                if (p == 1) toggleList("blacklist", fp, isBl);
-            }
-        }).show();
+        UikitFullListActivity.show(this, d.alias, items, 5013);
     }
 
     private void toggleList(String key, String fp, boolean exists) {
@@ -646,92 +695,24 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void showBigUrlDialog() {
         String ip = OldSendService.getLocalIp();
         String url = "http://" + ip + ":53317";
-        
-        TextView tvUrl = new TextView(this);
-        tvUrl.setText(url);
-        tvUrl.setTextSize(22);
-        tvUrl.setTypeface(null, android.graphics.Typeface.BOLD);
-        tvUrl.setTextColor(0xFF388E3C);
-        tvUrl.setGravity(android.view.Gravity.CENTER);
-        tvUrl.setPadding(16, 24, 16, 24);
-        
-        TextView tvDesc = new TextView(this);
-        tvDesc.setText(I18nManager.get("web_qr_desc"));
-        tvDesc.setTextSize(12);
-        tvDesc.setTextColor(ThemeUtils.isDarkMode(this) ? 0xFFAAAAAA : 0xFF666666);
-        tvDesc.setGravity(android.view.Gravity.CENTER);
-
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.addView(tvUrl);
-        layout.addView(tvDesc);
-
-        WatchUiUtils.createBaseDialog(this, I18nManager.get("web_qr"), layout, I18nManager.get("confirm"), null, null, null).show();
+        String msg = url + "\n" + I18nManager.get("web_qr_desc");
+        UikitFullTextActivity.show(this, I18nManager.get("web_qr"), msg, I18nManager.get("confirm"), 5017);
     }
 
     private void showHistoryMenu(final int pos) {
         final File f = new File(historyPaths.get(pos));
         final boolean isZip = f.exists() && f.getName().toLowerCase().endsWith(".zip");
-        
-        String[] items = isZip ? 
+        pendingHistoryFile = f;
+        pendingHistoryIsZip = isZip;
+        pendingHistoryPos = pos;
+        String[] items = isZip ?
             new String[]{I18nManager.get("unzip"), I18nManager.get("share_file"), I18nManager.get("delete_record")} :
             new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
-        WatchUiUtils.showList(this, historyAdapter.getItem(pos).split("\n")[0], items, new WatchUiUtils.OnItemSelectListener() {
-            public void onItemSelect(int p) {
-                int shareIdx = isZip ? 1 : 0;
-                int delIdx = isZip ? 2 : 1;
-
-                if (isZip && p == 0) {
-                    toast(I18nManager.get("unzipping"));
-                    new Thread(new Runnable() {
-                        public void run() {
-                            final boolean ok = org.watchsend.util.ZipUtils.unzip(f, f.getParentFile());
-                            handler.post(new Runnable() {
-                                public void run() { toast(ok ? I18nManager.get("unzip_ok") : I18nManager.get("unzip_fail")); }
-                            });
-                        }
-                    }).start();
-                } else if (p == shareIdx) {
-                    if (f.exists()) {
-                        Intent i = new Intent(Intent.ACTION_SEND);
-                        i.setType("*/*");
-                        i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
-                        startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
-                    } else toast(I18nManager.get("file_not_found"));
-                } else if (p == delIdx) {
-                    WatchUiUtils.showConfirm(MainActivity.this, I18nManager.get("delete_record"), I18nManager.get("delete_confirm"), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface d, int w) {
-                            HistoryStore.get().remove(MainActivity.this, historyPaths.get(pos));
-                            refreshHistory();
-                        }
-                    }).show();
-                }
-            }
-        }).show();
+        UikitFullListActivity.show(this, historyAdapter.getItem(pos).split("\n")[0], items, 5014);
     }
 
     private void showLogDialog() {
-        
-    }
-    
-    
-    private void showLogDialogOld() {
-        dialogLogView = new TextView(this);
-        dialogLogView.setTextSize(10);
-        dialogLogView.setTypeface(android.graphics.Typeface.MONOSPACE);
-        dialogLogView.setPadding(8, 8, 8, 8);
-        dialogLogView.setText(logCache.toString());
-        if (ThemeUtils.isDarkMode(this)) {
-            dialogLogView.setTextColor(0xFFAAAAAA); dialogLogView.setBackgroundColor(0xFF1E1E1E);
-        } else {
-            dialogLogView.setTextColor(0xFF333333); dialogLogView.setBackgroundColor(0xFFF5F5F5);
-        }
-        ScrollView sv = new ScrollView(this); sv.addView(dialogLogView);
-        logDialog = WatchUiUtils.createBaseDialog(this, I18nManager.get("log"), sv,
-            I18nManager.get("confirm"), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface d, int w) { dialogLogView = null; d.dismiss(); }
-            }, null, null);
-        logDialog.show();
+        UikitFullTextActivity.show(this, I18nManager.get("log"), logCache.toString(), I18nManager.get("confirm"), false, true, 5002);
     }
 
     public void onChanged() { if (!historyMode) refreshDevices(); }
@@ -760,7 +741,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             public void run() {
                 logCache.append(msg).append("\n");
                 if (logCache.length() > 4000) logCache.delete(0, logCache.length() - 4000);
-                if (dialogLogView != null) dialogLogView.setText(logCache.toString());
+                // 若日志页正处于打开的实时模式，同步追加并滚动到底部
+                UikitFullTextActivity live = UikitFullTextActivity.getLiveInstance();
+                if (live != null) live.appendLive(msg + "\n");
             }
         });
     }

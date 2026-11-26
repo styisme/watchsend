@@ -10,3 +10,4 @@ sign.ini
 *.keystore
 
 *.bak
+build.log

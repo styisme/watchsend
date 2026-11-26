@@ -6,13 +6,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public final class UikitConfig {
-    public static final String KEY_THEME_MODE        = "uikit_theme_mode";
-    public static final String KEY_UI_SCALE          = "uikit_ui_scale";
-    public static final String KEY_DYNAMIC_COLOR     = "uikit_dynamic_color";
-    public static final String KEY_LOW_PERF          = "uikit_low_perf";
-    public static final String KEY_BLOCK_SYSTEM_BACK = "uikit_block_back";
-    public static final String KEY_SCREEN_SHAPE      = "uikit_screen_shape";
-    public static final String KEY_CHIN_PADDING      = "uikit_chin_padding";
+    // 与设置页 WatchSettingsActivity 共用同一份配置（oldsend），key 保持一致，
+    // 否则 uikit 全屏页读不到"强制圆屏 / 低性能 / 主题 / UI 大小"等用户设置。
+    public static final String KEY_THEME_MODE        = "theme_mode";
+    public static final String KEY_UI_SCALE          = "ui_scale";
+    public static final String KEY_DYNAMIC_COLOR     = "dynamic_color";
+    public static final String KEY_LOW_PERF          = "low_perf_mode";
+    public static final String KEY_BLOCK_SYSTEM_BACK = "block_system_back";
+    public static final String KEY_SCREEN_SHAPE      = "screen_shape";
+    public static final String KEY_CHIN_PADDING      = "chin_padding";
     // 新增：自定义颜色
     public static final String KEY_CUSTOM_PRIMARY    = "uikit_custom_primary";
     public static final String KEY_CUSTOM_ACCENT     = "uikit_custom_accent";
@@ -26,7 +28,7 @@ public final class UikitConfig {
     public static final int SHAPE_SQUARE = 2;
 
 
-    public static final String KEY_APP_LANG = "uikit_app_lang";
+    public static final String KEY_APP_LANG = "app_lang";
     public static String getAppLang(Context ctx) {
         return prefs(ctx).getString(KEY_APP_LANG, "system");
     }
@@ -34,7 +36,7 @@ public final class UikitConfig {
         prefs(ctx).edit().putString(KEY_APP_LANG, lang).commit();
     }
 
-    private static String sPrefsName = "uikit_prefs";
+    private static String sPrefsName = "oldsend";
     private UikitConfig() {}
 
     public static void init(String prefsName) {

@@ -15,7 +15,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - [ ] 可跑 lint / 单元测试
 - [ ] 走标准 PR 流程（fork → PR → review）
 - [x] **仅靠云端 CI 编译（无本地工具链）** —— *（v1.1.0 - v1.4.0 期间的实际状态；依赖 GitHub Actions + JDK 8 + Gradle 5.6.4。v1.5.0 起已补建本地工具链，见下条）*
-- [x] **本地工具链（v1.5.0 起补建）** —— *（JDK 8 Temurin 8u512 + Gradle 5.6.4 + SDK `platforms;android-30` / `build-tools;30.0.3`；`assembleDebug` 与 `assembleRelease` 均已本地实际执行通过，产物 `versionCode=10500` / `versionName=1.5.0`）*
+- [x] **本地工具链（v1.5.0 起补建）** —— *（JDK 8 Temurin 8u512 + Gradle 5.6.4 + SDK `platforms;android-30` / `build-tools;30.0.3`；`assembleDebug` 与 `assembleRelease` 均已本地实际执行通过，产物 `versionCode=10500` / `versionName=1.5.0`。v1.5.1 本地 `assembleDebug` 通过，`versionCode=10501` / `versionName=1.5.1`；Release 签名仍依赖仓库 Secrets）*
 - [x] **仅靠移动端 / 手表端开发** —— *（主要使用手表端的 MGit 及手机端的 Pydroid 3 编写与运行 Python 修复脚本）*
 - [x] **走直推 master（无 PR 流程）** —— *（发生过强制推送覆盖代码的惨案，后通过网页端恢复）*
 - [x] **借助私有仓库生成签名** —— *（由于本地无 JDK 环境，通过专门的私有 Actions 仓库生成 Keystore，并转换为 Base64 注入主仓库 Secrets）*
@@ -72,6 +72,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - **关于 AI 生成与正则补丁**：本项目属于极端的 AI 辅助驱动开发。在 v1.1.0 到 v1.3.0 的迭代中，AI 使用了大量 Python 正则脚本直接修改源码，导致了多次灾难性错误（如误删 XML 的 `layout_width` 导致 App 闪退，大括号吞噬导致 CI 彻底崩溃，网页端模板字符串转义失败导致变量原样输出，甚至因 JDK 8 内部类未加 `final` 导致连篇报错）。最终完全依赖云端 CI 报错日志和人肉排查才修复。
 - **关于 AI 系统适配的滞后性 (v1.4.0 新增)**：在重构 UI 缩放时，AI 盲目使用了早已被 Android 11+ 废弃拦截的 `updateConfiguration` 方法，导致高版本系统（如 Android 16）缩放彻底失效；后通过人类真机测试反馈，逼迫 AI 改用 `attachBaseContext` 物理级包装才得以解决。在升级 targetSdk 30 时，AI 也曾因为写出了系统不存在的 `Theme.DeviceDefault.DayNight.NoTitleBar` 导致 AAPT 编译灾难。这说明人类开发者的真机反馈与报错纠偏是不可替代的。
 - **关于构建阻断的真实原因 (v1.5.0 新增)**：引入 Wear-Uikit 全屏组件时，布局引用了 3 个从未创建的 drawable（`uikit_dlg_btn_pos`、`uikit_dlg_btn_neg`、`uikit_input_bg`），AAPT 直接报 `resource not found`，云端与本地都无法出包。此前几轮“修复编译”提交只补了布局、图标与导入，漏掉了这三个资源本身。v1.5.0 已补齐并在本地复现验证：`assembleDebug` / `assembleRelease` 均成功。**但需要说明：Uikit 控件只做过编译与静态检查，并未逐控件在真机上点过。**
+- **关于云端模拟器不可用与 v1.5.1 验证边界**：本轮尝试在云端环境下载 Android Emulator 与 Wear OS 圆屏镜像并启动，但该环境无 `/dev/kvm`、CPU 无 vmx/svm 虚拟化标志、无 X11 图形栈，QEMU 软件模拟无法启动（`accel-check` 报 `KVM requires a CPU that supports vmx or svm`）。因此 v1.5.1 的全屏页圆屏适配、日志实时刷新、配置数据源对齐等改动，仅完成 `assembleDebug` 编译、配置 key 契约断言与 APK 产物字符串校验，**未在真机或模拟器上实际点验**，需维护者在真机复核圆屏滚轮、回弹与日志实时追加效果。
 - **关于极客底层操作**：Shizuku 静默安装采用纯手写 Binder IPC，在不同 ROM 下可能因权限校验被拦截，代码已做防闪退降级处理（失败则拉起系统安装器）。
 
 ---
@@ -95,7 +96,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 | `ShizukuHelper.java`（纯手写 Binder IPC 静默安装） | ⚠️ 仅 CI 编译 / 局部真机（极度依赖 Shizuku 版本与 ROM 权限） |
 | `ShellUtils.java`（Root 检测与 Shell 命令执行） | ⚠️ 仅 CI 编译 / 局部真机（受限于测试设备是否已 Root） |
 | `ZipUtils.java`（原生 Java ZIP 安全解压） | ✅ 真机测试（含 Zip Slip 防御） |
-| `uikit/*`（Wear-Uikit 控件库，44 个类 + 6 个全屏容器） | ⚠️ 仅编译验证 / 静态检查（未逐控件真机测试） |
+| `uikit/*`（Wear-Uikit 控件库，45 个类 + 6 个全屏容器） | ⚠️ 仅编译验证 / 静态检查（v1.5.1 圆屏适配与日志刷新未真机点验，未逐控件真机测试） |
 | `WebShareHandler.java` 与 `assets/index.html`（前端多语言与 API） | ✅ 真机测试（浏览器端功能及 10 语种自适应正常） |
 
 > 标注 `⚠️ 仅 CI` 或 `❌ 未验证` 的模块，**不代表不能发布**，但使用前请评估风险。
