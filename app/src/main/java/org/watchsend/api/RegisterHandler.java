@@ -35,7 +35,8 @@ public class RegisterHandler implements Router.Handler {
     }
 
     public static String readAll(HttpRequest req) throws Exception {
-        if (req.chunked) return readChunked(req.body);
+        // chunked 已在 HttpRequest.parse 里解码，这里只需读到流末尾
+        if (req.chunked) return readUntilEof(req.body);
         if (req.contentLength <= 0) return "";
         byte[] buf = new byte[(int) req.contentLength];
         int off = 0;
@@ -47,25 +48,13 @@ public class RegisterHandler implements Router.Handler {
         return new String(buf, 0, off, "UTF-8");
     }
 
-    static String readChunked(InputStream in) throws Exception {
-        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+    static String readUntilEof(InputStream in) throws Exception {
+        java.io.ByteArrayOutputStream bo = new java.io.ByteArrayOutputStream();
+        byte[] buf = new byte[16384];
         while (true) {
-            String line = HttpRequest.readLine(in);
-            if (line == null) break;
-            int size = Integer.parseInt(line.trim(), 16);
-            if (size == 0) {
-                HttpRequest.readLine(in);
-                break;
-            }
-            byte[] buf = new byte[size];
-            int off = 0;
-            while (off < size) {
-                int n = in.read(buf, off, size - off);
-                if (n < 0) break;
-                off += n;
-            }
-            bo.write(buf, 0, off);
-            HttpRequest.readLine(in);
+            int n = in.read(buf, 0, buf.length);
+            if (n < 0) break;
+            bo.write(buf, 0, n);
         }
         return new String(bo.toByteArray(), "UTF-8");
     }

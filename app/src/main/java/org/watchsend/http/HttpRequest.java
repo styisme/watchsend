@@ -52,7 +52,14 @@ public class HttpRequest {
         }
         String te = r.headers.get("transfer-encoding");
         r.chunked = (te != null && te.toLowerCase().indexOf("chunked") >= 0);
-        r.body = in;
+        if (r.chunked) {
+            // 分块解码放在解析层统一做：否则上层 Handler 会把 "1a\r\n" 这类分块标记
+            // 当成文件内容写进磁盘（官方客户端的流式上传正是 chunked，没有 Content-Length）。
+            r.body = new ChunkedInputStream(in);
+            r.contentLength = -1;
+        } else {
+            r.body = in;
+        }
         return r;
     }
 

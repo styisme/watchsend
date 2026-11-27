@@ -12,6 +12,14 @@
 
 ---
 
+## [1.7.6] - 2026-11-27
+
+### Fixed（官方客户端上传全部 400 的根因）
+- **`Transfer-Encoding: chunked` 请求体完全没解码**：官方 LocalSend 2.x 客户端上传文件用的是 `reqwest::Body::wrap_stream(...)`（`packages/core/src/http/client/mod.rs: upload_body`），流式 body 没有 `Content-Length`，走的是 chunked 编码。我们此前把 `req.body` 当原始文件字节直接写盘，写进去的"文件"里混着 `1a\r\n`、`\r\n` 这类分块标记——1.7.5 之前表现为"传输成功但文件打不开"，1.7.5 加了长度校验后就直接 `HTTP 400`（截图里"正在发送文件"三个文件全红就是这个）。
+- 新增零依赖 `http/ChunkedInputStream`，在 `HttpRequest.parse` 里统一解码分块（支持分块扩展段 `;ext=1`、结尾 trailer、空 body），上层 Handler 拿到的就是纯数据；`contentLength` 置 -1 表示长度未知。
+- `RegisterHandler.readAll` 同步改为"读到流末尾"，避免对已解码的流再做一次分块解析（否则 prepare-upload 的 JSON 会解析失败）。
+- 桌面 JVM 实测：100KB 随机数据按 1/1000/4096/12345/70000 不规则分块 + 带扩展段 + trailer 发送，解码后逐字节一致、SHA-256 一致、`entry.size` 与实际长度相等（不再触发 400）；空分块 body 立即返回 -1。
+
 ## [1.7.5] - 2026-11-27
 
 ### Fixed（本轮 Bug 审计，全部有源码级证据）
