@@ -210,14 +210,17 @@ public class UikitButton extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (Build.VERSION.SDK_INT >= 12 && isEnabled()) {
+        // 低性能模式下不跑按压缩放动画，避免每次点击都触发一轮属性动画
+        if (Build.VERSION.SDK_INT >= 12 && isEnabled() && !UikitConfig.isLowPerf(getContext())) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    animate().scaleX(0.92f).scaleY(0.92f).alpha(0.7f).setDuration(100).start();
+                    animate().scaleX(0.92f).scaleY(0.92f).alpha(0.7f)
+                        .setDuration(UikitConfig.animDuration(getContext(), 100)).start();
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    animate().scaleX(1f).scaleY(1f).alpha(1f).setDuration(150).start();
+                    animate().scaleX(1f).scaleY(1f).alpha(1f)
+                        .setDuration(UikitConfig.animDuration(getContext(), 150)).start();
                     break;
             }
         }

@@ -12,6 +12,23 @@
 
 ---
 
+## [1.7.10] - 2026-11-28
+
+### Changed
+- **低性能模式关掉更多动画**：此前只关闭滚轮缩放、进场缩放和滑动返回跟手；现在额外关闭——
+  - 按钮 `UikitButton` / `UikitIconButton` 的按压缩放与透明度过渡；
+  - `UikitLoadingBar` 的无限扫描动画（改为静止进度块）；
+  - `UikitLoadingView` 的三点呼吸动画（改为静止三点）；
+  - `UikitSkeleton` 的微光扫动（只保留静态灰块）；
+  - `UikitSwitch` 的拨动过渡（直接跳到目标状态）；
+  - `UikitBottomSheet` 下拉未过阈值时的 200ms 回弹（直接归位）。
+- 新增 `UikitConfig.animDuration(ctx, ms)`：低性能模式统一返回 0，动画时长集中收口，不再各处散写判断。
+
+### Verified
+- `gradle assembleDebug` 通过；静态检查确认 9 处动画入口均有 `isLowPerf` 闸门（`UikitButton`、`UikitIconButton`、`UikitLoadingBar`、`UikitLoadingView`、`UikitSkeleton`、`UikitSwitch`、`UikitBottomSheet`、`UikitUi`、`WatchUiUtils`），单 dex 包内 36 种语言译文仍在。
+
+---
+
 ## [1.7.9] - 2026-11-27
 
 ### Added

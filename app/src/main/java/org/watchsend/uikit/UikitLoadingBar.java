@@ -33,7 +33,13 @@ public class UikitLoadingBar extends View {
 
     public void startLoading() {
         if (animator != null && animator.isRunning()) return;
-        
+        // 低性能模式：不跑无限循环的扫描动画，改为画一条静止的进度块
+        if (UikitConfig.isLowPerf(getContext())) {
+            animRatio = 0.5f;
+            invalidate();
+            return;
+        }
+
         animator = ValueAnimator.ofFloat(0f, 1f);
         animator.setDuration(1200);
         animator.setRepeatCount(ValueAnimator.INFINITE);

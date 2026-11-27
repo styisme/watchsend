@@ -29,6 +29,12 @@ public class UikitSkeleton extends View {
     }
     public void start() {
         if (animator != null && animator.isRunning()) return;
+        // 低性能模式：去掉微光扫动，只保留静态灰块
+        if (UikitConfig.isLowPerf(getContext())) {
+            translateX = 0f;
+            invalidate();
+            return;
+        }
         animator = ValueAnimator.ofFloat(-400f, 400f);
         animator.setDuration(1000);
         animator.setRepeatCount(ValueAnimator.INFINITE);

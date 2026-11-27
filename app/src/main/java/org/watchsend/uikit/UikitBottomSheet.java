@@ -132,7 +132,12 @@ public class UikitBottomSheet extends Dialog {
                                 dismiss();
                             } else {
                                 // 否则弹回去
-                                root.animate().translationY(0).setDuration(200).start();
+                                if (UikitConfig.isLowPerf(v.getContext())) {
+                                    root.setTranslationY(0);   // 低性能模式：不回弹动画，直接归位
+                                } else {
+                                    root.animate().translationY(0)
+                                        .setDuration(UikitConfig.animDuration(v.getContext(), 200)).start();
+                                }
                             }
                         }
                         return true;

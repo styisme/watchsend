@@ -68,6 +68,14 @@ public final class UikitConfig {
     public static boolean isLowPerf(Context ctx) {
         return prefs(ctx).getBoolean(KEY_LOW_PERF, false);
     }
+
+    /**
+     * 动画时长闸门：低性能模式统一返回 0，调用方不必各写一遍 if。
+     * 普通模式下原样返回，便于集中调节。
+     */
+    public static int animDuration(Context ctx, int ms) {
+        return isLowPerf(ctx) ? 0 : ms;
+    }
     public static void setLowPerf(Context ctx, boolean low) {
         prefs(ctx).edit().putBoolean(KEY_LOW_PERF, low).commit();
     }

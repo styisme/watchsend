@@ -17,6 +17,12 @@ public class UikitLoadingView extends View {
     }
     public void start() {
         if (animator != null && animator.isRunning()) return;
+        // 低性能模式：三点呼吸动画改为静止的三点
+        if (UikitConfig.isLowPerf(getContext())) {
+            animValue = 0.5f;
+            invalidate();
+            return;
+        }
         animator = ValueAnimator.ofFloat(0f, 1f);
         animator.setDuration(1000);
         animator.setRepeatCount(ValueAnimator.INFINITE);

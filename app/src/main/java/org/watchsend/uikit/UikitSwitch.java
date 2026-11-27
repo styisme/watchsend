@@ -36,7 +36,7 @@ public class UikitSwitch extends CheckBox {
         super.setChecked(checked);
         float target = checked ? 1f : 0f;
         if (animProgress != target) {
-            if (Build.VERSION.SDK_INT >= 11) {
+            if (Build.VERSION.SDK_INT >= 11 && !UikitConfig.isLowPerf(getContext())) {
                 ValueAnimator animator = ValueAnimator.ofFloat(animProgress, target);
                 animator.setDuration(200);
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
