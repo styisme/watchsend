@@ -12,6 +12,12 @@
 
 ---
 
+## [1.7.2] - 2026-11-27
+
+### Fixed
+- 二维码页的复制按钮显示成原始词条 `copy_fingerprint`：这个 key 在词表里根本不存在（`I18nManager.get` 找不到时会原样返回 key）。已补 `copy_fingerprint`（复制地址）、`direct_send`（直连发送）、`gen_pin_send`（生成 PIN 发送）、`log`（日志）四个缺失词条，并补全繁体缺的 8 个词条。
+- 顺手做了一次全量词条体检：扫描所有 `I18nManager.get("...")` 调用与词表 key 的交集，现在简体/英文均无缺口。
+
 ## [1.7.1] - 2026-11-27
 
 ### Fixed

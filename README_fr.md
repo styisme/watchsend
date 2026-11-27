@@ -5,7 +5,7 @@
 > L'évolution montre de OldSend. Conservant toutes les capacités de transfert hardcore, l'interface utilisateur a été complètement remodelée en '3D Wheel' et 'Pill Cards' natifs de Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.1-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.2-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
