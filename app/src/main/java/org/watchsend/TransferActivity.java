@@ -614,10 +614,12 @@ public class TransferActivity extends Activity {
                             
                             try {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
+                                // Android 7+ 传 file:// 会抛 FileUriExposedException，必须走 content://
+                                android.net.Uri uri = org.watchsend.util.SafeFileUri.uriFor(TransferActivity.this, recvFile);
                                 if (isApk) {
-                                    i.setDataAndType(android.net.Uri.fromFile(recvFile), "application/vnd.android.package-archive");
+                                    i.setDataAndType(uri, "application/vnd.android.package-archive");
                                 } else {
-                                    i.setDataAndType(android.net.Uri.fromFile(recvFile), "*/*");
+                                    i.setDataAndType(uri, "*/*");
                                 }
                                 i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);

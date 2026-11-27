@@ -116,6 +116,8 @@ public class WebShareHandler implements Router.Handler {
             } finally {
                 try { fos.close(); } catch (Exception ignored) {}
             }
+            // 与协议上传一致：落盘后交给媒体库索引（私有目录也要能在相册里看到）
+            FileSaver.publish(target);
             return HttpResponse.json("{\"status\":\"ok\"}");
         }
         

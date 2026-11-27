@@ -4,6 +4,17 @@ import android.os.Environment;
 import java.io.File;
 
 public class FileSaver {
+    /** 写入完成后调用：把文件发布给媒体库，避免只在私有目录里"躺着看不见"。 */
+    public static void publish(File f) {
+        if (f == null) return;
+        android.content.Context ctx = org.watchsend.OldSendService.getContext();
+        if (ctx == null) return;
+        try {
+            android.media.MediaScannerConnection.scanFile(ctx, new String[]{f.getAbsolutePath()}, null, null);
+        } catch (Throwable ignored) {
+        }
+    }
+
     public static File createTarget(String fileName, boolean saveAlbum) {
         File dir = getTargetDir(fileName, saveAlbum);
         if (!dir.exists()) dir.mkdirs();
@@ -29,8 +40,30 @@ public class FileSaver {
         return f;
     }
 
+    /**
+     * 目标目录：真正遵守 save_album 开关，并按系统版本选择能写的目录。
+     *
+     * 之前这里把 saveAlbum 参数完全丢掉了，开关等于不存在；更严重的是 targetSdk=30 时
+     * Android 10+ 已经进入分区存储，直接往 /sdcard/Pictures/OldSend 写会 EACCES，
+     * 也就是说在 Wear OS 3 这类新设备上"接收文件"整个是坏的。
+     * 现在的策略：
+     * - save_album 关闭 → 应用私有目录（不进相册、不要求任何存储权限）
+     * - save_album 打开且 API < 29 → 沿用公共目录（Download/Pictures/Movies/Music）
+     * - save_album 打开且 API >= 29 → 应用外部私有目录 + 写入后 MediaScanner 通知相册索引
+     */
     private static File getTargetDir(String name, boolean saveAlbum) {
         String lower = name.toLowerCase();
+        android.content.Context ctx = org.watchsend.OldSendService.getContext();
+        boolean privateOk = ctx != null && android.os.Build.VERSION.SDK_INT >= 29;
+        if (!saveAlbum || privateOk) {
+            File base = null;
+            if (ctx != null) {
+                base = ctx.getExternalFilesDir(null);
+                if (base == null) base = ctx.getFilesDir();
+            }
+            if (base == null) base = new File(Environment.getExternalStorageDirectory(), "WatchSend");
+            return new File(base, saveAlbum ? "WatchSend" : "Received");
+        }
         // 图片依然进相册
         if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".gif")) {
             return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend");

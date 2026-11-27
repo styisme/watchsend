@@ -557,7 +557,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                 if (pendingHistoryFile.exists()) {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("*/*");
-                    i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pendingHistoryFile));
+                    // 同样避开 file:// 暴露（Android 7+ 会抛 FileUriExposedException）
+                    i.putExtra(Intent.EXTRA_STREAM, org.watchsend.util.SafeFileUri.uriFor(MainActivity.this, pendingHistoryFile));
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
                 } else toast(I18nManager.get("file_not_found"));
             } else if (p == delIdx) {
@@ -750,7 +752,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (!f.exists()) { toast(I18nManager.get("file_not_found")); return; }
         try {
             Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setDataAndType(Uri.fromFile(f), "application/*");
+            i.setDataAndType(org.watchsend.util.SafeFileUri.uriFor(MainActivity.this, f), "application/*");
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(i);
         } catch (Exception e) { toast(I18nManager.get("cannot_open")); }
     }

@@ -60,6 +60,12 @@
         <activity android:name=".watch.PinPadActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         <activity android:name=".watch.SelectedFilesActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         <activity android:name=".watch.WebShareQrActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <!-- 自定义 FileProvider：Android 7+ 跨应用传文件必须走 content:// -->
+        <provider
+            android:name=".util.FileProviderEx"
+            android:authorities="org.watchsend.files"
+            android:exported="true"
+            android:grantUriPermissions="true" />
             <activity android:name=".watch.WatchSettingsActivity"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
     

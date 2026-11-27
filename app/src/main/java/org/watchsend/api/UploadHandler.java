@@ -102,6 +102,8 @@ public class UploadHandler implements Router.Handler {
             OldSendService.log("接收不完整: " + entry.fileName + " (" + written + "/" + entry.size + ")");
         }
         OldSendService.log("接收完成: " + entry.fileName + " (" + written + " 字节)");
+        // Android 10+ 落在应用私有目录时，通知媒体库索引，相册/文件管理器才看得见
+        FileSaver.publish(target);
         OldSendService.getContext().sendBroadcast(new android.content.Intent("org.watchsend.TRANSFER_DONE").putExtra("ok", true).putExtra("savedFile", target.getAbsolutePath()));
 
         // 记录到历史

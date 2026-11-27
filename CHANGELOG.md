@@ -12,6 +12,20 @@
 
 ---
 
+## [1.7.4] - 2026-11-27
+
+### Fixed（"写着但实际不存在"的功能审计结果）
+- **一键安装 / 一键打开（协议接收）**：此前用 `Uri.fromFile` 跨应用传文件，Android 7+ 会直接抛 `FileUriExposedException`，异常被 catch 后只弹一句"无法打开"——也就是说这个按钮在真机上是死的。现新增零依赖自研 `util/FileProviderEx`（ContentProvider）+ `util/SafeFileUri`（按 API 24 自动选 `content://` 或 `file://`），并在清单注册 `authorities=org.watchsend.files`，同时补上 `FLAG_GRANT_READ_URI_PERMISSION`。
+- **分享文件 / 打开历史文件**：首页历史菜单里的"分享"和"打开"同样走 `Uri.fromFile`，同病同修。
+- **"保存到相册"开关形同不存在**：`FileSaver.getTargetDir(name, saveAlbum)` 的 `saveAlbum` 参数根本没被读取，关掉开关照旧往公共目录写。现已真正生效。
+- **Android 10+（targetSdk 30）接收文件整体失败**：分区存储下直接往 `/sdcard/Pictures/OldSend` 写会 EACCES。现改为——开关关闭时落应用私有目录（无需存储权限）；开关打开且 API ≥ 29 时落应用外部私有目录，写入完成后再用 `MediaScannerConnection` 通知媒体库索引，相册/文件管理器照样能看到。API < 29 保留原公共目录行为。
+- **安全收紧**：`FileProviderEx` 只放行 `Download/Pictures/Movies/Music` 下的 `OldSend`、`WatchSend` 子目录与本应用目录，避免对外可见的 provider 变成"任意文件读取器"。
+
+### Verified（不是假功能的部分）
+- "语音输入"确认是真的：`UikitFullInputActivity` 走系统 `RecognizerIntent`（`REQUEST_VOICE`）并在 `onActivityResult` 里把识别结果回填到输入框。
+- 设置页 18 个开关经脚本核对全部存在读取点，无"只写不读"。
+- PIN 保护确为真校验（`/v2/prepare-upload`、网页端、下载 API 均比对 `pin`），非摆设。
+
 ## [1.7.3] - 2026-11-27
 
 ### Fixed
