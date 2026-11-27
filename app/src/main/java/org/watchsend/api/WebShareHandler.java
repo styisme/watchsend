@@ -125,12 +125,8 @@ public class WebShareHandler implements Router.Handler {
         if (req.path.equals("/web/files") && req.method.equalsIgnoreCase("GET")) {
             JSONArray arr = new JSONArray();
             try {
-                File[] dirs = {
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "OldSend"),
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend"),
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend"),
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "OldSend")
-                };
+                // 用实际落盘目录（Android 10+ 在应用私有目录，写死公共目录会永远列空）
+                java.util.List<File> dirs = FileSaver.receivedDirs();
                 for (File dir : dirs) {
                     if (dir != null && dir.exists() && dir.isDirectory()) {
                         File[] list = dir.listFiles();
@@ -157,13 +153,16 @@ public class WebShareHandler implements Router.Handler {
             Map<String, String> q = req.getQueryParams();
             String name = q.get("name");
             if (name != null) {
-                File[] dirs = {
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "OldSend"),
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend"),
-                    new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend")
-                };
+                // 关键：先净化文件名。否则 ?name=../../../../data/data/... 可穿越目录读任意文件，
+                // 而网页端只需 PIN 即可访问，等于一个局域网任意文件读取口子。
+                name = FileSaver.sanitize(name);
+                java.util.List<File> dirs = FileSaver.receivedDirs();
                 for (File dir : dirs) {
                     File f = new File(dir, name);
+                    // 二次确认：真实路径必须仍在目标目录内
+                    try {
+                        if (!f.getCanonicalPath().startsWith(dir.getCanonicalPath() + File.separator)) continue;
+                    } catch (Exception e) { continue; }
                     if (f.exists() && f.isFile()) {
                         HttpResponse resp = new HttpResponse();
                         resp.contentType = "application/octet-stream";

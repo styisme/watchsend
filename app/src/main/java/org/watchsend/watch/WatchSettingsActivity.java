@@ -136,14 +136,18 @@ public class WatchSettingsActivity extends Activity {
         addSwitch(I18nManager.get("save_album"), I18nManager.get("save_album_desc"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
         addSwitch(I18nManager.get("save_history"), I18nManager.get("save_history_desc"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
         addSwitch(I18nManager.get("use_pin"), I18nManager.get("use_pin_desc"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
-        addItem(I18nManager.get("modify_pin") + " (" + prefs().getString("pin_code", "0000") + ")", new View.OnClickListener() {
+        addItem(I18nManager.get("modify_pin") + " (" + prefs().getString("pin_code", org.watchsend.OldSendService.DEFAULT_PIN) + ")", new View.OnClickListener() {
             public void onClick(View v) { editPin(); }
         });
 
 
         addSection(I18nManager.get("network"));
         addSwitch(I18nManager.get("https_enable"), I18nManager.get("https_enable_desc"), prefs().getBoolean("use_https", false), new SwitchHandler() {
-            public void onChanged(boolean v) { prefs().edit().putBoolean("use_https", v).commit(); }
+            public void onChanged(boolean v) {
+                prefs().edit().putBoolean("use_https", v).commit();
+                // 只存偏好不会改已有监听，必须重建，否则开关看起来生效、实际仍是旧协议
+                org.watchsend.OldSendService.restartServer(WatchSettingsActivity.this);
+            }
         });
         addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
         addSwitch(I18nManager.get("download_share"), I18nManager.get("download_share_desc"), DownloadShare.isEnabled(), new SwitchHandler() {
@@ -322,7 +326,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
     }
 
     private void editPin() {
-        UikitFullInputActivity.show(this, I18nManager.get("modify_pin"), prefs().getString("pin_code", "0000"), null, 6016);
+        UikitFullInputActivity.show(this, I18nManager.get("modify_pin"), prefs().getString("pin_code", org.watchsend.OldSendService.DEFAULT_PIN), null, 6016);
     }
 
     private void editPort() {
@@ -505,7 +509,14 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         // 6017 端口
         if (requestCode == 6017) {
             String text = data.getStringExtra(UikitFullInputActivity.EXTRA_RESULT_TEXT);
-            try { prefs().edit().putInt("port", Integer.parseInt(text.trim())).commit(); recreate(); } catch (Exception ignored) {}
+            try {
+                int p = Integer.parseInt(text.trim());
+                if (p < 1 || p > 65535) throw new IllegalArgumentException("port out of range");
+                prefs().edit().putInt("port", p).commit();
+                // 端口改了要立刻换监听，否则对外仍监听旧端口，二维码/地址却是新端口（对不上）
+                org.watchsend.OldSendService.restartServer(this);
+                recreate();
+            } catch (Exception ignored) {}
             return;
         }
         // 6018 文件后缀过滤

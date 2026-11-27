@@ -101,6 +101,10 @@ public class HttpServer {
     /** 超限时直接回 503 并断开，不解析请求体，避免被拖住资源。 */
     private void reject(Socket s) {
         try {
+            // 超限连接必须在限定时间内处理完：TLS 模式下 s 是未握手的 SSLSocket，
+            // 往它写明文会触发阻塞式握手，把 accept 线程永久卡死 → 整个服务不再接新连接。
+            s.setSoTimeout(3000);
+            if (s instanceof javax.net.ssl.SSLSocket) return;
             OutputStream out = s.getOutputStream();
             String body = "{\"error\":\"too many connections\"}";
             out.write(("HTTP/1.1 503 Service Unavailable\r\n"

@@ -43,15 +43,8 @@ public class DownloadShare {
 
     /** 用于协议上报的目录集合，与 FileSaver 的落盘目录保持一致。 */
     public static List<File> dirs() {
-        List<File> list = new ArrayList<File>();
-        try {
-            list.add(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "OldSend"));
-            list.add(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "OldSend"));
-            list.add(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "OldSend"));
-            list.add(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "OldSend"));
-        } catch (Throwable ignored) {
-        }
-        return list;
+        // 与实际落盘目录保持一致（Android 10+ 落应用私有目录，见 FileSaver.getTargetDir）
+        return FileSaver.receivedDirs();
     }
 
     public static List<File> listFiles() {

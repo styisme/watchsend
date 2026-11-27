@@ -16,10 +16,27 @@ public class FileSaver {
     }
 
     public static File createTarget(String fileName, boolean saveAlbum) {
+        return createResumeTarget(fileName, saveAlbum, 0);
+    }
+
+    /**
+     * 接收端的落盘目标（支持续传）。
+     *
+     * 旧实现里 createTarget 遇到同名文件一律改名为 "xxx (1).ext"，于是：
+     * ① 对方传输中断后重传，会生成一份新的 "(1)" 副本，原残文件永远留着；
+     * ② UploadHandler 里那段"文件已存在则追加续传"的代码因为目标名永远是新的，
+     *    existingSize 恒为 0，等于死代码。
+     * 现在：expectedSize > 0 且同名文件明显比预期小（说明上次没传完）时，直接复用该文件续写；
+     * 其余情况（同名且大小已达标、或不知道预期大小）才做去重改名。
+     */
+    public static File createResumeTarget(String fileName, boolean saveAlbum, long expectedSize) {
         File dir = getTargetDir(fileName, saveAlbum);
         if (!dir.exists()) dir.mkdirs();
         String safe = sanitize(fileName);
         File f = new File(dir, safe);
+        if (expectedSize > 0 && f.isFile() && f.length() < expectedSize) {
+            return f; // 上次未传完，续写同一个文件
+        }
         int i = 1;
         while (f.exists()) {
             int dot = safe.lastIndexOf('.');
@@ -38,6 +55,30 @@ public class FileSaver {
         } catch (Exception ignored) {
         }
         return f;
+    }
+
+    /**
+     * 所有可能落盘到的接收目录（供下载 API 列文件用）。
+     * 必须与实际写入目录一致，否则 Android 10+ 上"文件在私有目录、下载 API 却去公共目录找"，
+     * 列表永远为空。
+     */
+    public static java.util.List<File> receivedDirs() {
+        java.util.List<File> list = new java.util.ArrayList<File>();
+        android.content.Context ctx = org.watchsend.OldSendService.getContext();
+        if (ctx != null) {
+            File ext = ctx.getExternalFilesDir(null);
+            if (ext != null) {
+                list.add(new File(ext, "WatchSend"));
+                list.add(new File(ext, "Received"));
+            }
+        }
+        if (android.os.Build.VERSION.SDK_INT < 29) {
+            String[] dirs = {"Download", "Pictures", "Movies", "Music"};
+            for (int i = 0; i < dirs.length; i++) {
+                list.add(new File(Environment.getExternalStoragePublicDirectory(dirs[i]), "OldSend"));
+            }
+        }
+        return list;
     }
 
     /**
@@ -98,7 +139,7 @@ public class FileSaver {
      * 4) Windows 保留设备名加前缀（con.txt 之类）；
      * 5) 限制 255 字节（UTF-8），保留扩展名。
      */
-    static String sanitize(String name) {
+    public static String sanitize(String name) {
         if (name == null) return "untitled";
         int sep = Math.max(name.lastIndexOf('/'), name.lastIndexOf('\\'));
         if (sep >= 0) name = name.substring(sep + 1);

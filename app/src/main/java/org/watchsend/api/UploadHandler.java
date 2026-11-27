@@ -35,7 +35,8 @@ public class UploadHandler implements Router.Handler {
         if (entry == null || !entry.token.equals(token)) return HttpResponse.status(403);
 
         boolean saveAlbum = OldSendService.getPrefBooleanGlobal("save_album", true);
-        File target = FileSaver.createTarget(entry.fileName, saveAlbum);
+        // 用支持续传的目标：上次没传完的同名文件会被复用而不是另存 "(1)"
+        File target = FileSaver.createResumeTarget(entry.fileName, saveAlbum, entry.size);
         OldSendService.log("上传: " + entry.fileName + " -> " + target.getAbsolutePath());
 
         long written = 0;
@@ -83,6 +84,13 @@ public class UploadHandler implements Router.Handler {
             try { fos.close(); } catch (Exception ignored) {}
         }
 
+        // 长度没到：保留已落盘部分等对方续传，但这次绝不能算成功（旧实现只打日志就继续往下走，
+        // 会带着半截文件写历史、发 TRANSFER_DONE 成功广播，界面上看起来"收完了"）
+        if (entry.size > 0 && written != entry.size) {
+            OldSendService.log("接收不完整: " + entry.fileName + " (" + written + "/" + entry.size + ")，保留残文件待续传");
+            return HttpResponse.status(400);
+        }
+
         // 完整性校验：发送方提供了 sha256 时逐字节比对（官方 crypto/hash.rs 同等语义）
         if (entry.sha256 != null && digest != null) {
             String actual = CryptoUtils.hex(digest.digest());
@@ -98,9 +106,6 @@ public class UploadHandler implements Router.Handler {
             if (ms > 0) target.setLastModified(ms);
         }
 
-        if (entry.size > 0 && written != entry.size) {
-            OldSendService.log("接收不完整: " + entry.fileName + " (" + written + "/" + entry.size + ")");
-        }
         OldSendService.log("接收完成: " + entry.fileName + " (" + written + " 字节)");
         // Android 10+ 落在应用私有目录时，通知媒体库索引，相册/文件管理器才看得见
         FileSaver.publish(target);

@@ -46,10 +46,13 @@ public class OldSendService extends Service {
         return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getString(key, def);
     }
     
+    /** 默认 PIN，必须与设置页展示/编辑用的默认值一致（此前这里是 1234、设置页显示 0000，用户照着输必然 401）。 */
+    public static final String DEFAULT_PIN = "0000";
+
     public static String getPin() {
         Context ctx = getContext();
         if (ctx == null) return "0000";
-        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getString("pin_code", "1234");
+        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getString("pin_code", DEFAULT_PIN);
     }
 
     private static Context appContext;
@@ -180,9 +183,27 @@ public class OldSendService extends Service {
         startForeground(1, builder.build());
     }
 
+    /** 改端口 / 切 HTTPS 后必须让监听真正按新配置重开，否则设置里改了等于没改。 */
+    public static final String ACTION_RESTART = "org.watchsend.service.RESTART";
+
+    public static void restartServer(Context ctx) {
+        if (ctx == null) return;
+        Intent i = new Intent(ctx, OldSendService.class);
+        i.setAction(ACTION_RESTART);
+        ctx.startService(i);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isServiceRunning = true;
+        // 先拆掉旧监听（同一个 Service 实例里重建，避免 stop/start 竞态导致"服务已在运行中"直接返回）
+        if (intent != null && ACTION_RESTART.equals(intent.getAction())) {
+            try { if (httpServer != null) httpServer.stop(); } catch (Exception ignored) {}
+            try { if (multicastListener != null) multicastListener.stop(); } catch (Exception ignored) {}
+            if (multicastLock != null) { try { multicastLock.release(); } catch (Exception ignored) {} multicastLock = null; }
+            httpServer = null; multicastListener = null;
+            log("配置变更，重建监听");
+        }
         if (getContext() != null) QuickWidgetProvider.sendUpdateBroadcast(getContext());
         if (httpServer != null && multicastListener != null) {
             log("服务已在运行中");

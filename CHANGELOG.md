@@ -12,6 +12,18 @@
 
 ---
 
+## [1.7.5] - 2026-11-27
+
+### Fixed（本轮 Bug 审计，全部有源码级证据）
+- **分享文件点了没反应/对方打不开**：ACTION_SEND 只塞了 `EXTRA_STREAM`，没设 `ClipData`。系统只按 data/ClipData 授予临时读权限，接收方拿到 Uri 再读会抛 `SecurityException`。已补 `setClipData(ClipData.newRawUri(...))`。
+- **重传会生成 "文件 (1).ext"、续传代码是死代码**：`createTarget` 遇到同名文件一律改名，导致 `UploadHandler` 里 `existingSize > 0` 的续传分支永远进不去，中断后重传只会多出一份副本。新增 `createResumeTarget(name, saveAlbum, expectedSize)`：同名文件比预期小就复用续写，否则才去重改名。
+- **半截文件被当成"接收成功"**：长度不够时旧代码只打一行日志，随后照旧写历史、发 `TRANSFER_DONE ok=true` 广播。现在直接返回 400 并保留残文件等续传，sha256 校验也挪到长度校验之后（否则残文件会被摘要不匹配删掉，续传彻底没戏）。
+- **网页 `/web/download?name=` 路径穿越（安全问题）**：`new File(dir, name)` 直接拼用户输入，`name=../../../../data/data/...` 可在只凭 PIN 的情况下读取任意文件。现已 `sanitize` + `getCanonicalPath` 双重校验。
+- **网页文件列表 / 下载 API 永远为空**：1.7.4 把落盘目录改成应用私有目录后，这两处仍写死公共 `OldSend` 目录。新增 `FileSaver.receivedDirs()` 统一目录来源，`DownloadShare` 与网页端共用。
+- **默认 PIN 自相矛盾**：`getPin()` 默认 `1234`，设置页展示与编辑默认 `0000`。用户开启 PIN 后照界面输 0000 必然 401。已统一为 `OldSendService.DEFAULT_PIN`。
+- **改端口 / 切 HTTPS 等于没改**：两处开关只写 SharedPreferences，运行中的 `HttpServer` 不会换监听端口/协议，于是二维码和地址显示新端口、实际仍在旧端口。新增 `ACTION_RESTART` 在同一个 Service 实例内拆旧监听再重建（避免 stop/start 竞态命中"服务已在运行中"提前 return）。
+- **连接超限时的 503 会把服务卡死（DoS）**：`reject()` 在未握手的 `SSLSocket` 上写明文会触发阻塞式握手，而 accept 线程没有超时——一个 IP 发起 >6 条不握手的 TLS 连接就能让整个服务不再接受新连接。现在先设 `setSoTimeout(3000)`，TLS 连接只关不写。
+
 ## [1.7.4] - 2026-11-27
 
 ### Fixed（"写着但实际不存在"的功能审计结果）

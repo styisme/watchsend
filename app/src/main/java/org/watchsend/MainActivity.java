@@ -558,7 +558,11 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("*/*");
                     // 同样避开 file:// 暴露（Android 7+ 会抛 FileUriExposedException）
-                    i.putExtra(Intent.EXTRA_STREAM, org.watchsend.util.SafeFileUri.uriFor(MainActivity.this, pendingHistoryFile));
+                    android.net.Uri uri = org.watchsend.util.SafeFileUri.uriFor(MainActivity.this, pendingHistoryFile);
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    // 关键：系统只按 data/ClipData 授予临时读权限，仅塞 EXTRA_STREAM 时
+                    // 接收方拿到 Uri 之后读会抛 SecurityException（分享看起来成功、实际打不开）
+                    i.setClipData(android.content.ClipData.newRawUri("", uri));
                     i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(i, I18nManager.get("share_file")));
                 } else toast(I18nManager.get("file_not_found"));
