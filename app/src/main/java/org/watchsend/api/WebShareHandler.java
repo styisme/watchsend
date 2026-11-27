@@ -19,7 +19,17 @@ public class WebShareHandler implements Router.Handler {
 
     public HttpResponse handle(HttpRequest req) throws Exception {
         if (!OldSendService.getPrefBooleanGlobal("web_enable", true)) return HttpResponse.status(404);
-        
+
+        // 网页接口与协议接口共用同一套 PIN 策略：开启后所有 /web/* 都必须带 pin，
+        // 页面本身（/ 与 /index.html）放行，否则用户没法在网页里输入 PIN。
+        if (req.path != null && req.path.startsWith("/web/") && !checkPin(req)) {
+            HttpResponse res = HttpResponse.status(401);
+            res.headers.put("X-LocalSend-Pin", "true");
+            try { res.body = "{\"error\":\"pin_required\"}".getBytes("UTF-8"); } catch (Exception ignored) {}
+            OldSendService.log("网页端 PIN 拦截: " + req.path);
+            return res;
+        }
+
         if (req.path.equals("/") || req.path.equals("/index.html")) {
             HttpResponse resp = new HttpResponse();
             resp.contentType = "text/html; charset=utf-8";
@@ -164,5 +174,14 @@ public class WebShareHandler implements Router.Handler {
             }
         }
         return HttpResponse.status(404);
+    }
+
+    /** 网页端 PIN 校验：?pin= 或 X-LocalSend-Pin 头，二者任一正确即放行。 */
+    private static boolean checkPin(HttpRequest req) {
+        if (!OldSendService.getPrefBooleanGlobal("use_pin", false)) return true;
+        Map<String, String> q = req.getQueryParams();
+        String pin = q.get("pin");
+        if (pin == null) pin = req.headers.get("x-localsend-pin");
+        return pin != null && pin.equals(OldSendService.getPin());
     }
 }

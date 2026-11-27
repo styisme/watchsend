@@ -178,9 +178,19 @@ public class TransferActivity extends Activity {
         card.addView(row);
         
         TextView desc = new TextView(this);
-        desc.setText(I18nManager.get("wants_to_send_you"));
-        desc.setTextColor(colorSec);
-        desc.setTextSize(13);
+        String preview = intent.getStringExtra("messagePreview");
+        if (preview != null) {
+            // 文本消息：直接展示原文，避免用户以为收到的是文件
+            desc.setText(preview);
+            desc.setTextColor(colorMain);
+            desc.setTextSize(14);
+            desc.setSingleLine(false);
+            desc.setMaxLines(6);
+        } else {
+            desc.setText(I18nManager.get("wants_to_send_you"));
+            desc.setTextColor(colorSec);
+            desc.setTextSize(13);
+        }
         desc.setPadding(0, dp(8), 0, 0);
         card.addView(desc);
         container.addView(card);

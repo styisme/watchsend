@@ -187,6 +187,7 @@ public class OldSendService extends Service {
             }
             String alias = getAlias(this);
             SessionStore store = new SessionStore();
+            DownloadSessionStore downloadStore = new DownloadSessionStore();
             Router router = new Router();
             // 兼容 V2
             router.register(Protocol.V2_PREFIX + "/info", new InfoHandler(alias));
@@ -194,6 +195,9 @@ public class OldSendService extends Service {
             router.register(Protocol.V2_PREFIX + "/prepare-upload", new PrepareUploadHandler(store));
             router.register(Protocol.V2_PREFIX + "/upload", new UploadHandler(store));
             router.register(Protocol.V2_PREFIX + "/cancel", new CancelHandler(store));
+            // 官方 v2 下载 API（对方来取文件），仅在设置里开启共享下载后生效
+            router.register(Protocol.V2_PREFIX + "/prepare-download", new PrepareDownloadHandler(downloadStore));
+            router.register(Protocol.V2_PREFIX + "/download", new DownloadHandler(downloadStore));
             
             // 兼容老设备 V1
             String V1_PREFIX = "/api/localsend/v1";

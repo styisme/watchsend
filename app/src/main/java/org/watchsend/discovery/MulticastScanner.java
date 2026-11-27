@@ -10,8 +10,8 @@ import android.net.wifi.WifiManager;
 import org.json.JSONObject;
 import org.watchsend.OldSendService;
 import org.watchsend.Protocol;
+import org.watchsend.api.InfoHandler;
 import org.watchsend.model.Device;
-import org.watchsend.protocol.Identity;
 
 public class MulticastScanner {
 
@@ -26,9 +26,10 @@ public class MulticastScanner {
         }, "multicast-scan").start();
     }
 
-    static void doScan(Callback cb) {
+    static void doScan(final Callback cb) {
         DatagramSocket sock = null;
         WifiManager.MulticastLock lock = null;
+        int found = 0;
         try {
             Context ctx = OldSendService.getContext();
             if (ctx != null) {
@@ -42,17 +43,8 @@ public class MulticastScanner {
             sock.setSoTimeout(2000);
             sock.setBroadcast(true);
 
-            JSONObject self = new JSONObject();
-            self.put("alias", android.os.Build.MODEL);
-            self.put("version", Protocol.VERSION);
-            self.put("deviceModel", "Android " + android.os.Build.VERSION.RELEASE);
-            self.put("deviceType", "mobile");
-            self.put("fingerprint", Identity.getFingerprint());
-            self.put("port", Protocol.DEFAULT_PORT);
-            self.put("protocol", "http");
-            self.put("download", false);
-
-            byte[] data = self.toString().getBytes("UTF-8");
+            // 自述信息必须与真实监听协议/端口一致，否则加密设备会被对端当成明文设备
+            byte[] data = InfoHandler.selfInfo(android.os.Build.MODEL).toString().getBytes("UTF-8");
             InetAddress group = InetAddress.getByName(Protocol.MULTICAST_GROUP);
             DatagramPacket out = new DatagramPacket(data, data.length, group, Protocol.DEFAULT_PORT);
             sock.send(out);
@@ -68,6 +60,7 @@ public class MulticastScanner {
                     JSONObject o = new JSONObject(body);
                     Device d = Device.fromJson(o, p.getAddress().getHostAddress());
                     if (cb != null) cb.onDevice(d);
+                    found++;
                 } catch (java.net.SocketTimeoutException ste) {
                     break;
                 } catch (Exception e) {
@@ -79,7 +72,17 @@ public class MulticastScanner {
         } finally {
             try { if (sock != null) sock.close(); } catch (Exception ignored) {}
             if (lock != null && lock.isHeld()) lock.release();
-            if (cb != null) cb.onFinished();
+        }
+
+        // 多播一无所获时，退化为网段探测（很多企业/宿舍路由器会拦组播）
+        if (found == 0) {
+            OldSendService.log("多播无结果，启动网段探测");
+            SubnetScanner.scanAsync(new SubnetScanner.Callback() {
+                public void onDevice(Device d) { if (cb != null) cb.onDevice(d); }
+                public void onFinished() { if (cb != null) cb.onFinished(); }
+            });
+        } else if (cb != null) {
+            cb.onFinished();
         }
     }
 }

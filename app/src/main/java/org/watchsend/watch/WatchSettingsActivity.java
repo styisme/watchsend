@@ -15,6 +15,9 @@ import org.watchsend.MainActivity;
 import org.watchsend.OldSendService;
 import org.watchsend.R;
 import org.watchsend.util.I18nManager;
+import org.watchsend.util.QuickSave;
+import org.watchsend.model.FavoritesStore;
+import org.watchsend.transfer.DownloadShare;
 import org.watchsend.util.ThemeUtils;
 import org.watchsend.uikit.UikitFullListActivity;
 import org.watchsend.uikit.UikitFullInputActivity;
@@ -123,8 +126,13 @@ public class WatchSettingsActivity extends Activity {
 
 
         addSection(I18nManager.get("transfer_settings"));
-        addSwitch(I18nManager.get("auto_save"), I18nManager.get("auto_save_desc"), OldSendService.getPrefBooleanGlobal("auto_save", false), saveTo("auto_save"));
-        addSwitch(I18nManager.get("auto_whitelist"), I18nManager.get("auto_whitelist_desc"), OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false), saveTo("auto_accept_whitelist"));
+        // 三态取代原来的两个开关（旧 auto_save / auto_accept_whitelist 仍被 QuickSave 读取，升级不突变）
+        addItem(I18nManager.get("quick_save") + ": " + QuickSave.label(QuickSave.getMode()), new View.OnClickListener() {
+            public void onClick(View v) { pickQuickSave(); }
+        });
+        addItem(I18nManager.get("favorites") + " (" + FavoritesStore.count() + ")", new View.OnClickListener() {
+            public void onClick(View v) { manageFavorites(); }
+        });
         addSwitch(I18nManager.get("save_album"), I18nManager.get("save_album_desc"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
         addSwitch(I18nManager.get("save_history"), I18nManager.get("save_history_desc"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
         addSwitch(I18nManager.get("use_pin"), I18nManager.get("use_pin_desc"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
@@ -138,6 +146,9 @@ public class WatchSettingsActivity extends Activity {
             public void onChanged(boolean v) { prefs().edit().putBoolean("use_https", v).commit(); }
         });
         addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
+        addSwitch(I18nManager.get("download_share"), I18nManager.get("download_share_desc"), DownloadShare.isEnabled(), new SwitchHandler() {
+            public void onChanged(boolean v) { DownloadShare.setEnabled(v); }
+        });
         addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
         addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
@@ -315,13 +326,39 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         UikitFullInputActivity.show(this, I18nManager.get("filter_ext_title"), OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), null, 6018);
     }
 
-    private void editName() {
-        UikitFullInputActivity.show(this, I18nManager.get("set_name"), OldSendService.getAlias(this), null, 6019);
+    private void editName() {        UikitFullInputActivity.show(this, I18nManager.get("set_name"), OldSendService.getAlias(this), null, 6019);
     }
 
     private void manageAcl() {
         String[] items = {I18nManager.get("view_whitelist"), I18nManager.get("view_blacklist"), I18nManager.get("clear_all")};
         UikitFullListActivity.show(this, I18nManager.get("manage_acl"), items, 6013);
+    }
+
+    /** 快速保存三态选择（对应官方 QuickSaveMode）。 */
+    private void pickQuickSave() {
+        String[] items = {
+                I18nManager.get("quick_save_off"),
+                I18nManager.get("quick_save_on"),
+                I18nManager.get("quick_save_paired")
+        };
+        UikitFullListActivity.show(this, I18nManager.get("quick_save"), items, 6030);
+    }
+
+    /** 收藏设备列表，选中即移除（收藏同时是 paired 模式的白名单）。 */
+    private void manageFavorites() {
+        org.json.JSONArray arr = FavoritesStore.list();
+        if (arr.length() == 0) {
+            Toast.makeText(this, I18nManager.get("favorites_empty"), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String[] items = new String[arr.length()];
+        for (int i = 0; i < arr.length(); i++) {
+            org.json.JSONObject o = arr.optJSONObject(i);
+            String alias = o == null ? "" : o.optString("alias", "");
+            String ip = o == null ? "" : o.optString("ip", "");
+            items[i] = alias.length() > 0 ? alias + " (" + ip + ")" : ip;
+        }
+        UikitFullListActivity.show(this, I18nManager.get("favorites"), items, 6031);
     }
 
     private void showSpecificList(final String key) {
@@ -338,7 +375,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
     }
 
     private void aboutDialog() {
-        String msg = "WatchSend · Watch Edition\nv1.5.1\n\n" + I18nManager.get("author") + ": styisme\nAI " + I18nManager.get("contributors") + "\nMIT License\n\n" + I18nManager.get("about_desc");
+        String msg = "WatchSend · Watch Edition\nv" + org.watchsend.BuildConfig.VERSION_NAME + "\n\n" + I18nManager.get("author") + ": styisme\nAI " + I18nManager.get("contributors") + "\nMIT License\n\n" + I18nManager.get("about_desc");
         UikitFullTextActivity.show(this, I18nManager.get("about"), msg, I18nManager.get("confirm"), 6021);
     }
 
@@ -349,6 +386,27 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK || data == null) return;
 
+        // 6030 快速保存三态
+        if (requestCode == 6030) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos == 0) QuickSave.setMode(QuickSave.OFF);
+            else if (pos == 1) QuickSave.setMode(QuickSave.ON);
+            else if (pos == 2) QuickSave.setMode(QuickSave.PAIRED);
+            recreate();
+            return;
+        }
+        // 6031 收藏设备（选中即移除，便于在手表上管理）
+        if (requestCode == 6031) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            org.json.JSONArray arr = FavoritesStore.list();
+            if (pos >= 0 && pos < arr.length()) {
+                org.json.JSONObject o = arr.optJSONObject(pos);
+                if (o != null) FavoritesStore.remove(o.optString("fingerprint", ""));
+                Toast.makeText(this, I18nManager.get("favorite_removed"), Toast.LENGTH_SHORT).show();
+            }
+            recreate();
+            return;
+        }
         // 6010 主题
         if (requestCode == 6010) {
             int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);

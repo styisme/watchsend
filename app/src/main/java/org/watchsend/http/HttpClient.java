@@ -7,17 +7,24 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.Security;
 import javax.net.ssl.*;
 import java.security.cert.X509Certificate;
+
 import org.json.JSONObject;
+
 public class HttpClient {
+
+    public interface ProgressListener {
+        void onProgress(long sent, long total);
+    }
+
+    /**
+     * 兜底策略：其他 HTTPS 调用（如跨网 ntfy）没有固定证书的需求。
+     * 注意：LocalSend 协议内的连接一律通过 expectedFingerprint 参数显式固定，
+     * 不依赖这里的全局宽松策略。
+     */
     static {
         try {
-            if (android.os.Build.VERSION.SDK_INT < 24) {
-                try {
-                } catch (Throwable ignored) {}
-            }
             TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public void checkClientTrusted(X509Certificate[] chain, String authType) {}
@@ -35,16 +42,39 @@ public class HttpClient {
             e.printStackTrace();
         }
     }
-    public interface ProgressListener {
-        void onProgress(long sent, long total);
-    }
-    public static JSONObject getJson(String url, int timeoutMs) throws Exception {
+
+    private static HttpURLConnection open(String url, String expectedFingerprint) throws IOException {
         HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+        if (c instanceof HttpsURLConnection) {
+            PinnedTls.prepare((HttpsURLConnection) c, expectedFingerprint);
+        }
+        return c;
+    }
+
+    private static void captureFp(HttpURLConnection c, String[] fpOut) {
+        if (fpOut == null || c == null) return;
+        if (c instanceof HttpsURLConnection) {
+            String fp = PinnedTls.peerFingerprint((HttpsURLConnection) c);
+            if (fp != null) fpOut[0] = fp;
+        }
+    }
+
+    public static JSONObject getJson(String url, int timeoutMs) throws Exception {
+        return getJson(url, null, timeoutMs, null);
+    }
+
+    /**
+     * @param expectedFingerprint 已知对端证书指纹；null 表示首次连接（TOFU），只读不写敏感数据
+     * @param fpOut               非空时回填本次握手的对端证书指纹，供调用方持久化
+     */
+    public static JSONObject getJson(String url, String expectedFingerprint, int timeoutMs, String[] fpOut) throws Exception {
+        HttpURLConnection c = open(url, expectedFingerprint);
         c.setConnectTimeout(timeoutMs);
         c.setReadTimeout(timeoutMs);
         c.setRequestMethod("GET");
         try {
             int code = c.getResponseCode();
+            captureFp(c, fpOut);
             if (code == 401) throw new Exception("PIN_REQUIRED");
             if (code < 200 || code >= 300) return null;
             InputStream in = c.getInputStream();
@@ -56,8 +86,13 @@ public class HttpClient {
             c.disconnect();
         }
     }
+
     public static JSONObject postJson(String url, JSONObject body, int timeoutMs) throws Exception {
-        HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+        return postJson(url, body, null, timeoutMs, null);
+    }
+
+    public static JSONObject postJson(String url, JSONObject body, String expectedFingerprint, int timeoutMs, String[] fpOut) throws Exception {
+        HttpURLConnection c = open(url, expectedFingerprint);
         c.setConnectTimeout(timeoutMs);
         c.setReadTimeout(timeoutMs);
         c.setRequestMethod("POST");
@@ -76,6 +111,7 @@ public class HttpClient {
         }
         try {
             int code = c.getResponseCode();
+            captureFp(c, fpOut);
             if (code == 401) throw new Exception("PIN_REQUIRED");
             if (code < 200 || code >= 300) return null;
             InputStream in = c.getInputStream();
@@ -87,10 +123,15 @@ public class HttpClient {
             c.disconnect();
         }
     }
+
     public static boolean uploadFile(String url, File file, ProgressListener listener) throws Exception {
+        return uploadFile(url, file, null, listener);
+    }
+
+    public static boolean uploadFile(String url, File file, String expectedFingerprint, ProgressListener listener) throws Exception {
         long size = file.length();
         if (size > Integer.MAX_VALUE) throw new IOException("file too large for API 10 (>2GB)");
-        HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+        HttpURLConnection c = open(url, expectedFingerprint);
         c.setConnectTimeout(15000);
         c.setReadTimeout(300000);
         c.setRequestMethod("POST");
@@ -125,6 +166,7 @@ public class HttpClient {
             c.disconnect();
         }
     }
+
     public static String readAll(InputStream in) throws IOException {
         ByteArrayOutputStream bo = new ByteArrayOutputStream();
         byte[] buf = new byte[4096];

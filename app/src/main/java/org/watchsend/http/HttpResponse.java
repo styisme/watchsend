@@ -62,6 +62,7 @@ public class HttpResponse {
         if (status == 405) return "Method Not Allowed";
         if (status == 500) return "Internal Server Error";
         if (status == 501) return "Not Implemented";
+        if (status == 503) return "Service Unavailable";
         return "Unknown";
     }
 }

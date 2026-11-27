@@ -146,17 +146,40 @@
         else setLang('en');
 
         // ==================== 业务逻辑 ====================
-        fetch('/web/info').then(r=>r.json()).then(d=>document.querySelector('.header h1').innerText = "WatchSend - " + d.alias).catch(()=>{});
+        // 若手表设置了 PIN，所有 /web/* 接口都需要带上；页面本身不需要，所以在这里提示输入一次。
+        let webPin = localStorage.getItem('ws_pin') || '';
+        function withPin(u) {
+            if (!webPin) return u;
+            return u + (u.indexOf('?') >= 0 ? '&' : '?') + 'pin=' + encodeURIComponent(webPin);
+        }
+        function askPin(msg) {
+            const p = prompt(msg || '请输入手表 PIN');
+            if (p) { webPin = p; localStorage.setItem('ws_pin', p); return true; }
+            return false;
+        }
+        function onPinRequired(status) {
+            if (status !== 401) return false;
+            if (pinPrompting) return true;   // 避免轮询接口同时触发多个弹窗
+            pinPrompting = true;
+            webPin = ''; localStorage.removeItem('ws_pin');
+            setTimeout(function() {
+                pinPrompting = false;
+                if (askPin('PIN 不正确，请重新输入')) location.reload();
+            }, 0);
+            return true;
+        }
+        let pinPrompting = false;
+
+        fetch(withPin('/web/info')).then(r => { if (onPinRequired(r.status)) return null; return r.json(); }).then(d=>{ if(d) document.querySelector('.header h1').innerText = "WatchSend - " + d.alias; }).catch(()=>{});
 
         let lastClip = "";
         setInterval(() => {
-            fetch('/web/clipboard').then(r=>r.text()).then(txt => {
-                if (txt && txt !== "null" && txt !== lastClip) {
-                    lastClip = txt;
-                    const display = document.getElementById('clipboard-display');
-                    display.setAttribute('data-i18n', '');
-                    display.innerText = t('phone_prefix') + txt;
-                }
+            fetch(withPin('/web/clipboard')).then(r => { if (onPinRequired(r.status)) return null; return r.text(); }).then(txt => {
+                if (!txt || txt === "null" || txt === lastClip) return;
+                lastClip = txt;
+                const display = document.getElementById('clipboard-display');
+                display.setAttribute('data-i18n', '');
+                display.innerText = t('phone_prefix') + txt;
             }).catch(()=>{});
         }, 3000);
 
@@ -243,7 +266,7 @@
                     
                     await new Promise(resolve => {
                         const xhr = new XMLHttpRequest();
-                        xhr.open('POST', '/web/upload?name=' + encodeURIComponent(f.name), true);
+                        xhr.open('POST', withPin('/web/upload?name=' + encodeURIComponent(f.name)), true);
                         xhr.upload.onprogress = e => { 
                             if(e.lengthComputable) { 
                                 const p = Math.round((e.loaded/e.total)*100); 
@@ -251,7 +274,10 @@
                                 document.getElementById('s-'+i).innerText = p+'%'; 
                             } 
                         };
-                        xhr.onload = () => { document.getElementById('s-'+i).innerText = xhr.status===200 ? t('status_done') : t('status_fail'); resolve(); };
+                        xhr.onload = () => {
+                            if (xhr.status === 401) { onPinRequired(401); document.getElementById('s-'+i).innerText = 'PIN'; resolve(); return; }
+                            document.getElementById('s-'+i).innerText = xhr.status===200 ? t('status_done') : t('status_fail'); resolve();
+                        };
                         xhr.onerror = () => { document.getElementById('s-'+i).innerText = t('status_err'); resolve(); };
                         xhr.send(f);
                     });
@@ -265,7 +291,8 @@
         function loadFiles() {
             const list = document.getElementById('download-list');
             list.innerHTML = '<p style="text-align:center; color:var(--text-sec); font-size:14px;">' + t('loading_files') + '</p>';
-            fetch('/web/files').then(r => {
+            fetch(withPin('/web/files')).then(r => {
+                if (onPinRequired(r.status)) throw new Error("PIN");
                 if (!r.ok) throw new Error("HTTP " + r.status);
                 return r.json();
             }).then(data => {
@@ -278,7 +305,7 @@
                             '<div class="file-name">' + f.name + '</div>' +
                             '<div class="file-size">' + formatSize(f.size) + '</div>' +
                         '</div>' +
-                        '<a href="/web/download?name=' + encodeURIComponent(f.name) + '" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">' + t('btn_download') + '</a>';
+                        '<a href="' + withPin('/web/download?name=' + encodeURIComponent(f.name)) + '" class="btn" style="width:auto; padding:6px 12px; text-decoration:none; flex-shrink:0;">' + t('btn_download') + '</a>';
                     list.appendChild(div);
                 });
             }).catch(()=>{ list.innerHTML = '<p style="text-align:center; color:red;">' + t('msg_load_fail') + '</p>'; });
@@ -287,8 +314,8 @@
         function sendText() {
             const text = document.getElementById('text-input').value;
             if(!text) return showToast(t('msg_input_empty'));
-            fetch('/web/text', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) })
-            .then(r => { if(r.ok) { showToast(t('msg_sent_to_watch')); document.getElementById('text-input').value = ''; } else showToast(t('msg_send_fail')); })
+            fetch(withPin('/web/text'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) })
+            .then(r => { if (onPinRequired(r.status)) return; if(r.ok) { showToast(t('msg_sent_to_watch')); document.getElementById('text-input').value = ''; } else showToast(t('msg_send_fail')); })
             .catch(()=>showToast(t('msg_net_err')));
         }
     </script>

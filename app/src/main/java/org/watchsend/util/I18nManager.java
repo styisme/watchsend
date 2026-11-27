@@ -190,6 +190,11 @@ zh.put("screen_shape", "屏幕形状"); zh.put("shape_auto", "圆屏优化(自�
 zh.put("save_dir_label", "保存目录: ");
         zh.put("saved_to_dir_toast", "已保存到相册/下载目录");
         zh.put("size_label", "大小: ");
+        // 快速保存三态 / 收藏设备 / 共享下载（对齐官方 QuickSaveMode 与 download API）
+        zh.put("quick_save", "快速保存"); zh.put("quick_save_off", "每次都询问"); zh.put("quick_save_on", "全部自动接收"); zh.put("quick_save_paired", "仅收藏设备自动接收");
+        zh.put("favorites", "收藏的设备"); zh.put("favorites_empty", "还没有收藏的设备，长按设备即可收藏");
+        zh.put("add_favorite", "收藏此设备"); zh.put("remove_favorite", "取消收藏"); zh.put("favorite_added", "已收藏"); zh.put("favorite_removed", "已取消收藏");
+        zh.put("download_share", "共享下载"); zh.put("download_share_desc", "允许局域网设备通过 LocalSend 下载本机 OldSend 目录里的文件");
         dict.put("zh", zh);
 
         // ============ 繁体中文 (zh_TW) ============
@@ -320,6 +325,10 @@ zhTW.put("ui_size", "介面大小"); zhTW.put("ui_size_small", "小"); zhTW.put(
         zhTW.put("chin_padding", "底部避讓"); zhTW.put("chin_padding_desc", "針對有下巴的圓錶(如Moto 360)");
         zhTW.put("view_whitelist", "查看/移除 白名單"); zhTW.put("view_blacklist", "查看/移除 黑名單"); zhTW.put("clear_all", "清空所有名單");
         zhTW.put("add_files", "加入檔案"); zhTW.put("list_empty", "當前名單為空");
+        zhTW.put("quick_save", "快速儲存"); zhTW.put("quick_save_off", "每次都詢問"); zhTW.put("quick_save_on", "全部自動接收"); zhTW.put("quick_save_paired", "僅收藏裝置自動接收");
+        zhTW.put("favorites", "收藏的裝置"); zhTW.put("favorites_empty", "還沒有收藏的裝置，長按裝置即可收藏");
+        zhTW.put("add_favorite", "收藏此裝置"); zhTW.put("remove_favorite", "取消收藏"); zhTW.put("favorite_added", "已收藏"); zhTW.put("favorite_removed", "已取消收藏");
+        zhTW.put("download_share", "共享下載"); zhTW.put("download_share_desc", "允許區域網路裝置透過 LocalSend 下載本機 OldSend 目錄裡的檔案");
         dict.put("zh_TW", zhTW);
 
         // ============ 英语 (en) ============
@@ -502,6 +511,10 @@ en.put("screen_shape", "Screen Shape"); en.put("shape_auto", "Round Opt (Auto)")
 en.put("save_dir_label", "Save to: ");
         en.put("saved_to_dir_toast", "Saved to Album/Downloads");
         en.put("size_label", "Size: ");
+        en.put("quick_save", "Quick Save"); en.put("quick_save_off", "Ask every time"); en.put("quick_save_on", "Auto accept all"); en.put("quick_save_paired", "Auto accept favorites");
+        en.put("favorites", "Favorite devices"); en.put("favorites_empty", "No favorites yet, long-press a device to add");
+        en.put("add_favorite", "Add to favorites"); en.put("remove_favorite", "Remove from favorites"); en.put("favorite_added", "Added to favorites"); en.put("favorite_removed", "Removed from favorites");
+        en.put("download_share", "Share for download"); en.put("download_share_desc", "Let LAN devices pull files from your OldSend folders via LocalSend");
         dict.put("en", en);
 
         // ============ 日语 (ja) ============

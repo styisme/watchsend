@@ -15,6 +15,14 @@ public class ReceiveManager {
     private static boolean result = false;
 
     public static boolean askUser(final String alias, final int count) {
+        return askUser(alias, count, null);
+    }
+
+    /**
+     * @param messagePreview 文本消息的原文（协议 fileType=text 的 preview），
+     *                       非空时接收界面直接展示这句话，而不是"想给你发 N 个文件"
+     */
+    public static boolean askUser(final String alias, final int count, final String messagePreview) {
         FileLogger.log("ReceiveManager", "Ask user to receive from: " + alias);
         
         // 防御性清理上一次的残留
@@ -40,6 +48,7 @@ public class ReceiveManager {
                     intent.putExtra("mode", 1);
                     intent.putExtra("senderName", alias);
                     intent.putExtra("fileCount", count);
+                    if (messagePreview != null) intent.putExtra("messagePreview", messagePreview);
                     intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     OldSendService.getContext().startActivity(intent);
                 } catch (Exception e) {

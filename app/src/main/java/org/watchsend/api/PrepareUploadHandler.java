@@ -55,20 +55,24 @@ public class PrepareUploadHandler implements Router.Handler {
         int fileCount = files.length();
         OldSendService.log("收到请求: " + senderAlias + " 请求发送 " + fileCount + " 个文件");
 
-        // 2. 检查是否开启了自动保存 (跳过弹窗)
-        boolean autoSave = OldSendService.getPrefBooleanGlobal("auto_save", false);
-        boolean autoWhitelist = OldSendService.getPrefBooleanGlobal("auto_accept_whitelist", false);
-        String whitelist = OldSendService.getPrefStringGlobal("whitelist", "");
-        
-        if (!autoSave && autoWhitelist && whitelist.contains(senderFingerprint)) {
-            autoSave = true;
-            OldSendService.log("白名单自动放行: " + senderAlias);
+        // 2. 快速保存三态（off/on/paired），旧 auto_save / auto_accept_whitelist 由 QuickSave 兼容推导
+        String previewForAsk = null;
+        Iterator<?> pit = files.keys();
+        while (pit.hasNext()) {
+            JSONObject pf = files.optJSONObject((String) pit.next());
+            if (pf == null) continue;
+            if ("text".equals(pf.optString("fileType", ""))) {
+                String pv = pf.optString("preview", null);
+                if (pv != null) { previewForAsk = pv; break; }
+            }
         }
+
+        boolean autoSave = org.watchsend.util.QuickSave.shouldAutoAccept(senderFingerprint);
         boolean accepted = true;
         if (!autoSave) {
-            accepted = ReceiveManager.askUser(senderAlias, fileCount);
+            accepted = ReceiveManager.askUser(senderAlias, fileCount, previewForAsk);
         } else {
-            OldSendService.log("自动保存已开启，直接接收");
+            OldSendService.log("快速保存放行: " + senderAlias + " (mode=" + org.watchsend.util.QuickSave.getMode() + ")");
         }
 
         if (!accepted) {
@@ -96,7 +100,13 @@ public class PrepareUploadHandler implements Router.Handler {
             }
             long size = f.optLong("size", -1);
             String token = Long.toHexString(System.nanoTime() ^ (long) (Math.random() * 1e18));
-            session.addFile(fileId, fileName, size, token);
+            // 官方 2.x 的可选字段：sha256 用于接收端校验，metadata.modified 用于还原时间
+            String sha = f.optString("sha256", null);
+            String modified = null;
+            JSONObject meta = f.optJSONObject("metadata");
+            if (meta != null) modified = meta.optString("modified", null);
+            String preview = f.optString("preview", null);
+            session.addFile(fileId, fileName, size, token, sha, modified, preview);
             respFiles.put(fileId, token);
         }
 

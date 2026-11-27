@@ -12,6 +12,12 @@ public class Device implements java.io.Serializable {
     public int port;
     public boolean https;
     public boolean download;
+    /**
+     * 对端 TLS 证书的 SHA-256 指纹（TOFU 记录）。
+     * 只有 https 设备才需要；协议里 info 的 fingerprint 在 HTTPS 模式下按官方规范被忽略，
+     * 设备身份以证书为准（server_cert_verifier.rs）。
+     */
+    public String certFingerprint;
 
     public static Device fromJson(JSONObject o, String ip) {
         Device d = new Device();

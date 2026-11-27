@@ -31,6 +31,7 @@ import java.util.List;
 import org.watchsend.discovery.DeviceStore;
 import org.watchsend.discovery.MulticastScanner;
 import org.watchsend.model.Device;
+import org.watchsend.model.FavoritesStore;
 import org.watchsend.model.HistoryStore;
 import org.watchsend.ui.DeviceAdapter;
 import org.watchsend.util.I18nManager;
@@ -48,6 +49,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private String pendingAclFp;
     private boolean pendingAclIsWl;
     private boolean pendingAclIsBl;
+    private String pendingDeviceAlias;
+    private String pendingDeviceIp;
+    private int pendingDevicePort;
     private File pendingHistoryFile;
     private boolean pendingHistoryIsZip;
     private int pendingHistoryPos;
@@ -502,11 +506,17 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             return;
         }
 
-        // 5013 设备白/黑名单菜单
+        // 5013 设备菜单：白名单 / 黑名单 / 收藏
         if (requestCode == 5013 && resultCode == RESULT_OK) {
             int p = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
-            toggleList("whitelist", pendingAclFp, pendingAclIsWl);
-            if (p == 1) toggleList("blacklist", pendingAclFp, pendingAclIsBl);
+            if (p == 0) {
+                toggleList("whitelist", pendingAclFp, pendingAclIsWl);
+            } else if (p == 1) {
+                toggleList("blacklist", pendingAclFp, pendingAclIsBl);
+            } else if (p == 2) {
+                boolean added = FavoritesStore.toggle(pendingAclFp, pendingDeviceAlias, pendingDeviceIp, pendingDevicePort);
+                toast(added ? I18nManager.get("favorite_added") : I18nManager.get("favorite_removed"));
+            }
             return;
         }
 
@@ -634,9 +644,14 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         pendingAclFp = (d.fingerprint != null && d.fingerprint.length() > 0) ? d.fingerprint : d.ip;
         pendingAclIsWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(pendingAclFp);
         pendingAclIsBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(pendingAclFp);
+        pendingDeviceAlias = d.alias;
+        pendingDeviceIp = d.ip;
+        pendingDevicePort = d.port;
+        boolean fav = FavoritesStore.isFavorite(pendingAclFp);
         String[] items = new String[]{
             pendingAclIsWl ? I18nManager.get("remove_whitelist") : I18nManager.get("add_whitelist"),
-            pendingAclIsBl ? I18nManager.get("remove_blacklist") : I18nManager.get("add_blacklist")
+            pendingAclIsBl ? I18nManager.get("remove_blacklist") : I18nManager.get("add_blacklist"),
+            fav ? I18nManager.get("remove_favorite") : I18nManager.get("add_favorite")
         };
         UikitFullListActivity.show(this, d.alias, items, 5013);
     }
