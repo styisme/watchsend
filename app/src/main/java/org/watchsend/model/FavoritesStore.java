@@ -92,6 +92,49 @@ public class FavoritesStore {
         }
     }
 
+    /** 取收藏条目，没有则返回 null。 */
+    public static JSONObject entry(String fingerprint) {
+        if (fingerprint == null || fingerprint.length() == 0) return null;
+        JSONArray arr = list();
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject o = arr.optJSONObject(i);
+            if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) return o;
+        }
+        return null;
+    }
+
+    /** 官方 FavoriteEditDialog 的自定义备注名。 */
+    public static String remark(String fingerprint) {
+        JSONObject o = entry(fingerprint);
+        return o == null ? "" : o.optString("remark", "");
+    }
+
+    public static void setRemark(String fingerprint, String remark) {
+        SharedPreferences sp = prefs();
+        if (sp == null || fingerprint == null) return;
+        synchronized (LOCK) {
+            JSONArray arr = list();
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject o = arr.optJSONObject(i);
+                if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) {
+                    try {
+                        o.put("remark", remark == null ? "" : remark);
+                    } catch (Exception ignored) {}
+                    sp.edit().putString(KEY, arr.toString()).commit();
+                    return;
+                }
+            }
+        }
+    }
+
+    /** 列表里显示的名字：收藏且有备注时用备注，否则用设备别名。 */
+    public static String displayName(org.watchsend.model.Device d) {
+        if (d == null) return "";
+        String remark = remark(d.identity());
+        if (remark != null && remark.length() > 0) return remark;
+        return d.alias == null ? "" : d.alias;
+    }
+
     public static int count() {
         return list().length();
     }

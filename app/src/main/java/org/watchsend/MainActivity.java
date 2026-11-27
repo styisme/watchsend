@@ -224,7 +224,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                     showHistoryMenu(pos);
                     return true;
                 }
-                showAclMenu(adapter.getItem(pos));
+                // 长按进入设备详情（对齐官方 device_details_page）：信息、收藏、备注、白/黑名单都在里面
+                org.watchsend.watch.DeviceDetailActivity.show(MainActivity.this, adapter.getItem(pos), 5020);
                 return true;
             }
         });
@@ -448,6 +449,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5020) {
+            if (adapter != null) adapter.notifyDataSetChanged();
+            return;
+        }
         // 5001 主类型选择列表
         if (requestCode == 5001 && resultCode == RESULT_OK) {
             int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);

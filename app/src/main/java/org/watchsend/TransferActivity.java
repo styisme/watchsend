@@ -490,7 +490,12 @@ public class TransferActivity extends Activity {
             pbFile.setProgress(pct);
             
             tvPercent.setText(pct + "%");
-            tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(current) + " / " + formatSize(total) + "\n" + I18nManager.get("speed") + ": " + speedStr);
+            String etaStr = "";
+            if (speed > 1 && current < total) {
+                long left = (long) ((total - current) / speed);
+                etaStr = "  ·  " + I18nManager.get("remaining") + " " + (left < 60 ? left + "s" : (left / 60) + "m" + (left % 60) + "s");
+            }
+            tvSpeedSize.setText(I18nManager.get("size_label") + formatSize(current) + " / " + formatSize(total) + "\n" + I18nManager.get("speed") + ": " + speedStr + etaStr);
         }
     }
 
