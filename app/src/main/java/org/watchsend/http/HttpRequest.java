@@ -16,6 +16,8 @@ public class HttpRequest {
     public long contentLength;
     public boolean chunked;
     public InetAddress remoteAddress;
+    /** HTTPS 连接下对端证书的 SHA-256 指纹（小写 hex）；官方用它作为发送方身份。 */
+    public String peerCertFingerprint;
 
     public static HttpRequest parse(InputStream in, InetAddress remote) throws IOException {
         HttpRequest r = new HttpRequest();

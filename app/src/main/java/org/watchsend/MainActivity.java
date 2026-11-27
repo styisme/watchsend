@@ -641,7 +641,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void showAclMenu(final Device d) {
-        pendingAclFp = (d.fingerprint != null && d.fingerprint.length() > 0) ? d.fingerprint : d.ip;
+        pendingAclFp = d.identity();
         pendingAclIsWl = OldSendService.getPrefStringGlobal("whitelist", "").contains(pendingAclFp);
         pendingAclIsBl = OldSendService.getPrefStringGlobal("blacklist", "").contains(pendingAclFp);
         pendingDeviceAlias = d.alias;

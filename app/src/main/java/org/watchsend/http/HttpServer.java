@@ -117,9 +117,21 @@ public class HttpServer {
     private void handle(Socket s) {
         try {
             s.setSoTimeout(300000);
+            String peerFp = null;
+            if (s instanceof javax.net.ssl.SSLSocket) {
+                javax.net.ssl.SSLSocket ss = (javax.net.ssl.SSLSocket) s;
+                try {
+                    ss.startHandshake();
+                    peerFp = peerFingerprint(ss);
+                } catch (Exception e) {
+                    OldSendService.log("TLS 握手失败: " + e);
+                    return;
+                }
+            }
             InputStream in = new BufferedInputStream(s.getInputStream(), 8192);
             OutputStream out = new BufferedOutputStream(s.getOutputStream(), 8192);
             HttpRequest req = HttpRequest.parse(in, s.getInetAddress());
+            req.peerCertFingerprint = peerFp;
             HttpResponse resp = router.dispatch(req);
             resp.writeTo(out);
             out.flush();
@@ -128,6 +140,18 @@ public class HttpServer {
         } finally {
             try { s.close(); } catch (Exception ignored) {}
         }
+    }
+
+    /** 官方在 https 模式下用对端证书指纹代表发送方身份（server_cert_verifier.rs）。 */
+    private static String peerFingerprint(javax.net.ssl.SSLSocket ss) {
+        try {
+            java.security.cert.Certificate[] certs = ss.getSession().getPeerCertificates();
+            if (certs != null && certs.length > 0) {
+                return org.watchsend.util.SelfSignedCert.fingerprintOf(certs[0].getEncoded());
+            }
+        } catch (Throwable ignored) {
+        }
+        return null;
     }
 
     public void stop() {

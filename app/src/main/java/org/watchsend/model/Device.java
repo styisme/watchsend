@@ -34,6 +34,16 @@ public class Device implements java.io.Serializable {
         return d;
     }
 
+    /**
+     * 设备身份：官方在 https 模式下以对端证书指纹为准（info.fingerprint 被忽略），
+     * 明文模式下才用协议里的指纹，最后退回 IP。收藏/黑白名单/快速保存都按它匹配。
+     */
+    public String identity() {
+        if (https && certFingerprint != null && certFingerprint.length() > 0) return certFingerprint;
+        if (fingerprint != null && fingerprint.length() > 0) return fingerprint;
+        return ip == null ? "" : ip;
+    }
+
     public String url(String path) {
         String formatIp = ip;
         if (formatIp == null) formatIp = "";

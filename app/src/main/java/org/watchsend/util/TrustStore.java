@@ -74,4 +74,13 @@ public class TrustStore {
             }
         }
     }
+
+    /** 本机证书换了（设备身份变化）时清空，避免旧指纹继续生效。 */
+    public static void clearAll() {
+        SharedPreferences sp = prefs();
+        if (sp == null) return;
+        synchronized (LOCK) {
+            sp.edit().remove(KEY).commit();
+        }
+    }
 }

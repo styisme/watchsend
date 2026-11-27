@@ -37,14 +37,21 @@ public class PrepareUploadHandler implements Router.Handler {
         if (files == null) files = new JSONObject();
 
         String senderAlias = org.watchsend.util.I18nManager.get("unknown_device");
-        String senderFingerprint = req.remoteAddress.getHostAddress(); // 默认用 IP 兜底
+        // 身份优先级与官方一致：HTTPS 用对端证书指纹；明文用 info.fingerprint；最后退回 IP
+        String senderFingerprint = req.peerCertFingerprint;
+        if (senderFingerprint == null || senderFingerprint.length() == 0) {
+            senderFingerprint = req.remoteAddress.getHostAddress();
+        }
 
         JSONObject info = o.optJSONObject("info");
         if (info != null) {
             senderAlias = info.optString("alias", "未知设备");
-            String f = info.optString("fingerprint", "");
-            if (!f.isEmpty()) senderFingerprint = f;
+            if (req.peerCertFingerprint == null || req.peerCertFingerprint.length() == 0) {
+                String f = info.optString("fingerprint", "");
+                if (!f.isEmpty()) senderFingerprint = f;
+            }
         }
+        senderFingerprint = org.watchsend.util.CryptoUtils.normalizeFingerprint(senderFingerprint);
         
         String blacklist = OldSendService.getPrefStringGlobal("blacklist", "");
         if (blacklist.contains(senderFingerprint)) {
