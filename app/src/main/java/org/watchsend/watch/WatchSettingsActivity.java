@@ -223,9 +223,10 @@ public class WatchSettingsActivity extends Activity {
     private String currentLangLabel() {
         String lang = prefs().getString("app_lang", "system");
         if ("key".equals(lang)) return "debug_keys";
-        String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt"};
-        String[] names = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português"};
-        for (int i = 0; i < codes.length; i++) if (codes[i].equals(lang)) return names[i];
+        // 语言表由 I18nManager 统一维护（v1.7.7 起扩展到 50+ 种，不再在这里写死）
+        for (int i = 0; i < I18nManager.langCount(); i++) {
+            if (I18nManager.codeAt(i).equals(lang)) return I18nManager.labelAt(i);
+        }
         return lang;
     }
 
@@ -321,7 +322,11 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
     }
 
     private void pickLang() {
-        final String[] items = {I18nManager.get("follow_system"),"简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português", "debug_keys"};
+        // 语言表来自 I18nManager（当前 50+ 种），末尾多一项开发者用的 debug_keys
+        int n = I18nManager.langCount();
+        String[] items = new String[n + 1];
+        for (int i = 0; i < n; i++) items[i] = I18nManager.labelAt(i);
+        items[n] = "debug_keys";
         UikitFullListActivity.show(this, I18nManager.get("language"), items, 6012);
     }
 
@@ -441,8 +446,9 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         if (requestCode == 6012) {
             int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
             if (pos >= 0) {
-                String[] codes = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt", "key"};
-                prefs().edit().putString("app_lang", codes[pos]).commit();
+                // pos 末位是开发者用的 "key"（直接显示词条 key），其余从 I18nManager 取
+                String chosen = (pos >= I18nManager.langCount()) ? "key" : I18nManager.codeAt(pos);
+                prefs().edit().putString("app_lang", chosen).commit();
                 Toast.makeText(this, I18nManager.get("lang_switched"), Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(this, MainActivity.class));

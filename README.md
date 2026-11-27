@@ -5,7 +5,7 @@
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.6-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.7-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -26,7 +26,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.7.6**。
+当前版本：**v1.7.7**。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 
@@ -48,7 +48,7 @@
 ### 🛠️ 极客专属工具箱
 - **静默安装 (Beta)**：支持通过 Root 或 Shizuku 权限，在接收 APK 后实现无感后台安装（纯手写 Binder IPC 代理）。
 - **原生 ZIP 解压**：收到压缩包无需导出，在接收完成页或历史记录长按，直接调用纯 Java 引擎安全解压（内置防路径穿越漏洞）。
-- **网页端 10 语种自适应**：内置 WebShare 前端已全面支持 10 国语言，自动识别浏览器语言，支持拖拽上传与剪贴板同步。
+- **网页端 51 语种自适应**：内置 WebShare 前端已全面支持 51 种语言，自动识别浏览器语言，支持拖拽上传与剪贴板同步。
 - **历史快捷管理**：长按接收记录可快速分享文件或删除记录，ZIP 文件自动显示 📦 标识。
 - **Debug Keys 模式**：设置中可选的语言选项，切换后全界面直接显示底层词条 Key，极客查缺补漏神器。
 
@@ -59,7 +59,7 @@
 - **3D 滚轮特效**：上下滑动时，边缘卡片自动缩小并降低透明度，还原原生物理滚轮感。
 - **圆屏沉浸优化**：一键开启后，界面自动向内收缩，避免文字与按钮被圆形表盘切割。
 - **跟手滑动返回 & 预测性返回**：支持全局滑动退出，卡片缩小浮起，模拟系统级 Predictive Back 动画。
-- **全量 10 种语言变体**：完美适配中、繁、英、日、韩、德、法、西、俄、葡，无死角覆盖。
+- **全量 51 种语言变体**：中、繁、英、日、韩、德、法、西、俄、葡为全量词条，其余 41 种主要语言覆盖核心界面文案，长尾词条回退英文，永不出现裸 key。
 - **Wear-Uikit 组件库 (v1.5.0)**：内置 44 个纯 Java 原生控件（按钮、开关、滑块、步进器、进度环、骨架屏、底部弹窗等）与 6 个全屏容器，零第三方依赖，主题与动态取色统一由 `UikitTheme` 驱动。
 
 ### 🌐 跨网传输与穿透 (继承自 OldSend)

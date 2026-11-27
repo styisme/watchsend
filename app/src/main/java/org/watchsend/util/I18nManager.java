@@ -200,145 +200,105 @@ zh.put("save_dir_label", "保存目录: ");
         zh.put("remark_label", "备注名"); zh.put("not_set", "未设置");
         dict.put("zh", zh);
 
-        // ============ 繁体中文 (zh_TW) ============
-        Map<String, String> zhTW = new HashMap<>(zh);
-        zhTW.put("running", "運行中"); zhTW.put("stopped", "已停止"); zhTW.put("start", "啟動"); zhTW.put("stop", "停止");
-        zhTW.put("no_device", "暫無設備，請點擊掃描"); zhTW.put("receive_history", "接收記錄"); zhTW.put("settings", "設定");
-        zhTW.put("send", "發送"); zhTW.put("receive", "接收"); zhTW.put("file", "檔案"); zhTW.put("media", "媒體");
-        zhTW.put("folder", "資料夾"); zhTW.put("app", "應用"); zhTW.put("text", "文字"); zhTW.put("clipboard", "剪貼簿");
-        zhTW.put("not_selected", "未選擇檔案"); zhTW.put("auto_save", "自動儲存"); zhTW.put("save_album", "儲存到相簿");
-        zhTW.put("save_history", "儲存到歷史記錄"); zhTW.put("use_pin", "啟用 PIN 密碼"); zhTW.put("pin_off", "當前 PIN: 未啟用");
-        zhTW.put("pin_on", "當前 PIN 碼: "); zhTW.put("network", "網路與自動化"); zhTW.put("web_enable", "啟用網頁傳輸");
-        zhTW.put("auto_start", "開機自動啟動"); zhTW.put("receive_notif", "透過通知欄接收"); zhTW.put("port", "連接埠");
-        zhTW.put("timeout", "搜尋設備逾時"); zhTW.put("other", "其他"); zhTW.put("anim", "介面切換動畫");
-        zhTW.put("set_name", "修改設備名稱"); zhTW.put("backup", "備份 / 恢復設定"); zhTW.put("about", "關於 WatchSend");
-        zhTW.put("language", "語言 (Language)"); zhTW.put("follow_system", "跟隨系統"); zhTW.put("cancel", "取消");
-        zhTW.put("confirm", "確定"); zhTW.put("close", "關閉"); zhTW.put("clear", "清空"); zhTW.put("input_ip", "手動輸入 IP"); zhTW.put("log_empty", "暫無日誌");
-        zhTW.put("voice_input", "🎤 語音"); zhTW.put("voice_unsupported", "目前裝置不支援語音輸入");
-        zhTW.put("ip_format_error", "IP 格式錯誤"); zhTW.put("save_fail", "儲存失敗");
-        zhTW.put("input_text", "發送文字"); zhTW.put("select_lang", "選擇語言"); zhTW.put("restart_tip", "切換語言成功");
-        zhTW.put("add_ip", "加IP"); zhTW.put("cross_net", "跨網"); zhTW.put("auto_whitelist", "自動接收白名單檔案");
-        zhTW.put("filter_ext_title", "攔截危險副檔名"); zhTW.put("manage_acl", "管理白/黑名單");
-        zhTW.put("cross_net_title", "跨網傳輸"); zhTW.put("cross_net_desc", "無需連接同一Wi-Fi，極客通道直連。");
-        zhTW.put("upnp_punch", "一鍵自動穿透"); zhTW.put("direct_mode", "啟用極速直連");
-        zhTW.put("send_file_title", "我要傳送檔案"); zhTW.put("recv_file_title", "我要接收檔案");
-        zhTW.put("gen_pin_btn", "選擇檔案並生成6位密碼"); zhTW.put("input_pin_hint", "輸入6位密碼");
-        zhTW.put("connect_recv_btn", "連接並接收"); zhTW.put("author", "作者"); zhTW.put("contributors", "貢獻者");
-        zhTW.put("ipv6_local", "本機公網 IPv6: [%s]:53317 (可用直連)"); zhTW.put("ipv6_none", "本機 IPv6: 未獲取到公網 IPv6，僅限內網或穿透");
-        zhTW.put("stun_wait", "STUN 探測中..."); zhTW.put("stun_fail", "NAT 穿透失敗 (對稱型NAT)");
-        zhTW.put("stun_ok", "NAT公網位址: "); zhTW.put("stun_probe", "STUN探測");
-        zhTW.put("stun_tip", "NAT公網位址: 點擊右側探測"); zhTW.put("advanced_tip", "高級玩法：可配合 FRP/Ngrok 或 ZeroTier 組網後，將生成的公網位址填入下方極速直連。");
-        zhTW.put("file_count", "檔案: %d");  zhTW.put("unknown_size", "未知大小");
-        zhTW.put("manage", "管理"); zhTW.put("clear_all", "清空所有名單");
-        zhTW.put("view_whitelist", "查看/移除 白名單"); zhTW.put("view_blacklist", "查看/移除 黑名單");
-        zhTW.put("all_deleted", "已全部刪除"); zhTW.put("export_log", "匯出日誌");
-        zhTW.put("input_address", "輸入地址"); zhTW.put("label", "標籤"); zhTW.put("ip_address", "IP 位址");
-                // ---- P1 繁体覆盖 ----
-        zhTW.put("general", "一般"); zhTW.put("accept", "接受"); zhTW.put("reject", "拒絕");
-        zhTW.put("recv_completed", "接收完成"); zhTW.put("send_completed", "發送完成"); zhTW.put("interrupted", "已中斷");
-        zhTW.put("unknown_device", "未知設備"); zhTW.put("unknown_file", "未知檔案");
-        zhTW.put("save_dir_prefix", "儲存目錄: "); zhTW.put("wants_to_send", "想要傳送檔案給你");
-        zhTW.put("receive_request", "接收檔案請求"); zhTW.put("service_running", "WatchSend 正在執行");
-        zhTW.put("cn_gen_pin_send", "產生密碼並開始傳送"); zhTW.put("cn_direct_send", "直連傳送已選檔案");
-        zhTW.put("cn_status_packing", "正在打包檔案..."); zhTW.put("cn_status_connecting", "正在建立連線...");
-        zhTW.put("cn_status_send_done", "傳送完成！等待對方接收完畢。");
-        zhTW.put("cn_status_recv_done", "接收完成！已解壓到 Download 目錄");
-        zhTW.put("cn_pin_invalid", "請輸入6位純數字密碼");
-        zhTW.put("cn_direct_invalid", "請輸入對方公網IP和連接埠");
-        zhTW.put("manage_list", "名單管理中心"); zhTW.put("add_files", "加入檔案");
-        zhTW.put("delete_all", "全部刪除"); zhTW.put("select_title", "選擇");
-        zhTW.put("select_app", "選擇應用 (APK)");
-        zhTW.put("removed", "已移除"); zhTW.put("added_to_list", "已加入名單"); zhTW.put("removed_from_list", "已移出名單");
-        zhTW.put("share_log_missing", "日誌檔案不存在"); zhTW.put("share_failed", "分享失敗");
-        zhTW.put("clipboard_empty", "剪貼簿為空");
-        zhTW.put("folder_prefix", "[資料夾] "); zhTW.put("empty_folder", "空資料夾");
-        zhTW.put("send_folder", ">> [傳送此資料夾] <<"); zhTW.put("manual_device", "手動設備");
-
-        zhTW.put("recv_request", "接收請求"); zhTW.put("from_device", "來自設備"); zhTW.put("wants_to_send_you", "想要傳送檔案給你");
-        zhTW.put("action", "操作"); zhTW.put("current_file", "當前檔案"); zhTW.put("preparing", "準備中...");
-        zhTW.put("transferring", "傳輸中..."); zhTW.put("calculating", "計算中..."); zhTW.put("saved_to_local", "已儲存到本機");
-        zhTW.put("transfer_success", "傳輸成功"); zhTW.put("local_ipv6", "本機 IPv6"); zhTW.put("getting", "正在取得...");
-        zhTW.put("not_probed", "未探測"); zhTW.put("probing", "探測中..."); zhTW.put("nat_addr", "NAT 公網位址");
-        zhTW.put("input_direct_ip", "對方公網 IP:連接埠"); zhTW.put("selected_prefix", "已選 "); zhTW.put("files_suffix", "個檔案\n");
-        zhTW.put("select_file_gen_pin", "選擇檔案並產生密碼"); zhTW.put("pin_prefix", "密碼: "); zhTW.put("toast_input_ip", "請輸入對方公網IP和連接埠");
-        zhTW.put("toast_input_pin", "請輸入6位純數字密碼"); zhTW.put("ipv6_not_found", "未取得公網 IPv6"); zhTW.put("packing", "正在打包檔案...");
-        zhTW.put("packed_connecting", "打包完成，正在建立通道..."); zhTW.put("sending_prefix", "傳送中... "); zhTW.put("send_done", "傳送完成！");
-        zhTW.put("failed_prefix", "失敗: "); zhTW.put("direct_self", "直連失敗: 無法透過公網IP直連本機。"); zhTW.put("preparing_direct", "準備直連...");
-        zhTW.put("read_failed", "讀取失敗"); zhTW.put("prepare_failed", "準備失敗"); zhTW.put("direct_sending", "正在直連傳送...");
-        zhTW.put("sending_percent", "傳送中 "); zhTW.put("direct_send_done", "直連傳送完成！"); zhTW.put("direct_failed", "直連失敗: ");
-        zhTW.put("connecting", "正在連線..."); zhTW.put("receiving_prefix", "接收中... "); zhTW.put("recv_unzipping", "接收完成，解壓中...");
-        zhTW.put("recv_done", "接收完成！已儲存到下載。"); zhTW.put("recv_failed", "接收失敗: ");
-    
-
-        zhTW.put("round_screen_opt", "圓屏優化"); zhTW.put("round_screen_opt_desc", "防止內容被圓形邊緣遮擋");
-        zhTW.put("block_system_back", "攔截系統返回"); zhTW.put("block_system_back_desc", "防止與滑動返回衝突");
-        zhTW.put("dark_mode_desc", "黑白主題切換"); zhTW.put("transfer_settings", "傳輸");
-        zhTW.put("auto_save_desc", "免確認直接接收"); zhTW.put("auto_whitelist_desc", "僅限白名單設備");
-        zhTW.put("save_album_desc", "圖片與影片放入圖庫"); zhTW.put("save_history_desc", "記錄收發日誌");
-        zhTW.put("use_pin_desc", "增強接收安全性"); zhTW.put("https_enable_desc", "可能影響舊設備相容性");
-        zhTW.put("web_enable_desc", "瀏覽器互傳"); zhTW.put("auto_start_desc", "後台常駐");
-        zhTW.put("receive_notif_desc", "需系統權限"); zhTW.put("port_settings", "連接埠設定");
-        zhTW.put("timeout_settings", "搜尋逾時"); zhTW.put("device_security", "設備與安全");
-        zhTW.put("manage_acl_desc", "管理已信任設備"); zhTW.put("ui_scale_dialog_title", "無級縮放 UI");
-        zhTW.put("about_title", "關於"); zhTW.put("pin_title_dialog", "修改 PIN");
-        zhTW.put("port_dialog_title", "連接埠"); zhTW.put("timeout_dialog_title", "搜尋逾時(ms)");
-        zhTW.put("filter_dialog_title", "攔截副檔名"); zhTW.put("device_name_title", "設備名稱");
-        zhTW.put("lang_title", "語言設定"); zhTW.put("acl_dialog_title", "黑白名單");
-        zhTW.put("whitelist_title", "白名單"); zhTW.put("blacklist_title", "黑名單");
-        zhTW.put("about_desc_watchsend", "作者: styisme\nAI 輔助生成\nMIT License\n\n相容 LocalSend v2.2");
-    
-
-        zhTW.put("start_service", "啟動"); zhTW.put("stop_service", "停止"); zhTW.put("devices_nearby", "附近的設備");
-        zhTW.put("no_device_scan", "暫無設備，請點擊掃描"); zhTW.put("send_file", "傳送檔案"); zhTW.put("select_title_desc", "選擇內容");
-        zhTW.put("device", "設備"); zhTW.put("file", "檔案"); zhTW.put("media", "媒體"); zhTW.put("app", "應用");
-        zhTW.put("folder", "資料夾"); zhTW.put("text", "文字"); zhTW.put("clipboard", "剪貼簿"); zhTW.put("record", "接收記錄");
-        zhTW.put("return_to_devices", "↩ 返回設備"); zhTW.put("no_record", "暫無記錄"); zhTW.put("file_not_found", "檔案不存在");
-        zhTW.put("cannot_open", "無法開啟"); zhTW.put("no_app", "無應用"); zhTW.put("empty_folder", "空資料夾");
-        zhTW.put("add_files", "追加檔案"); zhTW.put("select_folder_send", ">> [傳送此資料夾] <<"); zhTW.put("unknown_file", "未知檔案");
-        zhTW.put("files_count_prefix", "檔案: "); zhTW.put("size_label", "大小: "); zhTW.put("clear_all_files", "全部刪除");
-        zhTW.put("back_prev", "返回上一頁");  zhTW.put("ip_prefix", "IP ");
-    
-
-        zhTW.put("web_qr", "網頁端網址"); zhTW.put("web_qr_desc", "請在電腦瀏覽器輸入此網址"); zhTW.put("open_file", "開啟檔案"); zhTW.put("install_apk", "一鍵安裝"); zhTW.put("unzip", "解壓縮"); zhTW.put("unzipping", "正在解壓縮..."); zhTW.put("unzip_ok", "解壓縮完成"); zhTW.put("unzip_fail", "解壓縮失敗"); zhTW.put("geek_mode", "極客模式"); zhTW.put("silent_install", "靜默安裝"); zhTW.put("silent_install_desc", "需 Root 或 Shizuku"); zhTW.put("share_file", "分享檔案"); zhTW.put("delete_record", "刪除記錄"); zhTW.put("delete_confirm", "確認刪除這條記錄嗎？"); zhTW.put("copied_hint", "已複製到剪貼簿");
-zhTW.put("settings_title", "設定"); zhTW.put("clear_all_files_btn", "清空所有檔案"); zhTW.put("add_whitelist", "加入白名單");
-        zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單"); zhTW.put("remove_blacklist", "移除黑名單");
-    
-
-        zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加");         zhTW.put("files_count_fmt", "%d 個檔案"); zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回");
-        zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)");
-    
-
-        zhTW.put("low_perf_mode", "低效能模式"); zhTW.put("low_perf_desc", "減弱或關閉UI動畫特效");
-    
-
-        zhTW.put("nearby_devices", "附近的設備"); zhTW.put("scan", "掃描"); zhTW.put("edit", "編輯"); zhTW.put("add", "追加");
-        zhTW.put("empty_scanning", "掃描中..."); zhTW.put("add_ip", "加IP"); zhTW.put("no_device_scan", "暫無設備，請點擊掃描");
-    
-zhTW.put("lang_switched", "語言已切換");
-zhTW.put("screen_shape", "螢幕形狀"); zhTW.put("shape_auto", "圓屏優化(自動)"); zhTW.put("shape_round", "強制圓螢幕"); zhTW.put("shape_square", "強制方螢幕");
-zhTW.put("ui_size", "介面大小"); zhTW.put("ui_size_small", "小"); zhTW.put("ui_size_medium", "標準"); zhTW.put("ui_size_large", "大");
-
-        zhTW.put("theme_mode", "主題模式"); zhTW.put("theme_auto", "跟隨系統"); zhTW.put("theme_light", "淺色模式"); zhTW.put("theme_dark", "深色模式");
-        zhTW.put("backup_title", "備份與恢復"); zhTW.put("backup_export", "匯出設定至剪貼簿"); zhTW.put("backup_import", "從剪貼簿匯入設定");
-        zhTW.put("dynamic_color", "動態取色"); zhTW.put("dynamic_color_desc", "跟隨系統桌布顏色"); zhTW.put("https_enable", "啟用 HTTPS 加密");
+                // ============ 繁体中文 (zh_TW) ============
+        Map<String, String> zhTW = new HashMap<>();
+        zhTW.put("running", "執行中"); zhTW.put("stopped", "已停止"); zhTW.put("start", "啟動"); zhTW.put("stop", "停止"); zhTW.put("no_device", "暫無裝置，請點選掃描");
+        zhTW.put("receive_history", "接收記錄"); zhTW.put("settings", "設定"); zhTW.put("send", "傳送"); zhTW.put("receive", "接收"); zhTW.put("file", "檔案");
+        zhTW.put("media", "媒體"); zhTW.put("folder", "資料夾"); zhTW.put("app", "應用程式"); zhTW.put("text", "文字"); zhTW.put("clipboard", "剪貼簿");
+        zhTW.put("not_selected", "未選擇檔案"); zhTW.put("auto_save", "自動儲存"); zhTW.put("save_album", "儲存到相簿"); zhTW.put("save_history", "儲存到歷史記錄");
+        zhTW.put("use_pin", "啟用 PIN 密碼"); zhTW.put("pin_off", "目前 PIN: 未啟用"); zhTW.put("pin_on", "目前 PIN 碼: "); zhTW.put("network", "網路與自動化");
+        zhTW.put("web_enable", "啟用網頁傳輸"); zhTW.put("auto_start", "開機自動啟動"); zhTW.put("receive_notif", "透過通知欄接收"); zhTW.put("port", "連接埠"); zhTW.put("timeout", "搜尋裝置逾時");
+        zhTW.put("other", "其他"); zhTW.put("anim", "介面切換動畫"); zhTW.put("set_name", "修改裝置名稱"); zhTW.put("backup", "備份 / 還原設定"); zhTW.put("about", "關於 WatchSend");
+        zhTW.put("language", "語言 (Language)"); zhTW.put("follow_system", "跟隨系統"); zhTW.put("cancel", "取消"); zhTW.put("confirm", "確定"); zhTW.put("close", "關閉");
+        zhTW.put("clear", "清空"); zhTW.put("input_ip", "手動輸入 IP"); zhTW.put("log_empty", "暫無日誌"); zhTW.put("voice_input", "🎤 語音");
+        zhTW.put("voice_unsupported", "目前裝置不支援語音輸入"); zhTW.put("ip_format_error", "IP 格式錯誤"); zhTW.put("save_fail", "儲存失敗"); zhTW.put("input_text", "傳送文字");
+        zhTW.put("select_lang", "選擇語言"); zhTW.put("restart_tip", "切換語言成功"); zhTW.put("backup_title", "備份與還原"); zhTW.put("backup_export", "匯出設定到剪貼簿");
+        zhTW.put("backup_import", "從剪貼簿匯入設定"); zhTW.put("theme_mode", "主題模式"); zhTW.put("theme_auto", "跟隨系統"); zhTW.put("theme_light", "淺色模式");
+        zhTW.put("theme_dark", "深色模式"); zhTW.put("dark_mode", "深色模式"); zhTW.put("dynamic_color", "動態取色"); zhTW.put("dynamic_color_desc", "跟隨系統桌布顏色");
+        zhTW.put("https_enable", "開啟 HTTPS 加密");
+        zhTW.put("about_desc", "WatchSend 是一款打破常規的極客級檔案傳輸工具。\n1. 完美相容 LocalSend 區域網路協定，最低支援 Android 2.3。\n2. 獨創 6 位密碼跨網傳輸，突破區域網路限制。\n3. 支援公網 P2P 極速直連，速度與安全盡在掌控。\n無需伺服器，全平台通用。\n\nAI 輔助生成，開源協定: MIT License。");
+        zhTW.put("about_credits", "作者\nstyisme\n\n貢獻者\nAI 助手 (大語言模型)"); zhTW.put("device_mobile", "手機"); zhTW.put("device_desktop", "電腦"); zhTW.put("device_web", "網頁");
+        zhTW.put("device_headless", "服務"); zhTW.put("device_server", "服務端"); zhTW.put("sending", "正在傳送檔案"); zhTW.put("send_failed", "傳送失敗");
+        zhTW.put("send_success", "傳送完成"); zhTW.put("sending_title", "正在傳送檔案"); zhTW.put("receiving_title", "正在接收檔案"); zhTW.put("total_progress", "總進度");
+        zhTW.put("size", "大小"); zhTW.put("speed", "速度"); zhTW.put("received", "已接收"); zhTW.put("completed", "已完成"); zhTW.put("failed", "已失敗");
         zhTW.put("enter_pin", "請輸入接收方 PIN 碼"); zhTW.put("pin_incorrect", "PIN 碼錯誤，請重試"); zhTW.put("modify_pin", "修改 PIN 碼"); zhTW.put("pin_code", "PIN 碼");
-        zhTW.put("sending", "正在傳送檔案"); zhTW.put("send_failed", "傳送失敗"); zhTW.put("send_success", "傳送完成");
-        zhTW.put("sending_title", "正在傳送檔案"); zhTW.put("receiving_title", "正在接收檔案"); zhTW.put("total_progress", "總進度");
-        zhTW.put("device_mobile", "手機"); zhTW.put("device_desktop", "電腦"); zhTW.put("device_web", "網頁");
-        zhTW.put("chin_padding", "底部避讓"); zhTW.put("chin_padding_desc", "針對有下巴的圓錶(如Moto 360)");
-        zhTW.put("view_whitelist", "查看/移除 白名單"); zhTW.put("view_blacklist", "查看/移除 黑名單"); zhTW.put("clear_all", "清空所有名單");
-        zhTW.put("add_files", "加入檔案"); zhTW.put("list_empty", "當前名單為空");
+        zhTW.put("add_ip", "加IP"); zhTW.put("cross_net", "跨網"); zhTW.put("auto_whitelist", "自動接收白名單檔案"); zhTW.put("general", "通用");
+        zhTW.put("save_dir_prefix", "儲存目錄: "); zhTW.put("recv_completed", "接收完成"); zhTW.put("send_completed", "傳送完成"); zhTW.put("interrupted", "已中斷");
+        zhTW.put("unknown_device", "未知裝置"); zhTW.put("receive_request", "接收檔案請求"); zhTW.put("reject", "拒絕"); zhTW.put("filter_ext_title", "攔截危險字尾");
+        zhTW.put("manage_acl", "管理白/黑名單"); zhTW.put("cross_net_title", "跨網傳輸"); zhTW.put("cross_net_desc", "無需連線同一Wi-Fi，極客通道直連。"); zhTW.put("upnp_punch", "一鍵自動穿透");
+        zhTW.put("direct_mode", "啟用極速直連"); zhTW.put("send_file_title", "我要傳送檔案"); zhTW.put("recv_file_title", "我要接收檔案"); zhTW.put("gen_pin_btn", "選擇檔案並生成6位密碼");
+        zhTW.put("input_pin_hint", "輸入6位密碼"); zhTW.put("connect_recv_btn", "連線並接收"); zhTW.put("author", "作者"); zhTW.put("contributors", "貢獻者");
+        zhTW.put("ipv6_local", "本機公網 IPv6: [%s]:53317 (可用直連)"); zhTW.put("ipv6_none", "本機 IPv6: 未獲取到公網 IPv6，僅限內網或穿透"); zhTW.put("stun_wait", "STUN 探測中...");
+        zhTW.put("stun_fail", "NAT 穿透失敗 (對稱型NAT)"); zhTW.put("stun_ok", "NAT公網位址: "); zhTW.put("stun_probe", "STUN探測"); zhTW.put("stun_tip", "NAT公網位址: 點選右側探測");
+        zhTW.put("advanced_tip", "高階玩法：可配合 FRP/Ngrok 或 ZeroTier 組網後，將生成的公網位址填入下方極速直連。"); zhTW.put("file_count", "檔案: %d"); zhTW.put("unknown_size", "未知大小");
+        zhTW.put("manage", "管理"); zhTW.put("clear_all", "清空所有"); zhTW.put("view_whitelist", "檢視白名單"); zhTW.put("view_blacklist", "檢視黑名單");
+        zhTW.put("all_deleted", "已全部刪除"); zhTW.put("export_log", "匯出日誌"); zhTW.put("input_address", "輸入位址"); zhTW.put("label", "標籤"); zhTW.put("ip_address", "IP 位址");
+        zhTW.put("accept", "接受"); zhTW.put("manage_list", "名單管理中心"); zhTW.put("list_empty", "名單為空"); zhTW.put("remove_device_fmt", "點選移除裝置 (%d個)");
+        zhTW.put("removed", "已移除"); zhTW.put("added_to_list", "已加入名單"); zhTW.put("removed_from_list", "已移出名單"); zhTW.put("add_files", "追加檔案");
+        zhTW.put("manual_device", "手動裝置"); zhTW.put("share_log_missing", "日誌檔案不存在"); zhTW.put("share_failed", "分享失敗"); zhTW.put("clipboard_empty", "剪貼簿為空");
+        zhTW.put("filter_ext_hint", "攔截字尾 (逗號分隔, 留空為不攔截)"); zhTW.put("filter_updated", "攔截規則已更新"); zhTW.put("select_title", "選擇"); zhTW.put("delete_all", "全部刪除");
+        zhTW.put("unknown_file", "未知檔案"); zhTW.put("service_running", "WatchSend 正在執行"); zhTW.put("service_ready", "區域網路檔案傳輸已就緒，點選返回");
+        zhTW.put("wants_to_send", "想要傳送給你檔案"); zhTW.put("select_app", "選擇應用程式 (APK)"); zhTW.put("send_folder", ">> [傳送此資料夾] <<"); zhTW.put("folder_prefix", "[資料夾] ");
+        zhTW.put("empty_folder", "空資料夾"); zhTW.put("cn_status_packing", "正在打包檔案..."); zhTW.put("cn_status_packaged", "打包完成，正在建立極客通道...");
+        zhTW.put("cn_status_sending_fmt", "正在傳送... 已傳送 %s KB"); zhTW.put("cn_status_send_done", "傳送完成！等待對方接收完畢。"); zhTW.put("cn_status_send_failed_fmt", "傳送失敗: %s");
+        zhTW.put("cn_status_connecting", "正在建立連線..."); zhTW.put("cn_status_receiving_fmt", "接收中... 已接收 %s KB"); zhTW.put("cn_status_recv_unzip", "接收完成，正在解壓...");
+        zhTW.put("cn_status_recv_done", "接收完成！已解壓到 Download 目錄"); zhTW.put("cn_status_recv_failed_fmt", "接收失敗: %s");
+        zhTW.put("cn_status_upnp_req", "正在向路由器申請 UPnP 埠對映..."); zhTW.put("cn_status_direct_read", "正在讀取檔案並準備直連..."); zhTW.put("cn_status_prepare_failed", "準備失敗");
+        zhTW.put("cn_status_direct_send", "正在透過公網直連傳送..."); zhTW.put("cn_status_direct_pct_fmt", "極速傳送中... %d%% (%s/%s KB)");
+        zhTW.put("cn_status_direct_done", "公網極速直連傳送完成！"); zhTW.put("cn_status_direct_failed_fmt", "直連失敗: %s");
+        zhTW.put("cn_status_self", "直連失敗: 無法透過公網IP直連本機，請使用另一臺裝置。"); zhTW.put("cn_pin_prefix_fmt", "密碼: %s"); zhTW.put("cn_pin_invalid", "請輸入6位純數字密碼");
+        zhTW.put("cn_direct_invalid", "請輸入對方公網IP和埠"); zhTW.put("cn_selected_fmt", "已選擇 %d 個檔案, 總計 %s"); zhTW.put("cn_read_failed", "讀取檔案失敗");
+        zhTW.put("cn_gen_pin_send", "生成密碼並開始傳送"); zhTW.put("cn_direct_send", "直連傳送已選檔案"); zhTW.put("cn_upnp_ok_fmt", "穿透成功！你的公網位址是: %s\n請讓對方填入此位址。");
+        zhTW.put("cn_upnp_off", "獲取失敗：路由器可能未開啟 UPnP。"); zhTW.put("cn_upnp_notfound", "獲取失敗：未找到支援 UPnP 的路由器。"); zhTW.put("cn_upnp_api_err", "對映失敗：路由器 UPnP 介面異常。");
+        zhTW.put("cn_upnp_rejected_fmt", "穿透失敗：路由器拒絕對映請求(%d)。"); zhTW.put("cn_upnp_exception_fmt", "穿透異常: %s"); zhTW.put("select_mode", "選擇傳輸模式");
+        zhTW.put("nat_public_untested", "NAT公網位址: 未探測"); zhTW.put("ipv6_format_direct", "本機公網 IPv6: [%s]:53317 (可用直連)"); zhTW.put("stun_probe_btn", "STUN探測");
+        zhTW.put("ui_size", "UI 大小"); zhTW.put("ui_size_small", "小"); zhTW.put("ui_size_medium", "標準"); zhTW.put("ui_size_large", "大");
+        zhTW.put("update_success", "更新成功"); zhTW.put("export_ok", "匯出成功"); zhTW.put("import_ok", "匯入成功"); zhTW.put("recv_request", "接收請求");
+        zhTW.put("from_device", "來自裝置"); zhTW.put("wants_to_send_you", "想要傳送檔案給你"); zhTW.put("action", "操作"); zhTW.put("current_file", "目前檔案");
+        zhTW.put("preparing", "準備中..."); zhTW.put("transferring", "傳輸中..."); zhTW.put("calculating", "計算中..."); zhTW.put("saved_to_local", "已儲存到本地");
+        zhTW.put("transfer_success", "傳輸成功"); zhTW.put("local_ipv6", "本機 IPv6"); zhTW.put("getting", "正在獲取..."); zhTW.put("not_probed", "未探測");
+        zhTW.put("probing", "探測中..."); zhTW.put("nat_addr", "NAT 公網位址"); zhTW.put("input_direct_ip", "對方公網 IP:埠"); zhTW.put("selected_prefix", "已選 ");
+        zhTW.put("files_suffix", " 個檔案\n"); zhTW.put("select_file_gen_pin", "選擇檔案並生成密碼"); zhTW.put("pin_prefix", "密碼: "); zhTW.put("toast_input_ip", "請輸入對方公網IP和埠");
+        zhTW.put("toast_input_pin", "請輸入6位純數字密碼"); zhTW.put("ipv6_not_found", "未獲取到公網 IPv6"); zhTW.put("packing", "正在打包檔案...");
+        zhTW.put("packed_connecting", "打包完成，正在建立通道..."); zhTW.put("sending_prefix", "傳送中... "); zhTW.put("send_done", "傳送完成！"); zhTW.put("failed_prefix", "失敗: ");
+        zhTW.put("direct_self", "直連失敗: 無法透過公網IP直連本機。"); zhTW.put("preparing_direct", "準備直連..."); zhTW.put("read_failed", "讀取失敗"); zhTW.put("prepare_failed", "準備失敗");
+        zhTW.put("direct_sending", "正在直連傳送..."); zhTW.put("sending_percent", "傳送中 "); zhTW.put("direct_send_done", "直連傳送完成！"); zhTW.put("direct_failed", "直連失敗: ");
+        zhTW.put("connecting", "正在連線..."); zhTW.put("receiving_prefix", "接收中... "); zhTW.put("recv_unzipping", "接收完成，解壓中..."); zhTW.put("recv_done", "接收完成！已儲存到下載。");
+        zhTW.put("recv_failed", "接收失敗: "); zhTW.put("round_screen_opt", "圓屏最佳化"); zhTW.put("round_screen_opt_desc", "防止內容被圓形邊緣遮擋");
+        zhTW.put("block_system_back", "攔截系統返回"); zhTW.put("block_system_back_desc", "防止與滑動返回衝突"); zhTW.put("dark_mode_desc", "黑白主題切換");
+        zhTW.put("transfer_settings", "傳輸"); zhTW.put("auto_save_desc", "免確認直接接收"); zhTW.put("auto_whitelist_desc", "僅限白名單裝置"); zhTW.put("save_album_desc", "圖片與影片放入相簿");
+        zhTW.put("save_history_desc", "記錄收發日誌"); zhTW.put("use_pin_desc", "增強接收安全性"); zhTW.put("https_enable_desc", "可能影響舊裝置相容性"); zhTW.put("web_enable_desc", "瀏覽器互傳");
+        zhTW.put("auto_start_desc", "後臺常駐"); zhTW.put("receive_notif_desc", "需系統許可權"); zhTW.put("port_settings", "埠設定"); zhTW.put("timeout_settings", "搜尋逾時");
+        zhTW.put("device_security", "裝置與安全"); zhTW.put("manage_acl_desc", "管理已信任裝置"); zhTW.put("ui_scale_dialog_title", "無級縮放 UI"); zhTW.put("about_title", "關於");
+        zhTW.put("pin_title_dialog", "修改 PIN"); zhTW.put("port_dialog_title", "埠"); zhTW.put("timeout_dialog_title", "搜尋逾時(ms)");
+        zhTW.put("filter_dialog_title", "攔截字尾"); zhTW.put("device_name_title", "裝置名稱"); zhTW.put("lang_title", "語言設定"); zhTW.put("acl_dialog_title", "黑白名單");
+        zhTW.put("whitelist_title", "白名單"); zhTW.put("blacklist_title", "黑名單");
+        zhTW.put("about_desc_watchsend", "作者: styisme\nAI 輔助生成\nMIT License\n\n相容 LocalSend v2.2"); zhTW.put("start_service", "啟動"); zhTW.put("stop_service", "停止");
+        zhTW.put("devices_nearby", "附近的裝置"); zhTW.put("no_device_scan", "暫無裝置，請點選掃描"); zhTW.put("send_file", "傳送檔案"); zhTW.put("select_title_desc", "選擇內容");
+        zhTW.put("device", "裝置"); zhTW.put("record", "接收記錄"); zhTW.put("return_to_devices", "↩ 返回裝置"); zhTW.put("no_record", "暫無記錄");
+        zhTW.put("file_not_found", "檔案不存在"); zhTW.put("cannot_open", "無法開啟"); zhTW.put("no_app", "無應用程式"); zhTW.put("select_folder_send", ">> [傳送此資料夾] <<");
+        zhTW.put("files_count_prefix", "檔案: "); zhTW.put("size_label", "大小: "); zhTW.put("clear_all_files", "全部刪除"); zhTW.put("back_prev", "返回上一頁");
+        zhTW.put("ip_prefix", "IP "); zhTW.put("web_qr", "網頁端位址"); zhTW.put("web_qr_desc", "請在電腦瀏覽器輸入此位址"); zhTW.put("open_file", "開啟檔案");
+        zhTW.put("install_apk", "一鍵安裝"); zhTW.put("unzip", "解壓到目前目錄"); zhTW.put("unzipping", "正在後臺解壓..."); zhTW.put("unzip_ok", "解壓完成"); zhTW.put("unzip_fail", "解壓失敗");
+        zhTW.put("geek_mode", "極客模式"); zhTW.put("silent_install", "靜默安裝"); zhTW.put("silent_install_desc", "需 Root 或 Shizuku"); zhTW.put("share_file", "分享檔案");
+        zhTW.put("delete_record", "刪除記錄"); zhTW.put("delete_confirm", "確認刪除這條記錄嗎？"); zhTW.put("copied_hint", "已複製到剪貼簿"); zhTW.put("settings_title", "設定");
+        zhTW.put("clear_all_files_btn", "清空所有檔案"); zhTW.put("add_whitelist", "加入白名單"); zhTW.put("remove_whitelist", "移除白名單"); zhTW.put("add_blacklist", "加入黑名單");
+        zhTW.put("remove_blacklist", "移除黑名單"); zhTW.put("edit_btn", "編輯"); zhTW.put("add_btn", "+ 追加"); zhTW.put("files_count_fmt", "%d 個檔案");
+        zhTW.put("total_size_fmt", "共 %s"); zhTW.put("swipe_back_toast", "請滑動螢幕返回"); zhTW.put("selected_files_fmt", "已選擇 %d 個檔案 (%s)");
+        zhTW.put("low_perf_mode", "低效能模式"); zhTW.put("low_perf_desc", "減弱或關閉UI動畫特效"); zhTW.put("nearby_devices", "附近的裝置"); zhTW.put("scan", "掃描");
+        zhTW.put("edit", "編輯"); zhTW.put("add", "追加"); zhTW.put("empty_scanning", "掃描中..."); zhTW.put("lang_switched", "語言已切換"); zhTW.put("screen_shape", "螢幕形狀");
+        zhTW.put("shape_auto", "圓屏最佳化(自動)"); zhTW.put("shape_round", "強制圓屏"); zhTW.put("shape_square", "強制方屏"); zhTW.put("chin_padding", "底部避讓");
+        zhTW.put("chin_padding_desc", "針對有下巴的圓表(如Moto 360)"); zhTW.put("save_dir_label", "儲存目錄: "); zhTW.put("saved_to_dir_toast", "已儲存到相簿/下載目錄");
         zhTW.put("quick_save", "快速儲存"); zhTW.put("quick_save_off", "每次都詢問"); zhTW.put("quick_save_on", "全部自動接收"); zhTW.put("quick_save_paired", "僅收藏裝置自動接收");
-        zhTW.put("favorites", "收藏的裝置"); zhTW.put("favorites_empty", "還沒有收藏的裝置，長按裝置即可收藏");
-        zhTW.put("add_favorite", "收藏此裝置"); zhTW.put("remove_favorite", "取消收藏"); zhTW.put("favorite_added", "已收藏"); zhTW.put("favorite_removed", "已取消收藏");
-        zhTW.put("download_share", "共享下載"); zhTW.put("download_share_desc", "允許區域網路裝置透過 LocalSend 下載本機 OldSend 目錄裡的檔案");
-        zhTW.put("day_yesterday", "昨天"); zhTW.put("month_suffix", "月"); zhTW.put("day_suffix", "日"); zhTW.put("year_suffix", "年"); zhTW.put("selected_files", "待傳送檔案"); zhTW.put("send_n_files", "傳送 %1 個檔案"); zhTW.put("copy_fingerprint", "複製位址"); zhTW.put("direct_send", "直連傳送"); zhTW.put("gen_pin_send", "產生 PIN 傳送"); zhTW.put("log", "日誌"); zhTW.put("completed", "已完成"); zhTW.put("device_headless", "無介面裝置"); zhTW.put("device_server", "伺服器"); zhTW.put("export_ok", "已匯出"); zhTW.put("import_ok", "已匯入"); zhTW.put("service_ready", "服務就緒"); zhTW.put("speed", "速度");
-        zhTW.put("fingerprint_phrase", "核對短語"); zhTW.put("remaining", "剩餘"); zhTW.put("device_details", "裝置詳情"); zhTW.put("protocol_label", "協定"); zhTW.put("fingerprint_label", "裝置指紋");
-        zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
-        zhTW.put("about_desc", "WatchSend 是一款打破常規的極客級檔案傳輸工具。\n1. 完整相容 LocalSend 區域網協定，支援 Android 2.3+。\n2. 獨創 6 位密碼跨網傳輸，突破區域網限制。\n3. 支援公網 P2P 直連，速度與安全都在自己手上。\n無需伺服器，跨平台。\n\nAI 輔助產生，開源：MIT License。");
+        zhTW.put("favorites", "收藏的裝置"); zhTW.put("favorites_empty", "還沒有收藏的裝置，長按裝置即可收藏"); zhTW.put("add_favorite", "收藏此裝置"); zhTW.put("remove_favorite", "取消收藏");
+        zhTW.put("favorite_added", "已收藏"); zhTW.put("favorite_removed", "已取消收藏"); zhTW.put("download_share", "共享下載");
+        zhTW.put("download_share_desc", "允許區域網路裝置透過 LocalSend 下載本機 OldSend 目錄裡的檔案"); zhTW.put("day_yesterday", "昨天"); zhTW.put("month_suffix", "月");
+        zhTW.put("day_suffix", "日"); zhTW.put("year_suffix", "年"); zhTW.put("selected_files", "待傳送檔案"); zhTW.put("send_n_files", "傳送 %1 個檔案");
+        zhTW.put("copy_fingerprint", "複製位址"); zhTW.put("direct_send", "直連傳送"); zhTW.put("gen_pin_send", "生成 PIN 傳送"); zhTW.put("log", "日誌");
+        zhTW.put("fingerprint_phrase", "核對短語"); zhTW.put("remaining", "剩餘"); zhTW.put("device_details", "裝置詳情"); zhTW.put("protocol_label", "協定");
+        zhTW.put("fingerprint_label", "裝置指紋"); zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
         dict.put("zh_TW", zhTW);
-
-        // ============ 英语 (en) ============
+// ============ 英语 (en) ============
         Map<String, String> en = new HashMap<>();
         en.put("running", "Running"); en.put("stopped", "Stopped"); en.put("start", "Start"); en.put("stop", "Stop");
         en.put("no_device", "No devices, tap scan"); en.put("receive_history", "Receive History"); en.put("settings", "Settings");
@@ -1926,6 +1886,31 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         pt.put("voice_unsupported", "Entrada de voz não suportada");
         pt.put("year_suffix", "/");
         dict.put("pt", pt);
+
+        installExtra1();
+        installExtra2();
+        installExtra3();
+    }
+
+
+    /** 语言选择页的代码表（顺序即展示顺序，"system" 恒为第一项）。 */
+    public static final String[] CODES = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt","ar","az","bg","bn","bs","ca","cs","da","el","et","eu","fa","fi","fil","he","hi","hr","hu","id","is","lt","lv","mk","ms","nb","ne","nl","pl","ro","sk","sl","sq","sr","sv","sw","th","tr","uk","ur","uz","vi"};
+    /** 各语言的自称（第一项由 follow_system 词条替换）。 */
+    public static final String[] LABELS = {"system","简体中文","繁體中文","English","日本語","한국어","Deutsch","Français","Español","Русский","Português","العربية","Azərbaycan","Български","বাংলা","Bosanski","Català","Čeština","Dansk","Ελληνικά","Eesti","Euskara","فارسی","Suomi","Filipino","עברית","हिन्दी","Hrvatski","Magyar","Bahasa Indonesia","Íslenska","Lietuvių","Latviešu","Македонски","Bahasa Melayu","Norsk bokmål","नेपाली","Nederlands","Polski","Română","Slovenčina","Slovenščina","Shqip","Српски","Svenska","Kiswahili","ไทย","Türkçe","Українська","اردو","Oʻzbekcha","Tiếng Việt"};
+
+    public static int langCount() { return CODES.length; }
+    public static String codeAt(int i) { return CODES[i]; }
+    public static String labelAt(int i) { return i == 0 ? get("follow_system") : LABELS[i]; }
+
+    /** 系统 Locale 的 language 代码归一化到我们的 code（iw/in/tl/no 这类历史代码要换算）。 */
+    private static String normalizeCode(String lang) {
+        if (lang == null) return "en";
+        if ("iw".equals(lang)) return "he";
+        if ("in".equals(lang)) return "id";
+        if ("tl".equals(lang)) return "fil";
+        if ("no".equals(lang)) return "nb";
+        if ("zh".equals(lang)) return "zh";
+        return dict.containsKey(lang) ? lang : "en";
     }
 
     public static void init(Context ctx) {
@@ -1935,10 +1920,8 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
             String sysCountry = Locale.getDefault().getCountry();
             if ("zh".equals(sysLang)) {
                 currentLang = "TW".equals(sysCountry) || "HK".equals(sysCountry) ? "zh_TW" : "zh";
-            } else if (dict.containsKey(sysLang)) {
-                currentLang = sysLang;
             } else {
-                currentLang = "en";
+                currentLang = normalizeCode(sysLang);
             }
         } else {
             currentLang = lang;
@@ -1947,6 +1930,351 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
 
     /** 当前生效的语言代码（zh / zh_TW / en / ja ...），供随语言变化的文案使用。 */
     public static String current() { return currentLang; }
+
+        // 扩展语言包：继承英文全量，覆盖最常用界面文案；未覆盖的长尾词条自动回退英文，
+        // 因此任何新语言都不会出现裸 key。世界语言数千种，这里按人口覆盖优先铺开主要语种。
+
+    private static void installExtra1() {
+        Map<String, String> en = dict.get("en");
+        // ===== 扩展语言包（v1.7.7）=====
+        // 世界语言约 7000 种，逐条维护全量译文不现实。这里按"覆盖全球绝大多数人口"的主要语种铺开：
+        // 每个新语言都继承英文全量词条，再覆盖首页/传输/设置里最关键的界面文案；
+        // 未覆盖的长尾词条自动回退英文，因此界面上不会出现裸 key。
+        Map<String, String> lang_ar = new HashMap<>(en);
+        lang_ar.put("cancel", "إلغاء"); lang_ar.put("confirm", "تأكيد"); lang_ar.put("close", "إغلاق"); lang_ar.put("settings", "الإعدادات");
+        lang_ar.put("send", "إرسال"); lang_ar.put("receive", "استقبال"); lang_ar.put("file", "ملف"); lang_ar.put("app", "تطبيق"); lang_ar.put("text", "نص");
+        lang_ar.put("start", "بدء"); lang_ar.put("stop", "إيقاف"); lang_ar.put("running", "قيد التشغيل"); lang_ar.put("stopped", "متوقف");
+        lang_ar.put("no_device", "لا توجد أجهزة — اضغط للبحث"); lang_ar.put("language", "اللغة"); lang_ar.put("follow_system", "اتبع النظام");
+        lang_ar.put("network", "الشبكة"); lang_ar.put("about", "حول"); lang_ar.put("log", "السجل"); lang_ar.put("log_empty", "لا توجد سجلات");
+        lang_ar.put("completed", "مكتمل"); lang_ar.put("accept", "قبول");
+        dict.put("ar", lang_ar);
+        Map<String, String> lang_az = new HashMap<>(en);
+        lang_az.put("cancel", "Ləğv et"); lang_az.put("confirm", "Təsdiq et"); lang_az.put("close", "Bağla"); lang_az.put("settings", "Ayarlar");
+        lang_az.put("send", "Göndər"); lang_az.put("receive", "Qəbul et"); lang_az.put("file", "Fayl"); lang_az.put("app", "Tətbiq"); lang_az.put("text", "Mətn");
+        lang_az.put("start", "Başlat"); lang_az.put("stop", "Dayandır"); lang_az.put("running", "İşləyir"); lang_az.put("stopped", "Dayandırıldı");
+        lang_az.put("no_device", "Cihaz yoxdur — skan üçün toxun"); lang_az.put("language", "Dil"); lang_az.put("follow_system", "Sistemə uyğun");
+        lang_az.put("network", "Şəbəkə"); lang_az.put("about", "Haqqında"); lang_az.put("log", "Jurnal"); lang_az.put("log_empty", "Jurnal boşdur");
+        lang_az.put("completed", "Tamamlandı"); lang_az.put("accept", "Qəbul et");
+        dict.put("az", lang_az);
+        Map<String, String> lang_bg = new HashMap<>(en);
+        lang_bg.put("cancel", "Отказ"); lang_bg.put("confirm", "Потвърди"); lang_bg.put("close", "Затвори"); lang_bg.put("settings", "Настройки");
+        lang_bg.put("send", "Изпрати"); lang_bg.put("receive", "Получи"); lang_bg.put("file", "Файл"); lang_bg.put("app", "Приложение"); lang_bg.put("text", "Текст");
+        lang_bg.put("start", "Старт"); lang_bg.put("stop", "Стоп"); lang_bg.put("running", "Работи"); lang_bg.put("stopped", "Спряно");
+        lang_bg.put("no_device", "Няма устройства — натиснете за сканиране"); lang_bg.put("language", "Език"); lang_bg.put("follow_system", "Според системата");
+        lang_bg.put("network", "Мрежа"); lang_bg.put("about", "Относно"); lang_bg.put("log", "Дневник"); lang_bg.put("log_empty", "Дневникът е празен");
+        lang_bg.put("completed", "Готово"); lang_bg.put("accept", "Приеми");
+        dict.put("bg", lang_bg);
+        Map<String, String> lang_bn = new HashMap<>(en);
+        lang_bn.put("cancel", "বাতিল"); lang_bn.put("confirm", "নিশ্চিত"); lang_bn.put("close", "বন্ধ"); lang_bn.put("settings", "সেটিংস"); lang_bn.put("send", "পাঠান");
+        lang_bn.put("receive", "গ্রহণ"); lang_bn.put("file", "ফাইল"); lang_bn.put("app", "অ্যাপ"); lang_bn.put("text", "টেক্সট"); lang_bn.put("start", "শুরু");
+        lang_bn.put("stop", "থামুন"); lang_bn.put("running", "চলছে"); lang_bn.put("stopped", "বন্ধ");
+        lang_bn.put("no_device", "কোনো ডিভাইস নেই — স্ক্যান করতে ট্যাপ করুন"); lang_bn.put("language", "ভাষা"); lang_bn.put("follow_system", "সিস্টেম অনুসরণ");
+        lang_bn.put("network", "নেটওয়ার্ক"); lang_bn.put("about", "সম্পর্কে"); lang_bn.put("log", "লগ"); lang_bn.put("log_empty", "লগ খালি");
+        lang_bn.put("completed", "সম্পন্ন"); lang_bn.put("accept", "গ্রহণ");
+        dict.put("bn", lang_bn);
+        Map<String, String> lang_bs = new HashMap<>(en);
+        lang_bs.put("cancel", "Otkaži"); lang_bs.put("confirm", "Potvrdi"); lang_bs.put("close", "Zatvori"); lang_bs.put("settings", "Postavke");
+        lang_bs.put("send", "Pošalji"); lang_bs.put("receive", "Primi"); lang_bs.put("file", "Datoteka"); lang_bs.put("app", "Aplikacija"); lang_bs.put("text", "Tekst");
+        lang_bs.put("start", "Start"); lang_bs.put("stop", "Stop"); lang_bs.put("running", "Radi"); lang_bs.put("stopped", "Zaustavljeno");
+        lang_bs.put("no_device", "Nema uređaja — dodirnite za skeniranje"); lang_bs.put("language", "Jezik"); lang_bs.put("follow_system", "Prati sistem");
+        lang_bs.put("network", "Mreža"); lang_bs.put("about", "O aplikaciji"); lang_bs.put("log", "Dnevnik"); lang_bs.put("log_empty", "Dnevnik je prazan");
+        lang_bs.put("completed", "Završeno"); lang_bs.put("accept", "Prihvati");
+        dict.put("bs", lang_bs);
+        Map<String, String> lang_ca = new HashMap<>(en);
+        lang_ca.put("cancel", "Cancel·la"); lang_ca.put("confirm", "Confirma"); lang_ca.put("close", "Tanca"); lang_ca.put("settings", "Configuració");
+        lang_ca.put("send", "Envia"); lang_ca.put("receive", "Rep"); lang_ca.put("file", "Fitxer"); lang_ca.put("app", "Aplicació"); lang_ca.put("text", "Text");
+        lang_ca.put("start", "Inicia"); lang_ca.put("stop", "Atura"); lang_ca.put("running", "En marxa"); lang_ca.put("stopped", "Aturat");
+        lang_ca.put("no_device", "Cap dispositiu — toca per escanejar"); lang_ca.put("language", "Idioma"); lang_ca.put("follow_system", "Segueix el sistema");
+        lang_ca.put("network", "Xarxa"); lang_ca.put("about", "Quant a"); lang_ca.put("log", "Registre"); lang_ca.put("log_empty", "Registre buit");
+        lang_ca.put("completed", "Completat"); lang_ca.put("accept", "Accepta");
+        dict.put("ca", lang_ca);
+        Map<String, String> lang_cs = new HashMap<>(en);
+        lang_cs.put("cancel", "Zrušit"); lang_cs.put("confirm", "Potvrdit"); lang_cs.put("close", "Zavřít"); lang_cs.put("settings", "Nastavení");
+        lang_cs.put("send", "Odeslat"); lang_cs.put("receive", "Přijmout"); lang_cs.put("file", "Soubor"); lang_cs.put("app", "Aplikace"); lang_cs.put("text", "Text");
+        lang_cs.put("start", "Start"); lang_cs.put("stop", "Stop"); lang_cs.put("running", "Běží"); lang_cs.put("stopped", "Zastaveno");
+        lang_cs.put("no_device", "Žádná zařízení — klepněte pro skenování"); lang_cs.put("language", "Jazyk"); lang_cs.put("follow_system", "Podle systému");
+        lang_cs.put("network", "Síť"); lang_cs.put("about", "O aplikaci"); lang_cs.put("log", "Protokol"); lang_cs.put("log_empty", "Protokol je prázdný");
+        lang_cs.put("completed", "Dokončeno"); lang_cs.put("accept", "Přijmout");
+        dict.put("cs", lang_cs);
+        Map<String, String> lang_da = new HashMap<>(en);
+        lang_da.put("cancel", "Annuller"); lang_da.put("confirm", "Bekræft"); lang_da.put("close", "Luk"); lang_da.put("settings", "Indstillinger");
+        lang_da.put("send", "Send"); lang_da.put("receive", "Modtag"); lang_da.put("file", "Fil"); lang_da.put("app", "App"); lang_da.put("text", "Tekst");
+        lang_da.put("start", "Start"); lang_da.put("stop", "Stop"); lang_da.put("running", "Kører"); lang_da.put("stopped", "Stoppet");
+        lang_da.put("no_device", "Ingen enheder — tryk for at scanne"); lang_da.put("language", "Sprog"); lang_da.put("follow_system", "Følg systemet");
+        lang_da.put("network", "Netværk"); lang_da.put("about", "Om"); lang_da.put("log", "Log"); lang_da.put("log_empty", "Log er tom");
+        lang_da.put("completed", "Fuldført"); lang_da.put("accept", "Accepter");
+        dict.put("da", lang_da);
+        Map<String, String> lang_el = new HashMap<>(en);
+        lang_el.put("cancel", "Ακύρωση"); lang_el.put("confirm", "Επιβεβαίωση"); lang_el.put("close", "Κλείσιμο"); lang_el.put("settings", "Ρυθμίσεις");
+        lang_el.put("send", "Αποστολή"); lang_el.put("receive", "Λήψη"); lang_el.put("file", "Αρχείο"); lang_el.put("app", "Εφαρμογή"); lang_el.put("text", "Κείμενο");
+        lang_el.put("start", "Έναρξη"); lang_el.put("stop", "Διακοπή"); lang_el.put("running", "Σε λειτουργία"); lang_el.put("stopped", "Σταματημένο");
+        lang_el.put("no_device", "Καμία συσκευή — πατήστε για σάρωση"); lang_el.put("language", "Γλώσσα"); lang_el.put("follow_system", "Ακολούθηση συστήματος");
+        lang_el.put("network", "Δίκτυο"); lang_el.put("about", "Σχετικά"); lang_el.put("log", "Καταγραφή"); lang_el.put("log_empty", "Κενή καταγραφή");
+        lang_el.put("completed", "Ολοκληρώθηκε"); lang_el.put("accept", "Αποδοχή");
+        dict.put("el", lang_el);
+        Map<String, String> lang_et = new HashMap<>(en);
+        lang_et.put("cancel", "Tühista"); lang_et.put("confirm", "Kinnita"); lang_et.put("close", "Sulge"); lang_et.put("settings", "Seaded");
+        lang_et.put("send", "Saada"); lang_et.put("receive", "Võta vastu"); lang_et.put("file", "Fail"); lang_et.put("app", "Rakendus"); lang_et.put("text", "Tekst");
+        lang_et.put("start", "Alusta"); lang_et.put("stop", "Peata"); lang_et.put("running", "Töötab"); lang_et.put("stopped", "Peatatud");
+        lang_et.put("no_device", "Seadmeid pole — puuduta skannimiseks"); lang_et.put("language", "Keel"); lang_et.put("follow_system", "Järgi süsteemi");
+        lang_et.put("network", "Võrk"); lang_et.put("about", "Teave"); lang_et.put("log", "Logi"); lang_et.put("log_empty", "Logi on tühi");
+        lang_et.put("completed", "Valmis"); lang_et.put("accept", "Nõustu");
+        dict.put("et", lang_et);
+        Map<String, String> lang_eu = new HashMap<>(en);
+        lang_eu.put("cancel", "Utzi"); lang_eu.put("confirm", "Berretsi"); lang_eu.put("close", "Itxi"); lang_eu.put("settings", "Ezarpenak");
+        lang_eu.put("send", "Bidali"); lang_eu.put("receive", "Jaso"); lang_eu.put("file", "Fitxategia"); lang_eu.put("app", "Aplikazioa");
+        lang_eu.put("text", "Testua"); lang_eu.put("start", "Hasi"); lang_eu.put("stop", "Gelditu"); lang_eu.put("running", "Martxan");
+        lang_eu.put("stopped", "Geldituta"); lang_eu.put("no_device", "Gailurik ez — sakatu eskaneatzeko"); lang_eu.put("language", "Hizkuntza");
+        lang_eu.put("follow_system", "Jarraitu sistema"); lang_eu.put("network", "Sarea"); lang_eu.put("about", "Honi buruz"); lang_eu.put("log", "Erregistroa");
+        lang_eu.put("log_empty", "Erregistroa hutsik"); lang_eu.put("completed", "Osatuta"); lang_eu.put("accept", "Onartu");
+        dict.put("eu", lang_eu);
+        Map<String, String> lang_fa = new HashMap<>(en);
+        lang_fa.put("cancel", "لغو"); lang_fa.put("confirm", "تأیید"); lang_fa.put("close", "بستن"); lang_fa.put("settings", "تنظیمات"); lang_fa.put("send", "ارسال");
+        lang_fa.put("receive", "دریافت"); lang_fa.put("file", "فایل"); lang_fa.put("app", "برنامه"); lang_fa.put("text", "متن"); lang_fa.put("start", "شروع");
+        lang_fa.put("stop", "توقف"); lang_fa.put("running", "در حال اجرا"); lang_fa.put("stopped", "متوقف"); lang_fa.put("no_device", "دستگاهی نیست — برای جستجو بزنید");
+        lang_fa.put("language", "زبان"); lang_fa.put("follow_system", "پیروی از سیستم"); lang_fa.put("network", "شبکه"); lang_fa.put("about", "درباره");
+        lang_fa.put("log", "گزارش"); lang_fa.put("log_empty", "گزارش خالی است"); lang_fa.put("completed", "تکمیل شد"); lang_fa.put("accept", "پذیرش");
+        dict.put("fa", lang_fa);
+        Map<String, String> lang_fi = new HashMap<>(en);
+        lang_fi.put("cancel", "Peruuta"); lang_fi.put("confirm", "Vahvista"); lang_fi.put("close", "Sulje"); lang_fi.put("settings", "Asetukset");
+        lang_fi.put("send", "Lähetä"); lang_fi.put("receive", "Vastaanota"); lang_fi.put("file", "Tiedosto"); lang_fi.put("app", "Sovellus");
+        lang_fi.put("text", "Teksti"); lang_fi.put("start", "Aloita"); lang_fi.put("stop", "Lopeta"); lang_fi.put("running", "Käynnissä");
+        lang_fi.put("stopped", "Pysäytetty"); lang_fi.put("no_device", "Ei laitteita — napauta skannataksesi"); lang_fi.put("language", "Kieli");
+        lang_fi.put("follow_system", "Seuraa järjestelmää"); lang_fi.put("network", "Verkko"); lang_fi.put("about", "Tietoja"); lang_fi.put("log", "Loki");
+        lang_fi.put("log_empty", "Loki on tyhjä"); lang_fi.put("completed", "Valmis"); lang_fi.put("accept", "Hyväksy");
+        dict.put("fi", lang_fi);
+        Map<String, String> lang_fil = new HashMap<>(en);
+        lang_fil.put("cancel", "Kanselahin"); lang_fil.put("confirm", "Kumpirmahin"); lang_fil.put("close", "Isara"); lang_fil.put("settings", "Mga setting");
+        lang_fil.put("send", "Ipadala"); lang_fil.put("receive", "Tanggapin"); lang_fil.put("file", "File"); lang_fil.put("app", "App"); lang_fil.put("text", "Teksto");
+        lang_fil.put("start", "Simulan"); lang_fil.put("stop", "Itigil"); lang_fil.put("running", "Tumatakbo"); lang_fil.put("stopped", "Nakatigil");
+        lang_fil.put("no_device", "Walang device — i-tap para mag-scan"); lang_fil.put("language", "Wika"); lang_fil.put("follow_system", "Sundin ang system");
+        lang_fil.put("network", "Network"); lang_fil.put("about", "Tungkol"); lang_fil.put("log", "Log"); lang_fil.put("log_empty", "Walang log");
+        lang_fil.put("completed", "Tapos na"); lang_fil.put("accept", "Tanggapin");
+        dict.put("fil", lang_fil);
+    }
+
+    private static void installExtra2() {
+        Map<String, String> en = dict.get("en");
+        Map<String, String> lang_he = new HashMap<>(en);
+        lang_he.put("cancel", "ביטול"); lang_he.put("confirm", "אישור"); lang_he.put("close", "סגור"); lang_he.put("settings", "הגדרות"); lang_he.put("send", "שלח");
+        lang_he.put("receive", "קבל"); lang_he.put("file", "קובץ"); lang_he.put("app", "אפליקציה"); lang_he.put("text", "טקסט"); lang_he.put("start", "התחל");
+        lang_he.put("stop", "עצור"); lang_he.put("running", "פועל"); lang_he.put("stopped", "עצור"); lang_he.put("no_device", "אין מכשירים — הקש לסריקה");
+        lang_he.put("language", "שפה"); lang_he.put("follow_system", "לפי המערכת"); lang_he.put("network", "רשת"); lang_he.put("about", "אודות");
+        lang_he.put("log", "יומן"); lang_he.put("log_empty", "היומן ריק"); lang_he.put("completed", "הושלם"); lang_he.put("accept", "אשר");
+        dict.put("he", lang_he);
+        Map<String, String> lang_hi = new HashMap<>(en);
+        lang_hi.put("cancel", "रद्द करें"); lang_hi.put("confirm", "ठीक है"); lang_hi.put("close", "बंद करें"); lang_hi.put("settings", "सेटिंग्स");
+        lang_hi.put("send", "भेजें"); lang_hi.put("receive", "प्राप्त करें"); lang_hi.put("file", "फ़ाइल"); lang_hi.put("app", "ऐप"); lang_hi.put("text", "टेक्स्ट");
+        lang_hi.put("start", "शुरू करें"); lang_hi.put("stop", "रोकें"); lang_hi.put("running", "चल रहा है"); lang_hi.put("stopped", "रुका हुआ");
+        lang_hi.put("no_device", "कोई डिवाइस नहीं — स्कैन के लिए टैप करें"); lang_hi.put("language", "भाषा"); lang_hi.put("follow_system", "सिस्टम के अनुसार");
+        lang_hi.put("network", "नेटवर्क"); lang_hi.put("about", "बारे में"); lang_hi.put("log", "लॉग"); lang_hi.put("log_empty", "कोई लॉग नहीं");
+        lang_hi.put("completed", "पूर्ण"); lang_hi.put("accept", "स्वीकार करें");
+        dict.put("hi", lang_hi);
+        Map<String, String> lang_hr = new HashMap<>(en);
+        lang_hr.put("cancel", "Odustani"); lang_hr.put("confirm", "Potvrdi"); lang_hr.put("close", "Zatvori"); lang_hr.put("settings", "Postavke");
+        lang_hr.put("send", "Pošalji"); lang_hr.put("receive", "Primi"); lang_hr.put("file", "Datoteka"); lang_hr.put("app", "Aplikacija"); lang_hr.put("text", "Tekst");
+        lang_hr.put("start", "Start"); lang_hr.put("stop", "Stop"); lang_hr.put("running", "Radi"); lang_hr.put("stopped", "Zaustavljeno");
+        lang_hr.put("no_device", "Nema uređaja — dodirnite za skeniranje"); lang_hr.put("language", "Jezik"); lang_hr.put("follow_system", "Prati sustav");
+        lang_hr.put("network", "Mreža"); lang_hr.put("about", "O aplikaciji"); lang_hr.put("log", "Dnevnik"); lang_hr.put("log_empty", "Dnevnik je prazan");
+        lang_hr.put("completed", "Dovršeno"); lang_hr.put("accept", "Prihvati");
+        dict.put("hr", lang_hr);
+        Map<String, String> lang_hu = new HashMap<>(en);
+        lang_hu.put("cancel", "Mégse"); lang_hu.put("confirm", "OK"); lang_hu.put("close", "Bezárás"); lang_hu.put("settings", "Beállítások");
+        lang_hu.put("send", "Küldés"); lang_hu.put("receive", "Fogadás"); lang_hu.put("file", "Fájl"); lang_hu.put("app", "Alkalmazás"); lang_hu.put("text", "Szöveg");
+        lang_hu.put("start", "Indítás"); lang_hu.put("stop", "Leállítás"); lang_hu.put("running", "Fut"); lang_hu.put("stopped", "Leállítva");
+        lang_hu.put("no_device", "Nincs eszköz — koppints a kereséshez"); lang_hu.put("language", "Nyelv"); lang_hu.put("follow_system", "Rendszer követése");
+        lang_hu.put("network", "Hálózat"); lang_hu.put("about", "Névjegy"); lang_hu.put("log", "Napló"); lang_hu.put("log_empty", "A napló üres");
+        lang_hu.put("completed", "Kész"); lang_hu.put("accept", "Elfogadás");
+        dict.put("hu", lang_hu);
+        Map<String, String> lang_id = new HashMap<>(en);
+        lang_id.put("cancel", "Batal"); lang_id.put("confirm", "Konfirmasi"); lang_id.put("close", "Tutup"); lang_id.put("settings", "Pengaturan");
+        lang_id.put("send", "Kirim"); lang_id.put("receive", "Terima"); lang_id.put("file", "Berkas"); lang_id.put("app", "Aplikasi"); lang_id.put("text", "Teks");
+        lang_id.put("start", "Mulai"); lang_id.put("stop", "Hentikan"); lang_id.put("running", "Berjalan"); lang_id.put("stopped", "Dihentikan");
+        lang_id.put("no_device", "Tidak ada perangkat — ketuk untuk memindai"); lang_id.put("language", "Bahasa"); lang_id.put("follow_system", "Ikuti sistem");
+        lang_id.put("network", "Jaringan"); lang_id.put("about", "Tentang"); lang_id.put("log", "Log"); lang_id.put("log_empty", "Log kosong");
+        lang_id.put("completed", "Selesai"); lang_id.put("accept", "Terima");
+        dict.put("id", lang_id);
+        Map<String, String> lang_is = new HashMap<>(en);
+        lang_is.put("cancel", "Hætta við"); lang_is.put("confirm", "Staðfesta"); lang_is.put("close", "Loka"); lang_is.put("settings", "Stillingar");
+        lang_is.put("send", "Senda"); lang_is.put("receive", "Móttaka"); lang_is.put("file", "Skrá"); lang_is.put("app", "App"); lang_is.put("text", "Texti");
+        lang_is.put("start", "Byrja"); lang_is.put("stop", "Stöðva"); lang_is.put("running", "Í gangi"); lang_is.put("stopped", "Stoppað");
+        lang_is.put("no_device", "Engin tæki — ýttu til að skanna"); lang_is.put("language", "Tungumál"); lang_is.put("follow_system", "Fylgja kerfi");
+        lang_is.put("network", "Net"); lang_is.put("about", "Um"); lang_is.put("log", "Log"); lang_is.put("log_empty", "Log er tómt"); lang_is.put("completed", "Lokið");
+        lang_is.put("accept", "Samþykkja");
+        dict.put("is", lang_is);
+        Map<String, String> lang_lt = new HashMap<>(en);
+        lang_lt.put("cancel", "Atšaukti"); lang_lt.put("confirm", "Patvirtinti"); lang_lt.put("close", "Uždaryti"); lang_lt.put("settings", "Nustatymai");
+        lang_lt.put("send", "Siųsti"); lang_lt.put("receive", "Gauti"); lang_lt.put("file", "Failas"); lang_lt.put("app", "Programėlė"); lang_lt.put("text", "Tekstas");
+        lang_lt.put("start", "Pradėti"); lang_lt.put("stop", "Stabdyti"); lang_lt.put("running", "Veikia"); lang_lt.put("stopped", "Sustabdyta");
+        lang_lt.put("no_device", "Įrenginių nėra — bakstelėkite nuskaityti"); lang_lt.put("language", "Kalba"); lang_lt.put("follow_system", "Pagal sistemą");
+        lang_lt.put("network", "Tinklas"); lang_lt.put("about", "Apie"); lang_lt.put("log", "Žurnalas"); lang_lt.put("log_empty", "Žurnalas tuščias");
+        lang_lt.put("completed", "Baigta"); lang_lt.put("accept", "Priimti");
+        dict.put("lt", lang_lt);
+        Map<String, String> lang_lv = new HashMap<>(en);
+        lang_lv.put("cancel", "Atcelt"); lang_lv.put("confirm", "Apstiprināt"); lang_lv.put("close", "Aizvērt"); lang_lv.put("settings", "Iestatījumi");
+        lang_lv.put("send", "Sūtīt"); lang_lv.put("receive", "Saņemt"); lang_lv.put("file", "Fails"); lang_lv.put("app", "Lietotne"); lang_lv.put("text", "Teksts");
+        lang_lv.put("start", "Sākt"); lang_lv.put("stop", "Pārtraukt"); lang_lv.put("running", "Darbojas"); lang_lv.put("stopped", "Apturēts");
+        lang_lv.put("no_device", "Nav ierīču — pieskarieties skenēšanai"); lang_lv.put("language", "Valoda"); lang_lv.put("follow_system", "Sekot sistēmai");
+        lang_lv.put("network", "Tīkls"); lang_lv.put("about", "Par"); lang_lv.put("log", "Žurnāls"); lang_lv.put("log_empty", "Žurnāls ir tukšs");
+        lang_lv.put("completed", "Pabeigts"); lang_lv.put("accept", "Pieņemt");
+        dict.put("lv", lang_lv);
+        Map<String, String> lang_mk = new HashMap<>(en);
+        lang_mk.put("cancel", "Откажи"); lang_mk.put("confirm", "Потврди"); lang_mk.put("close", "Затвори"); lang_mk.put("settings", "Поставки");
+        lang_mk.put("send", "Испрати"); lang_mk.put("receive", "Прими"); lang_mk.put("file", "Датотека"); lang_mk.put("app", "Апликација"); lang_mk.put("text", "Текст");
+        lang_mk.put("start", "Започни"); lang_mk.put("stop", "Запри"); lang_mk.put("running", "Работи"); lang_mk.put("stopped", "Запре");
+        lang_mk.put("no_device", "Нема уреди — допрете за скенирање"); lang_mk.put("language", "Јазик"); lang_mk.put("follow_system", "Според системот");
+        lang_mk.put("network", "Мрежа"); lang_mk.put("about", "За апликацијата"); lang_mk.put("log", "Дневник"); lang_mk.put("log_empty", "Дневникот е празен");
+        lang_mk.put("completed", "Завршено"); lang_mk.put("accept", "Прифати");
+        dict.put("mk", lang_mk);
+        Map<String, String> lang_ms = new HashMap<>(en);
+        lang_ms.put("cancel", "Batal"); lang_ms.put("confirm", "Sahkan"); lang_ms.put("close", "Tutup"); lang_ms.put("settings", "Tetapan");
+        lang_ms.put("send", "Hantar"); lang_ms.put("receive", "Terima"); lang_ms.put("file", "Fail"); lang_ms.put("app", "Aplikasi"); lang_ms.put("text", "Teks");
+        lang_ms.put("start", "Mula"); lang_ms.put("stop", "Henti"); lang_ms.put("running", "Berjalan"); lang_ms.put("stopped", "Dihentikan");
+        lang_ms.put("no_device", "Tiada peranti — ketik untuk imbas"); lang_ms.put("language", "Bahasa"); lang_ms.put("follow_system", "Ikut sistem");
+        lang_ms.put("network", "Rangkaian"); lang_ms.put("about", "Perihal"); lang_ms.put("log", "Log"); lang_ms.put("log_empty", "Log kosong");
+        lang_ms.put("completed", "Selesai"); lang_ms.put("accept", "Terima");
+        dict.put("ms", lang_ms);
+        Map<String, String> lang_nb = new HashMap<>(en);
+        lang_nb.put("cancel", "Avbryt"); lang_nb.put("confirm", "Bekreft"); lang_nb.put("close", "Lukk"); lang_nb.put("settings", "Innstillinger");
+        lang_nb.put("send", "Send"); lang_nb.put("receive", "Motta"); lang_nb.put("file", "Fil"); lang_nb.put("app", "App"); lang_nb.put("text", "Tekst");
+        lang_nb.put("start", "Start"); lang_nb.put("stop", "Stopp"); lang_nb.put("running", "Kjører"); lang_nb.put("stopped", "Stoppet");
+        lang_nb.put("no_device", "Ingen enheter — trykk for å skanne"); lang_nb.put("language", "Språk"); lang_nb.put("follow_system", "Følg systemet");
+        lang_nb.put("network", "Nettverk"); lang_nb.put("about", "Om"); lang_nb.put("log", "Logg"); lang_nb.put("log_empty", "Loggen er tom");
+        lang_nb.put("completed", "Fullført"); lang_nb.put("accept", "Aksepter");
+        dict.put("nb", lang_nb);
+        Map<String, String> lang_ne = new HashMap<>(en);
+        lang_ne.put("cancel", "रद्द गर्नुहोस्"); lang_ne.put("confirm", "पुष्टि गर्नुहोस्"); lang_ne.put("close", "बन्द गर्नुहोस्"); lang_ne.put("settings", "सेटिङ");
+        lang_ne.put("send", "पठाउनुहोस्"); lang_ne.put("receive", "प्राप्त गर्नुहोस्"); lang_ne.put("file", "फाइल"); lang_ne.put("app", "एप");
+        lang_ne.put("text", "पाठ"); lang_ne.put("start", "सुरु गर्नुहोस्"); lang_ne.put("stop", "रोक्नुहोस्"); lang_ne.put("running", "चलिरहेको");
+        lang_ne.put("stopped", "रोकिएको"); lang_ne.put("no_device", "कुनै यन्त्र छैन — स्क्यान गर्न ट्याप गर्नुहोस्"); lang_ne.put("language", "भाषा");
+        lang_ne.put("follow_system", "सिस्टम अनुसरण"); lang_ne.put("network", "नेटवर्क"); lang_ne.put("about", "बारेमा"); lang_ne.put("log", "लग");
+        lang_ne.put("log_empty", "लग खाली"); lang_ne.put("completed", "सम्पन्न"); lang_ne.put("accept", "स्वीकार");
+        dict.put("ne", lang_ne);
+        Map<String, String> lang_nl = new HashMap<>(en);
+        lang_nl.put("cancel", "Annuleren"); lang_nl.put("confirm", "Bevestigen"); lang_nl.put("close", "Sluiten"); lang_nl.put("settings", "Instellingen");
+        lang_nl.put("send", "Verzenden"); lang_nl.put("receive", "Ontvangen"); lang_nl.put("file", "Bestand"); lang_nl.put("app", "App"); lang_nl.put("text", "Tekst");
+        lang_nl.put("start", "Start"); lang_nl.put("stop", "Stop"); lang_nl.put("running", "Actief"); lang_nl.put("stopped", "Gestopt");
+        lang_nl.put("no_device", "Geen apparaten — tik om te scannen"); lang_nl.put("language", "Taal"); lang_nl.put("follow_system", "Systeem volgen");
+        lang_nl.put("network", "Netwerk"); lang_nl.put("about", "Over"); lang_nl.put("log", "Logboek"); lang_nl.put("log_empty", "Logboek leeg");
+        lang_nl.put("completed", "Voltooid"); lang_nl.put("accept", "Accepteren");
+        dict.put("nl", lang_nl);
+        Map<String, String> lang_pl = new HashMap<>(en);
+        lang_pl.put("cancel", "Anuluj"); lang_pl.put("confirm", "Potwierdź"); lang_pl.put("close", "Zamknij"); lang_pl.put("settings", "Ustawienia");
+        lang_pl.put("send", "Wyślij"); lang_pl.put("receive", "Odbierz"); lang_pl.put("file", "Plik"); lang_pl.put("app", "Aplikacja"); lang_pl.put("text", "Tekst");
+        lang_pl.put("start", "Start"); lang_pl.put("stop", "Stop"); lang_pl.put("running", "Działa"); lang_pl.put("stopped", "Zatrzymano");
+        lang_pl.put("no_device", "Brak urządzeń — dotknij, aby skanować"); lang_pl.put("language", "Język"); lang_pl.put("follow_system", "Zgodnie z systemem");
+        lang_pl.put("network", "Sieć"); lang_pl.put("about", "Informacje"); lang_pl.put("log", "Dziennik"); lang_pl.put("log_empty", "Dziennik jest pusty");
+        lang_pl.put("completed", "Zakończono"); lang_pl.put("accept", "Akceptuj");
+        dict.put("pl", lang_pl);
+    }
+
+    private static void installExtra3() {
+        Map<String, String> en = dict.get("en");
+        Map<String, String> lang_ro = new HashMap<>(en);
+        lang_ro.put("cancel", "Anulează"); lang_ro.put("confirm", "Confirmă"); lang_ro.put("close", "Închide"); lang_ro.put("settings", "Setări");
+        lang_ro.put("send", "Trimite"); lang_ro.put("receive", "Recepționează"); lang_ro.put("file", "Fișier"); lang_ro.put("app", "Aplicație");
+        lang_ro.put("text", "Text"); lang_ro.put("start", "Start"); lang_ro.put("stop", "Stop"); lang_ro.put("running", "Rulează"); lang_ro.put("stopped", "Oprit");
+        lang_ro.put("no_device", "Nu există dispozitive — atingeți pentru scanare"); lang_ro.put("language", "Limbă"); lang_ro.put("follow_system", "Urmează sistemul");
+        lang_ro.put("network", "Rețea"); lang_ro.put("about", "Despre"); lang_ro.put("log", "Jurnal"); lang_ro.put("log_empty", "Jurnal gol");
+        lang_ro.put("completed", "Finalizat"); lang_ro.put("accept", "Acceptă");
+        dict.put("ro", lang_ro);
+        Map<String, String> lang_sk = new HashMap<>(en);
+        lang_sk.put("cancel", "Zrušiť"); lang_sk.put("confirm", "Potvrdiť"); lang_sk.put("close", "Zavrieť"); lang_sk.put("settings", "Nastavenia");
+        lang_sk.put("send", "Odoslať"); lang_sk.put("receive", "Prijať"); lang_sk.put("file", "Súbor"); lang_sk.put("app", "Aplikácia"); lang_sk.put("text", "Text");
+        lang_sk.put("start", "Štart"); lang_sk.put("stop", "Stop"); lang_sk.put("running", "Beží"); lang_sk.put("stopped", "Zastavené");
+        lang_sk.put("no_device", "Žiadne zariadenia — klepnite na skenovanie"); lang_sk.put("language", "Jazyk"); lang_sk.put("follow_system", "Podľa systému");
+        lang_sk.put("network", "Sieť"); lang_sk.put("about", "O aplikácii"); lang_sk.put("log", "Protokol"); lang_sk.put("log_empty", "Protokol je prázdny");
+        lang_sk.put("completed", "Dokončené"); lang_sk.put("accept", "Prijať");
+        dict.put("sk", lang_sk);
+        Map<String, String> lang_sl = new HashMap<>(en);
+        lang_sl.put("cancel", "Prekliči"); lang_sl.put("confirm", "Potrdi"); lang_sl.put("close", "Zapri"); lang_sl.put("settings", "Nastavitve");
+        lang_sl.put("send", "Pošlji"); lang_sl.put("receive", "Prejmi"); lang_sl.put("file", "Datoteka"); lang_sl.put("app", "Aplikacija");
+        lang_sl.put("text", "Besedilo"); lang_sl.put("start", "Začni"); lang_sl.put("stop", "Ustavi"); lang_sl.put("running", "Deluje");
+        lang_sl.put("stopped", "Ustavljeno"); lang_sl.put("no_device", "Ni naprav — tapnite za skeniranje"); lang_sl.put("language", "Jezik");
+        lang_sl.put("follow_system", "Sledi sistemu"); lang_sl.put("network", "Omrežje"); lang_sl.put("about", "O aplikaciji"); lang_sl.put("log", "Dnevnik");
+        lang_sl.put("log_empty", "Dnevnik je prazen"); lang_sl.put("completed", "Dokončano"); lang_sl.put("accept", "Sprejmi");
+        dict.put("sl", lang_sl);
+        Map<String, String> lang_sq = new HashMap<>(en);
+        lang_sq.put("cancel", "Anulo"); lang_sq.put("confirm", "Konfirmo"); lang_sq.put("close", "Mbyll"); lang_sq.put("settings", "Cilësimet");
+        lang_sq.put("send", "Dërgo"); lang_sq.put("receive", "Merr"); lang_sq.put("file", "Skedar"); lang_sq.put("app", "Aplikacioni"); lang_sq.put("text", "Tekst");
+        lang_sq.put("start", "Fillo"); lang_sq.put("stop", "Ndalo"); lang_sq.put("running", "Po punon"); lang_sq.put("stopped", "Ndaluar");
+        lang_sq.put("no_device", "Nuk ka pajisje — trokit për skanim"); lang_sq.put("language", "Gjuha"); lang_sq.put("follow_system", "Ndjek sistemin");
+        lang_sq.put("network", "Rrjeti"); lang_sq.put("about", "Rreth"); lang_sq.put("log", "Regjistri"); lang_sq.put("log_empty", "Regjistri bosh");
+        lang_sq.put("completed", "Përfunduar"); lang_sq.put("accept", "Prano");
+        dict.put("sq", lang_sq);
+        Map<String, String> lang_sr = new HashMap<>(en);
+        lang_sr.put("cancel", "Откажи"); lang_sr.put("confirm", "Потврди"); lang_sr.put("close", "Затвори"); lang_sr.put("settings", "Подешавања");
+        lang_sr.put("send", "Пошаљи"); lang_sr.put("receive", "Прими"); lang_sr.put("file", "Датотека"); lang_sr.put("app", "Апликација"); lang_sr.put("text", "Текст");
+        lang_sr.put("start", "Старт"); lang_sr.put("stop", "Стоп"); lang_sr.put("running", "Ради"); lang_sr.put("stopped", "Заустављено");
+        lang_sr.put("no_device", "Нема уређаја — додирните за скенирање"); lang_sr.put("language", "Језик"); lang_sr.put("follow_system", "Прати систем");
+        lang_sr.put("network", "Мрежа"); lang_sr.put("about", "О апликацији"); lang_sr.put("log", "Дневник"); lang_sr.put("log_empty", "Дневник је празан");
+        lang_sr.put("completed", "Завршено"); lang_sr.put("accept", "Прихвати");
+        dict.put("sr", lang_sr);
+        Map<String, String> lang_sv = new HashMap<>(en);
+        lang_sv.put("cancel", "Avbryt"); lang_sv.put("confirm", "Bekräfta"); lang_sv.put("close", "Stäng"); lang_sv.put("settings", "Inställningar");
+        lang_sv.put("send", "Skicka"); lang_sv.put("receive", "Ta emot"); lang_sv.put("file", "Fil"); lang_sv.put("app", "App"); lang_sv.put("text", "Text");
+        lang_sv.put("start", "Starta"); lang_sv.put("stop", "Stoppa"); lang_sv.put("running", "Körs"); lang_sv.put("stopped", "Stoppad");
+        lang_sv.put("no_device", "Inga enheter — tryck för att skanna"); lang_sv.put("language", "Språk"); lang_sv.put("follow_system", "Följ systemet");
+        lang_sv.put("network", "Nätverk"); lang_sv.put("about", "Om"); lang_sv.put("log", "Logg"); lang_sv.put("log_empty", "Loggen är tom");
+        lang_sv.put("completed", "Klart"); lang_sv.put("accept", "Acceptera");
+        dict.put("sv", lang_sv);
+        Map<String, String> lang_sw = new HashMap<>(en);
+        lang_sw.put("cancel", "Ghairi"); lang_sw.put("confirm", "Thibitisha"); lang_sw.put("close", "Funga"); lang_sw.put("settings", "Mipangilio");
+        lang_sw.put("send", "Tuma"); lang_sw.put("receive", "Pokea"); lang_sw.put("file", "Faili"); lang_sw.put("app", "Programu"); lang_sw.put("text", "Maandishi");
+        lang_sw.put("start", "Anza"); lang_sw.put("stop", "Simamisha"); lang_sw.put("running", "Inaendelea"); lang_sw.put("stopped", "Imesimama");
+        lang_sw.put("no_device", "Hakuna kifaa — gusa ili kuchanganua"); lang_sw.put("language", "Lugha"); lang_sw.put("follow_system", "Fuata mfumo");
+        lang_sw.put("network", "Mtandao"); lang_sw.put("about", "Kuhusu"); lang_sw.put("log", "Kumbukumbu"); lang_sw.put("log_empty", "Kumbukumbu tupu");
+        lang_sw.put("completed", "Imekamilika"); lang_sw.put("accept", "Kubali");
+        dict.put("sw", lang_sw);
+        Map<String, String> lang_th = new HashMap<>(en);
+        lang_th.put("cancel", "ยกเลิก"); lang_th.put("confirm", "ยืนยัน"); lang_th.put("close", "ปิด"); lang_th.put("settings", "การตั้งค่า");
+        lang_th.put("send", "ส่ง"); lang_th.put("receive", "รับ"); lang_th.put("file", "ไฟล์"); lang_th.put("app", "แอป"); lang_th.put("text", "ข้อความ");
+        lang_th.put("start", "เริ่ม"); lang_th.put("stop", "หยุด"); lang_th.put("running", "กำลังทำงาน"); lang_th.put("stopped", "หยุดแล้ว");
+        lang_th.put("no_device", "ไม่มีอุปกรณ์ — แตะเพื่อสแกน"); lang_th.put("language", "ภาษา"); lang_th.put("follow_system", "ตามระบบ");
+        lang_th.put("network", "เครือข่าย"); lang_th.put("about", "เกี่ยวกับ"); lang_th.put("log", "บันทึก"); lang_th.put("log_empty", "ไม่มีบันทึก");
+        lang_th.put("completed", "เสร็จสิ้น"); lang_th.put("accept", "ยอมรับ");
+        dict.put("th", lang_th);
+        Map<String, String> lang_tr = new HashMap<>(en);
+        lang_tr.put("cancel", "İptal"); lang_tr.put("confirm", "Onayla"); lang_tr.put("close", "Kapat"); lang_tr.put("settings", "Ayarlar");
+        lang_tr.put("send", "Gönder"); lang_tr.put("receive", "Al"); lang_tr.put("file", "Dosya"); lang_tr.put("app", "Uygulama"); lang_tr.put("text", "Metin");
+        lang_tr.put("start", "Başlat"); lang_tr.put("stop", "Durdur"); lang_tr.put("running", "Çalışıyor"); lang_tr.put("stopped", "Durduruldu");
+        lang_tr.put("no_device", "Cihaz yok — taramak için dokunun"); lang_tr.put("language", "Dil"); lang_tr.put("follow_system", "Sistemi izle");
+        lang_tr.put("network", "Ağ"); lang_tr.put("about", "Hakkında"); lang_tr.put("log", "Günlük"); lang_tr.put("log_empty", "Günlük boş");
+        lang_tr.put("completed", "Tamamlandı"); lang_tr.put("accept", "Kabul et");
+        dict.put("tr", lang_tr);
+        Map<String, String> lang_uk = new HashMap<>(en);
+        lang_uk.put("cancel", "Скасувати"); lang_uk.put("confirm", "Підтвердити"); lang_uk.put("close", "Закрити"); lang_uk.put("settings", "Налаштування");
+        lang_uk.put("send", "Надіслати"); lang_uk.put("receive", "Отримати"); lang_uk.put("file", "Файл"); lang_uk.put("app", "Застосунок");
+        lang_uk.put("text", "Текст"); lang_uk.put("start", "Запуск"); lang_uk.put("stop", "Стоп"); lang_uk.put("running", "Працює"); lang_uk.put("stopped", "Зупинено");
+        lang_uk.put("no_device", "Немає пристроїв — торкніться для сканування"); lang_uk.put("language", "Мова"); lang_uk.put("follow_system", "За системою");
+        lang_uk.put("network", "Мережа"); lang_uk.put("about", "Про застосунок"); lang_uk.put("log", "Журнал"); lang_uk.put("log_empty", "Журнал порожній");
+        lang_uk.put("completed", "Завершено"); lang_uk.put("accept", "Прийняти");
+        dict.put("uk", lang_uk);
+        Map<String, String> lang_ur = new HashMap<>(en);
+        lang_ur.put("cancel", "منسوخ"); lang_ur.put("confirm", "تصدیق"); lang_ur.put("close", "بند"); lang_ur.put("settings", "ترتیبات"); lang_ur.put("send", "بھیجیں");
+        lang_ur.put("receive", "وصول"); lang_ur.put("file", "فائل"); lang_ur.put("app", "ایپ"); lang_ur.put("text", "متن"); lang_ur.put("start", "شروع");
+        lang_ur.put("stop", "روکیں"); lang_ur.put("running", "چل رہا ہے"); lang_ur.put("stopped", "رکا ہوا");
+        lang_ur.put("no_device", "کوئی ڈیوائس نہیں — اسکین کے لیے ٹیپ کریں"); lang_ur.put("language", "زبان"); lang_ur.put("follow_system", "سسٹم کی پیروی");
+        lang_ur.put("network", "نیٹ ورک"); lang_ur.put("about", "متعلق"); lang_ur.put("log", "لاگ"); lang_ur.put("log_empty", "لاگ خالی ہے");
+        lang_ur.put("completed", "مکمل"); lang_ur.put("accept", "قبول");
+        dict.put("ur", lang_ur);
+        Map<String, String> lang_uz = new HashMap<>(en);
+        lang_uz.put("cancel", "Bekor qilish"); lang_uz.put("confirm", "Tasdiqlash"); lang_uz.put("close", "Yopish"); lang_uz.put("settings", "Sozlamalar");
+        lang_uz.put("send", "Yuborish"); lang_uz.put("receive", "Qabul qilish"); lang_uz.put("file", "Fayl"); lang_uz.put("app", "Ilova"); lang_uz.put("text", "Matn");
+        lang_uz.put("start", "Boshlash"); lang_uz.put("stop", "Toʻxtatish"); lang_uz.put("running", "Ishlamoqda"); lang_uz.put("stopped", "Toʻxtatilgan");
+        lang_uz.put("no_device", "Qurilma yoʻq — skanerlash uchun bosing"); lang_uz.put("language", "Til"); lang_uz.put("follow_system", "Tizimga ergashish");
+        lang_uz.put("network", "Tarmoq"); lang_uz.put("about", "Haqida"); lang_uz.put("log", "Jurnal"); lang_uz.put("log_empty", "Jurnal boʻsh");
+        lang_uz.put("completed", "Tugallandi"); lang_uz.put("accept", "Qabul qilish");
+        dict.put("uz", lang_uz);
+        Map<String, String> lang_vi = new HashMap<>(en);
+        lang_vi.put("cancel", "Hủy"); lang_vi.put("confirm", "Xác nhận"); lang_vi.put("close", "Đóng"); lang_vi.put("settings", "Cài đặt"); lang_vi.put("send", "Gửi");
+        lang_vi.put("receive", "Nhận"); lang_vi.put("file", "Tệp"); lang_vi.put("app", "Ứng dụng"); lang_vi.put("text", "Văn bản"); lang_vi.put("start", "Bắt đầu");
+        lang_vi.put("stop", "Dừng"); lang_vi.put("running", "Đang chạy"); lang_vi.put("stopped", "Đã dừng");
+        lang_vi.put("no_device", "Không có thiết bị — chạm để quét"); lang_vi.put("language", "Ngôn ngữ"); lang_vi.put("follow_system", "Theo hệ thống");
+        lang_vi.put("network", "Mạng"); lang_vi.put("about", "Giới thiệu"); lang_vi.put("log", "Nhật ký"); lang_vi.put("log_empty", "Nhật ký trống");
+        lang_vi.put("completed", "Hoàn tất"); lang_vi.put("accept", "Chấp nhận");
+        dict.put("vi", lang_vi);
+    }
 
     public static String get(String key) {
         // 开发者模式：直接显示 Key
