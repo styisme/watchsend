@@ -5,7 +5,7 @@
 > OldSend 的手錶進化版。保留全部硬核傳輸能力，將 UI 徹底重塑為 Wear OS 原生的「3D 滾輪」與「藥丸卡片」形態。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.7-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.8-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
