@@ -150,6 +150,13 @@ public class WatchSettingsActivity extends Activity {
             public void onChanged(boolean v) { DownloadShare.setEnabled(v); }
         });
         addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+        addItem("▦ " + I18nManager.get("web_qr"), new View.OnClickListener() {
+            public void onClick(View v) {
+                // 网页端二维码：电脑摄像头扫一下就能打开，不必在手表上抄地址
+                org.watchsend.watch.WebShareQrActivity.show(WatchSettingsActivity.this,
+                        "http://" + OldSendService.getLocalIp() + ":53317");
+            }
+        });
         addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
             public void onClick(View v) { editPort(); }
         });
