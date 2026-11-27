@@ -453,6 +453,19 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             if (adapter != null) adapter.notifyDataSetChanged();
             return;
         }
+        // 5021 已选文件确认页回包
+        if (requestCode == 5021 && resultCode == RESULT_OK && data != null) {
+            int[] kept = data.getIntArrayExtra(org.watchsend.watch.SelectedFilesActivity.EXTRA_RESULT_KEPT);
+            if (kept != null && kept.length > 0) {
+                ArrayList<Uri> filtered = new ArrayList<Uri>();
+                for (int idx : kept) if (idx >= 0 && idx < pendingUris.size()) filtered.add(pendingUris.get(idx));
+                pendingUris.clear();
+                pendingUris.addAll(filtered);
+                if (pendingSendDevice != null) startTransfer(pendingSendDevice);
+            }
+            return;
+        }
+
         // 5001 主类型选择列表
         if (requestCode == 5001 && resultCode == RESULT_OK) {
             int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
@@ -588,7 +601,37 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         onFilesPicked();
     }
 
+    private Device pendingSendDevice = null;
+
+    /** 官方 selected_files_page 语义：先把要发的清单摆出来，可逐个移除，再确认。 */
     private void sendToDevice(final Device device) {
+        if (pendingUris.isEmpty()) return;
+        try {
+            ArrayList<String> names = new ArrayList<String>();
+            long[] sizes = new long[pendingUris.size()];
+            for (int i = 0; i < pendingUris.size(); i++) {
+                Uri u = pendingUris.get(i);
+                names.add(queryDisplayName(u));
+                sizes[i] = sizeOf(u);
+            }
+            pendingSendDevice = device;
+            org.watchsend.watch.SelectedFilesActivity.show(this, names, sizes, 5021);
+        } catch (Throwable t) {
+            // 取名字/大小失败就直接走原流程，不能让确认页挡住发送
+            startTransfer(device);
+        }
+    }
+
+    private long sizeOf(Uri u) {
+        try {
+            if ("file".equals(u.getScheme())) return new File(u.getPath()).length();
+            android.content.res.AssetFileDescriptor fd = getContentResolver().openAssetFileDescriptor(u, "r");
+            if (fd != null) { long len = fd.getLength(); fd.close(); return len; }
+        } catch (Throwable ignored) {}
+        return 0;
+    }
+
+    private void startTransfer(final Device device) {
         new Thread(new Runnable() {
             public void run() {
                 final List<File> files = new ArrayList<File>();
@@ -693,7 +736,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         List<HistoryStore.Record> list = HistoryStore.get().snapshot();
         for (HistoryStore.Record r : list) {
             String sizeStr = r.size > 1024*1024 ? (r.size/1024/1024)+"MB" : (r.size/1024)+"KB";
-            historyAdapter.add("[" + r.time + "] " + r.fileName + "\n" + sizeStr);
+            String when = r.ts > 0 ? org.watchsend.util.DateFmt.shortDateTime(r.ts) : r.time;
+            historyAdapter.add(when + " · " + r.fileName + "\n" + sizeStr);
             historyPaths.add(r.path);
         }
         historyAdapter.notifyDataSetChanged();
@@ -715,8 +759,8 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void showBigUrlDialog() {
         String ip = OldSendService.getLocalIp();
         String url = "http://" + ip + ":53317";
-        String msg = url + "\n" + I18nManager.get("web_qr_desc");
-        UikitFullTextActivity.show(this, I18nManager.get("web_qr"), msg, I18nManager.get("confirm"), 5017);
+        // 官方 web_share_page 的二维码：电脑摄像头直接扫，省去在手表上抄地址
+        org.watchsend.watch.WebShareQrActivity.show(this, url);
     }
 
     private void showHistoryMenu(final int pos) {

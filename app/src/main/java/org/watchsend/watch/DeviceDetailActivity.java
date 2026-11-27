@@ -131,6 +131,10 @@ public class DeviceDetailActivity extends Activity {
             public void onClick(View v) { copy(identity); }
         });
 
+        // 指纹文字短语：官方用图标字母表让人工比对，这里换成四段词（FingerprintWords）
+        String phrase = org.watchsend.util.FingerprintWords.phrase(identity);
+        if (phrase.length() > 0) addRow(I18nManager.get("fingerprint_phrase"), phrase, null);
+
         addSection(I18nManager.get("favorites"));
         boolean fav = FavoritesStore.isFavorite(identity);
         addRow(fav ? "★ " + I18nManager.get("remove_favorite") : "☆ " + I18nManager.get("add_favorite"), null,

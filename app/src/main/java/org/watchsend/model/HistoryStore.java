@@ -14,9 +14,16 @@ public class HistoryStore {
         public long size;
         public String time;
         public boolean isReceive;
+        /** 真实时间戳（毫秒）。老记录没有这个字段，为 0 时退回显示 time 字符串。 */
+        public long ts;
 
         public Record(String name, String path, long size, String time, boolean isReceive) {
+            this(name, path, size, time, isReceive, 0L);
+        }
+
+        public Record(String name, String path, long size, String time, boolean isReceive, long ts) {
             this.fileName = name; this.path = path; this.size = size; this.time = time; this.isReceive = isReceive;
+            this.ts = ts;
         }
     }
 
@@ -37,7 +44,7 @@ public class HistoryStore {
                     records.clear();
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject o = arr.getJSONObject(i);
-                        records.add(new Record(o.getString("name"), o.getString("path"), o.getLong("size"), o.getString("time"), o.getBoolean("isRecv")));
+                        records.add(new Record(o.getString("name"), o.getString("path"), o.getLong("size"), o.getString("time"), o.getBoolean("isRecv"), o.optLong("ts", 0L)));
                     }
                 }
             } catch (Exception ignored) {}
@@ -54,7 +61,7 @@ public class HistoryStore {
                 for (Record rec : records) {
                     JSONObject o = new JSONObject();
                     o.put("name", rec.fileName); o.put("path", rec.path);
-                    o.put("size", rec.size); o.put("time", rec.time); o.put("isRecv", rec.isReceive);
+                    o.put("size", rec.size); o.put("time", rec.time); o.put("isRecv", rec.isReceive); o.put("ts", rec.ts);
                     arr.put(o);
                 }
                 ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putString(KEY_HISTORY, arr.toString()).commit();
@@ -72,7 +79,7 @@ public class HistoryStore {
                 for (Record rec : records) {
                     JSONObject o = new JSONObject();
                     o.put("name", rec.fileName); o.put("path", rec.path);
-                    o.put("size", rec.size); o.put("time", rec.time); o.put("isRecv", rec.isReceive);
+                    o.put("size", rec.size); o.put("time", rec.time); o.put("isRecv", rec.isReceive); o.put("ts", rec.ts);
                     arr.put(o);
                 }
                 ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putString(KEY_HISTORY, arr.toString()).commit();

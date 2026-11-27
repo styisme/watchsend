@@ -108,12 +108,16 @@ public class UploadHandler implements Router.Handler {
         String timeStr = new java.text.SimpleDateFormat("HH:mm").format(new java.util.Date());
         boolean saveHistory = OldSendService.getPrefBooleanGlobal("save_history", true);
         if (saveHistory) {
-            HistoryStore.get().add(OldSendService.getContext(), new HistoryStore.Record(entry.fileName, target.getAbsolutePath(), written, timeStr, true));
+            HistoryStore.get().add(OldSendService.getContext(), new HistoryStore.Record(entry.fileName, target.getAbsolutePath(), written, timeStr, true, System.currentTimeMillis()));
         }
 
-        // 文本消息：优先用发送方内联的 preview，避免再从磁盘读一遍；否则按 .txt 读文件
+        // 文本消息：优先用发送方内联的 preview，避免再从磁盘读一遍；否则按 .txt 读文件。
+        // 超过 16KB 的 preview 说明对方是旧版本/异常实现，按官方语义当普通文件处理，不内联展示。
         String text = entry.preview;
-        if (text == null && entry.fileName.toLowerCase().endsWith(".txt") && written < 10 * 1024) {
+        if (text != null && text.length() > 16384) {
+            OldSendService.log("预览超过 16KB，按普通文件接收: " + entry.fileName);
+            text = null;
+        } else if (text == null && entry.fileName.toLowerCase().endsWith(".txt") && written < 10 * 1024) {
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(target);

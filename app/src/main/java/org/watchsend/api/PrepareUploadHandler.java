@@ -70,7 +70,8 @@ public class PrepareUploadHandler implements Router.Handler {
             if (pf == null) continue;
             if ("text".equals(pf.optString("fileType", ""))) {
                 String pv = pf.optString("preview", null);
-                if (pv != null) { previewForAsk = pv; break; }
+                // 官方 message_preview 规定：超过 16KB 的预览不内联，按普通 .txt 文件对待
+                if (pv != null && pv.length() <= 16384) { previewForAsk = pv; break; }
             }
         }
 

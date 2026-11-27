@@ -195,7 +195,7 @@ zh.put("save_dir_label", "保存目录: ");
         zh.put("favorites", "收藏的设备"); zh.put("favorites_empty", "还没有收藏的设备，长按设备即可收藏");
         zh.put("add_favorite", "收藏此设备"); zh.put("remove_favorite", "取消收藏"); zh.put("favorite_added", "已收藏"); zh.put("favorite_removed", "已取消收藏");
         zh.put("download_share", "共享下载"); zh.put("download_share_desc", "允许局域网设备通过 LocalSend 下载本机 OldSend 目录里的文件");
-        zh.put("remaining", "剩余"); zh.put("device_details", "设备详情"); zh.put("protocol_label", "协议"); zh.put("fingerprint_label", "设备指纹");
+        zh.put("day_yesterday", "昨天"); zh.put("month_suffix", "月"); zh.put("day_suffix", "日"); zh.put("year_suffix", "年"); zh.put("selected_files", "待发送文件"); zh.put("send_n_files", "发送 %1 个文件"); zh.put("fingerprint_phrase", "核对短语"); zh.put("remaining", "剩余"); zh.put("device_details", "设备详情"); zh.put("protocol_label", "协议"); zh.put("fingerprint_label", "设备指纹");
         zh.put("remark_label", "备注名"); zh.put("not_set", "未设置");
         dict.put("zh", zh);
 
@@ -331,7 +331,7 @@ zhTW.put("ui_size", "介面大小"); zhTW.put("ui_size_small", "小"); zhTW.put(
         zhTW.put("favorites", "收藏的裝置"); zhTW.put("favorites_empty", "還沒有收藏的裝置，長按裝置即可收藏");
         zhTW.put("add_favorite", "收藏此裝置"); zhTW.put("remove_favorite", "取消收藏"); zhTW.put("favorite_added", "已收藏"); zhTW.put("favorite_removed", "已取消收藏");
         zhTW.put("download_share", "共享下載"); zhTW.put("download_share_desc", "允許區域網路裝置透過 LocalSend 下載本機 OldSend 目錄裡的檔案");
-        zhTW.put("remaining", "剩餘"); zhTW.put("device_details", "裝置詳情"); zhTW.put("protocol_label", "協定"); zhTW.put("fingerprint_label", "裝置指紋");
+        zhTW.put("day_yesterday", "昨天"); zhTW.put("month_suffix", "月"); zhTW.put("day_suffix", "日"); zhTW.put("year_suffix", "年"); zhTW.put("selected_files", "待傳送檔案"); zhTW.put("send_n_files", "傳送 %1 個檔案"); zhTW.put("fingerprint_phrase", "核對短語"); zhTW.put("remaining", "剩餘"); zhTW.put("device_details", "裝置詳情"); zhTW.put("protocol_label", "協定"); zhTW.put("fingerprint_label", "裝置指紋");
         zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
         dict.put("zh_TW", zhTW);
 
@@ -519,7 +519,7 @@ en.put("save_dir_label", "Save to: ");
         en.put("favorites", "Favorite devices"); en.put("favorites_empty", "No favorites yet, long-press a device to add");
         en.put("add_favorite", "Add to favorites"); en.put("remove_favorite", "Remove from favorites"); en.put("favorite_added", "Added to favorites"); en.put("favorite_removed", "Removed from favorites");
         en.put("download_share", "Share for download"); en.put("download_share_desc", "Let LAN devices pull files from your OldSend folders via LocalSend");
-        en.put("remaining", "ETA"); en.put("device_details", "Device Details"); en.put("protocol_label", "Protocol"); en.put("fingerprint_label", "Fingerprint");
+        en.put("day_yesterday", "Yesterday"); en.put("month_suffix", "/"); en.put("day_suffix", ""); en.put("year_suffix", "/"); en.put("selected_files", "Selected Files"); en.put("send_n_files", "Send %1 file(s)"); en.put("fingerprint_phrase", "Verify Phrase"); en.put("remaining", "ETA"); en.put("device_details", "Device Details"); en.put("protocol_label", "Protocol"); en.put("fingerprint_label", "Fingerprint");
         en.put("remark_label", "Nickname"); en.put("not_set", "Not set");
         dict.put("en", en);
 
@@ -1541,6 +1541,9 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
             currentLang = lang;
         }
     }
+
+    /** 当前生效的语言代码（zh / zh_TW / en / ja ...），供随语言变化的文案使用。 */
+    public static String current() { return currentLang; }
 
     public static String get(String key) {
         // 开发者模式：直接显示 Key

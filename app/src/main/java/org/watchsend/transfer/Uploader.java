@@ -30,6 +30,34 @@ public class Uploader {
         void onDone(boolean ok, String msg);
     }
 
+    /** 当前正在进行的会话（用于"本地取消时通知对端"，官方 cancelSession 语义）。 */
+    private static volatile Device activeTarget;
+    private static volatile String activeSessionId;
+    private static volatile boolean cancelRequested;
+
+    /**
+     * 用户点取消：立刻置位停止标记，并向对端 POST /v2/cancel。
+     * 已发完的文件不可回滚，但对端能立即释放会话，不必等 10 分钟 TTL。
+     */
+    public static void cancelCurrent() {
+        cancelRequested = true;
+        final Device t = activeTarget;
+        final String sid = activeSessionId;
+        if (t == null || sid == null) return;
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    JSONObject body = new JSONObject();
+                    body.put("sessionId", sid);
+                    HttpClient.postJson(t.url(Protocol.V2_PREFIX + "/cancel"), body, t.https ? t.certFingerprint : null, 5000, null);
+                    OldSendService.log("已通知对端取消会话: " + sid);
+                } catch (Exception e) {
+                    OldSendService.log("通知取消失败: " + e.getMessage());
+                }
+            }
+        }).start();
+    }
+
     /** 摘要只在不超过这个体积时才预算，避免手表为几十 MB 的文件读两遍。 */
     private static final long SHA_MAX_BYTES = 32L * 1024 * 1024;
     /** 文本消息内联上限，与官方 message_preview 保持一致。 */
@@ -50,6 +78,9 @@ public class Uploader {
     static void doUpload(Device target, List<File> files, String pin, final ProgressCallback cb) throws Exception {
         if (files.isEmpty()) return;
 
+        cancelRequested = false;
+        activeTarget = target;
+        activeSessionId = null;
         JSONObject info = buildInfo(target);
         JSONObject filesJson = new JSONObject();
         long totalSize = 0;
@@ -107,6 +138,7 @@ public class Uploader {
         }
         if (resp == null) { cb.onDone(false, "对方拒绝接收"); return; }
         String sessionId = resp.optString("sessionId", null);
+        activeSessionId = sessionId;
         JSONObject respFiles = resp.optJSONObject("files");
         if (sessionId == null || respFiles == null) { cb.onDone(false, "响应无效"); return; }
 
@@ -126,6 +158,7 @@ public class Uploader {
 
             pool.execute(new Runnable() {
                 public void run() {
+                    if (cancelRequested) return;  // 取消后不再发后续文件
                     try {
                         boolean ok = HttpClient.uploadFile(uploadUrl, f, fpForUpload, new HttpClient.ProgressListener() {
                             public void onProgress(long sent, long fileSize) {

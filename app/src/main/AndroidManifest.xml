@@ -57,6 +57,9 @@
         <activity android:name=".SelectListActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         <activity android:name=".CrossNetActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         <activity android:name=".watch.DeviceDetailActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <activity android:name=".watch.PinPadActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <activity android:name=".watch.SelectedFilesActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
+        <activity android:name=".watch.WebShareQrActivity" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
             <activity android:name=".watch.WatchSettingsActivity"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
     

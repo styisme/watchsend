@@ -97,7 +97,19 @@ public class OldSendService extends Service {
     public static String getAlias(Context ctx) {
         if (ctx == null) return Build.MODEL;
         SharedPreferences sp = ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE);
-        return sp.getString("alias", Build.MODEL);
+        String saved = sp.getString("alias", "");
+        if (saved != null && saved.length() > 0) return saved;
+        // 首次启动：生成随语言变化的随机别名（官方 alias_generator 的语义），
+        // 否则同型号手表在同网段里全是 Build.MODEL，列表里分不清谁是谁。
+        String generated;
+        try {
+            generated = org.watchsend.util.AliasGenerator.generate();
+        } catch (Throwable t) {
+            generated = Build.MODEL;
+        }
+        if (generated == null || generated.length() == 0) generated = Build.MODEL;
+        sp.edit().putString("alias", generated).commit();
+        return generated;
     }
 
     public static void setAlias(Context ctx, String name) {

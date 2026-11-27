@@ -47,6 +47,8 @@ public class TransferActivity extends Activity {
     private long totalSize = 0;
     private long startTime;
     private boolean isDone = false;
+    /** 对方要求 PIN 时，用户输入后缓存在这里，重试上传时带上。 */
+    private String devicePin = null;
     private String receivedFilePath = null;
     private Handler handler = new Handler();
     
@@ -322,6 +324,8 @@ public class TransferActivity extends Activity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { 
                 WatchHardwareUtils.vibrate(TransferActivity.this, WatchHardwareUtils.HAPTIC_LIGHT);
+                // 通知对端取消会话（官方 cancelSession），已发出的文件不回滚
+                if (mode != 1) Uploader.cancelCurrent();
                 finish(); 
             }
         });
@@ -428,6 +432,21 @@ public class TransferActivity extends Activity {
         return "📄";
     }
 
+    /** 401 PIN_REQUIRED 时弹数字键盘，输完带 pin 重试。 */
+    private void requestPin() {
+        WatchHardwareUtils.vibrate(this, WatchHardwareUtils.HAPTIC_LIGHT);
+        org.watchsend.watch.PinPadActivity.show(this, I18nManager.get("enter_pin"), 7101);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 7101 && resultCode == RESULT_OK && data != null) {
+            devicePin = data.getStringExtra(org.watchsend.watch.PinPadActivity.EXTRA_PIN);
+            startUpload();
+        }
+    }
+
     private void startUpload() {
         if (filePaths == null || filePaths.isEmpty()) return;
         
@@ -440,7 +459,7 @@ public class TransferActivity extends Activity {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    Uploader.uploadFiles(targetDevice, files, new Uploader.ProgressCallback() {
+                    Uploader.uploadFiles(targetDevice, files, devicePin, new Uploader.ProgressCallback() {
                         public void onProgress(final String stage, final long sent, final long total) {
                             handler.post(new Runnable() { public void run() {
                                 if (!isDone) {
@@ -459,6 +478,10 @@ public class TransferActivity extends Activity {
                         }
                         public void onDone(final boolean ok, final String msg) {
                             handler.post(new Runnable() { public void run() { 
+                                if (!ok && msg != null && msg.contains("PIN_REQUIRED") && devicePin == null) {
+                                    requestPin();
+                                    return;
+                                }
                                 if (!isDone) transferDone(ok); 
                             }});
                         }
