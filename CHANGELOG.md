@@ -12,6 +12,22 @@
 
 ---
 
+## [1.7.9] - 2026-11-27
+
+### Added
+- **剩余 36 种语言全部补齐为全量 353 条**：العربية / Azərbaycan / Български / বাংলা / Bosanski / Català / Čeština / Dansk / Ελληνικά / Eesti / Euskara / فارسی / Suomi / Filipino / עברית / हिन्दी / Hrvatski / Magyar / Íslenska / Lietuvių / Latviešu / Македонски / Bahasa Melayu / Norsk bokmål / नेपाली / Română / Slovenčina / Slovenščina / Shqip / Српски / Svenska / Kiswahili / ไทย / Українська / اردو / Oʻzbekcha。
+- 词条总量 18,363 条（52 种 × 353 条），语言包内不再有"核心 22 条 + 英文兜底"的分层结构。
+
+### Changed
+- 36 种语言的译文来源分三层：官方 LocalSend 人工译文（27 种可用，覆盖设置/发送/接收等高频词）→ 既有核心文案 → 离线 NLLB-200 模型机翻，再对约 140 处明显错译做人工修正。
+- 每种语言独立成 `installFullXx()` 方法，避免单个方法体超过 JVM 64KB 上限。
+- 修正一处合并错误：克罗地亚语曾误用塞尔维亚语（西里尔）官方译文，现已回到拉丁字母的克罗地亚语；塞尔维亚语统一为西里尔字母。
+
+### Verified
+- 桌面 JVM 反射：52 个语言包全部 353 条、零缺失，`langCount=53`，静态初始化 40ms。
+
+---
+
 ## [1.7.8] - 2026-11-27
 
 ### Added
