@@ -2,7 +2,7 @@
 
 For anyone changing strings, adding a language, or asking "why is this screen in English?". Three parts: how the language data is organised, what is covered today, and where to touch when adding or fixing something.
 
-> Short version: the app ships **52 languages / 18,403 strings** (357-358 for the 10 base languages, 353 for the other 42); the web page carries a separate **10-language** dictionary; **ar / fa / he / ur are right-to-left**, and since 1.9.0 the whole UI mirrors for them.
+> Short version: the app ships **52 languages / 18,483 strings** (365-366 for the 10 base languages, 353 for the other 42); the web page carries a separate **10-language** dictionary; **ar / fa / he / ur are right-to-left**, and since 1.9.0 the whole UI mirrors for them.
 
 ---
 
@@ -10,7 +10,7 @@ For anyone changing strings, adding a language, or asking "why is this screen in
 
 | Surface | Languages | Strings | Implementation | Switching |
 | --- | --- | --- | --- | --- |
-| App UI (watch) | 52 | 353-358 per language, 18,403 total | `I18nManager` (Java string tables, lazy-loaded) | Settings - General - Language, or follow system |
+| App UI (watch) | 52 | 353-366 per language, 18,483 total | `I18nManager` (Java string tables, lazy-loaded) | Settings - General - Language, or follow system |
 | Web page (WebShare) | 10 | about 30 | JS dictionary inside `assets/index.html` | Browser language detection, dropdown on the page |
 
 The web page only carries 10 languages (zh / zh_TW / en / ja / ko / de / fr / es / ru / pt) because it is a temporary browser page with a small string count. The app is where the full 52 live. Do not mix the two numbers.
@@ -31,16 +31,16 @@ The web page only carries 10 languages (zh / zh_TW / en / ja / ko / de / fr / es
 
 | Language | Code | Strings | Direction | Translation source |
 | --- | --- | --- | --- | --- |
-| 简体中文 | `zh` | 357 | Left-to-right | Human-maintained |
-| 繁體中文 | `zh_TW` | 357 | Left-to-right | Human-maintained |
-| English | `en` | 357 | Left-to-right | Human-maintained |
-| 日本語 | `ja` | 358 | Left-to-right | Human-maintained |
-| 한국어 | `ko` | 358 | Left-to-right | Human-maintained |
-| Deutsch | `de` | 358 | Left-to-right | Human-maintained |
-| Français | `fr` | 358 | Left-to-right | Human-maintained |
-| Español | `es` | 358 | Left-to-right | Human-maintained |
-| Русский | `ru` | 358 | Left-to-right | Human-maintained |
-| Português | `pt` | 358 | Left-to-right | Human-maintained |
+| 简体中文 | `zh` | 365 | Left-to-right | Human-maintained |
+| 繁體中文 | `zh_TW` | 365 | Left-to-right | Human-maintained |
+| English | `en` | 365 | Left-to-right | Human-maintained |
+| 日本語 | `ja` | 366 | Left-to-right | Human-maintained |
+| 한국어 | `ko` | 366 | Left-to-right | Human-maintained |
+| Deutsch | `de` | 366 | Left-to-right | Human-maintained |
+| Français | `fr` | 366 | Left-to-right | Human-maintained |
+| Español | `es` | 366 | Left-to-right | Human-maintained |
+| Русский | `ru` | 366 | Left-to-right | Human-maintained |
+| Português | `pt` | 366 | Left-to-right | Human-maintained |
 | Italiano | `it` | 353 | Left-to-right | Human-maintained |
 | العربية | `ar` | 353 | Right-to-left | Human + MT |
 | Azərbaycan | `az` | 353 | Left-to-right | Human + MT |
@@ -90,14 +90,14 @@ The string counts above are measured, not estimated: reflect `I18nManager` on a 
 
 ## 4. How the totals add up
 
-**3 x 357 + 7 x 358 + 42 x 353 = 18,403.**
+**3 x 365 + 7 x 366 + 42 x 353 = 18,483.**
 
 - **42 languages have 353 strings.** All of them miss the same four keys: `resend`, `choose_device_to_send`, `idle_stop_server`, `idle_stop_server_desc`. Those were added in 1.7.12 and only translated into the 10 base languages, so in the other 42 they fall back to English.
-- **ja / ko / de / fr / es / ru / pt have 358.** That is 353 + those four + one legacy key `save_to_dir` that only ever existed in these seven packages (`en` does not have it).
-- **zh / zh_TW / en have 357.** That is 353 + those four.
+- **ja / ko / de / fr / es / ru / pt have 366.** That is 353 + those four + one legacy key `save_to_dir` that only ever existed in these seven packages (`en` does not have it) + the 8 strings added in 1.11.0.
+- **zh / zh_TW / en have 365.** That is 353 + those four + the 8 strings added in 1.11.0 (`auto_wifi`, `auto_wifi_desc`, `auto_wifi_list`, `battery_stop`, `battery_stop_desc`, `compress_image`, `compress_image_desc`, `send_all_devices`).
 - A previous revision of this document claimed "7 packages with 354 entries, 18,363 total". That miscounted both the legacy key and the four base-language strings and is superseded by this section and the 1.7.13 CHANGELOG entry.
 
-To verify: compile `I18nManager`, reflect the private `ensureLoaded(code)`, and count. Static initialisation holds 10 packages; after loading all codes you get 52 packages and 18,403 strings.
+To verify: compile `I18nManager`, reflect the private `ensureLoaded(code)`, and count. Static initialisation holds 10 packages; after loading all codes you get 52 packages and 18,483 strings.
 
 ---
 

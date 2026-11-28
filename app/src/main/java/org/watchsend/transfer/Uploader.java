@@ -39,6 +39,8 @@ public class Uploader {
      * 用户点取消：立刻置位停止标记，并向对端 POST /v2/cancel。
      * 已发完的文件不可回滚，但对端能立即释放会话，不必等 10 分钟 TTL。
      */
+    public static boolean isCancelRequested() { return cancelRequested; }
+
     public static void cancelCurrent() {
         cancelRequested = true;
         final Device t = activeTarget;
@@ -65,6 +67,30 @@ public class Uploader {
 
     public static void uploadFiles(final Device target, final List<File> files, final ProgressCallback cb) {
         uploadFiles(target, files, null, cb);
+    }
+
+    /**
+     * 串行发送（一对多广播用）：在当前线程里跑完这一台，返回是否全部成功。
+     * 成功收尾不回调 onDone，交给外层循环统一结束 UI；失败消息仍转发，便于提示哪台被拒。
+     */
+    public static boolean uploadFilesSync(final Device target, List<File> files, String pin, final ProgressCallback cb) {
+        final boolean[] ok = new boolean[]{false};
+        ProgressCallback wrapper = new ProgressCallback() {
+            public void onProgress(String stage, long sent, long total) {
+                if (cb != null) cb.onProgress(stage, sent, total);
+            }
+            public void onDone(boolean success, String msg) {
+                ok[0] = success;
+                if (cb != null && !success) cb.onDone(false, (target.alias == null ? "" : target.alias) + ": " + msg);
+            }
+        };
+        try {
+            doUpload(target, files, pin, wrapper);
+        } catch (Exception e) {
+            OldSendService.log("broadcast upload fail: " + target.alias + " " + e);
+            return false;
+        }
+        return ok[0];
     }
 
     public static void uploadFiles(final Device target, final List<File> files, final String pin, final ProgressCallback cb) {
@@ -143,6 +169,7 @@ public class Uploader {
         if (sessionId == null || respFiles == null) { cb.onDone(false, "响应无效"); return; }
 
         final AtomicLong totalSent = new AtomicLong(0);
+        final AtomicLong lastProgress = new AtomicLong(0);
         ExecutorService pool = Executors.newFixedThreadPool(3);
         final long finalTotalSize = totalSize;
         final boolean[] hasError = new boolean[]{false};
@@ -159,20 +186,35 @@ public class Uploader {
             pool.execute(new Runnable() {
                 public void run() {
                     if (cancelRequested) return;  // 取消后不再发后续文件
-                    try {
-                        boolean ok = HttpClient.uploadFile(uploadUrl, f, fpForUpload, new HttpClient.ProgressListener() {
-                            public void onProgress(long sent, long fileSize) {
-                                long current = totalSent.addAndGet(0);
-                                // 进度以"已完成字节 + 本文件已发字节"近似统计
-                                if (cb != null) cb.onProgress("发送中", current + sent, finalTotalSize);
+                    boolean ok = false;
+                    // 手表 WiFi 抖动很常见：失败后同一文件再试两次（1s、2s 退避），
+                    // 对端是官方实现时拿不到断点续传，重发整文件是唯一可行路径。
+                    for (int attempt = 1; attempt <= 3 && !ok && !cancelRequested; attempt++) {
+                        try {
+                            ok = HttpClient.uploadFile(uploadUrl, f, fpForUpload, new HttpClient.ProgressListener() {
+                                public void onProgress(long sent, long fileSize) {
+                                    long done = totalSent.get();
+                                    long shown = done + sent;
+                                    if (cb != null && shown > lastProgress.get()) {
+                                        lastProgress.set(shown);
+                                        cb.onProgress("发送中", shown, finalTotalSize);
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            ok = false;
+                            OldSendService.log("upload fail (try " + attempt + "): " + f.getName() + " " + e);
+                        }
+                        if (!ok) {
+                            if (attempt < 3) {
+                                OldSendService.log("重试 " + f.getName() + " 第 " + attempt + " 次失败，稍后重发");
+                                try { Thread.sleep(1000L * attempt); } catch (InterruptedException ignored) {} 
+                            } else {
+                                hasError[0] = true;
                             }
-                        });
-                        if (!ok) hasError[0] = true;
-                        totalSent.addAndGet(f.length());
-                    } catch (Exception e) {
-                        hasError[0] = true;
-                        OldSendService.log("upload fail: " + f.getName() + " " + e);
+                        }
                     }
+                    if (ok) totalSent.addAndGet(f.length());
                 }
             });
         }

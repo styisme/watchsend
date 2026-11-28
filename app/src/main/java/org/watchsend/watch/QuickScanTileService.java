@@ -21,28 +21,43 @@ public class QuickScanTileService extends TileService {
     @Override
     public void onClick() {
         super.onClick();
-        // 如果服务未启动，先拉起服务
-        Intent serviceIntent = new Intent(this, OldSendService.class);
-        if (Build.VERSION.SDK_INT >= 26) {
-            startForegroundService(serviceIntent);
+        // 磁贴改成纯开关：下拉点一下就知道服务是开是停，不必进 App 再翻设置
+        boolean running = OldSendService.isServiceRunning;
+        if (running) {
+            OldSendService.stopServer(this);
         } else {
-            startService(serviceIntent);
+            Intent serviceIntent = new Intent(this, OldSendService.class);
+            if (Build.VERSION.SDK_INT >= 26) {
+                startForegroundService(serviceIntent);
+            } else {
+                startService(serviceIntent);
+            }
         }
         WatchHardwareUtils.vibrate(this, WatchHardwareUtils.HAPTIC_LIGHT);
-
-        // 拉起 App
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("auto_scan", true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityAndCollapse(intent);
+        // 服务起停是异步的，稍等一下再刷新状态，避免磁贴停在旧值
+        new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
+            public void run() { updateTile(); }
+        }, 700);
     }
 
     private void updateTile() {
         Tile tile = getQsTile();
-        if (tile != null) {
-            tile.setState(Tile.STATE_INACTIVE);
-            tile.setLabel("WatchSend");
-            tile.updateTile();
-        }
+        if (tile == null) return;
+        boolean running = OldSendService.isServiceRunning
+                && !OldSendService.isListeningStopped();
+        try {
+            tile.setState(running ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
+            tile.setLabel(running ? "WatchSend · ON" : "WatchSend · OFF");
+        } catch (Throwable ignored) {}
+        try { tile.updateTile(); } catch (Throwable ignored) {}
+    }
+
+    /** App 内启停服务后让磁贴也刷新（系统只在下拉时才回调 onStartListening）。 */
+    public static void requestRefresh(android.content.Context ctx) {
+        if (ctx == null || Build.VERSION.SDK_INT < 24) return;
+        try {
+            android.service.quicksettings.TileService.requestListeningState(ctx,
+                    new android.content.ComponentName(ctx, QuickScanTileService.class));
+        } catch (Throwable ignored) {}
     }
 }

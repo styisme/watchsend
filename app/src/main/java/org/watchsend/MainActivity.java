@@ -72,6 +72,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private Button toggleBtn, btnSend, btnHistory, btnCrossNet, btnSettings, btnLog, scanBtn, manualIpBtn, btnAddFilesMore, btnEditFiles;
     private ListView deviceList;
     private DeviceAdapter adapter;
+    /** 一对多：本次要发往的设备集合（空/单元素走原来的单发流程）。 */
+    private final java.util.ArrayList<Device> pendingSendDevices = new java.util.ArrayList<Device>();
+    /** 长按设备弹出的菜单里当前那台。 */
+    private Device pendingMenuDevice;
     private ArrayAdapter<String> historyAdapter;
     private final List<String> historyPaths = new ArrayList<String>();
     private Handler handler = new Handler();
@@ -229,8 +233,15 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                     showHistoryMenu(pos);
                     return true;
                 }
-                // 长按进入设备详情（对齐官方 device_details_page）：信息、收藏、备注、白/黑名单都在里面
-                org.watchsend.watch.DeviceDetailActivity.show(MainActivity.this, adapter.getItem(pos), 5020);
+                // 长按先给菜单：设备详情，或把当前已选文件一口气发给全部在线设备
+                Device d = adapter.getItem(pos);
+                pendingMenuDevice = d;
+                int n = adapter.getCount();
+                String[] items = {
+                        I18nManager.get("device_details"),
+                        I18nManager.get("send_all_devices") + " (" + n + ")"
+                };
+                UikitFullListActivity.show(MainActivity.this, d.alias, items, 5030);
                 return true;
             }
         });
@@ -245,7 +256,23 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         checkAndRequestPermission();
         handleIntent(getIntent());
         recordConfigState();
+        maybeAutoStartByWifi();
         if (getIntent() != null && getIntent().getBooleanExtra("auto_scan", false)) doScan();
+    }
+
+    /** 服务被手动停过之后，回到已记住的网络再打开 App 时补一次自动启动。 */
+    private void maybeAutoStartByWifi() {
+        try {
+            android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
+            if (!sp.getBoolean("auto_wifi", false)) return;
+            if (OldSendService.isServiceRunning) return;
+            String ssid = OldSendService.currentWifiSsid();
+            if (ssid == null || ssid.length() == 0) return;
+            if (!OldSendService.autoWifiSsids(this).contains(ssid)) return;
+            log("已连上记住的网络「" + ssid + "」，自动启动服务");
+            android.content.Intent svc = new android.content.Intent(this, OldSendService.class);
+            if (android.os.Build.VERSION.SDK_INT >= 26) startForegroundService(svc); else startService(svc);
+        } catch (Throwable ignored) {}
     }
 
     private void recordConfigState() {
@@ -506,6 +533,19 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
             if (adapter != null) adapter.notifyDataSetChanged();
             return;
         }
+        // 5030 长按设备菜单：设备详情 / 发给全部在线设备
+        if (requestCode == 5030 && resultCode == RESULT_OK && data != null) {
+            int p = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (p == 0 && pendingMenuDevice != null) {
+                org.watchsend.watch.DeviceDetailActivity.show(MainActivity.this, pendingMenuDevice, 5020);
+            } else if (p == 1) {
+                if (pendingUris.isEmpty()) { toast(I18nManager.get("not_selected")); return; }
+                java.util.ArrayList<Device> all = new java.util.ArrayList<Device>(DeviceStore.get().snapshot());
+                if (all.size() <= 1) { toast(I18nManager.get("no_device")); return; }
+                confirmThenSend(all);
+            }
+            return;
+        }
         // 5021 已选文件确认页回包
         if (requestCode == 5021 && resultCode == RESULT_OK && data != null) {
             int[] kept = data.getIntArrayExtra(org.watchsend.watch.SelectedFilesActivity.EXTRA_RESULT_KEPT);
@@ -684,7 +724,17 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
 
     /** 官方 selected_files_page 语义：先把要发的清单摆出来，可逐个移除，再确认。 */
     private void sendToDevice(final Device device) {
-        if (pendingUris.isEmpty()) return;
+        java.util.ArrayList<Device> one = new java.util.ArrayList<Device>();
+        one.add(device);
+        confirmThenSend(one);
+    }
+
+    /** 选定设备集合后先走一次已选文件确认页，再进传输页（一对多与单发共用）。 */
+    private void confirmThenSend(final java.util.ArrayList<Device> targets) {
+        if (pendingUris.isEmpty() || targets == null || targets.isEmpty()) return;
+        pendingSendDevices.clear();
+        pendingSendDevices.addAll(targets);
+        pendingSendDevice = targets.get(0);
         try {
             ArrayList<String> names = new ArrayList<String>();
             long[] sizes = new long[pendingUris.size()];
@@ -693,11 +743,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                 names.add(queryDisplayName(u));
                 sizes[i] = sizeOf(u);
             }
-            pendingSendDevice = device;
             org.watchsend.watch.SelectedFilesActivity.show(this, names, sizes, 5021);
         } catch (Throwable t) {
             // 取名字/大小失败就直接走原流程，不能让确认页挡住发送
-            startTransfer(device);
+            startTransfer(targets.get(0));
         }
     }
 
@@ -711,11 +760,17 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     }
 
     private void startTransfer(final Device device) {
+        final java.util.ArrayList<Device> targets =
+                pendingSendDevices.isEmpty() ? null : new java.util.ArrayList<Device>(pendingSendDevices);
         new Thread(new Runnable() {
             public void run() {
                 final List<File> files = new ArrayList<File>();
                 for (Uri u : pendingUris) {
-                    try { files.add(copyToCache(u, queryDisplayName(u))); } catch (Exception e) { log("Read failed: " + e); }
+                    try {
+                        File cached = copyToCache(u, queryDisplayName(u));
+                        // 开了"发送前压缩图片"时，图片在这里就缩小，后续传输拿到的是小图
+                        files.add(org.watchsend.util.ImageCompressor.maybeCompress(MainActivity.this, cached));
+                    } catch (Exception e) { log("Read failed: " + e); }
                 }
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -727,6 +782,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
                         ArrayList<String> paths = new ArrayList<String>();
                         for (File f : files) paths.add(f.getAbsolutePath());
                         i.putStringArrayListExtra("files", paths);
+                        if (targets != null && targets.size() > 1) {
+                            i.putExtra("devices", new java.util.ArrayList<Device>(targets));
+                        }
                         startActivity(i);
                     }
                 });

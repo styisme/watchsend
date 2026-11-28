@@ -200,6 +200,10 @@ zh.put("save_dir_label", "保存目录: ");
         zh.put("remark_label", "备注名"); zh.put("not_set", "未设置");
         zh.put("resend", "重新发送"); zh.put("choose_device_to_send", "点选设备即可发送");
         zh.put("idle_stop_server", "熄屏空闲暂停服务"); zh.put("idle_stop_server_desc", "熄屏 3 分钟后暂停监听省电，亮屏自动恢复；可能漏接对方主动发送");
+        zh.put("auto_wifi", "按 WiFi 自动启停"); zh.put("auto_wifi_desc", "连上已记住的网络自动开启监听，离开后自动暂停；省电，也省掉每次手动开关");
+        zh.put("auto_wifi_list", "已记住的 WiFi"); zh.put("battery_stop", "低电量暂停服务"); zh.put("battery_stop_desc", "电量降到 15% 且未充电时暂停监听，充电或亮屏后恢复");
+        zh.put("compress_image", "发送前压缩图片"); zh.put("compress_image_desc", "仅对图片生效：长边超过 720 时缩小并转 JPEG，传得更快，对方收到的仍是清晰小图");
+        zh.put("send_all_devices", "发送给所有在线设备");
         zh.put("swipe_back", "启用软件内返回"); zh.put("swipe_back_desc", "开启后禁用系统返回，改用界面内滑动返回；关闭则系统返回照常，滑动返回不接管");
         dict.put("zh", zh);
 
@@ -302,6 +306,10 @@ zh.put("save_dir_label", "保存目录: ");
         zhTW.put("fingerprint_label", "裝置指紋"); zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
         zhTW.put("resend", "重新傳送"); zhTW.put("choose_device_to_send", "點選裝置即可傳送");
         zhTW.put("idle_stop_server", "螢幕關閉時暫停服務"); zhTW.put("idle_stop_server_desc", "螢幕關閉 3 分鐘後暫停監聽省電，亮起自動恢復；可能漏接對方主動傳送");
+        zhTW.put("auto_wifi", "依 Wi-Fi 自動啟停"); zhTW.put("auto_wifi_desc", "連上已記住的網路自動開啟監聽，離開後自動暫停；省電，也省去每次手動開關");
+        zhTW.put("auto_wifi_list", "已記住的 Wi-Fi"); zhTW.put("battery_stop", "低電量暫停服務"); zhTW.put("battery_stop_desc", "電量降到 15% 且未充電時暫停監聽，充電或亮起後恢復");
+        zhTW.put("compress_image", "傳送前壓縮圖片"); zhTW.put("compress_image_desc", "僅對圖片生效：長邊超過 720 時縮小並轉 JPEG，傳得更快，對方收到的仍是清晰小圖");
+        zhTW.put("send_all_devices", "傳送給所有線上裝置");
         zhTW.put("swipe_back", "啟用軟體內返回"); zhTW.put("swipe_back_desc", "開啟後停用系統返回，改用介面內滑動返回；關閉則系統返回照常，滑動返回不接管");
         dict.put("zh_TW", zhTW);
 // ============ 英语 (en) ============
@@ -493,6 +501,10 @@ en.put("save_dir_label", "Save to: ");
         en.put("remark_label", "Nickname"); en.put("not_set", "Not set");
         en.put("resend", "Resend"); en.put("choose_device_to_send", "Tap a device to send");
         en.put("idle_stop_server", "Pause service when idle"); en.put("idle_stop_server_desc", "Stop listening 3 min after screen off to save power; resumes when screen on. May miss incoming pushes");
+        en.put("auto_wifi", "Auto start by Wi-Fi"); en.put("auto_wifi_desc", "Start listening when connected to a remembered network, pause when you leave; saves battery and manual toggling");
+        en.put("auto_wifi_list", "Remembered Wi-Fi"); en.put("battery_stop", "Pause on low battery"); en.put("battery_stop_desc", "Pause listening when battery drops to 15% while unplugged; resumes on charge or screen-on");
+        en.put("compress_image", "Compress images before sending"); en.put("compress_image_desc", "Images only: downscale to 720px long edge and re-encode as JPEG for faster transfer, still clear on a watch");
+        en.put("send_all_devices", "Send to all online devices");
         en.put("swipe_back", "Enable In-App Back"); en.put("swipe_back_desc", "Turn on to block the system back and use the in-app swipe gesture; turn off to restore system back and stop capturing swipes");
         dict.put("en", en);
 

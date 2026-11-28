@@ -36,6 +36,8 @@ public class WatchSettingsActivity extends Activity {
 
     private LinearLayout container;
     private String pendingAclKey;
+    /** 6032 里当前 WiFi 列表的条目文本，选择后按这个串反推要加/要删哪个 SSID。 */
+    private String[] pendingWifiEntries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,10 @@ public class WatchSettingsActivity extends Activity {
         addSwitch(I18nManager.get("idle_stop_server"), I18nManager.get("idle_stop_server_desc"),
                 prefs().getBoolean("idle_stop_server", false), saveTo("idle_stop_server"));
 
+        // 低电量停服：15% 且未充电时停止监听，避免手表在兜底电上把网卡耗干
+        addSwitch(I18nManager.get("battery_stop"), I18nManager.get("battery_stop_desc"),
+                prefs().getBoolean("battery_stop", false), saveTo("battery_stop"));
+
         // ── 传输：先定接收策略，再定落到哪里 ──
         addSection(I18nManager.get("transfer_settings"));
         // 三态取代原来的两个开关（旧 auto_save / auto_accept_whitelist 仍被 QuickSave 读取，升级不突变）
@@ -151,6 +157,9 @@ public class WatchSettingsActivity extends Activity {
         });
         addSwitch(I18nManager.get("save_album"), I18nManager.get("save_album_desc"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
         addSwitch(I18nManager.get("save_history"), I18nManager.get("save_history_desc"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
+        // 发送前压缩图片：手表屏幕就 320px，原图传上去纯属浪费带宽
+        addSwitch(I18nManager.get("compress_image"), I18nManager.get("compress_image_desc"),
+                OldSendService.getPrefBooleanGlobal("compress_image", false), saveTo("compress_image"));
 
         // ── 网络与自动化：先协议与端口，再网页端（入口紧跟二维码），最后自启 ──
         addSection(I18nManager.get("network"));
@@ -176,6 +185,13 @@ public class WatchSettingsActivity extends Activity {
             public void onChanged(boolean v) { DownloadShare.setEnabled(v); }
         });
         addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+
+        // 按 WiFi 自动启停：连上记住的网络就开监听，离开就停，手表最省电的一档
+        addSwitch(I18nManager.get("auto_wifi"), I18nManager.get("auto_wifi_desc"),
+                prefs().getBoolean("auto_wifi", false), saveTo("auto_wifi"));
+        addItem(I18nManager.get("auto_wifi_list"), autoWifiSummary(), new View.OnClickListener() {
+            public void onClick(View v) { pickAutoWifi(); }
+        });
 
         // ── 设备与安全：身份 → 口令（开关与取值相邻）→ 拦截规则 ──
         addSection(I18nManager.get("device_security"));
@@ -207,6 +223,34 @@ public class WatchSettingsActivity extends Activity {
         addItem(I18nManager.get("about"), new View.OnClickListener() {
             public void onClick(View v) { aboutDialog(); }
         });
+    }
+
+    private String autoWifiSummary() {
+        java.util.Set<String> list = OldSendService.autoWifiSsids(this);
+        if (list.isEmpty()) return I18nManager.get("list_empty");
+        StringBuilder sb = new StringBuilder();
+        for (String x : list) {
+            if (sb.length() > 0) sb.append(", ");
+            sb.append(x);
+        }
+        return sb.toString();
+    }
+
+    /** 记住的网络列表：当前连着的那个可以直接加/移，已记住的点一下就删除。 */
+    private void pickAutoWifi() {
+        String cur = OldSendService.currentWifiSsid();
+        java.util.Set<String> list = OldSendService.autoWifiSsids(this);
+        java.util.ArrayList<String> entries = new java.util.ArrayList<String>();
+        if (cur != null) entries.add((list.contains(cur) ? "✓ " : "+ ") + cur);
+        for (String x : list) {
+            if (cur == null || !x.equals(cur)) entries.add("- " + x);
+        }
+        if (entries.isEmpty()) {
+            Toast.makeText(this, I18nManager.get("list_empty"), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        pendingWifiEntries = entries.toArray(new String[0]);
+        UikitFullListActivity.show(this, I18nManager.get("auto_wifi_list"), pendingWifiEntries, 6032);
     }
 
     private String currentShapeLabel() {
@@ -485,6 +529,21 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
                 org.json.JSONObject o = arr.optJSONObject(pos);
                 if (o != null) FavoritesStore.remove(o.optString("fingerprint", ""));
                 Toast.makeText(this, I18nManager.get("favorite_removed"), Toast.LENGTH_SHORT).show();
+            }
+            recreate();
+            return;
+        }
+        // 6032 记住的 WiFi（"✓/+ 当前网络" 切换，" - 已记住" 删除）
+        if (requestCode == 6032) {
+            int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
+            if (pos >= 0 && pendingWifiEntries != null && pos < pendingWifiEntries.length) {
+                String entry = pendingWifiEntries[pos];
+                String ssid = entry.length() > 2 ? entry.substring(2) : entry;
+                java.util.Set<String> list = OldSendService.autoWifiSsids(this);
+                java.util.Set<String> next = new java.util.HashSet<String>(list);
+                if (next.contains(ssid)) next.remove(ssid); else next.add(ssid);
+                OldSendService.setAutoWifiSsids(this, next);
+                Toast.makeText(this, next.contains(ssid) ? I18nManager.get("added_to_list") : I18nManager.get("removed"), Toast.LENGTH_SHORT).show();
             }
             recreate();
             return;

@@ -56,10 +56,12 @@ public class HttpResponse {
     private static String reasonOf(int status) {
         if (status == 200) return "OK";
         if (status == 204) return "No Content";
+        if (status == 206) return "Partial Content";
         if (status == 400) return "Bad Request";
         if (status == 403) return "Forbidden";
         if (status == 404) return "Not Found";
         if (status == 405) return "Method Not Allowed";
+        if (status == 416) return "Range Not Satisfiable";
         if (status == 500) return "Internal Server Error";
         if (status == 501) return "Not Implemented";
         if (status == 503) return "Service Unavailable";

@@ -40,9 +40,15 @@ public class UikitImageViewerActivity extends Activity {
         
         String assetName = getIntent().getStringExtra(EXTRA_IMAGE_NAME);
         try {
-            InputStream is = getAssets().open(assetName);
-            Bitmap bmp = BitmapFactory.decodeStream(is);
-            is.close();
+            Bitmap bmp;
+            if (assetName != null && assetName.startsWith("/")) {
+                // 传绝对路径时读本机文件（接收后直接在表上看图，不依赖第三方看图 App）
+                bmp = BitmapFactory.decodeFile(assetName);
+            } else {
+                InputStream is = getAssets().open(assetName);
+                bmp = BitmapFactory.decodeStream(is);
+                is.close();
+            }
             if (bmp != null) {
                 imageView.setImageBitmap(bmp);
             } else {

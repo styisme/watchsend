@@ -44,6 +44,8 @@ public class TransferActivity extends Activity {
 
     private int mode;
     private Device targetDevice;
+    /** 一对多广播时的目标设备（长度 > 1 才走广播分支）。 */
+    private java.util.ArrayList<Device> broadcastDevices;
     private ArrayList<String> filePaths;
     private long totalSize = 0;
     private long startTime;
@@ -245,6 +247,11 @@ public class TransferActivity extends Activity {
         }
 
         targetDevice = (Device) intent.getSerializableExtra("device");
+        Object extraDevices = intent.getSerializableExtra("devices");
+        if (extraDevices instanceof java.util.ArrayList) {
+            //noinspection unchecked
+            broadcastDevices = (java.util.ArrayList<Device>) extraDevices;
+        }
         filePaths = intent.getStringArrayListExtra("files");
 
         addSection(I18nManager.get("current_file"));
@@ -469,6 +476,13 @@ public class TransferActivity extends Activity {
             files.add(new File(path));
             totalSize += new File(path).length();
         }
+
+        if (broadcastDevices != null && broadcastDevices.size() > 1) {
+            showTransferNotification();
+            startBroadcastUpload(files);
+            return;
+        }
+        showTransferNotification();
         
         new Thread(new Runnable() {
             public void run() {
@@ -511,6 +525,107 @@ public class TransferActivity extends Activity {
         }).start();
     }
 
+    /**
+     * 一对多广播：串行发给每台，总进度按"单台字节 × 台数"算。
+     * 不并发是刻意的——手表网卡与 CPU 都撑不住 3 台同时拉，串行反而更快也更好观察。
+     */
+    private void startBroadcastUpload(final List<File> files) {
+        final long perDevice = totalSize;
+        final int count = broadcastDevices.size();
+        totalSize = perDevice * count;
+        final long allTotal = totalSize;
+        new Thread(new Runnable() {
+            public void run() {
+                int okCount = 0;
+                for (int i = 0; i < count; i++) {
+                    if (isDone) break;
+                    final Device d = broadcastDevices.get(i);
+                    final long base = perDevice * i;
+                    final int ordinal = i + 1;
+                    handler.post(new Runnable() { public void run() {
+                        if (!isDone && tvFileStatus != null) {
+                            String alias = d.alias == null ? "" : d.alias;
+                            tvFileStatus.setText(alias + "  " + ordinal + "/" + count);
+                        }
+                    }});
+                    boolean ok = Uploader.uploadFilesSync(d, files, null, new Uploader.ProgressCallback() {
+                        public void onProgress(String stage, long sent, long total) {
+                            final long shown = base + sent;
+                            handler.post(new Runnable() { public void run() {
+                                if (!isDone) updateProgress(shown, allTotal, files.get(0).getName());
+                            }});
+                        }
+                        public void onDone(boolean success, String msg) {
+                            if (!success) OldSendService.log("广播发送失败: " + msg);
+                        }
+                    });
+                    if (ok) okCount++;
+                }
+                final boolean allOk = okCount == count;
+                handler.post(new Runnable() { public void run() { if (!isDone) transferDone(allOk); }});
+                if (okCount > 0 && OldSendService.getContext() != null) {
+                    OldSendService.getContext().sendBroadcast(
+                            new Intent("org.watchsend.TRANSFER_DONE").putExtra("ok", allOk));
+                }
+            }
+        }).start();
+    }
+
+    /** 发送时挂一条带"取消"的通知：切走 App 后仍然能中止（已发完的文件不回滚）。 */
+    private void showTransferNotification() {
+        try {
+            android.app.NotificationManager nm =
+                    (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (nm == null) return;
+            String channelId = "oldsend_channel";
+            if (android.os.Build.VERSION.SDK_INT >= 26) {
+                android.app.NotificationChannel ch = new android.app.NotificationChannel(
+                        channelId, "OldSend后台服务", android.app.NotificationManager.IMPORTANCE_LOW);
+                nm.createNotificationChannel(ch);
+            }
+            Intent cancel = new Intent(this, org.watchsend.NotificationReceiver.class);
+            cancel.setAction(org.watchsend.NotificationReceiver.ACTION_CANCEL_TRANSFER);
+            android.app.PendingIntent pi = android.app.PendingIntent.getBroadcast(this, 4, cancel,
+                    android.app.PendingIntent.FLAG_UPDATE_CURRENT);
+            android.app.Notification.Builder b = android.os.Build.VERSION.SDK_INT >= 26
+                    ? new android.app.Notification.Builder(this, channelId)
+                    : new android.app.Notification.Builder(this);
+            b.setSmallIcon(android.R.drawable.stat_sys_upload)
+                    .setContentTitle(I18nManager.get("transferring"))
+                    .setOngoing(true);
+            if (android.os.Build.VERSION.SDK_INT >= 16) {
+                b.addAction(android.R.drawable.ic_delete, I18nManager.get("cancel"), pi);
+            }
+            nm.notify(102, b.build());
+        } catch (Throwable ignored) {}
+    }
+
+    private void hideTransferNotification() {
+        try {
+            android.app.NotificationManager nm =
+                    (android.app.NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (nm != null) nm.cancel(102);
+        } catch (Throwable ignored) {}
+    }
+
+    /** 文本预览只读前 64KB：手表上几十 MB 的日志全读进内存会直接 OOM。 */
+    private String readTextForPreview(File f) {
+        try {
+            java.io.FileInputStream in = new java.io.FileInputStream(f);
+            try {
+                int limit = (int) Math.min(f.length(), 64L * 1024);
+                byte[] buf = new byte[limit];
+                int off = 0;
+                while (off < limit) {
+                    int n = in.read(buf, off, limit - off);
+                    if (n <= 0) break;
+                    off += n;
+                }
+                return new String(buf, 0, off, "UTF-8");
+            } finally { in.close(); }
+        } catch (Throwable t) { return null; }
+    }
+
     private void updateProgress(long current, long total, String fileName) {
         if (isDone) return;
         if (UikitConfig.isLowPerf(this) && total > 0) {
@@ -546,6 +661,7 @@ public class TransferActivity extends Activity {
     }
 
     private void transferDone(boolean ok) {
+        hideTransferNotification();
         if (isDone) return;
         isDone = true;
 
@@ -635,6 +751,24 @@ public class TransferActivity extends Activity {
                                 Toast.makeText(TransferActivity.this, "静默安装失败，降级为普通安装", Toast.LENGTH_SHORT).show();
                             }
                             
+                            // 图片/文本先就地预览，不依赖手表上有没有装看图或读文本的 App
+                            String lower = recvFile.getName().toLowerCase();
+                            if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png")
+                                    || lower.endsWith(".webp") || lower.endsWith(".gif") || lower.endsWith(".bmp")) {
+                                org.watchsend.uikit.UikitImageViewerActivity.show(TransferActivity.this,
+                                        recvFile.getAbsolutePath());
+                                return;
+                            }
+                            if (lower.endsWith(".txt") || lower.endsWith(".md") || lower.endsWith(".log")
+                                    || lower.endsWith(".json") || lower.endsWith(".xml") || lower.endsWith(".csv")) {
+                                String text = readTextForPreview(recvFile);
+                                if (text != null) {
+                                    org.watchsend.uikit.UikitFullTextActivity.show(TransferActivity.this,
+                                            recvFile.getName(), text, I18nManager.get("confirm"), 0);
+                                    return;
+                                }
+                            }
+
                             try {
                                 Intent i = new Intent(Intent.ACTION_VIEW);
                                 // Android 7+ 传 file:// 会抛 FileUriExposedException，必须走 content://
