@@ -8,8 +8,8 @@ android {
         applicationId "org.watchsend"
         minSdkVersion 10
         targetSdkVersion 30
-        versionCode 10713
-        versionName "1.7.13"
+        versionCode 10800
+        versionName "1.8.0"
         resValue "string", "app_name", "WatchSend"
     }
 

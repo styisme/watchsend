@@ -4,13 +4,13 @@
 
 > Dateiübertragung auf der Uhr · Anleitung
 
-Gilt für Version 1.7.13 (versionCode 10713)   November 2026
+Gilt für Version 1.8.0 (versionCode 10800)   November 2026
 
 ## 1 Über diese Anleitung
 
 Diese Anleitung richtet sich an Nutzer von WatchSend und beschreibt Installation, Verbindung, Senden und Empfangen sowie die tatsächliche Wirkung jeder Option in den Einstellungen. Schaltflächen und Menüs sind so benannt, wie die App sie in der gewählten Sprache zeigt. Nach einem Sprachwechsel sollte die Ausgabe in derselben Sprache gelesen werden.
 
-Behandelt wird nur die Bedienung, nicht das Bauen, Paketieren oder Erweitern. Werkzeugkette, Beitragsregeln und Pflege der Sprachpakete stehen in CONTRIBUTING und im Ordner docs des Repositorys. Alle Angaben beruhen auf der Umsetzung von 1.7.13; die Cloud-Build-Umgebung kann keinen Emulator starten, daher sollte das Gefühl von Gesten am echten Gerät beurteilt werden.
+Behandelt wird nur die Bedienung, nicht das Bauen, Paketieren oder Erweitern. Werkzeugkette, Beitragsregeln und Pflege der Sprachpakete stehen in CONTRIBUTING und im Ordner docs des Repositorys. Alle Angaben beruhen auf der Umsetzung von 1.8.0; die Cloud-Build-Umgebung kann keinen Emulator starten, daher sollte das Gefühl von Gesten am echten Gerät beurteilt werden.
 
 ## 2 Installation und erster Start
 

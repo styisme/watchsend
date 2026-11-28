@@ -4,13 +4,13 @@
 
 > Transferencia de archivos en el reloj · Manual
 
-Válida para la versión 1.7.13 (versionCode 10713)   noviembre de 2026
+Válida para la versión 1.8.0 (versionCode 10800)   noviembre de 2026
 
 ## 1 Sobre esta guía
 
 Esta guía está dirigida a quienes usan WatchSend: instalación, conexión, envío y recepción, y el efecto real de cada opción de la pantalla de Ajustes. Los nombres de botones y menús coinciden con la lengua de interfaz elegida; si la ha cambiado, lea la edición en esa misma lengua.
 
-Solo trata el uso, no la compilación, el empaquetado ni las modificaciones. Cadena de herramientas, normas de contribución y mantenimiento de los paquetes de idioma están en CONTRIBUTING y la carpeta docs del repositorio. Las descripciones se basan en la implementación 1.7.13; el entorno de compilación en la nube no puede iniciar un emulador, así que la sensación de los gestos debe juzgarse en un dispositivo real.
+Solo trata el uso, no la compilación, el empaquetado ni las modificaciones. Cadena de herramientas, normas de contribución y mantenimiento de los paquetes de idioma están en CONTRIBUTING y la carpeta docs del repositorio. Las descripciones se basan en la implementación 1.8.0; el entorno de compilación en la nube no puede iniciar un emulador, así que la sensación de los gestos debe juzgarse en un dispositivo real.
 
 ## 2 Instalación y primer arranque
 
