@@ -22,6 +22,12 @@ public class QuickWidgetProvider extends AppWidgetProvider {
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+
+        // 图标按动态取色重新渲染（RemoteViews 只能塞位图）；取不到动态色时图标仍是原来的绿
+        try {
+            int px = (int) (56 * context.getResources().getDisplayMetrics().density);
+            views.setImageViewBitmap(R.id.widget_icon, org.watchsend.uikit.AppIcon.toBitmap(context, px));
+        } catch (Throwable ignored) {}
         
         // 1. 点击图标区域拉起 App
         Intent launchIntent = new Intent(context, MainActivity.class);

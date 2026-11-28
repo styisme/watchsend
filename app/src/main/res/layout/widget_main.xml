@@ -17,7 +17,9 @@
         android:orientation="vertical"
         android:gravity="center">
         
+        <!-- src 只是兜底；运行时由 QuickWidgetProvider 换成动态取色渲染的位图 -->
         <ImageView
+            android:id="@+id/widget_icon"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_launcher" />

@@ -4,6 +4,15 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.10.0] - 2026-11-28
+
+### Added
+- **应用图标支持 MD3 动态取色**：图标原来是一整块 vector（黑圆底 + 绿色外圈 + 绿色上箭头 + 白色下箭头），单层无法只染绿色。现拆成 `ic_launcher_disc`（黑底）、`ic_launcher_accent`（外圈与上箭头）、`ic_launcher_arrow`（白箭头）三层，新增 `uikit/AppIcon` 在运行时按 `SRC_IN` 把绿色层换成动态主色（固定取 `system_accent1-200`，黑底上足够亮），白箭头与黑底保持原样；取不到动态色（系统低于 Android 12、ROM 缺该档资源、或用户关掉开关）时不染色，保留图标原本的 `#81C784` 绿。
+- **桌面小组件图标跟随取色**：`QuickWidgetProvider` 用 `AppIcon.toBitmap` 把动态版本塞进 `RemoteViews`（`widget_main` 新增 `widget_icon` id），主色变化后刷新即可看到；布局里的 `src` 保留静态图标作兜底。
+
+### Notes
+- 启动器桌面图标、快捷设置磁贴、通知小图标由系统绘制，第三方应用无法运行时改色，仍为静态绿；Android 13 的“主题图标”需要额外的 adaptive / monochrome 资源，本轮未启用。
+
 ## [1.9.2] - 2026-11-28
 
 ### Fixed
