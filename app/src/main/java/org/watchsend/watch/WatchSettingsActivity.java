@@ -42,6 +42,9 @@ public class WatchSettingsActivity extends Activity {
         
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
+        // 设置页可能被直接打开（服务尚未启动），快速保存/收藏都要能读到配置
+        org.watchsend.util.QuickSave.init(this);
+        org.watchsend.model.FavoritesStore.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
         org.watchsend.uikit.RtlSupport.apply(this);
@@ -405,13 +408,16 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         UikitFullListActivity.show(this, I18nManager.get("manage_acl"), items, 6013);
     }
 
-    /** 快速保存三态选择（对应官方 QuickSaveMode）。 */
+    /** 快速保存三态选择（对应官方 QuickSaveMode）。当前生效项打勾，避免选完看不出结果。 */
     private void pickQuickSave() {
-        String[] items = {
-                I18nManager.get("quick_save_off"),
-                I18nManager.get("quick_save_on"),
-                I18nManager.get("quick_save_paired")
-        };
+        String cur = QuickSave.getMode();
+        java.util.ArrayList<org.watchsend.uikit.UikitListItemModel> items = new java.util.ArrayList<org.watchsend.uikit.UikitListItemModel>();
+        items.add(new org.watchsend.uikit.UikitListItemModel(
+                QuickSave.label(QuickSave.OFF), QuickSave.OFF.equals(cur) ? "✓" : null));
+        items.add(new org.watchsend.uikit.UikitListItemModel(
+                QuickSave.label(QuickSave.ON), QuickSave.ON.equals(cur) ? "✓" : null));
+        items.add(new org.watchsend.uikit.UikitListItemModel(
+                QuickSave.label(QuickSave.PAIRED), QuickSave.PAIRED.equals(cur) ? "✓" : null));
         UikitFullListActivity.show(this, I18nManager.get("quick_save"), items, 6030);
     }
 
@@ -460,9 +466,14 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         // 6030 快速保存三态
         if (requestCode == 6030) {
             int pos = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
-            if (pos == 0) QuickSave.setMode(QuickSave.OFF);
-            else if (pos == 1) QuickSave.setMode(QuickSave.ON);
-            else if (pos == 2) QuickSave.setMode(QuickSave.PAIRED);
+            String mode = pos == 0 ? QuickSave.OFF
+                    : pos == 1 ? QuickSave.ON
+                    : pos == 2 ? QuickSave.PAIRED : null;
+            if (mode != null && !QuickSave.setMode(mode)) {
+                // 真的写不进去时明确提示，别再静默回滚
+                Toast.makeText(this, I18nManager.get("failed_prefix") + I18nManager.get("quick_save"),
+                        Toast.LENGTH_SHORT).show();
+            }
             recreate();
             return;
         }

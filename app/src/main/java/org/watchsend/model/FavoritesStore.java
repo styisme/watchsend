@@ -19,10 +19,39 @@ public class FavoritesStore {
     private static final String KEY = "favorites";
     private static final Object LOCK = new Object();
 
+    /** 服务未启动时读不到配置，收藏页会显示 0 台、点了也没反应，用注入的 application context 兜底。 */
+    private static Context appCtx;
+
+    public static void init(Context c) {
+        if (c != null) appCtx = c.getApplicationContext();
+    }
+
+    private static Context context() {
+        Context c = OldSendService.getContext();
+        return c != null ? c : appCtx;
+    }
+
     private static SharedPreferences prefs() {
-        Context ctx = OldSendService.getContext();
+        Context ctx = context();
         if (ctx == null) return null;
         return ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * 指纹比较口径。收藏写入时可能拿到对方原始形态（大写十六进制、"sha256:" 前缀、
+     * "AA:BB:.." 冒号分隔），而接收侧 PrepareUploadHandler 已经归一化，直接字符串相等
+     * 会让 paired 模式匹配不到收藏设备。这里统一按归一化后的形式比较，并兼容旧条目。
+     */
+    private static String keyOf(String fp) {
+        if (fp == null) return "";
+        String norm = org.watchsend.util.CryptoUtils.normalizeFingerprint(fp);
+        return norm != null ? norm : fp.trim();
+    }
+
+    private static boolean same(String stored, String query) {
+        if (stored == null || query == null) return false;
+        if (stored.equals(query)) return true;
+        return keyOf(stored).equals(keyOf(query));
     }
 
     public static JSONArray list() {
@@ -44,7 +73,7 @@ public class FavoritesStore {
         JSONArray arr = list();
         for (int i = 0; i < arr.length(); i++) {
             JSONObject o = arr.optJSONObject(i);
-            if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) return true;
+            if (o != null && same(o.optString("fingerprint", ""), fingerprint)) return true;
         }
         return false;
     }
@@ -58,7 +87,7 @@ public class FavoritesStore {
             JSONArray arr = list();
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject o = arr.optJSONObject(i);
-                if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) {
+                if (o != null && same(o.optString("fingerprint", ""), fingerprint)) {
                     arr.remove(i);
                     sp.edit().putString(KEY, arr.toString()).commit();
                     return false;
@@ -66,7 +95,7 @@ public class FavoritesStore {
             }
             JSONObject o = new JSONObject();
             try {
-                o.put("fingerprint", fingerprint);
+                o.put("fingerprint", keyOf(fingerprint));
                 o.put("alias", alias == null ? "" : alias);
                 o.put("ip", ip == null ? "" : ip);
                 o.put("port", port);
@@ -98,7 +127,7 @@ public class FavoritesStore {
         JSONArray arr = list();
         for (int i = 0; i < arr.length(); i++) {
             JSONObject o = arr.optJSONObject(i);
-            if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) return o;
+            if (o != null && same(o.optString("fingerprint", ""), fingerprint)) return o;
         }
         return null;
     }
@@ -116,7 +145,7 @@ public class FavoritesStore {
             JSONArray arr = list();
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject o = arr.optJSONObject(i);
-                if (o != null && fingerprint.equals(o.optString("fingerprint", ""))) {
+                if (o != null && same(o.optString("fingerprint", ""), fingerprint)) {
                     try {
                         o.put("remark", remark == null ? "" : remark);
                     } catch (Exception ignored) {}

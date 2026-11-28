@@ -4,6 +4,16 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.9.1] - 2026-11-28
+
+### Fixed
+- **快速保存设置切完又变回“每次都询问”**：`QuickSave` 与 `FavoritesStore` 原先只认 `OldSendService.getContext()`，服务尚未起来时该接口返回 null，`setMode` 直接 return、`getMode` 落回默认值，重新进入设置页就显示回旧模式。现在由入口 Activity 注入 application context 兜底，`MainActivity` 与设置页启动时都已接上；`setMode` 改为写入后立即读回校验，失败时给出提示并在日志留痕，不再静默回滚。
+- **“仅收藏设备自动接收”匹配不到收藏**：接收侧 `PrepareUploadHandler` 会把发送方指纹归一化（转小写、去掉 `sha256:` 前缀与冒号），收藏侧却拿原始字符串直接相等比较；对方发来大写十六进制或带冒号分隔的指纹时必然失配，收藏过的设备照样弹窗。`FavoritesStore` 的增删查改统一按归一化口径比较，已存的旧条目无需迁移。
+- **旧白名单子串误命中**：`paired` 模式兼容旧 `whitelist` 时用 `contains` 判断，`10.0.14.5` 会被 `10.0.14.55` 误放行；改为按逗号切分后逐项精确比对（比较前同样归一化）。
+
+### Changed
+- 快速保存的三种模式选择列表给当前生效项打勾，选之前就能看出处于哪种模式。
+
 ## [1.9.0] - 2026-11-28
 
 ### Added

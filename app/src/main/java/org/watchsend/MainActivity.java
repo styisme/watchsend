@@ -89,6 +89,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         
         super.onCreate(savedInstanceState);
         I18nManager.init(this);
+        // 服务可能还没起来，先把 application context 交给配置工具兜底
+        org.watchsend.util.QuickSave.init(this);
+        org.watchsend.model.FavoritesStore.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         org.watchsend.uikit.RtlSupport.apply(this);
