@@ -19,6 +19,7 @@ import android.widget.*;
 
 import org.watchsend.model.Device;
 import org.watchsend.transfer.Uploader;
+import org.watchsend.uikit.UikitConfig;
 import org.watchsend.util.I18nManager;
 import org.watchsend.util.ThemeUtils;
 import org.watchsend.watch.WatchUiUtils;
@@ -47,6 +48,9 @@ public class TransferActivity extends Activity {
     private long totalSize = 0;
     private long startTime;
     private boolean isDone = false;
+    // 低性能模式的进度刷新闸门：只保留"整 1% 变化"或"距上次刷新超过 700ms"的更新
+    private int lastPct = -1;
+    private long lastProgressAt = 0L;
     /** 对方要求 PIN 时，用户输入后缓存在这里，重试上传时带上。 */
     private String devicePin = null;
     private String receivedFilePath = null;
@@ -499,6 +503,15 @@ public class TransferActivity extends Activity {
 
     private void updateProgress(long current, long total, String fileName) {
         if (isDone) return;
+        if (UikitConfig.isLowPerf(this) && total > 0) {
+            // 低性能设备上进度回调可能每几十毫秒一次，全量重绘会让传输页自己拖慢传输；
+            // 这里只在百分比进位或超过 700ms 才真正刷 UI。
+            int pctNow = (int) (current * 100 / total);
+            long now = System.currentTimeMillis();
+            if (pctNow == lastPct && now - lastProgressAt < 700) return;
+            lastPct = pctNow;
+            lastProgressAt = now;
+        }
         long elapsed = System.currentTimeMillis() - startTime;
         double speed = current / (elapsed / 1000.0 + 0.1);
         String speedStr = speed > 1024 * 1024 ? String.format(Locale.US, "%.1f MB/s", speed / 1024 / 1024) : String.format(Locale.US, "%.1f KB/s", speed / 1024);

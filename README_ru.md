@@ -5,7 +5,7 @@
 > Часовая эволюция OldSend. Сохранив все хардкорные возможности передачи, пользовательский интерфейс был полностью переработан в нативные для Wear OS «3D-колесо» и «Pill Cards».
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.10-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.11-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---

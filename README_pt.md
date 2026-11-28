@@ -5,7 +5,7 @@
 > A evolução do relógio do OldSend. Mantendo todas as capacidades de transferência hardcore, a interface do usuário foi completamente remodelada em '3D Wheel' e 'Pill Cards' nativos do Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.10-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.11-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---

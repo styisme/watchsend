@@ -1,5 +1,7 @@
 package org.watchsend.discovery;
 
+import android.content.Context;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,6 +14,7 @@ import org.watchsend.api.InfoHandler;
 import org.watchsend.http.HttpClient;
 import org.watchsend.model.Device;
 import org.watchsend.util.TrustStore;
+import org.watchsend.uikit.UikitConfig;
 
 /**
  * 多播被路由器拦截时的回退发现（官方 discovery 也有类似的多播失败兜底）。
@@ -24,6 +27,11 @@ public class SubnetScanner {
     private static final int PROBE_TIMEOUT_MS = 400;
     private static final int THREADS = 16;
     private static final long TOTAL_WAIT_MS = 9000;
+
+    // 低性能模式：并发线程减半、单机超时放宽、总等待拉长，避免 254 个探测把弱 CPU 打满
+    private static final int PROBE_TIMEOUT_MS_LOW = 700;
+    private static final int THREADS_LOW = 6;
+    private static final long TOTAL_WAIT_MS_LOW = 15000;
 
     public interface Callback {
         void onDevice(Device d);
@@ -50,7 +58,10 @@ public class SubnetScanner {
         final String prefix = localIp.substring(0, lastDot + 1);
         final int port = InfoHandler.selfPort();
 
-        ExecutorService pool = Executors.newFixedThreadPool(THREADS);
+        Context ctx = OldSendService.getContext();
+        boolean low = ctx != null && UikitConfig.isLowPerf(ctx);
+        final int timeoutMs = low ? PROBE_TIMEOUT_MS_LOW : PROBE_TIMEOUT_MS;
+        ExecutorService pool = Executors.newFixedThreadPool(low ? THREADS_LOW : THREADS);
         final CountDownLatch latch = new CountDownLatch(254);
         for (int i = 1; i <= 254; i++) {
             final String host = prefix + i;
@@ -61,7 +72,7 @@ public class SubnetScanner {
             pool.execute(new Runnable() {
                 public void run() {
                     try {
-                        probe(host, port, cb);
+                        probe(host, port, timeoutMs, cb);
                     } finally {
                         latch.countDown();
                     }
@@ -69,20 +80,20 @@ public class SubnetScanner {
             });
         }
         try {
-            latch.await(TOTAL_WAIT_MS, TimeUnit.MILLISECONDS);
+            latch.await(low ? TOTAL_WAIT_MS_LOW : TOTAL_WAIT_MS, TimeUnit.MILLISECONDS);
         } catch (Exception ignored) {
         }
         pool.shutdownNow();
         if (cb != null) cb.onFinished();
     }
 
-    private static void probe(String host, int port, Callback cb) {
+    private static void probe(String host, int port, int timeoutMs, Callback cb) {
         // 1) 明文设备
         JSONObject info = null;
         String[] fp = new String[1];
         try {
             info = HttpClient.getJson("http://" + host + ":" + port + Protocol.V2_PREFIX + "/info",
-                    null, PROBE_TIMEOUT_MS, fp);
+                    null, timeoutMs, fp);
         } catch (Exception ignored) {
         }
         if (info == null) {
@@ -90,7 +101,7 @@ public class SubnetScanner {
             fp[0] = null;
             try {
                 info = HttpClient.getJson("https://" + host + ":" + port + Protocol.V2_PREFIX + "/info",
-                        null, PROBE_TIMEOUT_MS, fp);
+                        null, timeoutMs, fp);
             } catch (Exception ignored) {
             }
         }

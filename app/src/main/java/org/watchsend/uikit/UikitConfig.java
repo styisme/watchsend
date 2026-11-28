@@ -65,8 +65,44 @@ public final class UikitConfig {
     public static void setDynamicColorEnabled(Context ctx, boolean enabled) {
         prefs(ctx).edit().putBoolean(KEY_DYNAMIC_COLOR, enabled).commit();
     }
+    /** 自动判定结果缓存（每进程算一次，避免每次读都由系统调用重算）。 */
+    private static Boolean sAutoLowPerf;
+
+    /**
+     * 低性能模式开关：
+     * 1) 用户在设置页显式开/关过 → 完全听用户的；
+     * 2) 从未设置过 → 按设备能力自动判定（低内存设备 / 低 RAM 标记 / ≤2 核），
+     *    老手表不必让用户自己猜该不该开。
+     */
     public static boolean isLowPerf(Context ctx) {
-        return prefs(ctx).getBoolean(KEY_LOW_PERF, false);
+        SharedPreferences p = prefs(ctx);
+        if (p.contains(KEY_LOW_PERF)) return p.getBoolean(KEY_LOW_PERF, false);
+        return autoLowPerf(ctx);
+    }
+
+    private static boolean autoLowPerf(Context ctx) {
+        if (sAutoLowPerf != null) return sAutoLowPerf;
+        boolean low = false;
+        try {
+            // 应用可用堆 ≤ 256MB：这是手表与入门机的典型区间（手机通常 ≥256MB，手表多为 48~192MB）
+            if (Runtime.getRuntime().maxMemory() / (1024L * 1024L) <= 256L) low = true;
+            // 系统自报低内存设备
+            if (android.os.Build.VERSION.SDK_INT >= 19) {
+                android.app.ActivityManager am =
+                        (android.app.ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+                if (am != null && am.isLowRamDevice()) low = true;
+            }
+            // 双核及以下
+            if (Runtime.getRuntime().availableProcessors() <= 2) low = true;
+        } catch (Throwable ignored) {
+        }
+        sAutoLowPerf = low;
+        return low;
+    }
+
+    /** 用户是否显式选择过低性能模式（false 表示当前值来自自动判定）。 */
+    public static boolean isLowPerfExplicit(Context ctx) {
+        return prefs(ctx).contains(KEY_LOW_PERF);
     }
 
     /**

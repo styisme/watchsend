@@ -14,6 +14,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import java.lang.ref.WeakReference;
 
+import android.os.Handler;
+import android.os.Looper;
+
 public class UikitFullTextActivity extends Activity {
     public static final String EXTRA_TITLE = "uikit_title";
     public static final String EXTRA_MESSAGE = "uikit_message";
@@ -26,6 +29,10 @@ public class UikitFullTextActivity extends Activity {
     private TextView tvBody;
     private ScrollView mScroll;
     private boolean liveHasContent;
+    // 低性能模式的日志合批缓冲：先攒起来，500ms 落地一次，避免每条日志都触发一次全文 setText + 滚动重排
+    private final StringBuilder livePending = new StringBuilder();
+    private final Handler liveHandler = new Handler(Looper.getMainLooper());
+    private Runnable liveFlush;
 
     public static void show(Activity activity, String title, String message, String positiveText, int requestCode) {
         show(activity, title, message, positiveText, false, false, requestCode);
@@ -183,10 +190,37 @@ public class UikitFullTextActivity extends Activity {
     /** 实时模式下追加一行文本并自动滚动到底部 */
     public void appendLive(String line) {
         if (tvBody == null || mScroll == null) return;
+        if (UikitConfig.isLowPerf(this)) {
+            livePending.append(line);
+            if (liveFlush == null) {
+                liveFlush = new Runnable() {
+                    @Override public void run() {
+                        liveFlush = null;
+                        flushLive();
+                    }
+                };
+                liveHandler.postDelayed(liveFlush, 500);
+            }
+            return;
+        }
         if (!liveHasContent) { tvBody.setText(line); liveHasContent = true; }
         else tvBody.setText(tvBody.getText() + line);
         mScroll.post(new Runnable() {
             @Override public void run() { mScroll.fullScroll(ScrollView.FOCUS_DOWN); }
+        });
+    }
+
+    /** 把合批缓冲一次性写进正文（低性能模式专用），并只滚动一次。 */
+    private void flushLive() {
+        if (tvBody == null || mScroll == null) return;
+        if (livePending.length() == 0) return;
+        String chunk = livePending.toString();
+        livePending.setLength(0);
+        if (!liveHasContent) { tvBody.setText(chunk); liveHasContent = true; }
+        else tvBody.setText(tvBody.getText() + chunk);
+        final ScrollView sv = mScroll;
+        sv.post(new Runnable() {
+            @Override public void run() { sv.fullScroll(ScrollView.FOCUS_DOWN); }
         });
     }
 
@@ -197,6 +231,7 @@ public class UikitFullTextActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        if (liveFlush != null) { liveHandler.removeCallbacks(liveFlush); liveFlush = null; }
         if (sLiveRef != null && sLiveRef.get() == this) sLiveRef.clear();
         super.onDestroy();
     }

@@ -24,6 +24,7 @@ import org.watchsend.uikit.UikitFullInputActivity;
 import org.watchsend.uikit.UikitFullTextActivity;
 import org.watchsend.uikit.UikitFullSliderActivity;
 import org.watchsend.uikit.UikitCompatSwitch;
+import org.watchsend.uikit.UikitConfig;
 
 public class WatchSettingsActivity extends Activity {
 
@@ -103,7 +104,10 @@ public class WatchSettingsActivity extends Activity {
         }
 
         // 低性能模式
-        addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"), prefs().getBoolean("low_perf_mode", false), saveTo("low_perf_mode"));
+        // 开关要显示"实际生效值"：未手动设置过时由 UikitConfig 按设备能力自动判定，
+        // 这里若仍读 prefs 默认 false，会出现"开关关着但动画已经关了"的割裂。
+        addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"),
+                UikitConfig.isLowPerf(this), saveTo("low_perf_mode"));
         
 
         // 主题模式 (深/浅/自动)

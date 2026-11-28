@@ -1890,50 +1890,66 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         installExtra1();
         installExtra2();
         installExtra3();
-        installFullAr();
-        installFullAz();
-        installFullBg();
-        installFullBn();
-        installFullBs();
-        installFullCa();
-        installFullCs();
-        installFullDa();
-        installFullEl();
-        installFullEt();
-        installFullEu();
-        installFullFa();
-        installFullFi();
-        installFullFil();
-        installFullHe();
-        installFullHi();
-        installFullHr();
-        installFullHu();
-        installFullIs();
-        installFullLt();
-        installFullLv();
-        installFullMk();
-        installFullMs();
-        installFullNb();
-        installFullNe();
-        installFullRo();
-        installFullSk();
-        installFullSl();
-        installFullSq();
-        installFullSr();
-        installFullSv();
-        installFullSw();
-        installFullTh();
-        installFullUk();
-        installFullUr();
-        installFullUz();
-        installFullIt();
-        installFullNl();
-        installFullPl();
-        installFullTr();
-        installFullId();
-        installFullVi();
+
+        // 语言包按需加载：52 种全量共 18,363 条，启动即全建会白占约 1MB 堆、并多花几十毫秒冷启动。
+        // 这里只常驻 en / zh 等基础包（供兜底），其余在当前语言确定后由 ensureLoaded() 建一次。
+
     }
 
+
+    /**
+     * 按需把某个语言包的全量词条装进 dict（幂等、线程安全）。
+     * 基础包（zh / zh_TW / en / ja / ko / de / fr / es / ru / pt）在 static 块里已常驻，这里直接命中返回。
+     */
+    private static void ensureLoaded(String code) {
+        if (code == null) return;
+        if (dict.containsKey(code)) return;
+        synchronized (dict) {
+            if (dict.containsKey(code)) return;
+            if ("ar".equals(code)) installFullAr();
+            else if ("az".equals(code)) installFullAz();
+            else if ("bg".equals(code)) installFullBg();
+            else if ("bn".equals(code)) installFullBn();
+            else if ("bs".equals(code)) installFullBs();
+            else if ("ca".equals(code)) installFullCa();
+            else if ("cs".equals(code)) installFullCs();
+            else if ("da".equals(code)) installFullDa();
+            else if ("el".equals(code)) installFullEl();
+            else if ("et".equals(code)) installFullEt();
+            else if ("eu".equals(code)) installFullEu();
+            else if ("fa".equals(code)) installFullFa();
+            else if ("fi".equals(code)) installFullFi();
+            else if ("fil".equals(code)) installFullFil();
+            else if ("he".equals(code)) installFullHe();
+            else if ("hi".equals(code)) installFullHi();
+            else if ("hr".equals(code)) installFullHr();
+            else if ("hu".equals(code)) installFullHu();
+            else if ("is".equals(code)) installFullIs();
+            else if ("lt".equals(code)) installFullLt();
+            else if ("lv".equals(code)) installFullLv();
+            else if ("mk".equals(code)) installFullMk();
+            else if ("ms".equals(code)) installFullMs();
+            else if ("nb".equals(code)) installFullNb();
+            else if ("ne".equals(code)) installFullNe();
+            else if ("ro".equals(code)) installFullRo();
+            else if ("sk".equals(code)) installFullSk();
+            else if ("sl".equals(code)) installFullSl();
+            else if ("sq".equals(code)) installFullSq();
+            else if ("sr".equals(code)) installFullSr();
+            else if ("sv".equals(code)) installFullSv();
+            else if ("sw".equals(code)) installFullSw();
+            else if ("th".equals(code)) installFullTh();
+            else if ("uk".equals(code)) installFullUk();
+            else if ("ur".equals(code)) installFullUr();
+            else if ("uz".equals(code)) installFullUz();
+            else if ("it".equals(code)) installFullIt();
+            else if ("nl".equals(code)) installFullNl();
+            else if ("pl".equals(code)) installFullPl();
+            else if ("tr".equals(code)) installFullTr();
+            else if ("id".equals(code)) installFullId();
+            else if ("vi".equals(code)) installFullVi();
+        }
+    }
 
     /** 语言选择页的代码表（顺序即展示顺序，"system" 恒为第一项）。 */
     public static final String[] CODES = {"system","zh","zh_TW","en","ja","ko","de","fr","es","ru","pt","it","ar","az","bg","bn","bs","ca","cs","da","el","et","eu","fa","fi","fil","he","hi","hr","hu","id","is","lt","lv","mk","ms","nb","ne","nl","pl","ro","sk","sl","sq","sr","sv","sw","th","tr","uk","ur","uz","vi"};
@@ -1945,6 +1961,11 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
     public static String labelAt(int i) { return i == 0 ? get("follow_system") : LABELS[i]; }
 
     /** 系统 Locale 的 language 代码归一化到我们的 code（iw/in/tl/no 这类历史代码要换算）。 */
+    private static boolean isSupported(String lang) {
+        for (String c : CODES) if (c.equals(lang)) return true;
+        return false;
+    }
+
     private static String normalizeCode(String lang) {
         if (lang == null) return "en";
         if ("iw".equals(lang)) return "he";
@@ -1952,7 +1973,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         if ("tl".equals(lang)) return "fil";
         if ("no".equals(lang)) return "nb";
         if ("zh".equals(lang)) return "zh";
-        return dict.containsKey(lang) ? lang : "en";
+        return isSupported(lang) ? lang : "en";
     }
 
     public static void init(Context ctx) {
@@ -1968,6 +1989,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         } else {
             currentLang = lang;
         }
+        ensureLoaded(currentLang);
     }
 
     /** 当前生效的语言代码（zh / zh_TW / en / ja ...），供随语言变化的文案使用。 */
@@ -5945,6 +5967,8 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         if ("key".equals(currentLang)) {
             return key;
         }
+        // 懒加载兜底：init() 之外（如静态初始化阶段）也可能先取词条
+        if (!dict.containsKey(currentLang)) ensureLoaded(currentLang);
         // 1. 当前语言
         if (dict.containsKey(currentLang) && dict.get(currentLang).containsKey(key)) {
             return dict.get(currentLang).get(key);

@@ -38,8 +38,19 @@ public final class UikitUi {
         if (!isDark) bg.setStroke((int)(1 * ctx.getResources().getDisplayMetrics().density), 0xFFE0E0E0);
         return bg;
     }
+    /** 递归关掉整页的 overscroll 边缘特效（低性能模式用）。 */
+    public static void disableOverScroll(View root) {
+        if (root == null) return;
+        root.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        if (root instanceof android.view.ViewGroup) {
+            android.view.ViewGroup g = (android.view.ViewGroup) root;
+            for (int i = 0; i < g.getChildCount(); i++) disableOverScroll(g.getChildAt(i));
+        }
+    }
+
     public static void applyRoundPadding(Context ctx, View root) {
         if (root == null) return;
+        if (UikitConfig.isLowPerf(ctx)) disableOverScroll(root);
         boolean isRound = WearHardwareUtils.isRoundScreen(root);
         boolean isChin  = WearHardwareUtils.needChinPadding(ctx);
         float d = ctx.getResources().getDisplayMetrics().density;
@@ -50,7 +61,11 @@ public final class UikitUi {
     }
     public static void setupWheelScroll(final ScrollView sv, final LinearLayout c) {
         if (sv == null || c == null) return;
-        if (UikitConfig.isLowPerf(sv.getContext())) return;
+        if (UikitConfig.isLowPerf(sv.getContext())) {
+            // 低性能模式：滚轮缩放/回弹整体跳过，同时关掉边缘 overscroll 特效（边缘拉伸需要额外交付绘制）
+            sv.setOverScrollMode(View.OVER_SCROLL_NEVER);
+            return;
+        }
         boolean isRound = WearHardwareUtils.isRoundScreen(sv);
         sv.setClipToPadding(false);
         sv.setVerticalScrollBarEnabled(false);
