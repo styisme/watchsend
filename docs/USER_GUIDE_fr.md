@@ -4,13 +4,13 @@
 
 > Transfert de fichiers sur la montre · Manuel
 
-Valable pour la version 1.8.2 (versionCode 10802)   novembre 2026
+Valable pour la version 1.9.0 (versionCode 10900)   novembre 2026
 
 ## 1 À propos de ce guide
 
 Ce guide s’adresse aux utilisateurs de WatchSend : installation, connexion, envoi et réception, et effet réel de chaque option de l’écran Réglages. Les libellés de boutons et de menus reprennent la langue d’affichage choisie. Après un changement de langue, lisez la version dans cette même langue.
 
-Il ne traite que de l’usage, pas de la compilation, du packaging ni des modifications. Chaîne d’outils, règles de contribution et maintenance des paquets de langue figurent dans CONTRIBUTING et le dossier docs du dépôt. Les descriptions reposent sur l’implémentation 1.8.2 ; l’environnement de compilation cloud ne peut pas lancer d’émulateur, le ressenti des gestes est donc à juger sur un appareil réel.
+Il ne traite que de l’usage, pas de la compilation, du packaging ni des modifications. Chaîne d’outils, règles de contribution et maintenance des paquets de langue figurent dans CONTRIBUTING et le dossier docs du dépôt. Les descriptions reposent sur l’implémentation 1.9.0 ; l’environnement de compilation cloud ne peut pas lancer d’émulateur, le ressenti des gestes est donc à juger sur un appareil réel.
 
 ## 2 Installation et premier lancement
 

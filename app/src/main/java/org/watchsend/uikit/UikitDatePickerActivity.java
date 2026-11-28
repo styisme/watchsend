@@ -33,6 +33,7 @@ public class UikitDatePickerActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(bgColor);
         setContentView(root);
+        org.watchsend.uikit.RtlSupport.apply(this);
         UikitUi.applyRoundPadding(this, root);
         
         Calendar cal = Calendar.getInstance();

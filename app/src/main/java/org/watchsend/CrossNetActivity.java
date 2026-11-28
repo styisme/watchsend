@@ -69,6 +69,7 @@ public class CrossNetActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cross_net);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
@@ -333,6 +334,7 @@ public class CrossNetActivity extends Activity {
         tvTitle.setText(title);
         tvTitle.setTextSize(15);
         org.watchsend.uikit.TextFit.wrap(tvTitle, 2);
+        tvTitle.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tvTitle.setTextColor(colorMain);
         textContainer.addView(tvTitle);
 

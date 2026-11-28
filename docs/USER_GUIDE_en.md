@@ -4,13 +4,13 @@
 
 > File transfer on your watch - user manual
 
-Applies to v1.8.2 (versionCode 10802)    November 2026
+Applies to v1.9.0 (versionCode 10900)    November 2026
 
 ## 1 About This Guide
 
 This guide is written for people who use WatchSend: how to install it, connect, send and receive files, and what every option on the Settings screen actually does. Button and menu names match what the app shows in the language you have selected; if you have switched the interface language, read the edition in that same language.
 
-It covers usage only, not building, packaging or extending the project. For the toolchain, contribution rules and how to maintain language packs, see CONTRIBUTING and the docs folder in the repository. Behaviour described here reflects the 1.8.2 implementation; the cloud build environment cannot run an emulator, so judge gesture feel on real hardware.
+It covers usage only, not building, packaging or extending the project. For the toolchain, contribution rules and how to maintain language packs, see CONTRIBUTING and the docs folder in the repository. Behaviour described here reflects the 1.9.0 implementation; the cloud build environment cannot run an emulator, so judge gesture feel on real hardware.
 
 ## 2 Install and First Launch
 
@@ -28,6 +28,7 @@ The home screen runs from top to bottom: status and address, the device list, th
 - In-app swipe back is on by default: swipe inward horizontally starting within about 16dp of the left or right edge; the page follows your finger, shrinks, fades and returns. Every screen follows the same rule - full-screen pages, device details, the PIN pad, selected files and the web QR page included. If you prefer the system back gesture, turn off Settings - General - Enable In-App Back; system back then behaves normally and swiping no longer navigates.
 - Interface Scale adjusts the whole app between 0.3x and 2.5x. On a round watch, try this first when text feels cramped.
 - Round watches should enable round-screen optimisation; watches with a chin such as the Moto 360 should also enable Chin Padding so buttons are not clipped.
+- Arabic, Persian, Hebrew and Urdu are written right to left. Choosing one of these four mirrors the whole UI: lists run right to left, text aligns right, the chevron points left, and swipe back starts from the opposite edge. Everything else behaves the same.
 
 ## 4 Sending Files
 

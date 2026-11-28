@@ -7,7 +7,7 @@
 > OldSend のウェアラブル進化版。硬核な転送機能はそのままに、UI を Wear OS ネイティブの「3D ホイール」と「ピル型カード」に作り直しました。小型画面と丸い文字盤のために。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.9.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -16,7 +16,7 @@
 
 ## 📦 バージョン
 
-現在のバージョン：**v1.8.2**。52 言語すべて全量（10 の基本言語は 357〜358 項目、その他は 353 項目、合計 18,403 項目）。履歴は [CHANGELOG.md](CHANGELOG.md) を参照。
+現在のバージョン：**v1.9.0**。52 言語すべて全量（10 の基本言語は 357〜358 項目、その他は 353 項目、合計 18,403 項目）。履歴は [CHANGELOG.md](CHANGELOG.md) を参照。
 
 ---
 

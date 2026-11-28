@@ -36,6 +36,7 @@ public class UikitImageViewerActivity extends Activity {
         imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.MATRIX);
         setContentView(imageView);
+        org.watchsend.uikit.RtlSupport.apply(this);
         
         String assetName = getIntent().getStringExtra(EXTRA_IMAGE_NAME);
         try {

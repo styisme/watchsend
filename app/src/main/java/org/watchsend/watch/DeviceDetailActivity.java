@@ -69,6 +69,7 @@ public class DeviceDetailActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
@@ -243,6 +244,7 @@ public class DeviceDetailActivity extends Activity {
         tvValue.setTextSize(11);
         tvValue.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
         org.watchsend.uikit.TextFit.wrap(tvValue, 2); // 长值（路径、SSID、型号名）允许两行
+        tvValue.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         row.addView(tvValue);
 
         if (click != null) {

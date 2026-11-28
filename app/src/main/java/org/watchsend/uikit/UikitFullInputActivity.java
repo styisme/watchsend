@@ -87,6 +87,7 @@ public class UikitFullInputActivity extends Activity {
         
         scroll.addView(root);
         setContentView(scroll);
+        org.watchsend.uikit.RtlSupport.apply(this);
 
         UikitUi.applyRoundPadding(this, root);
         UikitUi.setupWheelScroll(scroll, root);
@@ -110,6 +111,7 @@ public class UikitFullInputActivity extends Activity {
         etInput.setHint(hint);
         etInput.setTextSize(16);
         etInput.setSingleLine(false);
+        etInput.setGravity(org.watchsend.uikit.RtlSupport.startGravity() | android.view.Gravity.TOP);
         etInput.setGravity(Gravity.TOP | Gravity.START);
         etInput.setPadding(16 * density, 12 * density, 16 * density, 12 * density);
         etInput.setMinHeight(100 * density);

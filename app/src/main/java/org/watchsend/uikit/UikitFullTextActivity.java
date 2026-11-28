@@ -89,6 +89,7 @@ public class UikitFullTextActivity extends Activity {
         
         scroll.addView(root);
         setContentView(scroll);
+        org.watchsend.uikit.RtlSupport.apply(this);
         mScroll = scroll;
         if (live) sLiveRef = new WeakReference<>(this);
 

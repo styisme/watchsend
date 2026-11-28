@@ -56,6 +56,7 @@ public class SelectedFilesActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
@@ -143,6 +144,7 @@ public class SelectedFilesActivity extends Activity {
         tv.setText(formatSize(sizes[index]) + "  " + names.get(index));
         tv.setTextSize(11);
         tv.setSingleLine(true);
+        tv.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tv.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
         tv.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
         tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));

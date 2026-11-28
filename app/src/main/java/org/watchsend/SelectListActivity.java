@@ -38,6 +38,7 @@ public class SelectListActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_list);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this); // 入场动画
 

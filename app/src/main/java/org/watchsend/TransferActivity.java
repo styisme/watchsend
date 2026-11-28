@@ -114,6 +114,7 @@ public class TransferActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_transfer);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
         
@@ -172,6 +173,7 @@ public class TransferActivity extends Activity {
         tvName.setText(senderName);
         tvName.setTextColor(colorMain);
         tvName.setTextSize(16);
+        tvName.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tvName.setTypeface(null, Typeface.BOLD);
         tvName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         row.addView(tvName);
@@ -190,12 +192,14 @@ public class TransferActivity extends Activity {
             desc.setText(preview);
             desc.setTextColor(colorMain);
             desc.setTextSize(14);
+            desc.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
             desc.setSingleLine(false);
             desc.setMaxLines(6);
         } else {
             desc.setText(I18nManager.get("wants_to_send_you"));
             desc.setTextColor(colorSec);
             desc.setTextSize(13);
+            desc.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         }
         desc.setPadding(0, dp(8), 0, 0);
         card.addView(desc);
@@ -254,6 +258,7 @@ public class TransferActivity extends Activity {
         tvFileName.setText(I18nManager.get("preparing"));
         tvFileName.setTextColor(colorMain);
         tvFileName.setTextSize(15);
+        tvFileName.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tvFileName.setSingleLine(true);
         tvFileName.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
         tvFileName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -269,6 +274,7 @@ public class TransferActivity extends Activity {
         tvFileStatus.setText(I18nManager.get("transferring"));
         tvFileStatus.setTextColor(colorAccent);
         tvFileStatus.setTextSize(12);
+        tvFileStatus.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tvFileStatus.setPadding(0, dp(8), 0, dp(8));
         fileCard.addView(tvFileStatus);
 
@@ -417,7 +423,9 @@ public class TransferActivity extends Activity {
         progress.setColor(0xFF388E3C);
         progress.setSize(0, dp(6));
 
-        ClipDrawable clip = new ClipDrawable(progress, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+        // RTL 语言里进度条从右往左推进，方向跟着阅读方向走
+        int clipGravity = org.watchsend.uikit.RtlSupport.isRtl() ? Gravity.RIGHT : Gravity.LEFT;
+        ClipDrawable clip = new ClipDrawable(progress, clipGravity, ClipDrawable.HORIZONTAL);
         LayerDrawable ld = new LayerDrawable(new Drawable[]{bg, clip});
         ld.setId(0, android.R.id.background);
         ld.setId(1, android.R.id.progress);

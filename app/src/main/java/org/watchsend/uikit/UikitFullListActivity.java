@@ -68,6 +68,7 @@ public class UikitFullListActivity extends Activity {
         
         scroll.addView(root);
         setContentView(scroll);
+        org.watchsend.uikit.RtlSupport.apply(this);
 
         UikitUi.applyRoundPadding(this, root);
         UikitUi.setupWheelScroll(scroll, root);
@@ -137,6 +138,7 @@ public class UikitFullListActivity extends Activity {
                 tvSub.setText(model.subtitle);
                 tvSub.setTextSize(12);
                 TextFit.wrap(tvSub, 2);
+                tvSub.setGravity(RtlSupport.startGravity());
                 if (model.accentColor == 0 && model.cardColor != 0) {
                     int r = (model.cardColor >> 16) & 0xFF;
                     int g = (model.cardColor >> 8) & 0xFF;

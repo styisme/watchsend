@@ -51,6 +51,7 @@ public class UikitPickerActivity extends Activity {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(bgColor);
         setContentView(root);
+        org.watchsend.uikit.RtlSupport.apply(this);
         
         UikitUi.applyRoundPadding(this, root);
 

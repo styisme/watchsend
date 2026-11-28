@@ -44,6 +44,7 @@ public class WatchSettingsActivity extends Activity {
         I18nManager.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_watch_settings);
+        org.watchsend.uikit.RtlSupport.apply(this);
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
@@ -246,6 +247,7 @@ public class WatchSettingsActivity extends Activity {
         boolean isDark = ThemeUtils.isDarkMode(this);
         TextView tv = new TextView(this);
         tv.setText(title); tv.setTextSize(12);
+        tv.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         tv.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
         tv.setTypeface(null, Typeface.BOLD);
         tv.setPadding(dp(12), dp(10), dp(12), dp(4));
@@ -276,6 +278,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         tvTitle.setText(label); tvTitle.setTextSize(16);
         tvTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
         org.watchsend.uikit.TextFit.wrap(tvTitle, 2); // 德/俄长词最多两行，超出省略
+        tvTitle.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         textCol.addView(tvTitle);
 
         if (subLabel != null) {
@@ -286,6 +289,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             // 说明文字在中日韩只要一两行，德/俄能到 70em 以上（六七行）。限三行、尾部省略，
             // 被截断的长说明改成点正文区打开全文页，短语言的正文区点了也给全文，不额外占高度。
             org.watchsend.uikit.TextFit.wrap(tvSub, 3);
+            tvSub.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
             final String fullDesc = subLabel;
             final String fullTitle = label;
             textCol.setOnClickListener(new View.OnClickListener() {
@@ -338,6 +342,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         tvTitle.setText(label); tvTitle.setTextSize(16);
         tvTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
         org.watchsend.uikit.TextFit.wrap(tvTitle, 2); // 德/俄长词最多两行，超出省略
+        tvTitle.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
         textCol.addView(tvTitle);
 
         if (value != null && value.length() > 0) {
@@ -346,12 +351,14 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             tvValue.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
             tvValue.setPadding(0, dp(2), dp(6), 0);
             org.watchsend.uikit.TextFit.wrap(tvValue, 2);
+            tvValue.setGravity(org.watchsend.uikit.RtlSupport.startGravity());
             textCol.addView(tvValue);
         }
         row.addView(textCol);
 
         TextView arrow = new TextView(this);
-        arrow.setText(">"); arrow.setTextSize(18);
+        // RTL 语言的阅读方向相反，箭头也跟着指左
+        arrow.setText(org.watchsend.uikit.RtlSupport.isRtl() ? "<" : ">"); arrow.setTextSize(18);
         arrow.setTextColor(isDark ? 0xFF81C784 : 0xFF999999);
         row.addView(arrow);
 

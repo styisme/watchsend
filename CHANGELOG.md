@@ -4,6 +4,25 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.9.0] - 2026-11-28
+
+### Added
+- **从右到左（RTL）语言的界面镜像**：语言包里的 العربية（ar）、فارسی（fa）、עברית（he）、اردو（ur）此前只能按从左到右排布——列表项从左边起、文字靠左、右侧箭头指右，阿拉伯语用户看到的是“反过来”的界面。新增 `uikit/RtlSupport`：按当前选中语言判断书写方向，把根视图设成 RTL，让列表顺序、START/END 对齐、`marginStart`/`paddingStart` 一起镜像。4 个语种各 353 条词条均在位，无缺键。
+- **方向相关的细节同步**：设置页右侧箭头在 RTL 下改指左；传输进度条改从右往左推进；文本输入框与副标题改为起始边对齐；`item_device`、`activity_main`、`activity_select_list`、`activity_transfer`、`activity_watch_settings` 里 7 处不对称的 `layout_marginLeft` / `paddingLeft` 补上对应的 `marginStart` / `paddingStart`，旧版本仍读原属性。
+- **滑动返回天然双向**：手势本来就接受左右两侧边缘起手、正负方向都能退页，RTL 下无需另设规则，从另一侧边缘向内滑即可。
+
+### Changed
+- `AndroidManifest` 打开 `android:supportsRtl="true"`；17 个 Activity 在 `setContentView` 后统一调用 `RtlSupport.apply(this)`，切换语言后随页面重建生效。低于 Android 4.2 的设备保持 LTR，避免 `Gravity.START` 不可用导致错位。
+
+### Docs
+- 10 份 README 徽章与“当前版本”行、10 份用户指南的适用版本行同步到 1.9.0（versionCode 10900）。
+- 中、繁、英三份指南在界面章节补充 RTL 说明：选这四种语言后界面镜像、箭头改指左、滑动返回从另一侧边缘起手。
+
+### Verified
+- `gradle assembleDebug` 通过（JDK8 / build-tools 30.0.3）。
+- 语言包解析：`ar` / `fa` / `he` / `ur` 各 353 条，与其余非基础语种一致。
+- 未在真机验证（云主机无 KVM、无 X11），RTL 镜像后的实际排版、阿拉伯数字与混排文本的观感以装机为准；已知未覆盖项：进度环上的百分比文本仍按 LTR 绘制，视觉可读但方向未镜像。
+
 ## [1.8.2] - 2026-11-28
 
 ### Fixed

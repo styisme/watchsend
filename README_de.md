@@ -7,7 +7,7 @@
 > Die Wearable-Version von OldSend. Alle Übertragungsfunktionen bleiben, die Oberfläche wurde für kleine und runde Displays als Wear-OS-natives „3D-Wheel“ mit Pillen-Karten neu gebaut.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.9.0-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -16,7 +16,7 @@
 
 ## 📦 Version
 
-Aktuell: **v1.8.2**. 52 Sprachen vollständig (357–358 Einträge für die 10 Basissprachen, 353 für die übrigen, 18.403 insgesamt). Verlauf in [CHANGELOG.md](CHANGELOG.md).
+Aktuell: **v1.9.0**. 52 Sprachen vollständig (357–358 Einträge für die 10 Basissprachen, 353 für die übrigen, 18.403 insgesamt). Verlauf in [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

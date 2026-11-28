@@ -41,6 +41,7 @@ public class UikitFullConfirmActivity extends Activity {
                 ScrollView.LayoutParams.MATCH_PARENT, ScrollView.LayoutParams.MATCH_PARENT));
         scroll.addView(root);
         setContentView(scroll);
+        org.watchsend.uikit.RtlSupport.apply(this);
         UikitUi.applyRoundPadding(this, root);
         UikitUi.setupWheelScroll(scroll, root);
         // 中间文字
