@@ -4,6 +4,19 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.11.1] - 2026-11-28
+
+### Added
+- **多语言补齐到 52 种**：1.11.0 的 8 条新词条（`auto_wifi` / `auto_wifi_desc` / `auto_wifi_list` / `battery_stop` / `battery_stop_desc` / `compress_image` / `compress_image_desc` / `send_all_devices`）此前只有 `zh / zh_TW / en` 三个包，其余 49 种会回退成英文。现在全部 52 种语言都有了，非基础语种的设置页不会再一半中文一半英文。
+- 顺带补齐 `ja / ko / de / fr / es / ru / pt` 这 7 个基础语种（1.11.0 时也只补了三个包）。
+
+### Changed
+- `docs/LANGUAGES.md` 与 `docs/LANGUAGES_EN.md` 的实测统计同步为：`zh / zh_TW / en` 365 条、7 个基础语种 366 条、其余 42 种各 361 条，合计 **18,819** 条；并注明这 42 种仍缺 `resend`、`choose_device_to_send`、`idle_stop_server`、`idle_stop_server_desc` 四条 1.7.12 历史键。
+
+### Notes
+- 49 种语言的译文为机翻级（人工译文集中在 10 个基础语种），术语对齐了 LocalSend 官方用法，但细节措辞不必当成终稿；有母语使用者反馈可单独提 PR 改。
+- 语言列表、RTL 镜像、兜底链（当前语言 → `en` → `zh` → key 本身）均未改动。
+
 ## [1.11.0] - 2026-11-28
 
 ### Added
@@ -18,7 +31,7 @@
 - **通知栏操作**：常驻通知新增“停止”，不用再钻三层设置；发送时挂一条带“取消”的进度通知，切走 App 后仍可中止（已发完的文件不回滚）。
 
 ### Notes
-- 本次新增 8 条词条，只补了 `zh / zh_TW / en` 三个包，其余 49 种语言回退英文；`docs/LANGUAGES.md` 与英文版的实测统计已同步为 365/366/353、合计 18,483。
+- 8 条新词条首发时只补了 `zh / zh_TW / en` 三个包，其余 49 种语言回退英文，已由 1.11.1 补齐。
 - 断点续传只在“对端来取文件”（download API）这一侧生效；往官方 LocalSend 发文件时协议本身不支持 Range，只能整文件重发，靠上面的重试兜底。
 - 低电量停服与 WiFi 自动启停都依赖前台服务存活；服务被系统彻底回收后不再监听网络变化，需靠开机自启或打开 App 补启。
 

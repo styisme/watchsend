@@ -709,6 +709,14 @@ ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360
         ja.put("resend", "再送信"); ja.put("choose_device_to_send", "デバイスをタップして送信");
         ja.put("idle_stop_server", "消灯時にサービスを一時停止"); ja.put("idle_stop_server_desc", "消灯から3分後に待ち受けを停止して省電力。点灯で自動再開。相手からの送信を取り逃す場合があります");
         ja.put("swipe_back", "アプリ内戻るを有効化"); ja.put("swipe_back_desc", "オンでシステム戻るを無効にし画面内スワイプで戻る。オフでシステム戻るを復元しスワイプを奪わない");
+        ja.put("auto_wifi", "Wi-Fi で自動起動");
+        ja.put("auto_wifi_desc", "登録したネットワークに接続すると待ち受けを開始し、離れると一時停止します");
+        ja.put("auto_wifi_list", "登録済みの Wi-Fi");
+        ja.put("battery_stop", "低電力時に一時停止");
+        ja.put("battery_stop_desc", "充電していない状態で 15% 以下になると停止します");
+        ja.put("compress_image", "送信前に画像を圧縮");
+        ja.put("compress_image_desc", "長辺 720px を超える画像を縮小します");
+        ja.put("send_all_devices", "すべてのデバイスに送信");
         dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -912,6 +920,14 @@ ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360�
         ko.put("resend", "다시 보내기"); ko.put("choose_device_to_send", "기기를 탭하면 전송됩니다");
         ko.put("idle_stop_server", "화면 꺼짐 시 서비스 일시 중지"); ko.put("idle_stop_server_desc", "화면이 꺼진 뒤 3분이 지나면 수신을 중지해 전력을 아낍니다. 화면을 켜면 자동 재개됩니다. 상대방 전송을 놓칠 수 있습니다");
         ko.put("swipe_back", "앱 내 뒤로 사용"); ko.put("swipe_back_desc", "켜면 시스템 뒤로 가기를 막고 화면 스와이프로 돌아갑니다. 끄면 시스템 뒤로 가기를 복원하고 스와이프를 가로채지 않습니다");
+        ko.put("auto_wifi", "Wi-Fi에 따라 자동 시작");
+        ko.put("auto_wifi_desc", "저장된 네트워크에 연결되면 수신을 시작하고, 벗어나면 일시 중지합니다");
+        ko.put("auto_wifi_list", "저장된 Wi-Fi");
+        ko.put("battery_stop", "배터리 부족 시 일시 중지");
+        ko.put("battery_stop_desc", "충전 중이 아닐 때 15% 이하이면 중지합니다");
+        ko.put("compress_image", "보내기 전 이미지 압축");
+        ko.put("compress_image_desc", "긴 변이 720px를 넘는 이미지를 축소합니다");
+        ko.put("send_all_devices", "모든 기기에 보내기");
         dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -1115,6 +1131,14 @@ de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für run
         de.put("resend", "Erneut senden"); de.put("choose_device_to_send", "Gerät antippen zum Senden");
         de.put("idle_stop_server", "Dienst bei Inaktivität pausieren"); de.put("idle_stop_server_desc", "Stoppt das Lauschen 3 Min. nach Bildschirm-aus zum Stromsparen; startet beim Einschalten neu. Eingehende Sendungen können verpasst werden");
         de.put("swipe_back", "In-App-Zurück aktivieren"); de.put("swipe_back_desc", "An: System-Zurück wird gesperrt, zurück per Wischen im Bild. Aus: System-Zurück gilt wieder, Wischen wird nicht abgefangen");
+        de.put("auto_wifi", "Autostart je nach Wi-Fi");
+        de.put("auto_wifi_desc", "Beginnt bei verbundenem gemerkten Netzwerk zu lauschen, pausiert beim Verlassen");
+        de.put("auto_wifi_list", "Gemerkte Wi-Fi-Netze");
+        de.put("battery_stop", "Bei niedrigem Akku pausieren");
+        de.put("battery_stop_desc", "Stoppt unter 15 %, wenn nicht geladen wird");
+        de.put("compress_image", "Bilder vor dem Senden komprimieren");
+        de.put("compress_image_desc", "Bilder über 720 px verkleinern");
+        de.put("send_all_devices", "An alle Geräte senden");
         dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -1318,6 +1342,14 @@ fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Po
         fr.put("resend", "Renvoyer"); fr.put("choose_device_to_send", "Touchez un appareil pour envoyer");
         fr.put("idle_stop_server", "Suspendre le service en veille"); fr.put("idle_stop_server_desc", "Coupe l'écoute 3 min après extinction de l'écran pour économiser la batterie ; reprise à l'allumage. Des envois entrants peuvent être manqués");
         fr.put("swipe_back", "Activer le retour intégré"); fr.put("swipe_back_desc", "Activé : le retour système est bloqué, on revient par glissement dans l’interface. Désactivé : retour système rétabli, le glissement n’est plus capté");
+        fr.put("auto_wifi", "Démarrage auto selon le Wi-Fi");
+        fr.put("auto_wifi_desc", "Écoute dès la connexion à un réseau mémorisé, pause en le quittant");
+        fr.put("auto_wifi_list", "Réseaux Wi-Fi mémorisés");
+        fr.put("battery_stop", "Pause si batterie faible");
+        fr.put("battery_stop_desc", "S'arrête sous 15 % hors charge");
+        fr.put("compress_image", "Compresser les images avant l'envoi");
+        fr.put("compress_image_desc", "Réduire les images au-delà de 720 px");
+        fr.put("send_all_devices", "Envoyer à tous les appareils");
         dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1521,6 +1553,14 @@ es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para re
         es.put("resend", "Reenviar"); es.put("choose_device_to_send", "Toca un dispositivo para enviar");
         es.put("idle_stop_server", "Pausar servicio en reposo"); es.put("idle_stop_server_desc", "Detiene la escucha 3 min después de apagar la pantalla para ahorrar batería; se reanuda al encenderla. Puede perder envíos entrantes");
         es.put("swipe_back", "Activar retroceso interno"); es.put("swipe_back_desc", "Activado: se bloquea el retroceso del sistema y se usa el gesto dentro de la app. Desactivado: vuelve el retroceso del sistema y el gesto no se intercepta");
+        es.put("auto_wifi", "Inicio automático por Wi-Fi");
+        es.put("auto_wifi_desc", "Empieza a escuchar en una red recordada y se pausa al salir");
+        es.put("auto_wifi_list", "Redes Wi-Fi recordadas");
+        es.put("battery_stop", "Pausar con batería baja");
+        es.put("battery_stop_desc", "Se detiene por debajo del 15 % sin carga");
+        es.put("compress_image", "Comprimir imágenes antes de enviar");
+        es.put("compress_image_desc", "Reducir imágenes de más de 720 px");
+        es.put("send_all_devices", "Enviar a todos los dispositivos");
         dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1724,6 +1764,14 @@ ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "
         ru.put("resend", "Отправить снова"); ru.put("choose_device_to_send", "Нажмите на устройство для отправки");
         ru.put("idle_stop_server", "Пауза службы в простое"); ru.put("idle_stop_server_desc", "Прекращает прослушивание через 3 мин после выключения экрана для экономии; возобновляется при включении. Входящие отправки могут быть пропущены");
         ru.put("swipe_back", "Включить возврат в приложении"); ru.put("swipe_back_desc", "Вкл.: системный возврат блокируется, назад — свайпом внутри приложения. Выкл.: системный возврат работает, свайп не перехватывается");
+        ru.put("auto_wifi", "Автозапуск по Wi-Fi");
+        ru.put("auto_wifi_desc", "Начинает слушать в запомненной сети, при выходе пауза");
+        ru.put("auto_wifi_list", "Запомненные сети Wi-Fi");
+        ru.put("battery_stop", "Пауза при низком заряде");
+        ru.put("battery_stop_desc", "Останавливается ниже 15% без зарядки");
+        ru.put("compress_image", "Сжимать изображения перед отправкой");
+        ru.put("compress_image_desc", "Уменьшать изображения больше 720 px");
+        ru.put("send_all_devices", "Отправить всем устройствам");
         dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1927,6 +1975,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         pt.put("resend", "Reenviar"); pt.put("choose_device_to_send", "Toque em um dispositivo para enviar");
         pt.put("idle_stop_server", "Pausar serviço em repouso"); pt.put("idle_stop_server_desc", "Para a escuta 3 min após a tela apagar para economizar bateria; retoma ao acender. Pode perder envios recebidos");
         pt.put("swipe_back", "Ativar voltar no app"); pt.put("swipe_back_desc", "Ligado: bloqueia o voltar do sistema e usa o gesto dentro do app. Desligado: o voltar do sistema volta e o gesto não é interceptado");
+        pt.put("auto_wifi", "Início automático por Wi-Fi");
+        pt.put("auto_wifi_desc", "Começa a escutar na rede memorizada e pausa ao sair");
+        pt.put("auto_wifi_list", "Redes Wi-Fi memorizadas");
+        pt.put("battery_stop", "Pausar com bateria fraca");
+        pt.put("battery_stop_desc", "Para abaixo de 15% sem carregar");
+        pt.put("compress_image", "Comprimir imagens antes de enviar");
+        pt.put("compress_image_desc", "Reduzir imagens acima de 720 px");
+        pt.put("send_all_devices", "Enviar para todos os dispositivos");
         dict.put("pt", pt);
 
         installExtra1();
@@ -2148,6 +2204,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "توليد PIN وإرسال"); b.put("log", "السجل"); b.put("fingerprint_phrase", "التحقق من العبارة"); b.put("remaining", "الموعد المحدد");
         b.put("device_details", "تفاصيل الجهاز"); b.put("protocol_label", "البروتوكول"); b.put("fingerprint_label", "بصمة الأصابع"); b.put("remark_label", "الاسم الأسمي");
         b.put("not_set", "لا يتم تعيينها");
+        b.put("auto_wifi", "بدء تلقائي حسب Wi-Fi");
+        b.put("auto_wifi_desc", "يبدأ الاستماع عند الاتصال بشبكة محفوظة ويتوقف عند مغادرتها");
+        b.put("auto_wifi_list", "شبكات Wi-Fi المحفوظة");
+        b.put("battery_stop", "إيقاف مؤقت عند انخفاض البطارية");
+        b.put("battery_stop_desc", "يتوقف تحت 15٪ وعند عدم الشحن");
+        b.put("compress_image", "ضغط الصور قبل الإرسال");
+        b.put("compress_image_desc", "تصغير الصور التي يزيد طولها عن 720 بكسل");
+        b.put("send_all_devices", "إرسال إلى جميع الأجهزة");
         dict.put("ar", b);
     }
     /** az 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2242,6 +2306,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN-i yaratmaq və göndərmək"); b.put("log", "Jurnal"); b.put("fingerprint_phrase", "Söhbətləri yoxlayın"); b.put("remaining", "Gələcək saat");
         b.put("device_details", "Cihaz təfərrüatları"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Barmaq izi"); b.put("remark_label", "Ad");
         b.put("not_set", "Qeyri-sığorta");
+        b.put("auto_wifi", "Wi-Fi ilə avtomatik başlat");
+        b.put("auto_wifi_desc", "Yadda saxlanmış şəbəkəyə qoşulanda dinləməyə başlayır, ayrıldıqda dayanır");
+        b.put("auto_wifi_list", "Yadda saxlanmış Wi-Fi");
+        b.put("battery_stop", "Aşağı batareyada dayandır");
+        b.put("battery_stop_desc", "Şarj olunmursa 15%-dən aşağıda dayandırır");
+        b.put("compress_image", "Şəkilləri göndərməzdən əvvəl sıxışdır");
+        b.put("compress_image_desc", "720 pikseldən böyük şəkilləri kiçildir");
+        b.put("send_all_devices", "Bütün cihazlara göndər");
         dict.put("az", b);
     }
     /** bg 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2336,6 +2408,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Създаване на PIN и изпращане"); b.put("log", "Дневник"); b.put("fingerprint_phrase", "Проверяване на фразата"); b.put("remaining", "ЕТА");
         b.put("device_details", "Данни за устройството"); b.put("protocol_label", "Протокол"); b.put("fingerprint_label", "Отпечатъци от пръсти"); b.put("remark_label", "Прозвище");
         b.put("not_set", "Не се задава");
+        b.put("auto_wifi", "Автоматично стартиране по Wi-Fi");
+        b.put("auto_wifi_desc", "Стартира при свързване със запазена мрежа и спира при напускане");
+        b.put("auto_wifi_list", "Запазени Wi-Fi мрежи");
+        b.put("battery_stop", "Пауза при ниска батерия");
+        b.put("battery_stop_desc", "Спира под 15% без зареждане");
+        b.put("compress_image", "Компресиране на снимки");
+        b.put("compress_image_desc", "Смалява снимки над 720 px");
+        b.put("send_all_devices", "Изпращане до всички устройства");
         dict.put("bg", b);
     }
     /** bn 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2430,6 +2510,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "পিন তৈরি করুন এবং প্রেরণ করুন"); b.put("log", "লগ"); b.put("fingerprint_phrase", "বাক্যাংশ যাচাই করুন"); b.put("remaining", "সময়সীমা");
         b.put("device_details", "ডিভাইসের বিবরণ"); b.put("protocol_label", "প্রোটোকল"); b.put("fingerprint_label", "আঙ্গুলের ছাপ"); b.put("remark_label", "ডাকনাম");
         b.put("not_set", "সেট করা হয়নি");
+        b.put("auto_wifi", "Wi-Fi অনুযায়ী স্বয়ংক্রিয় শুরু");
+        b.put("auto_wifi_desc", "সংরক্ষিত নেটওয়ার্কে যুক্ত হলে শোনা শুরু, বেরোলে থামে");
+        b.put("auto_wifi_list", "সংরক্ষিত Wi-Fi");
+        b.put("battery_stop", "কম ব্যাটারিতে বিরতি");
+        b.put("battery_stop_desc", "চার্জ ছাড়া ১৫% এর নিচে থামে");
+        b.put("compress_image", "পাঠানোর আগে ছবি সংকুচিত");
+        b.put("compress_image_desc", "৭২০ পিক্সেলের বড় ছবি ছোট করে");
+        b.put("send_all_devices", "সব ডিভাইসে পাঠান");
         dict.put("bn", b);
     }
     /** bs 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2524,6 +2612,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generira PIN i šalje"); b.put("log", "Dnevnik"); b.put("fingerprint_phrase", "Proveri frazu"); b.put("remaining", "Dolaska");
         b.put("device_details", "Detalji uređaja"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Odtis prstiju"); b.put("remark_label", "Primet");
         b.put("not_set", "Ne postavljeno");
+        b.put("auto_wifi", "Automatsko pokretanje preko Wi-Fi");
+        b.put("auto_wifi_desc", "Počinje sa slušanjem na zapamćenoj mreži, pauza pri odlasku");
+        b.put("auto_wifi_list", "Zapamćene Wi-Fi mreže");
+        b.put("battery_stop", "Pauza na niskoj bateriji");
+        b.put("battery_stop_desc", "Pauza ispod 15% bez punjenja");
+        b.put("compress_image", "Sažmi slike prije slanja");
+        b.put("compress_image_desc", "Smanji slike veće od 720 px");
+        b.put("send_all_devices", "Pošalji svim uređajima");
         dict.put("bs", b);
     }
     /** ca 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2618,6 +2714,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generar PIN i enviar"); b.put("log", "Registre"); b.put("fingerprint_phrase", "Verificar la frase"); b.put("remaining", "ETA");
         b.put("device_details", "Detalls del dispositiu"); b.put("protocol_label", "Protocol"); b.put("fingerprint_label", "Impressió digital"); b.put("remark_label", "Sobrenom");
         b.put("not_set", "No està establert");
+        b.put("auto_wifi", "Inici automàtic per Wi-Fi");
+        b.put("auto_wifi_desc", "Comença a escoltar en una xarxa recordada i s'atura en sortir");
+        b.put("auto_wifi_list", "Xarxes Wi-Fi recordades");
+        b.put("battery_stop", "Pausa amb bateria baixa");
+        b.put("battery_stop_desc", "S'atura per sota del 15% sense càrrega");
+        b.put("compress_image", "Comprimeix imatges abans d'enviar");
+        b.put("compress_image_desc", "Redueix imatges de més de 720 px");
+        b.put("send_all_devices", "Envia a tots els dispositius");
         dict.put("ca", b);
     }
     /** cs 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2712,6 +2816,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Vytvořit PIN a zaslat"); b.put("log", "Protokol"); b.put("fingerprint_phrase", "Zkontrolovat frázi"); b.put("remaining", "Doručení");
         b.put("device_details", "Podrobnosti o zařízení"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Odtisk prstů"); b.put("remark_label", "Jméno");
         b.put("not_set", "Neustanovený");
+        b.put("auto_wifi", "Automatické spuštění podle Wi-Fi");
+        b.put("auto_wifi_desc", "Začne naslouchat na uložené síti, po odchodu pauza");
+        b.put("auto_wifi_list", "Uložené sítě Wi-Fi");
+        b.put("battery_stop", "Pozastavit při slabé baterii");
+        b.put("battery_stop_desc", "Pozastaví pod 15 % bez nabíjení");
+        b.put("compress_image", "Komprimovat obrázky před odesláním");
+        b.put("compress_image_desc", "Zmenší obrázky nad 720 px");
+        b.put("send_all_devices", "Odeslat všem zařízením");
         dict.put("cs", b);
     }
     /** da 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2806,6 +2918,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generere PIN & Send"); b.put("log", "Log"); b.put("fingerprint_phrase", "Kontroller frasen"); b.put("remaining", "Tidsplan");
         b.put("device_details", "Enhedsdetaljer"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Fingeraftryk"); b.put("remark_label", "Kædeskæde");
         b.put("not_set", "Ikke indstillet");
+        b.put("auto_wifi", "Auto-start efter Wi-Fi");
+        b.put("auto_wifi_desc", "Starter ved tilslutning til et gemt netværk, pauser når du forlader");
+        b.put("auto_wifi_list", "Gemte Wi-Fi-netværk");
+        b.put("battery_stop", "Pause ved lavt batteri");
+        b.put("battery_stop_desc", "Pauser under 15 % uden opladning");
+        b.put("compress_image", "Komprimer billeder før sending");
+        b.put("compress_image_desc", "Skaler billeder over 720 px ned");
+        b.put("send_all_devices", "Send til alle enheder");
         dict.put("da", b);
     }
     /** el 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2900,6 +3020,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Γεννήσετε PIN & Στείλτε"); b.put("log", "Καταγραφή"); b.put("fingerprint_phrase", "Ελέγξτε τη φράση"); b.put("remaining", "Εποχή");
         b.put("device_details", "Λεπτομέρειες συσκευής"); b.put("protocol_label", "Πρωτοκόλλιο"); b.put("fingerprint_label", "Φυλικές αποτυπώσεις"); b.put("remark_label", "Παρατσούκλι");
         b.put("not_set", "Δεν έχει ρυθμιστεί");
+        b.put("auto_wifi", "Αυτόματη εκκίνηση με Wi-Fi");
+        b.put("auto_wifi_desc", "Ξεκινά σε αποθηκευμένο δίκτυο, παύει όταν φεύγεις");
+        b.put("auto_wifi_list", "Αποθηκευμένα Wi-Fi");
+        b.put("battery_stop", "Παύση σε χαμηλή μπαταρία");
+        b.put("battery_stop_desc", "Παύει κάτω από 15% χωρίς φόρτιση");
+        b.put("compress_image", "Συμπίεση εικόνων πριν την αποστολή");
+        b.put("compress_image_desc", "Σμίκρυνση εικόνων άνω των 720 px");
+        b.put("send_all_devices", "Αποστολή σε όλες τις συσκευές");
         dict.put("el", b);
     }
     /** et 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -2994,6 +3122,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Jätkake PIN ja saatke"); b.put("log", "Logi"); b.put("fingerprint_phrase", "Tõendame sõnad"); b.put("remaining", "Aeg");
         b.put("device_details", "Seadme üksikasjad"); b.put("protocol_label", "Protokolli"); b.put("fingerprint_label", "Sõrmejäljed"); b.put("remark_label", "Üldnimi");
         b.put("not_set", "Ei ole seadistatud");
+        b.put("auto_wifi", "Automaatne käivitus Wi-Fi järgi");
+        b.put("auto_wifi_desc", "Alustab meelespeetud võrgus, lahkudes peatub");
+        b.put("auto_wifi_list", "Meelespeetud Wi-Fi võrgud");
+        b.put("battery_stop", "Peata madala aku korral");
+        b.put("battery_stop_desc", "Peatub alla 15% laadimata");
+        b.put("compress_image", "Tihenda pildid enne saatmist");
+        b.put("compress_image_desc", "Vähenda pilte üle 720 px");
+        b.put("send_all_devices", "Saada kõigile seadmetele");
         dict.put("et", b);
     }
     /** eu 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3088,6 +3224,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN bat sortzen eta bidaltzen"); b.put("log", "Erregistroa"); b.put("fingerprint_phrase", "Begiratu esaldiak"); b.put("remaining", "Etorkizuna");
         b.put("device_details", "Gailuaren xehetasunak"); b.put("protocol_label", "Protokoloa"); b.put("fingerprint_label", "Hatz-markak"); b.put("remark_label", "Izenordea");
         b.put("not_set", "Ez dago ezarritakoan.");
+        b.put("auto_wifi", "Wi-Fi bidez auto-abiaraztea");
+        b.put("auto_wifi_desc", "Gogoratutako sarean entzuten hasi, irtetean eten");
+        b.put("auto_wifi_list", "Gogoratutako Wi-Fi sareak");
+        b.put("battery_stop", "Eten bateria baxuarekin");
+        b.put("battery_stop_desc", "Eteten da %15etik behera kargatu gabe");
+        b.put("compress_image", "Konprimitu irudiak bidali aurretik");
+        b.put("compress_image_desc", "720 px baino handiagoak txikitu");
+        b.put("send_all_devices", "Bidali gailu guztiei");
         dict.put("eu", b);
     }
     /** fa 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3182,6 +3326,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN را تولید کنید و ارسال کنید"); b.put("log", "گزارش"); b.put("fingerprint_phrase", "عبارت را بررسی کنید"); b.put("remaining", "زمان رسانی");
         b.put("device_details", "جزئیات دستگاه"); b.put("protocol_label", "پروتکل"); b.put("fingerprint_label", "اثر انگشت"); b.put("remark_label", "نام مستعار");
         b.put("not_set", "تنظیم نشده");
+        b.put("auto_wifi", "شروع خودکار با Wi-Fi");
+        b.put("auto_wifi_desc", "با اتصال به شبکه ذخیره‌شده شروع و با خروج متوقف می‌شود");
+        b.put("auto_wifi_list", "شبکه‌های Wi-Fi ذخیره‌شده");
+        b.put("battery_stop", "توقف در باتری کم");
+        b.put("battery_stop_desc", "زیر ۱۵٪ و بدون شارژ متوقف می‌شود");
+        b.put("compress_image", "فشرده‌سازی تصویر پیش از ارسال");
+        b.put("compress_image_desc", "کوچک‌کردن تصاویر بزرگ‌تر از ۷۲۰ پیکسل");
+        b.put("send_all_devices", "ارسال به همه دستگاه‌ها");
         dict.put("fa", b);
     }
     /** fi 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3276,6 +3428,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Teki PIN ja lähetä"); b.put("log", "Loki"); b.put("fingerprint_phrase", "Tarkista ilmaisu"); b.put("remaining", "ETA");
         b.put("device_details", "Laitteen tiedot"); b.put("protocol_label", "pöytäkirja"); b.put("fingerprint_label", "Vihreiden sormenjäljet"); b.put("remark_label", "- Lämpönimi");
         b.put("not_set", "Ei asetettu");
+        b.put("auto_wifi", "Automaattinen käynnistys Wi-Fi:n mukaan");
+        b.put("auto_wifi_desc", "Aloittaa muistetussa verkossa, pysähtyy lähtiessä");
+        b.put("auto_wifi_list", "Muistetut Wi-Fi-verkot");
+        b.put("battery_stop", "Keskeytä akun ollessa vähissä");
+        b.put("battery_stop_desc", "Keskeyttää alle 15 %:ssa ilman latausta");
+        b.put("compress_image", "Pakkaa kuvat ennen lähetystä");
+        b.put("compress_image_desc", "Pienennä yli 720 px kuvat");
+        b.put("send_all_devices", "Lähetä kaikille laitteille");
         dict.put("fi", b);
     }
     /** fil 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3370,6 +3530,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Paglikha ng PIN & Ipadala"); b.put("log", "Tagalog"); b.put("fingerprint_phrase", "I-verify ang Phrase"); b.put("remaining", "ETA");
         b.put("device_details", "Mga detalye ng aparato"); b.put("protocol_label", "Protocol"); b.put("fingerprint_label", "Mga pag-print ng daliri"); b.put("remark_label", "Pangalan");
         b.put("not_set", "Hindi naka-set");
+        b.put("auto_wifi", "Auto-start ayon sa Wi-Fi");
+        b.put("auto_wifi_desc", "Nagsisimula sa nakaalalaang network, humihinto kapag umalis");
+        b.put("auto_wifi_list", "Nakaalalang Wi-Fi");
+        b.put("battery_stop", "I-pause kapag mahina ang baterya");
+        b.put("battery_stop_desc", "Humihinto sa ilalim ng 15% kung hindi nagcha-charge");
+        b.put("compress_image", "I-compress ang larawan bago ipadala");
+        b.put("compress_image_desc", "Paliitin ang larawang higit sa 720 px");
+        b.put("send_all_devices", "Ipadala sa lahat ng device");
         dict.put("fil", b);
     }
     /** he 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3464,6 +3632,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "ליצור PIN & לשלוח"); b.put("log", "יומן"); b.put("fingerprint_phrase", "בדוק את הביטוי"); b.put("remaining", "תשעון");
         b.put("device_details", "פרטי מכשיר"); b.put("protocol_label", "פרוטוקול"); b.put("fingerprint_label", "טביעת אצבע"); b.put("remark_label", "שם כינוי");
         b.put("not_set", "לא הוסדר");
+        b.put("auto_wifi", "הפעלה אוטומטית לפי Wi-Fi");
+        b.put("auto_wifi_desc", "מתחיל ברשת שמורה, נעצר ביציאה");
+        b.put("auto_wifi_list", "רשתות Wi-Fi שמורות");
+        b.put("battery_stop", "השהה בסוללה נמוכה");
+        b.put("battery_stop_desc", "עוצר מתחת ל-15% ללא טעינה");
+        b.put("compress_image", "כווץ תמונות לפני שליחה");
+        b.put("compress_image_desc", "הקטן תמונות מעל 720 פיקסלים");
+        b.put("send_all_devices", "שלח לכל ההתקנים");
         dict.put("he", b);
     }
     /** hi 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3558,6 +3734,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "पिन उत्पन्न करें और भेजें"); b.put("log", "लॉग"); b.put("fingerprint_phrase", "वाक्यांश की जाँच करें"); b.put("remaining", "समय");
         b.put("device_details", "डिवाइस विवरण"); b.put("protocol_label", "प्रोटोकॉल"); b.put("fingerprint_label", "उंगली के निशान"); b.put("remark_label", "उपनाम");
         b.put("not_set", "सेट नहीं");
+        b.put("auto_wifi", "Wi-Fi के अनुसार स्वतः शुरू");
+        b.put("auto_wifi_desc", "सहेजे गए नेटवर्क पर सुनना शुरू, निकलने पर रुकता है");
+        b.put("auto_wifi_list", "सहेजे गए Wi-Fi");
+        b.put("battery_stop", "कम बैटरी पर रोकें");
+        b.put("battery_stop_desc", "चार्ज न होने पर 15% से नीचे रुकता है");
+        b.put("compress_image", "भेजने से पहले तस्वीरें संपीड़ित करें");
+        b.put("compress_image_desc", "720 px से बड़ी तस्वीरें छोटी करें");
+        b.put("send_all_devices", "सभी डिवाइस को भेजें");
         dict.put("hi", b);
     }
     /** hr 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3652,6 +3836,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Napraviti PIN i poslati"); b.put("log", "Dnevnik"); b.put("fingerprint_phrase", "Provjerite frazu"); b.put("remaining", "Dolaska");
         b.put("device_details", "Detalji uređaja"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Odtisci prstiju"); b.put("remark_label", "Prvenstvo");
         b.put("not_set", "Ne postavljeno");
+        b.put("auto_wifi", "Automatsko pokretanje prema Wi-Fi");
+        b.put("auto_wifi_desc", "Počinje na zapamćenoj mreži, pauza pri odlasku");
+        b.put("auto_wifi_list", "Zapamćene Wi-Fi mreže");
+        b.put("battery_stop", "Pauza pri niskoj bateriji");
+        b.put("battery_stop_desc", "Pauza ispod 15% bez punjenja");
+        b.put("compress_image", "Sažmi slike prije slanja");
+        b.put("compress_image_desc", "Smanji slike veće od 720 px");
+        b.put("send_all_devices", "Pošalji svim uređajima");
         dict.put("hr", b);
     }
     /** hu 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3746,6 +3938,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN-t generálj és küldj"); b.put("log", "Napló"); b.put("fingerprint_phrase", "A kifejezés ellenőrizése"); b.put("remaining", "Időpont");
         b.put("device_details", "Eszköz részletei"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Ujjlenyomat"); b.put("remark_label", "Hír");
         b.put("not_set", "Nem állított");
+        b.put("auto_wifi", "Automatikus indítás Wi-Fi szerint");
+        b.put("auto_wifi_desc", "Elindul a mentett hálózaton, távozáskor szünetel");
+        b.put("auto_wifi_list", "Mentett Wi-Fi hálózatok");
+        b.put("battery_stop", "Szünetelés alacsony akkumulátornál");
+        b.put("battery_stop_desc", "15% alatt töltés nélkül leáll");
+        b.put("compress_image", "Képek tömörítése küldés előtt");
+        b.put("compress_image_desc", "720 px-nél nagyobb képek kicsinyítése");
+        b.put("send_all_devices", "Küldés minden eszközre");
         dict.put("hu", b);
     }
     /** is 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3840,6 +4040,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Gerðu PIN og sendu"); b.put("log", "Log"); b.put("fingerprint_phrase", "Gakktu úr sögunni"); b.put("remaining", "Framkvæmdahorf");
         b.put("device_details", "Upplýsingar um tækið"); b.put("protocol_label", "Umræður"); b.put("fingerprint_label", "Fingrafar"); b.put("remark_label", "Hægt að hafa");
         b.put("not_set", "Ekki sett");
+        b.put("auto_wifi", "Sjálfvirk ræsing eftir Wi-Fi");
+        b.put("auto_wifi_desc", "Byrjar á skráðu neti, stöðvast þegar þú ferð");
+        b.put("auto_wifi_list", "Skráð Wi-Fi net");
+        b.put("battery_stop", "Hlé við lága rafhlöðu");
+        b.put("battery_stop_desc", "Stöðvast undir 15% án hleðslu");
+        b.put("compress_image", "Þjappa myndum fyrir sendingu");
+        b.put("compress_image_desc", "Minnka myndir yfir 720 px");
+        b.put("send_all_devices", "Sendu á öll tæki");
         dict.put("is", b);
     }
     /** lt 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -3934,6 +4142,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Sukurti PIN ir išsiųsti"); b.put("log", "Žurnalas"); b.put("fingerprint_phrase", "Įvertinkite frazę"); b.put("remaining", "Atvykimo laikas");
         b.put("device_details", "Įrankių duomenys"); b.put("protocol_label", "Protokolas"); b.put("fingerprint_label", "Pringlų paštas"); b.put("remark_label", "Nume");
         b.put("not_set", "Neįdėluotas");
+        b.put("auto_wifi", "Automatinis paleidimas pagal Wi-Fi");
+        b.put("auto_wifi_desc", "Pradeda prisimintame tinkle, išėjus pristabdo");
+        b.put("auto_wifi_list", "Prisiminti Wi-Fi tinklai");
+        b.put("battery_stop", "Pristabdyti esant mažai baterijai");
+        b.put("battery_stop_desc", "Sustabdo žemiau 15% be įkrovimo");
+        b.put("compress_image", "Suspausti nuotraukas prieš siunčiant");
+        b.put("compress_image_desc", "Sumažinti didesnes nei 720 px nuotraukas");
+        b.put("send_all_devices", "Siųsti visiems įrenginiams");
         dict.put("lt", b);
     }
     /** lv 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4028,6 +4244,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Jautājums:"); b.put("log", "Žurnāls"); b.put("fingerprint_phrase", "Pārbaudiet frazi"); b.put("remaining", "ETA");
         b.put("device_details", "Aparāta detaļas"); b.put("protocol_label", "Protokols"); b.put("fingerprint_label", "Pītera atslēgas"); b.put("remark_label", "Nomi");
         b.put("not_set", "Neatkārtojies");
+        b.put("auto_wifi", "Automātiska palaišana pēc Wi-Fi");
+        b.put("auto_wifi_desc", "Sāk atcerētajā tīklā, aizejot aptur");
+        b.put("auto_wifi_list", "Atcerētie Wi-Fi tīkli");
+        b.put("battery_stop", "Pauze pie zemas baterijas");
+        b.put("battery_stop_desc", "Aptur zem 15% bez uzlādes");
+        b.put("compress_image", "Saspiest attēlus pirms sūtīšanas");
+        b.put("compress_image_desc", "Samazināt attēlus virs 720 px");
+        b.put("send_all_devices", "Sūtīt visām ierīcēm");
         dict.put("lv", b);
     }
     /** mk 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4122,6 +4346,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Генерација на PIN и испраќање"); b.put("log", "Дневник"); b.put("fingerprint_phrase", "Проверка на фразата"); b.put("remaining", "ЕТА");
         b.put("device_details", "Детали за уредот"); b.put("protocol_label", "Протокол"); b.put("fingerprint_label", "Отпечаток на прстот"); b.put("remark_label", "Прозвище");
         b.put("not_set", "Не се поставува");
+        b.put("auto_wifi", "Автоматско стартување по Wi-Fi");
+        b.put("auto_wifi_desc", "Почнува на запаметена мрежа, пауза при одење");
+        b.put("auto_wifi_list", "Запаметени Wi-Fi мрежи");
+        b.put("battery_stop", "Пауза при слаба батерија");
+        b.put("battery_stop_desc", "Застанува под 15% без полнење");
+        b.put("compress_image", "Компресирај слики пред праќање");
+        b.put("compress_image_desc", "Намали слики над 720 px");
+        b.put("send_all_devices", "Прати до сите уреди");
         dict.put("mk", b);
     }
     /** ms 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4216,6 +4448,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Menjana PIN & Kirim"); b.put("log", "Log"); b.put("fingerprint_phrase", "Periksa Perkataan"); b.put("remaining", "ETA");
         b.put("device_details", "Perincian peranti"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Jambatan jari"); b.put("remark_label", "Nama panggilan");
         b.put("not_set", "Tidak ditetapkan");
+        b.put("auto_wifi", "Mula automatik ikut Wi-Fi");
+        b.put("auto_wifi_desc", "Mula mendengar pada rangkaian diingati, jeda bila keluar");
+        b.put("auto_wifi_list", "Wi-Fi diingati");
+        b.put("battery_stop", "Jeda bila bateri rendah");
+        b.put("battery_stop_desc", "Berhenti bawah 15% tanpa cas");
+        b.put("compress_image", "Mampat imej sebelum hantar");
+        b.put("compress_image_desc", "Kecilkan imej melebihi 720 px");
+        b.put("send_all_devices", "Hantar ke semua peranti");
         dict.put("ms", b);
     }
     /** nb 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4310,6 +4550,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generere PIN & Send"); b.put("log", "Logg"); b.put("fingerprint_phrase", "Sjekk frasen"); b.put("remaining", "ETA");
         b.put("device_details", "Anordningens detaljer"); b.put("protocol_label", "Protokoll"); b.put("fingerprint_label", "Fingeravtrykk"); b.put("remark_label", "Snakk");
         b.put("not_set", "Ikke satt");
+        b.put("auto_wifi", "Auto-start etter Wi-Fi");
+        b.put("auto_wifi_desc", "Starter på lagret nettverk, pauser når du forlater");
+        b.put("auto_wifi_list", "Lagrede Wi-Fi-nettverk");
+        b.put("battery_stop", "Pause ved lavt batteri");
+        b.put("battery_stop_desc", "Pauser under 15 % uten lading");
+        b.put("compress_image", "Komprimer bilder før sending");
+        b.put("compress_image_desc", "Skaler ned bilder over 720 px");
+        b.put("send_all_devices", "Send til alle enheter");
         dict.put("nb", b);
     }
     /** ne 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4404,6 +4652,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "पिन उत्पन्न र पठाउनुहोस्"); b.put("log", "लग"); b.put("fingerprint_phrase", "वाक्यांश जाँच गर्नुहोस्"); b.put("remaining", "समय");
         b.put("device_details", "डिभाइस विवरण"); b.put("protocol_label", "प्रोटोकल"); b.put("fingerprint_label", "औंलाको छाप"); b.put("remark_label", "उपनाम");
         b.put("not_set", "सेट छैन");
+        b.put("auto_wifi", "Wi-Fi अनुसार स्वतः सुरु");
+        b.put("auto_wifi_desc", "सुरक्षित नेटवर्कमा सुन्न सुरु, निस्कँदा रोकिन्छ");
+        b.put("auto_wifi_list", "सुरक्षित Wi-Fi");
+        b.put("battery_stop", "कम ब्याट्रीमा रोक्नुहोस्");
+        b.put("battery_stop_desc", "चार्ज नभए १५% मुनि रोकिन्छ");
+        b.put("compress_image", "पठाउनु अघि तस्बिर संकुचित");
+        b.put("compress_image_desc", "७२० px भन्दा ठूला तस्बिर साना बनाउनु");
+        b.put("send_all_devices", "सबै यन्त्रमा पठाउनु");
         dict.put("ne", b);
     }
     /** ro 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4498,6 +4754,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generați PIN & trimite"); b.put("log", "Jurnal"); b.put("fingerprint_phrase", "Verifică fraza"); b.put("remaining", "ETA");
         b.put("device_details", "Detalii dispozitiv"); b.put("protocol_label", "Protocolul"); b.put("fingerprint_label", "Amprentele digitale"); b.put("remark_label", "Numele de poreclă");
         b.put("not_set", "Nu este setat");
+        b.put("auto_wifi", "Pornire automată după Wi-Fi");
+        b.put("auto_wifi_desc", "Începe pe rețeaua memorată, pauză la plecare");
+        b.put("auto_wifi_list", "Rețele Wi-Fi memorate");
+        b.put("battery_stop", "Pauză la baterie slabă");
+        b.put("battery_stop_desc", "Se oprește sub 15% fără încărcare");
+        b.put("compress_image", "Comprimă imagini înainte de trimitere");
+        b.put("compress_image_desc", "Micșorează imaginile peste 720 px");
+        b.put("send_all_devices", "Trimite tuturor dispozitivelor");
         dict.put("ro", b);
     }
     /** sk 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4592,6 +4856,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generovať PIN a odoslať"); b.put("log", "Protokol"); b.put("fingerprint_phrase", "Zkontrolujte frázu"); b.put("remaining", "ETA");
         b.put("device_details", "Podrobnosti o zariadení"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Odtlačky prstov"); b.put("remark_label", "Názov");
         b.put("not_set", "Neuradené");
+        b.put("auto_wifi", "Automatické spustenie podľa Wi-Fi");
+        b.put("auto_wifi_desc", "Začne na uloženej sieti, pri odchode pauza");
+        b.put("auto_wifi_list", "Uložené Wi-Fi siete");
+        b.put("battery_stop", "Pozastaviť pri slabej batérii");
+        b.put("battery_stop_desc", "Pozastaví pod 15 % bez nabíjania");
+        b.put("compress_image", "Komprimovať obrázky pred odoslaním");
+        b.put("compress_image_desc", "Zmenšiť obrázky nad 720 px");
+        b.put("send_all_devices", "Odoslať všetkým zariadeniam");
         dict.put("sk", b);
     }
     /** sl 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4686,6 +4958,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generira PIN in pošlje"); b.put("log", "Dnevnik"); b.put("fingerprint_phrase", "Preverite frazo"); b.put("remaining", "ETA");
         b.put("device_details", "Podrobnosti naprave"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Odtis prstov"); b.put("remark_label", "Naročnik");
         b.put("not_set", "Ne nastavljeno");
+        b.put("auto_wifi", "Samodejni zagon po Wi-Fi");
+        b.put("auto_wifi_desc", "Začne poslušati v shranjenem omrežju, ob odhodu pavza");
+        b.put("auto_wifi_list", "Shranjena omrežja Wi-Fi");
+        b.put("battery_stop", "Premor pri nizki bateriji");
+        b.put("battery_stop_desc", "Ustavi pod 15 % brez polnjenja");
+        b.put("compress_image", "Stisni slike pred pošiljanjem");
+        b.put("compress_image_desc", "Pomanjšaj slike nad 720 px");
+        b.put("send_all_devices", "Pošlji vsem napravam");
         dict.put("sl", b);
     }
     /** sq 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4780,6 +5060,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Të gjeneroni PIN & dërgo"); b.put("log", "Regjistri"); b.put("fingerprint_phrase", "Verifikoni frazën"); b.put("remaining", "ETA");
         b.put("device_details", "Detaje të pajisjes"); b.put("protocol_label", "Protokolli"); b.put("fingerprint_label", "Prints"); b.put("remark_label", "Fëmijë");
         b.put("not_set", "Nuk është vendosur");
+        b.put("auto_wifi", "Nisje automatike sipas Wi-Fi");
+        b.put("auto_wifi_desc", "Fillon në rrjetin e ruajtur, ndalon kur largohesh");
+        b.put("auto_wifi_list", "Rrjetet Wi-Fi të ruajtura");
+        b.put("battery_stop", "Pauzë kur bateria është e ulët");
+        b.put("battery_stop_desc", "Ndalon nën 15% pa karikim");
+        b.put("compress_image", "Kompreso fotot para dërgimit");
+        b.put("compress_image_desc", "Zvogëlo fotot mbi 720 px");
+        b.put("send_all_devices", "Dërgo te të gjitha pajisjet");
         dict.put("sq", b);
     }
     /** sr 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4874,6 +5162,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Генерација ПИН и Пошаљивање"); b.put("log", "Логови"); b.put("fingerprint_phrase", "Проверите фразу"); b.put("remaining", "ЕТА");
         b.put("device_details", "Детаљи о уређају"); b.put("protocol_label", "Протокол"); b.put("fingerprint_label", "Опечаток прста"); b.put("remark_label", "Позван");
         b.put("not_set", "Не постављена");
+        b.put("auto_wifi", "Аутоматско покретање по Wi-Fi");
+        b.put("auto_wifi_desc", "Почиње на сачуваној мрежи, пауза при одласку");
+        b.put("auto_wifi_list", "Сачуване Wi-Fi мреже");
+        b.put("battery_stop", "Пауза при слабој батерији");
+        b.put("battery_stop_desc", "Зауставља се испод 15% без пуњења");
+        b.put("compress_image", "Компресуј слике пре слања");
+        b.put("compress_image_desc", "Смањи слике преко 720 px");
+        b.put("send_all_devices", "Пошаљи свим уређајима");
         dict.put("sr", b);
     }
     /** sv 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -4968,6 +5264,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generera PIN och skicka"); b.put("log", "Logg"); b.put("fingerprint_phrase", "Kontrollera frasen"); b.put("remaining", "Ankomstdatum");
         b.put("device_details", "Enhetsdetaljer"); b.put("protocol_label", "Protokoll"); b.put("fingerprint_label", "Fingeravtryck"); b.put("remark_label", "Förnamn");
         b.put("not_set", "Inte inställd");
+        b.put("auto_wifi", "Autostart efter Wi-Fi");
+        b.put("auto_wifi_desc", "Börjar på sparat nätverk, pausar när du lämnar");
+        b.put("auto_wifi_list", "Sparade Wi-Fi-nätverk");
+        b.put("battery_stop", "Pausa vid lågt batteri");
+        b.put("battery_stop_desc", "Pausar under 15 % utan laddning");
+        b.put("compress_image", "Komprimera bilder före sändning");
+        b.put("compress_image_desc", "Skala ner bilder över 720 px");
+        b.put("send_all_devices", "Skicka till alla enheter");
         dict.put("sv", b);
     }
     /** sw 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -5062,6 +5366,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Kuzalisha PIN & Tuma"); b.put("log", "Kumbukumbu"); b.put("fingerprint_phrase", "Thibitisha Maneno"); b.put("remaining", "ETA");
         b.put("device_details", "Maelezo ya Kifaa"); b.put("protocol_label", "Mkataba"); b.put("fingerprint_label", "Vipande vya kidole"); b.put("remark_label", "Jina la utani");
         b.put("not_set", "Haujatengwa");
+        b.put("auto_wifi", "Anza kiotomatiki kwa Wi-Fi");
+        b.put("auto_wifi_desc", "Huanza kwenye mtandao uliokumbukwa, husimama unapoondoka");
+        b.put("auto_wifi_list", "Wi-Fi zilizokumbukwa");
+        b.put("battery_stop", "Sitisha kwa betri chini");
+        b.put("battery_stop_desc", "Husimama chini ya 15% bila kuchaji");
+        b.put("compress_image", "Bana picha kabla ya kutuma");
+        b.put("compress_image_desc", "Punguza picha zaidi ya 720 px");
+        b.put("send_all_devices", "Tuma kwa vifaa vyote");
         dict.put("sw", b);
     }
     /** th 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -5156,6 +5468,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Generate PIN & Send"); b.put("log", "บันทึก"); b.put("fingerprint_phrase", "ตรวจสอบประโยค"); b.put("remaining", "ช่วงเวลา");
         b.put("device_details", "รายละเอียดอุปกรณ์"); b.put("protocol_label", "โปร โต็อค"); b.put("fingerprint_label", "ผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลงานผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลงานผลการผลการผลการผลการผลการผลการผลการผลการผลการผลการผลงานผลการผลการผลการผลการผลการผลการผล"); b.put("remark_label", "ชื่อเล่น");
         b.put("not_set", "ไม่ตั้ง");
+        b.put("auto_wifi", "เริ่มอัตโนมัติตาม Wi-Fi");
+        b.put("auto_wifi_desc", "เริ่มฟังเมื่อเชื่อมต่อเครือข่ายที่จำไว้ หยุดเมื่อออก");
+        b.put("auto_wifi_list", "Wi-Fi ที่จำไว้");
+        b.put("battery_stop", "หยุดชั่วคราวเมื่อแบตต่ำ");
+        b.put("battery_stop_desc", "หยุดเมื่อต่ำกว่า 15% และไม่ชาร์จ");
+        b.put("compress_image", "บีบอัดรูปก่อนส่ง");
+        b.put("compress_image_desc", "ย่อรูปที่ใหญ่กว่า 720 px");
+        b.put("send_all_devices", "ส่งไปทุกอุปกรณ์");
         dict.put("th", b);
     }
     /** uk 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -5250,6 +5570,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Подивіть PIN і відправить"); b.put("log", "Журнал"); b.put("fingerprint_phrase", "Перевірка фрази"); b.put("remaining", "Погода");
         b.put("device_details", "Відомості про пристрій"); b.put("protocol_label", "Протокол"); b.put("fingerprint_label", "Відбитки пальців"); b.put("remark_label", "Прозвище");
         b.put("not_set", "Не встановлено");
+        b.put("auto_wifi", "Автозапуск за Wi-Fi");
+        b.put("auto_wifi_desc", "Починає в запам'ятованій мережі, пауза при виході");
+        b.put("auto_wifi_list", "Запам'ятовані мережі Wi-Fi");
+        b.put("battery_stop", "Пауза при низькому заряді");
+        b.put("battery_stop_desc", "Зупиняється нижче 15% без заряджання");
+        b.put("compress_image", "Стискати зображення перед надсиланням");
+        b.put("compress_image_desc", "Зменшувати зображення понад 720 px");
+        b.put("send_all_devices", "Надіслати всім пристроям");
         dict.put("uk", b);
     }
     /** ur 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -5344,6 +5672,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN بنائیں اور بھیجیں"); b.put("log", "لاگ"); b.put("fingerprint_phrase", "جملہ کی تصدیق کریں"); b.put("remaining", "ETA");
         b.put("device_details", "آلے کی تفصیلات"); b.put("protocol_label", "پروٹوکول"); b.put("fingerprint_label", "فنگر پرنٹ"); b.put("remark_label", "عرفان");
         b.put("not_set", "مقرر نہیں");
+        b.put("auto_wifi", "Wi-Fi کے مطابق خودکار آغاز");
+        b.put("auto_wifi_desc", "محفوظ نیٹ ورک پر سماعت شروع، جانے پر رک جاتا ہے");
+        b.put("auto_wifi_list", "محفوظ Wi-Fi");
+        b.put("battery_stop", "کم بیٹری پر روکیں");
+        b.put("battery_stop_desc", "چارج کے بغیر 15% سے کم پر رک جاتا ہے");
+        b.put("compress_image", "بھیجنے سے پہلے تصاویر کمپریس کریں");
+        b.put("compress_image_desc", "720 px سے بڑی تصاویر چھوٹی کریں");
+        b.put("send_all_devices", "تمام آلات کو بھیجیں");
         dict.put("ur", b);
     }
     /** uz 全量 353 条（合并官方人工译文 / 既有核心文案 / 离线机翻）。 */
@@ -5438,6 +5774,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN & joʻnatish"); b.put("log", "Jurnal"); b.put("fingerprint_phrase", "Ibodatni tekshirish"); b.put("remaining", "ETA");
         b.put("device_details", "Qurilma tafsilotlari"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Barmoq izlari"); b.put("remark_label", "Nom");
         b.put("not_set", "Oʻrnatilmagan");
+        b.put("auto_wifi", "Wi-Fi bo'yicha avtomatik ishga tushish");
+        b.put("auto_wifi_desc", "Saqlangan tarmoqqa ulanganda tinglashni boshlaydi, chiqqanda to'xtaydi");
+        b.put("auto_wifi_list", "Saqlangan Wi-Fi tarmoqlari");
+        b.put("battery_stop", "Batareya kam bo'lsa to'xtatish");
+        b.put("battery_stop_desc", "Quvvatlanmasa 15% dan pastda to'xtaydi");
+        b.put("compress_image", "Yuborishdan oldin rasmlarni siqish");
+        b.put("compress_image_desc", "720 px dan katta rasmlarni kichraytirish");
+        b.put("send_all_devices", "Barcha qurilmalarga yuborish");
         dict.put("uz", b);
     }
     /** it 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -5532,6 +5876,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Genera PIN e invia"); b.put("log", "Log"); b.put("fingerprint_phrase", "Frase di verifica"); b.put("remaining", "Tempo rimanente");
         b.put("device_details", "Dettagli dispositivo"); b.put("protocol_label", "Protocollo"); b.put("fingerprint_label", "Impronta"); b.put("remark_label", "Soprannome");
         b.put("not_set", "Non impostato");
+        b.put("auto_wifi", "Avvio automatico in base al Wi-Fi");
+        b.put("auto_wifi_desc", "Inizia sulla rete memorizzata, si ferma quando esci");
+        b.put("auto_wifi_list", "Reti Wi-Fi memorizzate");
+        b.put("battery_stop", "Pausa con batteria scarica");
+        b.put("battery_stop_desc", "Si ferma sotto il 15% senza ricarica");
+        b.put("compress_image", "Comprimi le immagini prima dell'invio");
+        b.put("compress_image_desc", "Riduci le immagini oltre 720 px");
+        b.put("send_all_devices", "Invia a tutti i dispositivi");
         dict.put("it", b);
     }
     /** nl 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -5626,6 +5978,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN maken en verzenden"); b.put("log", "Logboek"); b.put("fingerprint_phrase", "Verificatiezin"); b.put("remaining", "Resterend");
         b.put("device_details", "Apparaatgegevens"); b.put("protocol_label", "Protocol"); b.put("fingerprint_label", "Vingerafdruk"); b.put("remark_label", "Bijnaam");
         b.put("not_set", "Niet ingesteld");
+        b.put("auto_wifi", "Automatisch starten op Wi-Fi");
+        b.put("auto_wifi_desc", "Start op een opgeslagen netwerk, pauzeert bij weggaan");
+        b.put("auto_wifi_list", "Opgeslagen Wi-Fi-netwerken");
+        b.put("battery_stop", "Pauzeren bij lage batterij");
+        b.put("battery_stop_desc", "Pauzeert onder 15% zonder opladen");
+        b.put("compress_image", "Comprimeer afbeeldingen voor verzenden");
+        b.put("compress_image_desc", "Verklein afbeeldingen boven 720 px");
+        b.put("send_all_devices", "Verzenden naar alle apparaten");
         dict.put("nl", b);
     }
     /** pl 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -5720,6 +6080,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Utwórz PIN i wyślij"); b.put("log", "Log"); b.put("fingerprint_phrase", "Fraza weryfikacyjna"); b.put("remaining", "Pozostało");
         b.put("device_details", "Szczegóły urządzenia"); b.put("protocol_label", "Protokół"); b.put("fingerprint_label", "Odcisk"); b.put("remark_label", "Pseudonim");
         b.put("not_set", "Nie ustawiono");
+        b.put("auto_wifi", "Automatyczne uruchamianie wg Wi-Fi");
+        b.put("auto_wifi_desc", "Zaczyna nasłuchiwać w zapisanej sieci, pauzuje po wyjściu");
+        b.put("auto_wifi_list", "Zapisane sieci Wi-Fi");
+        b.put("battery_stop", "Pauza przy niskiej baterii");
+        b.put("battery_stop_desc", "Zatrzymuje poniżej 15% bez ładowania");
+        b.put("compress_image", "Kompresuj obrazy przed wysłaniem");
+        b.put("compress_image_desc", "Pomniejsz obrazy powyżej 720 px");
+        b.put("send_all_devices", "Wyślij do wszystkich urządzeń");
         dict.put("pl", b);
     }
     /** tr 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -5814,6 +6182,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "PIN oluştur ve gönder"); b.put("log", "Günlük"); b.put("fingerprint_phrase", "Doğrulama ifadesi"); b.put("remaining", "Kalan");
         b.put("device_details", "Cihaz ayrıntıları"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Parmak izi"); b.put("remark_label", "Takma ad");
         b.put("not_set", "Ayarlanmadı");
+        b.put("auto_wifi", "Wi-Fi ile otomatik başlat");
+        b.put("auto_wifi_desc", "Kayıtlı ağa bağlanınca dinlemeye başlar, ayrılınca durur");
+        b.put("auto_wifi_list", "Kayıtlı Wi-Fi ağları");
+        b.put("battery_stop", "Düşük pilde duraklat");
+        b.put("battery_stop_desc", "Şarj yokken %15 altında durur");
+        b.put("compress_image", "Göndermeden önce görselleri sıkıştır");
+        b.put("compress_image_desc", "720 px üzeri görselleri küçült");
+        b.put("send_all_devices", "Tüm cihazlara gönder");
         dict.put("tr", b);
     }
     /** id 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -5908,6 +6284,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Buat PIN dan kirim"); b.put("log", "Log"); b.put("fingerprint_phrase", "Frasa verifikasi"); b.put("remaining", "Tersisa");
         b.put("device_details", "Detail perangkat"); b.put("protocol_label", "Protokol"); b.put("fingerprint_label", "Sidik jari"); b.put("remark_label", "Nama panggilan");
         b.put("not_set", "Belum diatur");
+        b.put("auto_wifi", "Mulai otomatis menurut Wi-Fi");
+        b.put("auto_wifi_desc", "Mulai mendengarkan di jaringan tersimpan, jeda saat pergi");
+        b.put("auto_wifi_list", "Wi-Fi tersimpan");
+        b.put("battery_stop", "Jeda saat baterai lemah");
+        b.put("battery_stop_desc", "Berhenti di bawah 15% tanpa cas");
+        b.put("compress_image", "Kompres gambar sebelum kirim");
+        b.put("compress_image_desc", "Perkecil gambar di atas 720 px");
+        b.put("send_all_devices", "Kirim ke semua perangkat");
         dict.put("id", b);
     }
     /** vi 全量词条（353 条，不再继承英文，避免中英混排）。 */
@@ -6002,6 +6386,14 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("gen_pin_send", "Tạo PIN và gửi"); b.put("log", "Nhật ký"); b.put("fingerprint_phrase", "Cụm từ xác minh"); b.put("remaining", "Còn lại");
         b.put("device_details", "Chi tiết thiết bị"); b.put("protocol_label", "Giao thức"); b.put("fingerprint_label", "Vân tay"); b.put("remark_label", "Biệt danh");
         b.put("not_set", "Chưa đặt");
+        b.put("auto_wifi", "Tự khởi động theo Wi-Fi");
+        b.put("auto_wifi_desc", "Bắt đầu lắng nghe trên mạng đã lưu, tạm dừng khi rời đi");
+        b.put("auto_wifi_list", "Wi-Fi đã lưu");
+        b.put("battery_stop", "Tạm dừng khi pin yếu");
+        b.put("battery_stop_desc", "Dừng dưới 15% khi không sạc");
+        b.put("compress_image", "Nén ảnh trước khi gửi");
+        b.put("compress_image_desc", "Thu nhỏ ảnh trên 720 px");
+        b.put("send_all_devices", "Gửi tới mọi thiết bị");
         dict.put("vi", b);
     }
     public static String get(String key) {

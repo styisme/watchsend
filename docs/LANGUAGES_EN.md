@@ -2,7 +2,7 @@
 
 For anyone changing strings, adding a language, or asking "why is this screen in English?". Three parts: how the language data is organised, what is covered today, and where to touch when adding or fixing something.
 
-> Short version: the app ships **52 languages / 18,483 strings** (365-366 for the 10 base languages, 353 for the other 42); the web page carries a separate **10-language** dictionary; **ar / fa / he / ur are right-to-left**, and since 1.9.0 the whole UI mirrors for them.
+> Short version: the app ships **52 languages / 18,819 strings** (365-366 for the 10 base languages, 361 for the other 42); the web page carries a separate **10-language** dictionary; **ar / fa / he / ur are right-to-left**, and since 1.9.0 the whole UI mirrors for them.
 
 ---
 
@@ -10,7 +10,7 @@ For anyone changing strings, adding a language, or asking "why is this screen in
 
 | Surface | Languages | Strings | Implementation | Switching |
 | --- | --- | --- | --- | --- |
-| App UI (watch) | 52 | 353-366 per language, 18,483 total | `I18nManager` (Java string tables, lazy-loaded) | Settings - General - Language, or follow system |
+| App UI (watch) | 52 | 361-366 per language, 18,819 total | `I18nManager` (Java string tables, lazy-loaded) | Settings - General - Language, or follow system |
 | Web page (WebShare) | 10 | about 30 | JS dictionary inside `assets/index.html` | Browser language detection, dropdown on the page |
 
 The web page only carries 10 languages (zh / zh_TW / en / ja / ko / de / fr / es / ru / pt) because it is a temporary browser page with a small string count. The app is where the full 52 live. Do not mix the two numbers.
@@ -41,48 +41,48 @@ The web page only carries 10 languages (zh / zh_TW / en / ja / ko / de / fr / es
 | Español | `es` | 366 | Left-to-right | Human-maintained |
 | Русский | `ru` | 366 | Left-to-right | Human-maintained |
 | Português | `pt` | 366 | Left-to-right | Human-maintained |
-| Italiano | `it` | 353 | Left-to-right | Human-maintained |
-| العربية | `ar` | 353 | Right-to-left | Human + MT |
-| Azərbaycan | `az` | 353 | Left-to-right | Human + MT |
-| Български | `bg` | 353 | Left-to-right | Human + MT |
-| বাংলা | `bn` | 353 | Left-to-right | Human + MT |
-| Bosanski | `bs` | 353 | Left-to-right | Human + MT |
-| Català | `ca` | 353 | Left-to-right | Human + MT |
-| Čeština | `cs` | 353 | Left-to-right | Human + MT |
-| Dansk | `da` | 353 | Left-to-right | Human + MT |
-| Ελληνικά | `el` | 353 | Left-to-right | Human + MT |
-| Eesti | `et` | 353 | Left-to-right | Human + MT |
-| Euskara | `eu` | 353 | Left-to-right | Human + MT |
-| فارسی | `fa` | 353 | Right-to-left | Human + MT |
-| Suomi | `fi` | 353 | Left-to-right | Human + MT |
-| Filipino | `fil` | 353 | Left-to-right | Human + MT |
-| עברית | `he` | 353 | Right-to-left | Human + MT |
-| हिन्दी | `hi` | 353 | Left-to-right | Human + MT |
-| Hrvatski | `hr` | 353 | Left-to-right | Human + MT |
-| Magyar | `hu` | 353 | Left-to-right | Human + MT |
-| Bahasa Indonesia | `id` | 353 | Left-to-right | Human-maintained |
-| Íslenska | `is` | 353 | Left-to-right | Human + MT |
-| Lietuvių | `lt` | 353 | Left-to-right | Human + MT |
-| Latviešu | `lv` | 353 | Left-to-right | Human + MT |
-| Македонски | `mk` | 353 | Left-to-right | Human + MT |
-| Bahasa Melayu | `ms` | 353 | Left-to-right | Human + MT |
-| Norsk bokmål | `nb` | 353 | Left-to-right | Human + MT |
-| नेपाली | `ne` | 353 | Left-to-right | Human + MT |
-| Nederlands | `nl` | 353 | Left-to-right | Human-maintained |
-| Polski | `pl` | 353 | Left-to-right | Human-maintained |
-| Română | `ro` | 353 | Left-to-right | Human + MT |
-| Slovenčina | `sk` | 353 | Left-to-right | Human + MT |
-| Slovenščina | `sl` | 353 | Left-to-right | Human + MT |
-| Shqip | `sq` | 353 | Left-to-right | Human + MT |
-| Српски | `sr` | 353 | Left-to-right | Human + MT |
-| Svenska | `sv` | 353 | Left-to-right | Human + MT |
-| Kiswahili | `sw` | 353 | Left-to-right | Human + MT |
-| ไทย | `th` | 353 | Left-to-right | Human + MT |
-| Türkçe | `tr` | 353 | Left-to-right | Human-maintained |
-| Українська | `uk` | 353 | Left-to-right | Human + MT |
-| اردو | `ur` | 353 | Right-to-left | Human + MT |
-| Oʻzbekcha | `uz` | 353 | Left-to-right | Human + MT |
-| Tiếng Việt | `vi` | 353 | Left-to-right | Human-maintained |
+| Italiano | `it` | 361 | Left-to-right | Human-maintained |
+| العربية | `ar` | 361 | Right-to-left | Human + MT |
+| Azərbaycan | `az` | 361 | Left-to-right | Human + MT |
+| Български | `bg` | 361 | Left-to-right | Human + MT |
+| বাংলা | `bn` | 361 | Left-to-right | Human + MT |
+| Bosanski | `bs` | 361 | Left-to-right | Human + MT |
+| Català | `ca` | 361 | Left-to-right | Human + MT |
+| Čeština | `cs` | 361 | Left-to-right | Human + MT |
+| Dansk | `da` | 361 | Left-to-right | Human + MT |
+| Ελληνικά | `el` | 361 | Left-to-right | Human + MT |
+| Eesti | `et` | 361 | Left-to-right | Human + MT |
+| Euskara | `eu` | 361 | Left-to-right | Human + MT |
+| فارسی | `fa` | 361 | Right-to-left | Human + MT |
+| Suomi | `fi` | 361 | Left-to-right | Human + MT |
+| Filipino | `fil` | 361 | Left-to-right | Human + MT |
+| עברית | `he` | 361 | Right-to-left | Human + MT |
+| हिन्दी | `hi` | 361 | Left-to-right | Human + MT |
+| Hrvatski | `hr` | 361 | Left-to-right | Human + MT |
+| Magyar | `hu` | 361 | Left-to-right | Human + MT |
+| Bahasa Indonesia | `id` | 361 | Left-to-right | Human-maintained |
+| Íslenska | `is` | 361 | Left-to-right | Human + MT |
+| Lietuvių | `lt` | 361 | Left-to-right | Human + MT |
+| Latviešu | `lv` | 361 | Left-to-right | Human + MT |
+| Македонски | `mk` | 361 | Left-to-right | Human + MT |
+| Bahasa Melayu | `ms` | 361 | Left-to-right | Human + MT |
+| Norsk bokmål | `nb` | 361 | Left-to-right | Human + MT |
+| नेपाली | `ne` | 361 | Left-to-right | Human + MT |
+| Nederlands | `nl` | 361 | Left-to-right | Human-maintained |
+| Polski | `pl` | 361 | Left-to-right | Human-maintained |
+| Română | `ro` | 361 | Left-to-right | Human + MT |
+| Slovenčina | `sk` | 361 | Left-to-right | Human + MT |
+| Slovenščina | `sl` | 361 | Left-to-right | Human + MT |
+| Shqip | `sq` | 361 | Left-to-right | Human + MT |
+| Српски | `sr` | 361 | Left-to-right | Human + MT |
+| Svenska | `sv` | 361 | Left-to-right | Human + MT |
+| Kiswahili | `sw` | 361 | Left-to-right | Human + MT |
+| ไทย | `th` | 361 | Left-to-right | Human + MT |
+| Türkçe | `tr` | 361 | Left-to-right | Human-maintained |
+| Українська | `uk` | 361 | Left-to-right | Human + MT |
+| اردو | `ur` | 361 | Right-to-left | Human + MT |
+| Oʻzbekcha | `uz` | 361 | Left-to-right | Human + MT |
+| Tiếng Việt | `vi` | 361 | Left-to-right | Human-maintained |
 
 The string counts above are measured, not estimated: reflect `I18nManager` on a desktop JVM, force every package to load, count each map. Why they differ is in the next section.
 
@@ -90,14 +90,14 @@ The string counts above are measured, not estimated: reflect `I18nManager` on a 
 
 ## 4. How the totals add up
 
-**3 x 365 + 7 x 366 + 42 x 353 = 18,483.**
+**3 x 365 + 7 x 366 + 42 x 361 = 18,819.**
 
-- **42 languages have 353 strings.** All of them miss the same four keys: `resend`, `choose_device_to_send`, `idle_stop_server`, `idle_stop_server_desc`. Those were added in 1.7.12 and only translated into the 10 base languages, so in the other 42 they fall back to English.
+- **42 languages have 361 strings:** 353 plus the 8 strings added in 1.11.0. All of them still miss the same four keys: `resend`, `choose_device_to_send`, `idle_stop_server`, `idle_stop_server_desc`. Those were added in 1.7.12 and only translated into the 10 base languages, so in the other 42 they fall back to English.
 - **ja / ko / de / fr / es / ru / pt have 366.** That is 353 + those four + one legacy key `save_to_dir` that only ever existed in these seven packages (`en` does not have it) + the 8 strings added in 1.11.0.
 - **zh / zh_TW / en have 365.** That is 353 + those four + the 8 strings added in 1.11.0 (`auto_wifi`, `auto_wifi_desc`, `auto_wifi_list`, `battery_stop`, `battery_stop_desc`, `compress_image`, `compress_image_desc`, `send_all_devices`).
 - A previous revision of this document claimed "7 packages with 354 entries, 18,363 total". That miscounted both the legacy key and the four base-language strings and is superseded by this section and the 1.7.13 CHANGELOG entry.
 
-To verify: compile `I18nManager`, reflect the private `ensureLoaded(code)`, and count. Static initialisation holds 10 packages; after loading all codes you get 52 packages and 18,483 strings.
+To verify: compile `I18nManager`, reflect the private `ensureLoaded(code)`, and count. Static initialisation holds 10 packages; after loading all codes you get 52 packages and 18,819 strings.
 
 ---
 
@@ -187,12 +187,12 @@ The other 42 languages have no separate manual; the English guide plus the in-ap
 
 ### A new language
 
-1. Write an `installFullXx()` with 353 strings (copy the `en` map as a template);
+1. Write an `installFullXx()` with 361 strings (copy the `en` map as a template);
 2. add the code to `CODES` and `LABELS` (that order is the order in Settings; `system` is always first);
 3. **register a branch in `ensureLoaded()`**, otherwise the package never loads and the UI stays English;
 4. for an RTL language, add the code to `RtlSupport.RTL_LANGS`;
 5. add legacy system codes to `normalizeCode()`;
-6. verify: 10 packages after static init, 53 after full load, 353 strings each; for RTL also check that the chevron, progress bar and swipe edge mirror.
+6. verify: 10 packages after static init, 52 after full load, 361 strings each; for RTL also check that the chevron, progress bar and swipe edge mirror.
 
 ### Before committing
 
