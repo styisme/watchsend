@@ -79,28 +79,28 @@ Los ajustes se agrupan como sigue. Los valores predeterminados describen una ins
 
 | Grupo | Opción | Predeterminado | Efecto |
 | --- | --- | --- | --- |
-| General | Forma de pantalla | Auto | Detecta reloj redondo o cuadrado; se puede forzar |
-| General | Margen inferior | No | Sube el contenido en relojes redondos con mentón, como el Moto 360 |
-| General | Color dinámico | Sí | Sigue el fondo o la esfera (Android 12 y posteriores) |
-| General | Modo bajo rendimiento | Auto | Reduce o corta animaciones; sin ajuste manual lo deciden memoria libre y núcleos |
-| General | Pausar servicio inactivo | No | Tras 3 minutos con pantalla apagada pausa la escucha para ahorrar y se reanuda al encender; puede perder envíos entrantes |
 | General | Tema | Seguir sistema | Seguir sistema, forzar claro, forzar oscuro |
 | General | Idioma | Seguir sistema | 52 idiomas; debug_keys al final de la lista muestra las claves en bruto para diagnóstico |
 | General | Escala de interfaz | Media (1,0x) | Ajusta texto y controles entre 0,3x y 2,5x |
+| General | Forma de pantalla | Auto | Detecta reloj redondo o cuadrado; se puede forzar |
+| General | Margen inferior | No | Sube el contenido en relojes redondos con mentón, como el Moto 360 |
+| General | Color dinámico | Sí | Sigue el fondo o la esfera (Android 12 y posteriores) |
 | General | Activar atrás interno | Sí | Sí bloquea el atrás del sistema y usa el deslizamiento; no restaura el atrás del sistema y deja de interceptar el gesto |
+| General | Modo bajo rendimiento | Auto | Reduce o corta animaciones; sin ajuste manual lo deciden memoria libre y núcleos |
+| General | Pausar servicio inactivo | No | Tras 3 minutos con pantalla apagada pausa la escucha para ahorrar y se reanuda al encender; puede perder envíos entrantes |
 | Transferencia | Guardado rápido | Preguntar siempre | Preguntar siempre, aceptar todo, solo favoritos |
 | Transferencia | Dispositivos favoritos | Vacío | Memoriza equipos frecuentes y se combina con la opción anterior |
 | Transferencia | Guardar en galería | Sí | Coloca fotos y vídeos recibidos en la galería |
 | Transferencia | Guardar en historial | Sí | Escribe lo recibido en el historial |
-| Transferencia | Activar PIN | No | El emisor debe introducir el PIN antes de enviar |
-| Transferencia | Cambiar PIN | 0000 | Cuatro dígitos; cámbielo por uno que solo usted conozca |
 | Red y automatización | Activar HTTPS | No | Transferencia por TLS; equipos muy antiguos solo admiten TLS 1.0 y pueden fallar |
+| Red y automatización | Puerto | 53317 | Puerto del servicio; tras cambiarlo, emisor y receptor deben coincidir |
 | Red y automatización | Activar transferencia web | Sí | Permite al navegador acceder a la dirección local del servicio |
+| Red y automatización | URL web | — | Muestra dirección y código QR; el enlace se puede copiar |
 | Red y automatización | Compartir descargas | No | Permite que equipos del LAN obtengan archivos de la carpeta local vía LocalSend |
 | Red y automatización | Inicio automático | No | Arranca el servicio al encender; útil para un receptor permanente |
-| Red y automatización | URL web | — | Muestra dirección y código QR; el enlace se puede copiar |
-| Red y automatización | Puerto | 53317 | Puerto del servicio; tras cambiarlo, emisor y receptor deben coincidir |
 | Dispositivo y seguridad | Cambiar nombre | Modelo | Nombre que ven los demás equipos |
+| Dispositivo y seguridad | Activar PIN | No | El emisor debe introducir el PIN antes de enviar |
+| Dispositivo y seguridad | Cambiar PIN | 0000 | Cuatro dígitos; cámbielo por uno que solo usted conozca |
 | Dispositivo y seguridad | Bloquear extensiones peligrosas | exe,bat,cmd,vbs,sh | Los archivos con estas extensiones se rechazan |
 | Dispositivo y seguridad | Listas blanca y negra | Vacío | Pulsación larga en un equipo para bloquearlo o añadirlo a la lista blanca |
 | Modo geek | Instalación silenciosa (beta) | No | Instala automáticamente un APK recibido mediante Root o Shizuku |

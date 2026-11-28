@@ -79,28 +79,28 @@ Die Einstellungen sind wie unten gruppiert. Standardwerte gelten für eine frisc
 
 | Gruppe | Eintrag | Standard | Wirkung |
 | --- | --- | --- | --- |
-| Allgemein | Bildschirmform | Automatisch | Erkennt runde oder eckige Uhr, kann erzwungen werden |
-| Allgemein | Untere Aussparung | Aus | Schiebt Inhalte bei runden Uhren mit Kinn, etwa Moto 360, nach oben |
-| Allgemein | Dynamische Farbe | An | Folgt Hintergrundbild oder Zifferblatt (ab Android 12) |
-| Allgemein | Geringe Leistung | Automatisch | Schwächt oder stoppt UI-Animationen; ohne manuelle Wahl entscheiden freier Speicher und Kerne |
-| Allgemein | Dienst bei Inaktivität pausieren | Aus | Nach 3 Minuten Bildschirm aus pausiert der Empfang zum Stromsparen, bei Aktivierung wieder an; eingehende Sendungen können entgehen |
 | Allgemein | Design | System folgen | System folgen, hell erzwingen, dunkel erzwingen |
 | Allgemein | Sprache | System folgen | 52 Sprachen; debug_keys am Listenende zeigt Rohschlüssel zur Fehlersuche |
 | Allgemein | Schnittstellenskalierung | Mittel (1.0x) | Skaliert Text und Bedienelemente zwischen 0.3x und 2.5x |
+| Allgemein | Bildschirmform | Automatisch | Erkennt runde oder eckige Uhr, kann erzwungen werden |
+| Allgemein | Untere Aussparung | Aus | Schiebt Inhalte bei runden Uhren mit Kinn, etwa Moto 360, nach oben |
+| Allgemein | Dynamische Farbe | An | Folgt Hintergrundbild oder Zifferblatt (ab Android 12) |
 | Allgemein | In-App-Zurück aktivieren | An | An sperrt System-Zurück und nutzt Wischen; aus stellt System-Zurück wieder her und fängt Wischen nicht ab |
+| Allgemein | Geringe Leistung | Automatisch | Schwächt oder stoppt UI-Animationen; ohne manuelle Wahl entscheiden freier Speicher und Kerne |
+| Allgemein | Dienst bei Inaktivität pausieren | Aus | Nach 3 Minuten Bildschirm aus pausiert der Empfang zum Stromsparen, bei Aktivierung wieder an; eingehende Sendungen können entgehen |
 | Übertragung | Schnellspeichern | Jedes Mal fragen | Jedes Mal fragen, alles automatisch, nur Favoriten automatisch |
 | Übertragung | Favoriten | Leer | Merkt häufige Geräte, kombiniert mit obigem Eintrag für automatischen Empfang |
 | Übertragung | In Galerie speichern | An | Legt empfangene Fotos und Videos in die Galerie |
 | Übertragung | Im Verlauf speichern | An | Schreibt Empfangenes in den Verlauf |
-| Übertragung | PIN aktivieren | Aus | Gegenseite muss vor dem Senden die PIN eingeben |
-| Übertragung | PIN ändern | 0000 | Vier Ziffern; auf einen nur selbst bekannten Wert ändern |
 | Netzwerk & Automatisierung | HTTPS aktivieren | Aus | Übertragung per TLS; sehr alte Geräte können nur TLS 1.0 und scheitern |
+| Netzwerk & Automatisierung | Port | 53317 | Dienstport; nach Änderung müssen Sender und Empfänger übereinstimmen |
 | Netzwerk & Automatisierung | Webübertragung aktivieren | An | Erlaubt dem Browser den Zugriff auf die lokale Dienstadresse |
+| Netzwerk & Automatisierung | Web-URL | — | Zeigt Adresse und QR-Code, Link kopierbar |
 | Netzwerk & Automatisierung | Download-Freigabe | Aus | LAN-Geräte dürfen per LocalSend Dateien aus dem lokalen Ordner holen |
 | Netzwerk & Automatisierung | Autostart beim Booten | Aus | Startet den Dienst beim Booten; passend für Dauerempfänger |
-| Netzwerk & Automatisierung | Web-URL | — | Zeigt Adresse und QR-Code, Link kopierbar |
-| Netzwerk & Automatisierung | Port | 53317 | Dienstport; nach Änderung müssen Sender und Empfänger übereinstimmen |
 | Gerät & Sicherheit | Gerätenamen ändern | Gerätemodell | Name, den andere Geräte in ihrer Liste sehen |
+| Gerät & Sicherheit | PIN aktivieren | Aus | Gegenseite muss vor dem Senden die PIN eingeben |
+| Gerät & Sicherheit | PIN ändern | 0000 | Vier Ziffern; auf einen nur selbst bekannten Wert ändern |
 | Gerät & Sicherheit | Gefährliche Endungen blockieren | exe,bat,cmd,vbs,sh | Dateien mit diesen Endungen werden abgelehnt |
 | Gerät & Sicherheit | Weiß-/Schwarzliste | Leer | Gerät lange drücken zum Sperren oder für Weißliste mit Schnellspeichern |
 | Geek-Modus | Stille Installation (Beta) | Aus | Installiert eine empfangene APK über Root oder Shizuku automatisch |

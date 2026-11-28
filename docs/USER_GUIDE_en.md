@@ -79,28 +79,28 @@ Settings is grouped as shown below. Defaults describe a fresh install that has n
 
 | Group | Item | Default | What it does |
 | --- | --- | --- | --- |
-| General | Screen Shape | Auto | Detects a round or square watch; can be forced |
-| General | Chin Padding | Off | Shifts content up for round watches with a chin, such as the Moto 360 |
-| General | Dynamic Color | On | Follows wallpaper or watch-face colours (Android 12 and later) |
-| General | Low Performance | Auto | Reduces or disables UI animation; when never set manually, decided from free heap and core count |
-| General | Pause service when idle | Off | After 3 minutes with the screen off, listening pauses to save power and resumes on wake; incoming pushes may be missed |
 | General | Theme Mode | Follow system | Follow system, force light, force dark |
 | General | Language | Follow system | 52 languages; debug_keys at the bottom of the list shows raw string keys for troubleshooting |
 | General | Interface Scale | Medium (1.0x) | Scales text and controls between 0.3x and 2.5x |
+| General | Screen Shape | Auto | Detects a round or square watch; can be forced |
+| General | Chin Padding | Off | Shifts content up for round watches with a chin, such as the Moto 360 |
+| General | Dynamic Color | On | Follows wallpaper or watch-face colours (Android 12 and later) |
 | General | Enable In-App Back | On | On blocks system back and uses the in-app swipe; off restores system back and stops intercepting swipes |
+| General | Low Performance | Auto | Reduces or disables UI animation; when never set manually, decided from free heap and core count |
+| General | Pause service when idle | Off | After 3 minutes with the screen off, listening pauses to save power and resumes on wake; incoming pushes may be missed |
 | Transfer | Quick Save | Ask every time | Ask every time, auto accept all, auto accept favourites |
 | Transfer | Favourite devices | Empty | Caches frequent devices; pairs with the option above for automatic receiving |
 | Transfer | Save to gallery | On | Puts received photos and videos into the gallery |
 | Transfer | Save to history | On | Writes received content into history |
-| Transfer | Enable PIN | Off | Send requires the PIN before transfer starts |
-| Transfer | Change PIN | 0000 | Four digits; change it to a value only you know |
 | Network & Automation | Enable HTTPS | Off | Transfers use TLS; very old devices only support TLS 1.0 and may fail the handshake |
+| Network & Automation | Port | 53317 | Service port; sender and receiver must match after a change |
 | Network & Automation | Enable web transfer | On | Lets a browser reach the local service address |
+| Network & Automation | Web URL | — | Shows the address and a QR code; the link can be copied |
 | Network & Automation | Share for download | Off | Lets LAN devices pull files from the local folder through LocalSend |
 | Network & Automation | Auto start on boot | Off | Starts the service at boot; suited to a dedicated receiver |
-| Network & Automation | Web URL | — | Shows the address and a QR code; the link can be copied |
-| Network & Automation | Port | 53317 | Service port; sender and receiver must match after a change |
 | Device & Security | Rename device | Device model | The name other devices see in their list |
+| Device & Security | Enable PIN | Off | Send requires the PIN before transfer starts |
+| Device & Security | Change PIN | 0000 | Four digits; change it to a value only you know |
 | Device & Security | Block dangerous exts | exe,bat,cmd,vbs,sh | Files with these extensions are refused |
 | Device & Security | Manage White/Blacklist | Empty | Long-press a device to block it, or whitelist it to pair with Quick Save |
 | Geek Mode | Silent Install (Beta) | Off | Installs a received APK automatically through Root or Shizuku |

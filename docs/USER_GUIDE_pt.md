@@ -79,28 +79,28 @@ Os ajustes são agrupados como abaixo. Os padrões descrevem uma instalação no
 
 | Grupo | Opção | Padrão | Efeito |
 | --- | --- | --- | --- |
-| Geral | Formato da tela | Auto | Detecta relógio redondo ou quadrado; pode ser forçado |
-| Geral | Recuo inferior | Desligado | Sobe o conteúdo em relógios redondos com queixo, como o Moto 360 |
-| Geral | Cor dinâmica | Ligado | Segue o papel de parede ou mostrador (Android 12 e superior) |
-| Geral | Modo de baixo desempenho | Auto | Reduz ou corta animações; sem ajuste manual, decide memória livre e núcleos |
-| Geral | Pausar serviço ocioso | Desligado | Após 3 minutos com a tela apagada, a escuta pausa para economizar e volta ao acender; envios recebidos podem ser perdidos |
 | Geral | Tema | Seguir sistema | Seguir sistema, forçar claro, forçar escuro |
 | Geral | Idioma | Seguir sistema | 52 idiomas; debug_keys no fim da lista mostra as chaves cruas para diagnóstico |
 | Geral | Escala da interface | Média (1,0x) | Ajusta texto e controles entre 0,3x e 2,5x |
+| Geral | Formato da tela | Auto | Detecta relógio redondo ou quadrado; pode ser forçado |
+| Geral | Recuo inferior | Desligado | Sobe o conteúdo em relógios redondos com queixo, como o Moto 360 |
+| Geral | Cor dinâmica | Ligado | Segue o papel de parede ou mostrador (Android 12 e superior) |
 | Geral | Ativar voltar no app | Ligado | Ligado bloqueia o voltar do sistema e usa o gesto; desligado restaura o voltar do sistema e para de interceptar o gesto |
+| Geral | Modo de baixo desempenho | Auto | Reduz ou corta animações; sem ajuste manual, decide memória livre e núcleos |
+| Geral | Pausar serviço ocioso | Desligado | Após 3 minutos com a tela apagada, a escuta pausa para economizar e volta ao acender; envios recebidos podem ser perdidos |
 | Transferência | Salvamento rápido | Perguntar sempre | Perguntar sempre, aceitar tudo, só favoritos |
 | Transferência | Dispositivos favoritos | Vazio | Memoriza aparelhos frequentes e combina com a opção acima |
 | Transferência | Salvar na galeria | Ligado | Coloca fotos e vídeos recebidos na galeria |
 | Transferência | Salvar no histórico | Ligado | Grava o conteúdo recebido no histórico |
-| Transferência | Ativar PIN | Desligado | O emissor precisa digitar o PIN antes de enviar |
-| Transferência | Alterar PIN | 0000 | Quatro dígitos; troque por um valor só seu |
 | Rede e automação | Ativar HTTPS | Desligado | Transferência por TLS; aparelhos muito antigos só têm TLS 1.0 e podem falhar |
+| Rede e automação | Porta | 53317 | Porta do serviço; depois de mudar, emissor e receptor precisam coincidir |
 | Rede e automação | Ativar transferência web | Ligado | Permite ao navegador acessar o endereço local do serviço |
+| Rede e automação | URL web | — | Mostra endereço e QR code; o link pode ser copiado |
 | Rede e automação | Compartilhar downloads | Desligado | Permite que aparelhos da LAN baixem arquivos da pasta local via LocalSend |
 | Rede e automação | Iniciar ao ligar | Desligado | Sobe o serviço na inicialização; bom para um receptor fixo |
-| Rede e automação | URL web | — | Mostra endereço e QR code; o link pode ser copiado |
-| Rede e automação | Porta | 53317 | Porta do serviço; depois de mudar, emissor e receptor precisam coincidir |
 | Dispositivo e segurança | Alterar nome | Modelo | Nome que os outros aparelhos veem |
+| Dispositivo e segurança | Ativar PIN | Desligado | O emissor precisa digitar o PIN antes de enviar |
+| Dispositivo e segurança | Alterar PIN | 0000 | Quatro dígitos; troque por um valor só seu |
 | Dispositivo e segurança | Bloquear extensões perigosas | exe,bat,cmd,vbs,sh | Arquivos com essas extensões são recusados |
 | Dispositivo e segurança | Listas branca e negra | Vazio | Toque longo em um aparelho para bloquear ou pôr na lista branca |
 | Modo geek | Instalação silenciosa (beta) | Desligado | Instala automaticamente um APK recebido via Root ou Shizuku |

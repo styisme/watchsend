@@ -87,13 +87,30 @@ public class WatchSettingsActivity extends Activity {
     private void buildSettings() {
         container.removeAllViews();
 
+        // ── 通用：外观 → 交互 → 性能与省电，按“最常调”在前排列 ──
         addSection(I18nManager.get("general"));
 
+        // 主题模式 (深/浅/自动)
+        addItem(I18nManager.get("theme_mode"), currentThemeLabel(), new View.OnClickListener() {
+            public void onClick(View v) { pickTheme(); }
+        });
+
+        // 语言
+        addItem(I18nManager.get("language"), currentLangLabel(), new View.OnClickListener() {
+            public void onClick(View v) { pickLang(); }
+        });
+
+        // UI 大小：圆表觉得字挤时最先调的就是它，归到外观组
+        addItem(I18nManager.get("ui_size"), getUiSizeLabel(), new View.OnClickListener() {
+            public void onClick(View v) { pickUiSize(); }
+        });
+
         // 屏幕形状选择 (自动/强制圆/强制方)
-        addItem(I18nManager.get("screen_shape") + ": " + currentShapeLabel(), new View.OnClickListener() {
+        addItem(I18nManager.get("screen_shape"), currentShapeLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickShape(); }
         });
-// 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
+
+        // 底部下巴避让 (针对 Moto 360 等有黑边的圆表)
         addSwitch(I18nManager.get("chin_padding"), I18nManager.get("chin_padding_desc"), prefs().getBoolean("chin_padding", false), saveTo("chin_padding"));
 
         // 动态取色 (仅在 Android 12+ 显示)
@@ -103,56 +120,35 @@ public class WatchSettingsActivity extends Activity {
             });
         }
 
-        // 低性能模式
-        // 开关要显示"实际生效值"：未手动设置过时由 UikitConfig 按设备能力自动判定，
-        // 这里若仍读 prefs 默认 false，会出现"开关关着但动画已经关了"的割裂。
-        addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"),
-                UikitConfig.isLowPerf(this), saveTo("low_perf_mode"));
-        
-
-        // 熄屏空闲暂停服务（默认关闭：开启后会牺牲"对方随时推过来都能收到"的可靠性换续航）
-        addSwitch(I18nManager.get("idle_stop_server"), I18nManager.get("idle_stop_server_desc"),
-                prefs().getBoolean("idle_stop_server", false), saveTo("idle_stop_server"));
-
-        // 主题模式 (深/浅/自动)
-        addItem(I18nManager.get("theme_mode") + ": " + currentThemeLabel(), new View.OnClickListener() {
-            public void onClick(View v) { pickTheme(); }
-        });
-
-        // 语言
-        addItem(I18nManager.get("language") + ": " + currentLangLabel(), new View.OnClickListener() {
-            public void onClick(View v) { pickLang(); }
-        });
-        
-        // UI 大小
-        addItem(I18nManager.get("ui_size") + ": " + getUiSizeLabel(), new View.OnClickListener() {
-            public void onClick(View v) { pickUiSize(); }
-        });
-
-        // 拦截系统返回
-        // 语义：开启 → 禁用系统返回、改用界面内滑动返回；关闭 → 系统返回照常、滑动返回不接管
+        // 启用软件内返回：开启后页面内滑动接管，系统返回不再直接退出
         addSwitch(I18nManager.get("swipe_back"), I18nManager.get("swipe_back_desc"),
                 UikitConfig.isSwipeBackEnabled(this), new SwitchHandler() {
                     public void onChanged(boolean v) { UikitConfig.setSwipeBackEnabled(WatchSettingsActivity.this, v); }
                 });
 
+        // 低性能模式
+        // 开关要显示“实际生效值”：未手动设置过时由 UikitConfig 按设备能力自动判定，
+        // 这里若仍读 prefs 默认 false，会出现“开关关着但动画已经关了”的割裂。
+        addSwitch(I18nManager.get("low_perf_mode"), I18nManager.get("low_perf_desc"),
+                UikitConfig.isLowPerf(this), saveTo("low_perf_mode"));
 
+        // 熄屏空闲暂停服务（默认关闭：开启后会牺牲“对方随时推过来都能收到”的可靠性换续航）
+        addSwitch(I18nManager.get("idle_stop_server"), I18nManager.get("idle_stop_server_desc"),
+                prefs().getBoolean("idle_stop_server", false), saveTo("idle_stop_server"));
+
+        // ── 传输：先定接收策略，再定落到哪里 ──
         addSection(I18nManager.get("transfer_settings"));
         // 三态取代原来的两个开关（旧 auto_save / auto_accept_whitelist 仍被 QuickSave 读取，升级不突变）
-        addItem(I18nManager.get("quick_save") + ": " + QuickSave.label(QuickSave.getMode()), new View.OnClickListener() {
+        addItem(I18nManager.get("quick_save"), QuickSave.label(QuickSave.getMode()), new View.OnClickListener() {
             public void onClick(View v) { pickQuickSave(); }
         });
-        addItem(I18nManager.get("favorites") + " (" + FavoritesStore.count() + ")", new View.OnClickListener() {
+        addItem(I18nManager.get("favorites"), String.valueOf(FavoritesStore.count()), new View.OnClickListener() {
             public void onClick(View v) { manageFavorites(); }
         });
         addSwitch(I18nManager.get("save_album"), I18nManager.get("save_album_desc"), OldSendService.getPrefBooleanGlobal("save_album", true), saveTo("save_album"));
         addSwitch(I18nManager.get("save_history"), I18nManager.get("save_history_desc"), OldSendService.getPrefBooleanGlobal("save_history", true), saveTo("save_history"));
-        addSwitch(I18nManager.get("use_pin"), I18nManager.get("use_pin_desc"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
-        addItem(I18nManager.get("modify_pin") + " (" + prefs().getString("pin_code", org.watchsend.OldSendService.DEFAULT_PIN) + ")", new View.OnClickListener() {
-            public void onClick(View v) { editPin(); }
-        });
 
-
+        // ── 网络与自动化：先协议与端口，再网页端（入口紧跟二维码），最后自启 ──
         addSection(I18nManager.get("network"));
         addSwitch(I18nManager.get("https_enable"), I18nManager.get("https_enable_desc"), prefs().getBoolean("use_https", false), new SwitchHandler() {
             public void onChanged(boolean v) {
@@ -161,11 +157,10 @@ public class WatchSettingsActivity extends Activity {
                 org.watchsend.OldSendService.restartServer(WatchSettingsActivity.this);
             }
         });
-        addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
-        addSwitch(I18nManager.get("download_share"), I18nManager.get("download_share_desc"), DownloadShare.isEnabled(), new SwitchHandler() {
-            public void onChanged(boolean v) { DownloadShare.setEnabled(v); }
+        addItem(I18nManager.get("port"), String.valueOf(prefs().getInt("port", 53317)), new View.OnClickListener() {
+            public void onClick(View v) { editPort(); }
         });
-        addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
+        addSwitch(I18nManager.get("web_enable"), I18nManager.get("web_enable_desc"), OldSendService.getPrefBooleanGlobal("web_enable", true), saveTo("web_enable"));
         addItem("▦ " + I18nManager.get("web_qr"), new View.OnClickListener() {
             public void onClick(View v) {
                 // 网页端二维码：电脑摄像头扫一下就能打开，不必在手表上抄地址
@@ -173,22 +168,26 @@ public class WatchSettingsActivity extends Activity {
                         "http://" + OldSendService.getLocalIp() + ":53317");
             }
         });
-        addItem(I18nManager.get("port") + ": " + prefs().getInt("port", 53317), new View.OnClickListener() {
-            public void onClick(View v) { editPort(); }
+        addSwitch(I18nManager.get("download_share"), I18nManager.get("download_share_desc"), DownloadShare.isEnabled(), new SwitchHandler() {
+            public void onChanged(boolean v) { DownloadShare.setEnabled(v); }
         });
+        addSwitch(I18nManager.get("auto_start"), I18nManager.get("auto_start_desc"), OldSendService.getPrefBooleanGlobal("auto_start", false), saveTo("auto_start"));
 
-
+        // ── 设备与安全：身份 → 口令（开关与取值相邻）→ 拦截规则 ──
         addSection(I18nManager.get("device_security"));
-        addItem(I18nManager.get("set_name") + ": " + OldSendService.getAlias(this), new View.OnClickListener() {
+        addItem(I18nManager.get("set_name"), OldSendService.getAlias(this), new View.OnClickListener() {
             public void onClick(View v) { editName(); }
         });
-        addItem(I18nManager.get("filter_ext_title") + ": " + OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new View.OnClickListener() {
+        addSwitch(I18nManager.get("use_pin"), I18nManager.get("use_pin_desc"), OldSendService.getPrefBooleanGlobal("use_pin", false), saveTo("use_pin"));
+        addItem(I18nManager.get("modify_pin"), prefs().getString("pin_code", org.watchsend.OldSendService.DEFAULT_PIN), new View.OnClickListener() {
+            public void onClick(View v) { editPin(); }
+        });
+        addItem(I18nManager.get("filter_ext_title"), OldSendService.getPrefStringGlobal("filter_ext", "exe,bat,cmd,vbs,sh"), new View.OnClickListener() {
             public void onClick(View v) { editFilter(); }
         });
         addItem(I18nManager.get("manage_acl"), new View.OnClickListener() {
             public void onClick(View v) { manageAcl(); }
         });
-
 
         // 极客模式 (Root/Shizuku)
         if (org.watchsend.util.ShellUtils.isRootAvailable() || org.watchsend.util.ShellUtils.isShizukuAvailable()) {
@@ -196,6 +195,7 @@ public class WatchSettingsActivity extends Activity {
             addSwitch(I18nManager.get("silent_install") + " (Beta)", I18nManager.get("silent_install_desc"), prefs().getBoolean("silent_install", false), saveTo("silent_install"));
         }
 
+        // ── 其他：不可逆操作与信息页 ──
         addSection(I18nManager.get("other"));
         addItem(I18nManager.get("backup"), new View.OnClickListener() {
             public void onClick(View v) { backupDialog(); }
@@ -296,7 +296,17 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         container.addView(row);
     }
 
+    /** 无当前值的入口行（备份、关于、二维码等），右侧只有箭头。 */
     private void addItem(String label, View.OnClickListener click) {
+        addItem(label, null, click);
+    }
+
+    /**
+     * 带当前值的入口行：标题 16sp + 当前值副行 12sp。
+     * 以前把值拼进标题（"设备名: 我的表"、"过滤扩展名: exe,bat,..."），
+     * 圆表 320px 宽下长值会折行把箭头挤掉，改为与开关行一致的上下两行。
+     */
+    private void addItem(String label, String value, View.OnClickListener click) {
         boolean isDark = ThemeUtils.isDarkMode(this);
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -308,11 +318,24 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         lp.bottomMargin = dp(8);
         row.setLayoutParams(lp);
 
+        LinearLayout textCol = new LinearLayout(this);
+        textCol.setOrientation(LinearLayout.VERTICAL);
+        textCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
         TextView tvTitle = new TextView(this);
         tvTitle.setText(label); tvTitle.setTextSize(16);
         tvTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
-        tvTitle.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        row.addView(tvTitle);
+        textCol.addView(tvTitle);
+
+        if (value != null && value.length() > 0) {
+            TextView tvValue = new TextView(this);
+            tvValue.setText(value); tvValue.setTextSize(12);
+            tvValue.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
+            tvValue.setPadding(0, dp(2), dp(6), 0);
+            tvValue.setMaxLines(2);
+            textCol.addView(tvValue);
+        }
+        row.addView(textCol);
 
         TextView arrow = new TextView(this);
         arrow.setText(">"); arrow.setTextSize(18);

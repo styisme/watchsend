@@ -79,28 +79,28 @@ Les réglages sont groupés comme ci-dessous. Les valeurs par défaut décrivent
 
 | Groupe | Option | Défaut | Effet |
 | --- | --- | --- | --- |
-| Général | Forme d’écran | Auto | Détecte montre ronde ou carrée, peut être forcée |
-| Général | Retrait du bas | Non | Remonte le contenu pour les montres rondes à menton, comme la Moto 360 |
-| Général | Couleur dynamique | Oui | Suit le fond d’écran ou le cadran (Android 12 et plus) |
-| Général | Mode faible performance | Auto | Réduit ou coupe les animations ; sans choix manuel, décidé par la mémoire libre et les cœurs |
-| Général | Suspendre le service inactif | Non | Après 3 minutes écran éteint, la réception se suspend pour économiser l’énergie et reprend au réveil ; un envoi entrant peut être manqué |
 | Général | Thème | Suivre le système | Suivre le système, forcer clair, forcer sombre |
 | Général | Langue | Suivre le système | 52 langues ; debug_keys en bas de liste affiche les clés brutes pour le diagnostic |
 | Général | Échelle de l’interface | Moyenne (1,0x) | Règle texte et contrôles entre 0,3x et 2,5x |
+| Général | Forme d’écran | Auto | Détecte montre ronde ou carrée, peut être forcée |
+| Général | Retrait du bas | Non | Remonte le contenu pour les montres rondes à menton, comme la Moto 360 |
+| Général | Couleur dynamique | Oui | Suit le fond d’écran ou le cadran (Android 12 et plus) |
 | Général | Activer le retour intégré | Oui | Oui bloque le retour système et utilise le glissement ; non rétablit le retour système et n’intercepte plus le glissement |
+| Général | Mode faible performance | Auto | Réduit ou coupe les animations ; sans choix manuel, décidé par la mémoire libre et les cœurs |
+| Général | Suspendre le service inactif | Non | Après 3 minutes écran éteint, la réception se suspend pour économiser l’énergie et reprend au réveil ; un envoi entrant peut être manqué |
 | Transfert | Enregistrement rapide | Demander chaque fois | Demander chaque fois, tout accepter, favoris seulement |
 | Transfert | Appareils favoris | Vide | Mémorise les appareils fréquents, combiné avec l’option précédente |
 | Transfert | Enregistrer en galerie | Oui | Place les photos et vidéos reçues dans la galerie |
 | Transfert | Enregistrer dans l’historique | Oui | Écrit le contenu reçu dans l’historique |
-| Transfert | Activer le PIN | Non | L’émetteur doit saisir le PIN avant d’envoyer |
-| Transfert | Modifier le PIN | 0000 | Quatre chiffres ; choisissez une valeur connue de vous seul |
 | Réseau et automatisation | Activer HTTPS | Non | Transfert en TLS ; les appareils anciens ne gèrent que TLS 1.0 et peuvent échouer |
+| Réseau et automatisation | Port | 53317 | Port du service ; après changement, émetteur et récepteur doivent correspondre |
 | Réseau et automatisation | Activer le transfert web | Oui | Autorise le navigateur à joindre l’adresse locale du service |
+| Réseau et automatisation | URL web | — | Affiche l’adresse et un QR code, lien copiable |
 | Réseau et automatisation | Partage de téléchargement | Non | Autorise les appareils du LAN à récupérer des fichiers du dossier local via LocalSend |
 | Réseau et automatisation | Démarrage automatique | Non | Démarre le service au boot ; adapté à un récepteur permanent |
-| Réseau et automatisation | URL web | — | Affiche l’adresse et un QR code, lien copiable |
-| Réseau et automatisation | Port | 53317 | Port du service ; après changement, émetteur et récepteur doivent correspondre |
 | Appareil et sécurité | Renommer l’appareil | Modèle | Nom vu par les autres appareils |
+| Appareil et sécurité | Activer le PIN | Non | L’émetteur doit saisir le PIN avant d’envoyer |
+| Appareil et sécurité | Modifier le PIN | 0000 | Quatre chiffres ; choisissez une valeur connue de vous seul |
 | Appareil et sécurité | Bloquer les extensions dangereuses | exe,bat,cmd,vbs,sh | Les fichiers portant ces extensions sont refusés |
 | Appareil et sécurité | Listes blanche et noire | Vide | Appui long sur un appareil pour le bloquer ou l’ajouter à la liste blanche |
 | Mode geek | Installation silencieuse (bêta) | Non | Installe automatiquement un APK reçu via Root ou Shizuku |
