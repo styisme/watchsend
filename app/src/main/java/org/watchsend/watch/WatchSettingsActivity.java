@@ -595,10 +595,8 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
 
     @Override
     public void onBackPressed() {
-        if (WatchUiUtils.isSystemBackBlocked(this)) {
-            Toast.makeText(this, I18nManager.get("swipe_back_toast"), Toast.LENGTH_SHORT).show();
-        } else {
-            super.onBackPressed();
-        }
+        // 开启“软件内返回”时吞掉返回键，交给界面内横滑退出；关闭时交回系统
+        if (org.watchsend.uikit.BackGate.handleBack(this)) return;
+        super.onBackPressed();
     }
 }

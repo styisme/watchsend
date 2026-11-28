@@ -7,7 +7,7 @@
 > La versión de reloj de OldSend. Conserva todas las capacidades de transferencia y reconstruye la interfaz para pantallas pequeñas y redondas como «rueda 3D» y tarjetas píldora, al estilo de Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.0-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.8.1-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -16,7 +16,7 @@
 
 ## 📦 Versión
 
-Versión actual: **v1.8.0**. 52 idiomas completos (357–358 entradas para los 10 idiomas base, 353 para el resto, 18.403 en total). Historial en [CHANGELOG.md](CHANGELOG.md).
+Versión actual: **v1.8.1**. 52 idiomas completos (357–358 entradas para los 10 idiomas base, 353 para el resto, 18.403 en total). Historial en [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

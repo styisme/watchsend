@@ -119,4 +119,11 @@ public class UikitPickerActivity extends Activity {
         if (UikitUi.handleSwipeBack(this, ev)) return true;
         return super.dispatchTouchEvent(ev);
     }
+
+    @Override
+    public void onBackPressed() {
+        // 开启“软件内返回”时吞掉返回键，交给界面内横滑退出；关闭时交回系统
+        if (org.watchsend.uikit.BackGate.handleBack(this)) return;
+        super.onBackPressed();
+    }
 }

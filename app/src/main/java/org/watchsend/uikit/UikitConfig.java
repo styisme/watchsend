@@ -139,13 +139,6 @@ public final class UikitConfig {
                 .commit();
     }
 
-    /** 兼容旧调用点：拦截系统返回 ⇔ 启用软件内返回。 */
-    public static boolean isSystemBackBlocked(Context ctx) {
-        return isSwipeBackEnabled(ctx);
-    }
-    public static void setSystemBackBlocked(Context ctx, boolean blocked) {
-        setSwipeBackEnabled(ctx, blocked);
-    }
     public static int getScreenShape(Context ctx) {
         return prefs(ctx).getInt(KEY_SCREEN_SHAPE, SHAPE_AUTO);
     }

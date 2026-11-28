@@ -110,8 +110,9 @@ public class WatchUiUtils {
 
     private static int dp(int val, Context ctx) { return (int)(val * ctx.getResources().getDisplayMetrics().density); }
 
+    /** 与设置页显示的值同源：未手设时由 UikitConfig 按设备能力自动判定。 */
     public static boolean isLowPerformance(Context ctx) {
-        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("low_perf_mode", false);
+        return org.watchsend.uikit.UikitConfig.isLowPerf(ctx);
     }
 
     public static void applyEntryAnimation(Activity activity) {
@@ -123,99 +124,13 @@ public class WatchUiUtils {
         root.animate().scaleX(1.0f).scaleY(1.0f).alpha(1.0f).setDuration(250).setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
     }
 
-    // ====== 滑动返回 ======
-    private static float startX = 0;
-    private static float startY = 0;
-    private static boolean isSwiping = false;
-
-    public static boolean handleSwipeBack(final Activity activity, android.view.MotionEvent ev) {
-        // 关闭"软件内返回"时，滑动不该被我们消费，交给系统手势/控件自己处理
-        if (!isSwipeBackEnabled(activity)) return false;
-        final View root = activity.findViewById(android.R.id.content);
-        final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
-
-        switch (ev.getAction()) {
-            case android.view.MotionEvent.ACTION_DOWN:
-                startX = ev.getX();
-                startY = ev.getY();
-                isSwiping = false;
-                break;
-
-            case android.view.MotionEvent.ACTION_MOVE:
-                float deltaX = ev.getX() - startX;
-                float deltaY = ev.getY() - startY;
-
-                if (isLowPerformance(activity)) {
-                    if (Math.abs(deltaX) > screenWidth / 4 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-                        activity.finish();
-                        return true;
-                    }
-                    break;
-                }
-
-                if (!isSwiping) {
-                    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
-                        isSwiping = true;
-                        if (android.os.Build.VERSION.SDK_INT >= 21) {
-                            root.setClipToOutline(true);
-                            root.setOutlineProvider(new android.view.ViewOutlineProvider() {
-                                @Override
-                                public void getOutline(android.view.View view, android.graphics.Outline outline) {
-                                    float radius = 40f * view.getContext().getResources().getDisplayMetrics().density;
-                                    outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
-                                }
-                            });
-                            root.setElevation(20f * activity.getResources().getDisplayMetrics().density);
-                        }
-                    }
-                }
-
-                if (isSwiping) {
-                    root.setTranslationX(deltaX);
-                    float scale = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.25f;
-                    root.setScaleX(scale);
-                    root.setScaleY(scale);
-                    float alpha = 1.0f - (Math.abs(deltaX) / (float) screenWidth) * 0.5f;
-                    root.setAlpha(alpha);
-                    return true;
-                }
-                break;
-
-            case android.view.MotionEvent.ACTION_UP:
-            case android.view.MotionEvent.ACTION_CANCEL:
-                if (isSwiping) {
-                    isSwiping = false;
-                    float finalDeltaX = ev.getX() - startX;
-
-                    if (Math.abs(finalDeltaX) > screenWidth / 4) {
-                        float targetX = finalDeltaX > 0 ? screenWidth : -screenWidth;
-                        root.animate().translationX(targetX).scaleX(0.5f).scaleY(0.5f).alpha(0f).setDuration(200).withEndAction(new Runnable() {
-                            public void run() {
-                                activity.finish();
-                                activity.overridePendingTransition(0, 0);
-                                root.setTranslationX(0);
-                                root.setScaleX(1f);
-                                root.setScaleY(1f);
-                                root.setAlpha(1f);
-                            }
-                        }).start();
-                    } else {
-                        root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
-                    }
-                    return true;
-                }
-                break;
-        }
-        return false;
+    // ====== 滑动返回（实现只有一份，在 uikit 里，这里只做包内转发） ======
+    public static boolean handleSwipeBack(Activity activity, android.view.MotionEvent ev) {
+        return org.watchsend.uikit.UikitUi.handleSwipeBack(activity, ev);
     }
 
-    /** 是否启用软件内返回（读取的是 UikitConfig 的新键，含老值迁移）。 */
+    /** 是否启用软件内返回（粗判用；页面内请直接问 BackGate）。 */
     public static boolean isSwipeBackEnabled(Context ctx) {
         return org.watchsend.uikit.UikitConfig.isSwipeBackEnabled(ctx);
-    }
-
-    /** 兼容旧调用点：拦截系统返回 ⇔ 启用软件内返回。 */
-    public static boolean isSystemBackBlocked(Context ctx) {
-        return isSwipeBackEnabled(ctx);
     }
 }

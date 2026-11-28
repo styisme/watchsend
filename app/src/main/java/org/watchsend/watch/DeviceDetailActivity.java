@@ -265,4 +265,18 @@ public class DeviceDetailActivity extends Activity {
             build();
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(android.view.MotionEvent ev) {
+        // 横滑返回与系统返回共用同一个开关，页面级统一挂载
+        if (org.watchsend.uikit.UikitUi.handleSwipeBack(this, ev)) return true;
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 开启“软件内返回”时吞掉返回键，交给界面内横滑退出；关闭时交回系统
+        if (org.watchsend.uikit.BackGate.handleBack(this)) return;
+        super.onBackPressed();
+    }
 }

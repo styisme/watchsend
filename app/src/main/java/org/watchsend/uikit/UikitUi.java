@@ -135,47 +135,65 @@ public final class UikitUi {
 
     private static float sStartX = 0, sStartY = 0;
     private static boolean sIsSwiping = false;
+    /** 起手点必须靠近左右边缘才算返回手势，避免列表里横向滑动误退页。 */
+    private static final int EDGE_DP = 16;
+
+    /**
+     * 界面内横滑返回：从左右边缘横向拖动超过约四分之一屏宽时退出当前页。
+     * 软件内返回关闭时直接返回 false，触摸事件交还控件与系统，不做任何消费。
+     */
     public static boolean handleSwipeBack(final Activity a, android.view.MotionEvent ev) {
-        if (!UikitConfig.isSwipeBackEnabled(a)) return false; // 软件内返回关闭时不消费触摸
         if (a == null) return false;
+        if (!UikitConfig.isSwipeBackEnabled(a)) return false;
         final View root = a.findViewById(android.R.id.content);
-        final int w = a.getResources().getDisplayMetrics().widthPixels;
         if (root == null) return false;
+        final int w = a.getResources().getDisplayMetrics().widthPixels;
+        final int edge = dp(EDGE_DP, a);
+
         switch (ev.getAction()) {
             case android.view.MotionEvent.ACTION_DOWN:
-                sStartX = ev.getX(); sStartY = ev.getY(); sIsSwiping = false; break;
+                sStartX = ev.getX(); sStartY = ev.getY(); sIsSwiping = false;
+                break;
+
             case android.view.MotionEvent.ACTION_MOVE:
+                if (sStartX > edge && sStartX < w - edge) break; // 非边缘起手，不认作返回手势
                 float dx = ev.getX() - sStartX;
                 float dy = ev.getY() - sStartY;
+
                 if (UikitConfig.isLowPerf(a)) {
-                    if (Math.abs(dx) > w/4 && Math.abs(dx) > Math.abs(dy)*1.5) { a.finish(); return true; }
+                    // 低性能模式不做跟手动画，够距离直接退，省掉一帧帧重绘
+                    if (Math.abs(dx) > w / 4 && Math.abs(dx) > Math.abs(dy) * 1.5) { a.finish(); return true; }
                     break;
                 }
-                if (!sIsSwiping && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)*1.5) sIsSwiping = true;
+
+                if (!sIsSwiping && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                    sIsSwiping = true;
+                    applySwipeOutline(root);
+                }
                 if (sIsSwiping) {
                     root.setTranslationX(dx);
-                    float s = 1f - (Math.abs(dx)/(float)w)*0.25f;
+                    float s = 1f - (Math.abs(dx) / (float) w) * 0.25f;
                     root.setScaleX(s); root.setScaleY(s);
-                    root.setAlpha(1f - (Math.abs(dx)/(float)w)*0.5f);
+                    root.setAlpha(1f - (Math.abs(dx) / (float) w) * 0.5f);
                     return true;
                 }
                 break;
+
             case android.view.MotionEvent.ACTION_UP:
             case android.view.MotionEvent.ACTION_CANCEL:
                 if (sIsSwiping) {
                     sIsSwiping = false;
                     float fx = ev.getX() - sStartX;
-                    if (Math.abs(fx) > w/4) {
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            float tx = fx > 0 ? w : -w;
-                            root.animate().translationX(tx).scaleX(0.5f).scaleY(0.5f).alpha(0f)
-                                .setDuration(200).withEndAction(new Runnable() {
-                                    @Override public void run() {
-                                        a.finish();
-                                        a.overridePendingTransition(0, 0);
-                                    }
-                                }).start();
-                        } else { a.finish(); }
+                    if (Math.abs(fx) > w / 4) {
+                        float tx = fx > 0 ? w : -w;
+                        root.animate().translationX(tx).scaleX(0.5f).scaleY(0.5f).alpha(0f)
+                            .setDuration(200).withEndAction(new Runnable() {
+                                @Override public void run() {
+                                    a.finish();
+                                    a.overridePendingTransition(0, 0);
+                                    resetSwipe(root); // 页面可能被复用（singleTop / 返回栈），复位后再交还
+                                }
+                            }).start();
                     } else {
                         root.animate().translationX(0).scaleX(1f).scaleY(1f).alpha(1f).setDuration(200).start();
                     }
@@ -185,11 +203,26 @@ public final class UikitUi {
         }
         return false;
     }
-    public static boolean isSwipeBackEnabled(Context ctx) {
-        return UikitConfig.isSwipeBackEnabled(ctx);
+
+    /** 拖动中的卡片外观：圆角 + 抬高投影，和主界面原来的观感保持一致。 */
+    private static void applySwipeOutline(final View root) {
+        if (Build.VERSION.SDK_INT < 21) return;
+        root.setClipToOutline(true);
+        root.setOutlineProvider(new android.view.ViewOutlineProvider() {
+            @Override public void getOutline(android.view.View view, android.graphics.Outline outline) {
+                float radius = 40f * view.getContext().getResources().getDisplayMetrics().density;
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+            }
+        });
+        root.setElevation(20f * root.getContext().getResources().getDisplayMetrics().density);
     }
-    /** 兼容旧调用点。 */
-    public static boolean isSystemBackBlocked(Context ctx) {
+
+    private static void resetSwipe(final View root) {
+        root.setTranslationX(0);
+        root.setScaleX(1f); root.setScaleY(1f); root.setAlpha(1f);
+    }
+
+    public static boolean isSwipeBackEnabled(Context ctx) {
         return UikitConfig.isSwipeBackEnabled(ctx);
     }
     private static int dp(int v, Context ctx) {

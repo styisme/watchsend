@@ -4,6 +4,28 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.8.1] - 2026-11-28
+
+### Fixed
+- **软件内返回此前只覆盖 5 个页面**：17 个 Activity 里只有 MainActivity、TransferActivity、CrossNetActivity、SelectListActivity、WatchSettingsActivity 拦了返回键，uikit 的 8 个全屏页与设备详情、PIN 键盘、已选文件、网页二维码共 12 个页面在开关开启时按返回仍会直接退出，和设置项“开启后禁用系统返回”的说明不符。新增 `uikit/BackGate`，全部 17 个页面统一调用 `BackGate.handleBack()`：开启时吞掉返回并提示横滑，关闭时原样交回系统。4 个此前连滑动都没挂的页面（设备详情、PIN 键盘、已选文件、网页二维码）一并补上 `dispatchTouchEvent` 手势。
+- **两页提示写死中文**：`CrossNetActivity` 与 `SelectListActivity` 曾硬编码“请滑动屏幕返回”，日、韩、俄等语言界面下会突然蹦中文。现统一走 `swipe_back_toast` 词条（52 个语言包齐备），并加 800ms 节流，连按返回不会把 Toast 刷成一串。
+- **潜在空指针**：`UikitUi.handleSwipeBack()` 里 `a == null` 判断排在读配置之后，传入空 Activity 会先崩在 `isSwipeBackEnabled(a)`；判断已提到最前。
+- **低性能判定两套标准**：`WatchUiUtils.isLowPerformance()` 直接读 `low_perf_mode` 原始值、缺省 false，没走 `UikitConfig.isLowPerf()` 按内存与核心数的自动判定，导致自动判为低性能的设备上仍走 250ms 跟手动画。现两处同源。
+
+### Changed
+- **滑动返回实现合并为一份**：`WatchUiUtils` 与 `UikitUi` 各有一套手势代码，圆角、投影、复位只有前一套有，同一手势在两个页面族观感不一样。现统一到 `UikitUi.handleSwipeBack()`（圆角 + 投影 + 结束后复位），`WatchUiUtils.handleSwipeBack()` 只做转发。
+- **起手点限定在边缘**：必须在左右边缘 16dp 内起手才认作返回手势，列表里横向滑动不再误退页；低性能快退路径同样受此限制。
+- **删除反义旧名**：移除 `isSystemBackBlocked()` 的三个副本与 5 处调用点，`setSystemBackBlocked()`（无调用死代码）一并删除。旧键 `block_system_back` 仍随写入回写取反值，降级到 1.7.12 行为不变。
+
+### Docs
+- 10 份 README 徽章与“当前版本”行、10 份用户指南的适用版本行同步到 1.8.1（versionCode 10801）。
+- 中、繁、英三份指南的滑动返回段改写：说明起手点在边缘 16dp 内，并明确“全部页面统一遵循”，不再需要按页记忆哪页能用返回键。
+
+### Verified
+- `gradle assembleDebug` 通过（JDK8 / build-tools 30.0.3）。
+- `javap` 逐个核对 17 个 Activity 类，全部同时具备 `onBackPressed()` 与 `dispatchTouchEvent()`，无遗漏；`请滑动屏幕返回` 硬编码残留 0 处（仅剩词条定义）。
+- 未在真机验证（云主机无 KVM、无 X11），边缘起手阈值与跟手手感以装机为准。
+
 ## [1.8.0] - 2026-11-28
 
 ### Added
