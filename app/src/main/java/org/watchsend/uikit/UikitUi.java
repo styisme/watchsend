@@ -136,6 +136,7 @@ public final class UikitUi {
     private static float sStartX = 0, sStartY = 0;
     private static boolean sIsSwiping = false;
     public static boolean handleSwipeBack(final Activity a, android.view.MotionEvent ev) {
+        if (!UikitConfig.isSwipeBackEnabled(a)) return false; // 软件内返回关闭时不消费触摸
         if (a == null) return false;
         final View root = a.findViewById(android.R.id.content);
         final int w = a.getResources().getDisplayMetrics().widthPixels;
@@ -184,8 +185,12 @@ public final class UikitUi {
         }
         return false;
     }
+    public static boolean isSwipeBackEnabled(Context ctx) {
+        return UikitConfig.isSwipeBackEnabled(ctx);
+    }
+    /** 兼容旧调用点。 */
     public static boolean isSystemBackBlocked(Context ctx) {
-        return UikitConfig.isSystemBackBlocked(ctx);
+        return UikitConfig.isSwipeBackEnabled(ctx);
     }
     private static int dp(int v, Context ctx) {
         return (int)(v * ctx.getResources().getDisplayMetrics().density);

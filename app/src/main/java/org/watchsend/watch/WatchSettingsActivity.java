@@ -130,7 +130,11 @@ public class WatchSettingsActivity extends Activity {
         });
 
         // 拦截系统返回
-        addSwitch(I18nManager.get("block_system_back"), I18nManager.get("block_system_back_desc"), prefs().getBoolean("block_system_back", true), saveTo("block_system_back"));
+        // 语义：开启 → 禁用系统返回、改用界面内滑动返回；关闭 → 系统返回照常、滑动返回不接管
+        addSwitch(I18nManager.get("swipe_back"), I18nManager.get("swipe_back_desc"),
+                UikitConfig.isSwipeBackEnabled(this), new SwitchHandler() {
+                    public void onChanged(boolean v) { UikitConfig.setSwipeBackEnabled(WatchSettingsActivity.this, v); }
+                });
 
 
         addSection(I18nManager.get("transfer_settings"));

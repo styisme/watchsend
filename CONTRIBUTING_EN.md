@@ -258,7 +258,7 @@ A: It covers both UI and transport: all animation durations collapse to zero thr
 A: In Settings -> Language list, scroll to the bottom and select `debug_keys`. The UI will directly display the raw keys instead of translated text, making it extremely fast to locate missing translations or layout overflow issues.
 
 **Q: Swipe back gesture conflicts with system back / freezes?**
-A: Check if the "Block System Back" switch is enabled in Settings. Internally, we intercept native back via `onBackPressed()` and delegate everything to `WatchUiUtils.handleSwipeBack()`.
+A: The switch is now worded positively as "Enable In-App Back". On: `onBackPressed()` intercepts native back and delegates to `WatchUiUtils.handleSwipeBack()`. Off: native back behaves normally and `handleSwipeBack()` returns `false` immediately without consuming touches. The legacy `block_system_back` key is migrated to `swipe_back_enabled` on first read.
 
 **Q: After enabling round screen optimization, the top title bar disappears, how to go back?**
 A: This is intentional for an immersive experience. When round screen optimization is on, it relies on **swiping to go back**. If swiping fails, check if the `handleSwipeBack` event in `WatchUiUtils` is being over-consumed by internal controls on the current page (like a horizontal ScrollView).

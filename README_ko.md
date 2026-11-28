@@ -5,7 +5,7 @@
 > OldSend의 웨어러블 진화판. 강력한 전송 기능은 그대로 두고 UI를 Wear OS 네이티브 "3D 휠"과 "필 카드"로 다시 설계했습니다. 작은 화면과 원형 디스플레이를 위해.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -14,7 +14,7 @@
 
 ## 📦 버전
 
-현재 버전: **v1.7.12**. 52개 언어 전량(언어당 353개, 총 18,363개 항목). 전체 이력은 [CHANGELOG.md](CHANGELOG.md).
+현재 버전: **v1.7.13**. 52개 언어 전량(10개 기본 언어 357–358개, 나머지 353개, 총 18,403개 항목). 전체 이력은 [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -34,7 +34,7 @@
 
 ### 🎨 UI와 언어
 - 물리 수준 UI 배율(0.3x~2.5x), 3단 테마, Android 12+ 다이내믹 컬러, 3D 휠, 원형 화면 최적화, 스와이프 뒤로.
-- **52개 언어 전량**: 언어당 353개 현지화 문구, 원시 키 없음. 1.7.12에서 추가한 4개 문구는 10개 기본 언어에 반영, 나머지는 영어로 대체.
+- **52개 언어 전량**: 언어당 353개 이상 현지화 문구, 총 18,403개, 원시 키 없음. 1.7.13의 "앱 내 뒤로 사용" 2개 문구는 52개 언어 전체에 반영. 1.7.12의 4개는 10개 기본 언어만.
 - **언어 팩 지연 로딩**: 시작 시 기본 팩만 적재, 나머지는 언어 확정 후 한 번만 생성(약 1MB 힙과 콜드 스타트 시간 절약). 자세히는 [언어 가이드](docs/LANGUAGES.md).
 - **Wear-Uikit**: 순수 Java 위젯 44개＋전체 화면 컨테이너 6개, 외부 의존성 없음.
 

@@ -129,6 +129,8 @@ public class WatchUiUtils {
     private static boolean isSwiping = false;
 
     public static boolean handleSwipeBack(final Activity activity, android.view.MotionEvent ev) {
+        // 关闭"软件内返回"时，滑动不该被我们消费，交给系统手势/控件自己处理
+        if (!isSwipeBackEnabled(activity)) return false;
         final View root = activity.findViewById(android.R.id.content);
         final int screenWidth = activity.getResources().getDisplayMetrics().widthPixels;
 
@@ -207,7 +209,13 @@ public class WatchUiUtils {
         return false;
     }
 
+    /** 是否启用软件内返回（读取的是 UikitConfig 的新键，含老值迁移）。 */
+    public static boolean isSwipeBackEnabled(Context ctx) {
+        return org.watchsend.uikit.UikitConfig.isSwipeBackEnabled(ctx);
+    }
+
+    /** 兼容旧调用点：拦截系统返回 ⇔ 启用软件内返回。 */
     public static boolean isSystemBackBlocked(Context ctx) {
-        return ctx.getSharedPreferences("oldsend", Context.MODE_PRIVATE).getBoolean("block_system_back", true);
+        return isSwipeBackEnabled(ctx);
     }
 }

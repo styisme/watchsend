@@ -5,7 +5,7 @@
 > The watch evolution of OldSend. Retaining all hardcore transfer capabilities, the UI has been completely reshaped into Wear OS native "3D Wheel" and "Pill Cards", designed for small and round screens.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -19,7 +19,7 @@
 ---
 
 ## 📦 Version & Origin
-Current Version: **v1.7.12**.
+Current Version: **v1.7.13**. 52 languages complete (357–358 entries for the 10 base languages, 353 for the rest, 18,403 in total). See [CHANGELOG.md](CHANGELOG.md) for history.
 
 This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). Core protocols, HTTP server, and cross-network features are inherited from OldSend, while the UI and package name (`org.watchsend`) are completely rewritten.
 
@@ -50,7 +50,7 @@ This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). 
 - **3D Wheel Effect**: Cards scale down and fade out at the edges while scrolling.
 - **Round Screen Optimization**: Dynamic paddings to prevent text cutoff.
 - **Predictive Back**: Simulates system-level predictive back animations.
-- **52 Languages, Fully Translated**: 353 entries per language, 18,363 strings in total, no mixed-language UI and no raw keys. The 4 strings added in 1.7.12 cover the 10 base languages and fall back to English elsewhere.
+- **52 Languages, Fully Translated**: at least 353 localized entries per language, 18,403 strings in total, no raw keys. The two "Enable In-App Back" strings in 1.7.13 cover all 52 languages; the four strings from 1.7.12 still cover only the 10 base languages.
 - **Per-need Language Loading**: Only base packs (en / zh …) are built at startup; the rest are built once when the active language is known, saving roughly 1MB of heap and some cold-start time. See [Language Guide](docs/LANGUAGES_EN.md).
 - **Wear-Uikit Library (v1.5.0)**: 44 dependency-free native Java widgets (buttons, switches, sliders, steppers, progress rings, skeletons, bottom sheets, ...) plus 6 fullscreen containers, with theme and dynamic color driven by `UikitTheme`.
 

@@ -258,7 +258,7 @@ A: 它同时作用于 UI 与传输：动画时长统一由 `UikitConfig.animDura
 A: 在设置 -> 语言列表中，滑到最底部选择 `debug_keys`。全界面文字将直接显示原始 Key，极速定位排版溢出或漏翻问题。
 
 **Q: 滑动返回手势与系统返回冲突 / 卡死？**
-A: 请检查设置页的“拦截系统返回”开关是否开启。在底层，我们通过 `onBackPressed()` 拦截了系统原生返回，统一交由 `WatchUiUtils.handleSwipeBack()` 处理。
+A: 设置页的开关已改为正向语义“启用软件内返回”。开启时：`onBackPressed()` 拦截系统原生返回，统一交由 `WatchUiUtils.handleSwipeBack()` 处理；关闭时：系统返回恢复默认行为，`handleSwipeBack()` 在入口直接返回 `false`，不再消费触摸事件。历史配置键 `block_system_back` 会在首次读取时自动迁移到新键 `swipe_back_enabled`。
 
 **Q: 开启了圆屏优化后，顶部标题栏消失，怎么返回？**
 A: 这是刻意设计的沉浸式体验。在开启圆屏优化时，依赖**滑动屏幕返回**。如果滑动失效，请检查 `WatchUiUtils` 中的 `handleSwipeBack` 事件是否被当前页面的内部控件（如横向的 ScrollView）过度消费。

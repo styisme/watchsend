@@ -5,7 +5,7 @@
 > La versión de reloj de OldSend. Conserva todas las capacidades de transferencia y reconstruye la interfaz para pantallas pequeñas y redondas como «rueda 3D» y tarjetas píldora, al estilo de Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -14,7 +14,7 @@
 
 ## 📦 Versión
 
-Versión actual: **v1.7.12**. 52 idiomas completos (353 entradas por idioma, 18.363 en total). Historial en [CHANGELOG.md](CHANGELOG.md).
+Versión actual: **v1.7.13**. 52 idiomas completos (357–358 entradas para los 10 idiomas base, 353 para el resto, 18.403 en total). Historial en [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -34,7 +34,7 @@ Versión actual: **v1.7.12**. 52 idiomas completos (353 entradas por idioma, 18.
 
 ### 🎨 Interfaz e idiomas
 - Escalado físico de la UI (0,3x–2,5x), tema de tres estados, color dinámico en Android 12+, rueda 3D, adaptación a pantalla redonda, gesto de volver.
-- **52 idiomas completos**: 353 entradas localizadas por idioma, sin claves crudas. Los 4 textos nuevos de 1.7.12 están traducidos en los 10 idiomas base; el resto cae en inglés.
+- **52 idiomas completos**: al menos 353 entradas localizadas por idioma, 18.403 en total, sin claves crudas. Los dos textos "Activar retroceso interno" de 1.7.13 cubren los 52 idiomas; los cuatro de 1.7.12 siguen limitados a los 10 base.
 - **Carga de idiomas bajo demanda**: al arrancar solo los paquetes base, el resto se construye una vez conocida la lengua (ahorra ~1 MB de heap y tiempo de arranque). Ver [guía de idiomas](docs/LANGUAGES.md).
 - **Wear-Uikit**: 44 widgets Java nativos + 6 contenedores a pantalla completa, sin dependencias externas.
 

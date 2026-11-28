@@ -12,6 +12,9 @@ public final class UikitConfig {
     public static final String KEY_UI_SCALE          = "ui_scale";
     public static final String KEY_DYNAMIC_COLOR     = "dynamic_color";
     public static final String KEY_LOW_PERF          = "low_perf_mode";
+    /** 软件内（滑动）返回：开关语义从"拦截系统返回"翻转而来，存独立的键，老用户的值自动迁移。 */
+    public static final String KEY_SWIPE_BACK         = "swipe_back_enabled";
+    /** 旧键，仅用于把历史设置迁移到 KEY_SWIPE_BACK；新代码不要再读写它。 */
     public static final String KEY_BLOCK_SYSTEM_BACK = "block_system_back";
     public static final String KEY_SCREEN_SHAPE      = "screen_shape";
     public static final String KEY_CHIN_PADDING      = "chin_padding";
@@ -115,11 +118,33 @@ public final class UikitConfig {
     public static void setLowPerf(Context ctx, boolean low) {
         prefs(ctx).edit().putBoolean(KEY_LOW_PERF, low).commit();
     }
+    /**
+     * 是否启用"软件内返回"（界面内滑动退出）。
+     * true：禁用系统返回，统一由滑动返回处理；false：系统返回照常，滑动返回不接管。
+     * 老版本只有反义的 block_system_back，首次读取时迁移一次并落到新键。
+     */
+    public static boolean isSwipeBackEnabled(Context ctx) {
+        SharedPreferences p = prefs(ctx);
+        if (p.contains(KEY_SWIPE_BACK)) return p.getBoolean(KEY_SWIPE_BACK, true);
+        boolean enabled = p.getBoolean(KEY_BLOCK_SYSTEM_BACK, true);
+        p.edit().putBoolean(KEY_SWIPE_BACK, enabled).apply();
+        return enabled;
+    }
+
+    public static void setSwipeBackEnabled(Context ctx, boolean enabled) {
+        prefs(ctx).edit()
+                .putBoolean(KEY_SWIPE_BACK, enabled)
+                // 同时写回旧键：若用户降级回 1.7.12，行为与这里保持一致
+                .putBoolean(KEY_BLOCK_SYSTEM_BACK, !enabled)
+                .commit();
+    }
+
+    /** 兼容旧调用点：拦截系统返回 ⇔ 启用软件内返回。 */
     public static boolean isSystemBackBlocked(Context ctx) {
-        return prefs(ctx).getBoolean(KEY_BLOCK_SYSTEM_BACK, true);
+        return isSwipeBackEnabled(ctx);
     }
     public static void setSystemBackBlocked(Context ctx, boolean blocked) {
-        prefs(ctx).edit().putBoolean(KEY_BLOCK_SYSTEM_BACK, blocked).commit();
+        setSwipeBackEnabled(ctx, blocked);
     }
     public static int getScreenShape(Context ctx) {
         return prefs(ctx).getInt(KEY_SCREEN_SHAPE, SHAPE_AUTO);

@@ -5,7 +5,7 @@
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -26,7 +26,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.7.12**。
+当前版本：**v1.7.13**。52 种语言全量（10 个基础语种 357–358 条，其余 353 条，共 18,403 条词条）。完整历史见 [CHANGELOG.md](CHANGELOG.md)。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 
@@ -59,7 +59,7 @@
 - **3D 滚轮特效**：上下滑动时，边缘卡片自动缩小并降低透明度，还原原生物理滚轮感。
 - **圆屏沉浸优化**：一键开启后，界面自动向内收缩，避免文字与按钮被圆形表盘切割。
 - **跟手滑动返回 & 预测性返回**：支持全局滑动退出，卡片缩小浮起，模拟系统级 Predictive Back 动画。
-- **52 种语言全部全量**：每种 353 条词条均为本地译文，共 18,363 条，界面不再出现中英混排，也不会出现裸 key。1.7.12 新增的 4 条文案已覆盖 10 个基础语种，其余语种按既有策略回退英文。
+- **52 种语言全部全量**：各语种 353 条以上本地译文，共 18,403 条，界面不出现裸 key。1.7.13 的"启用软件内返回"两条文案已覆盖全部 52 个语种；1.7.12 的 4 条仍限于 10 个基础语种。
 - **语言包按需加载**：启动只装 en / zh 等基础包，其余在当前语言确定后构建一次，省下约 1MB 堆与冷启动时间。
 - **传输限速省电**：低性能模式 2 MB/s，电量低于 15% 且未充电时 512 KB/s，发送与接收两侧同时生效。
 - **熄屏空闲暂停服务（默认关闭）**：开启后熄屏 3 分钟暂停 HTTP/组播监听，亮屏自动恢复；有传输在进行时自动顺延，不会掐断文件。

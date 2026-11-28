@@ -5,7 +5,7 @@
 > OldSend 的手錶進化版。保留全部硬核傳輸能力，將 UI 徹底重塑為 Wear OS 原生的「3D 滾輪」與「藥丸卡片」形態，為小螢幕與圓錶盤而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -14,7 +14,7 @@
 
 ## 📦 版本
 
-目前版本：**v1.7.12**。52 種語言全量（每種 353 條，共 18,363 條詞條）。完整歷史見 [CHANGELOG.md](CHANGELOG.md)。
+目前版本：**v1.7.13**。52 種語言全量（10 個基礎語種 357–358 條，其餘 353 條，共 18,403 條詞條）。完整歷史見 [CHANGELOG.md](CHANGELOG.md)。
 
 ---
 
@@ -35,7 +35,7 @@
 
 ### 🎨 UI 與多語言
 - 物理級 UI 縮放（0.3x～2.5x）、三態主題、Android 12+ 動態取色、3D 滾輪、圓屏沉浸優化、跟手滑動返回。
-- **52 種語言全量**：每種 353 條本地譯文，無裸 key。1.7.12 新增的 4 條文案已覆蓋 10 個基礎語種，其餘語種回退英文。
+- **52 種語言全量**：各語種 353 條以上本地譯文，共 18,403 條，無裸 key。1.7.13 的「啟用軟體內返回」兩條文案已覆蓋全部 52 個語種；1.7.12 的 4 條仍限於 10 個基礎語種。
 - **語言包按需載入**：啟動僅載入基礎包，其餘於語言確定後建一次，節省約 1MB 堆與冷啟動時間。詳見 [多語言使用指南](docs/LANGUAGES.md)。
 - **Wear-Uikit**：44 個純 Java 原生控件 + 6 個全螢幕容器，零第三方依賴。
 

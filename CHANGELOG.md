@@ -4,6 +4,26 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.7.13] - 2026-11-28
+
+### Changed
+- **"拦截系统返回"改为正向语义"启用软件内返回"**：设置页的开关现在直接回答"要不要用 App 内的返回方式"。开启 = 禁用系统返回，返回动作由界面内滑动手势接管；关闭 = 系统返回照常工作，同时滑动返回不再接管触摸。原来的双重否定（"拦截系统返回"开/关）容易让人反着理解，尤其和"滑动返回"摆在同一页时。
+- **滑动返回补上开关闸门**：`WatchUiUtils.handleSwipeBack()` 与 `UikitUi.handleSwipeBack()` 入口新增 `isSwipeBackEnabled()` 判断，关闭后直接 `return false`，触摸事件交还给控件与系统，不再出现"已经关掉却还能滑走"的情况。
+- **配置键迁移**：新键 `swipe_back_enabled`（`UikitConfig.KEY_SWIPE_BACK`），首次读取时若不存在则读取旧键 `block_system_back` 的布尔值并写回，老用户升级后行为不变（原来开拦截的仍是滑动返回，原来关拦截的仍是系统返回）。写入时同时回写旧键的取反值，方便回退到 1.7.12 时行为一致。`isSystemBackBlocked()` 保留为兼容别名，四个 Activity 的 `onBackPressed()` 调用点无需改动。
+- **52 个语种全部补齐新文案**：`swipe_back` / `swipe_back_desc` 在 52 个语言包里都写了本地译文（不是只翻 10 个基础语种再回退英文），并删除了旧的 `block_system_back` / `block_system_back_desc` 两条反义词条，词条总量维持 18,403 条不变。
+
+### Docs
+- 10 份 README 的版本徽章与版本说明同步到 1.7.13；语言统计从"每种 353 条、共 18,363 条"更正为实测值：10 个基础语种 357–358 条（多出 1.7.12 只翻了基础语种的 4 条）、其余 42 个语种 353 条，合计 18,403 条。
+- `docs/LANGUAGES.md` / `docs/LANGUAGES_EN.md` 更新同一组数字，并在语言清单表后加了"条目数为何不同"的脚注。
+- `CONTRIBUTING.md` / `CONTRIBUTING_EN.md` 的返回键 FAQ 改写为新语义，说明迁移逻辑。
+
+### Verified
+- `gradle assembleDebug` 通过（JDK8 / build-tools 30.0.3，无第三方依赖变化）。
+- 桌面 JVM 反射校验：`langCount=53`、`dict=52`、全量加载 18,403 条；52 个包均含 `swipe_back` / `swipe_back_desc`，`block_system_back` 残留 0 处。
+- 未在真机/模拟器验证（云主机无 KVM、无 X11），手势行为仅到静态与编译级确认。
+
+---
+
 ## [Unreleased]
 
 ### Planned

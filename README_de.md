@@ -5,7 +5,7 @@
 > Die Wearable-Version von OldSend. Alle Übertragungsfunktionen bleiben, die Oberfläche wurde für kleine und runde Displays als Wear-OS-natives „3D-Wheel“ mit Pillen-Karten neu gebaut.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -14,7 +14,7 @@
 
 ## 📦 Version
 
-Aktuell: **v1.7.12**. 52 Sprachen vollständig (353 Einträge je Sprache, 18.363 insgesamt). Verlauf in [CHANGELOG.md](CHANGELOG.md).
+Aktuell: **v1.7.13**. 52 Sprachen vollständig (357–358 Einträge für die 10 Basissprachen, 353 für die übrigen, 18.403 insgesamt). Verlauf in [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -34,7 +34,7 @@ Aktuell: **v1.7.12**. 52 Sprachen vollständig (353 Einträge je Sprache, 18.363
 
 ### 🎨 UI und Sprachen
 - Physische UI-Skalierung (0,3x–2,5x), Drei-Zustands-Theme, Dynamic Color ab Android 12, 3D-Wheel, Runddisplay-Optimierung, Swipe-Zurück.
-- **52 Sprachen vollständig**: 353 lokalisierte Einträge je Sprache, keine rohen Keys. Die 4 neuen Texte aus 1.7.12 sind in den 10 Basissprachen übersetzt, sonst englischer Fallback.
+- **52 Sprachen vollständig**: mindestens 353 lokalisierte Einträge je Sprache, 18.403 insgesamt, keine rohen Keys. Die zwei Texte zu „In-App-Zurück aktivieren" aus 1.7.13 decken alle 52 Sprachen ab; die vier aus 1.7.12 nur die 10 Basissprachen.
 - **Sprachpakete auf Abruf**: beim Start nur Basispakete, der Rest einmalig nach Sprachwahl (spart ca. 1 MB Heap und Kaltstartzeit). Siehe [Sprachleitfaden](docs/LANGUAGES.md).
 - **Wear-Uikit**: 44 reine Java-Widgets + 6 Vollbild-Container, keine Fremdabhängigkeiten.
 

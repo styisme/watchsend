@@ -2,7 +2,7 @@
 
 This document explains the language coverage of WatchSend, how to switch languages, how missing strings fall back, and where to change things when adding a language or a single string.
 
-> Short version: **the app supports 52 languages with 353 entries each (18,363 strings in total); the web frontend (WebShare) supports 10 languages. They are two different sets, not one number.**
+> Short version: **the app supports 52 languages — 357–358 entries for the 10 base languages and 353 for the other 42, 18,403 strings in total; the web frontend (WebShare) supports only 10 languages. They are two different sets, not one number.**
 
 ---
 
@@ -10,7 +10,7 @@ This document explains the language coverage of WatchSend, how to switch languag
 
 | Surface | Languages | Entries | Implementation | How to switch |
 | --- | --- | --- | --- | --- |
-| App UI (watch) | 52 | 353 per language, 18,363 total | `I18nManager` (Java string table, lazily loaded) | Settings → Language, or follow system |
+| App UI (watch) | 52 | 353–358 per language, 18,403 total | `I18nManager` (Java string table, lazily loaded) | Settings → Language, or follow system |
 | Web frontend (WebShare) | 10 | about 30 strings | JS dictionary inside `assets/index.html` | Detects browser language; a dropdown is also available |
 
 The web frontend intentionally ships 10 languages (zh / zh_TW / en / ja / ko / de / fr / es / ru / pt) because it is a small throwaway browser page; the 52-language set belongs to the app. Older READMEs merged these two numbers into one claim, which was corrected during the 1.7.12 documentation review.
@@ -30,16 +30,18 @@ The web frontend intentionally ships 10 languages (zh / zh_TW / en / ja / ko / d
 
 | Language | Code | Entries | Origin |
 | --- | --- | --- | --- |
-| 简体中文 | `zh` | 353 | Hand-maintained, full |
-| 繁體中文 | `zh_TW` | 353 | Hand-maintained, full |
-| English | `en` | 353 | Hand-maintained, full (fallback language) |
-| 日本語 | `ja` | 354 | Hand-maintained, full |
-| 한국어 | `ko` | 354 | Hand-maintained, full |
-| Deutsch | `de` | 354 | Hand-maintained, full |
-| Français | `fr` | 354 | Hand-maintained, full |
-| Español | `es` | 354 | Hand-maintained, full |
-| Русский | `ru` | 354 | Hand-maintained, full |
-| Português | `pt` | 354 | Hand-maintained, full |
+| 简体中文 | `zh` | 357 | Hand-maintained, full |
+| 繁體中文 | `zh_TW` | 357 | Hand-maintained, full |
+| English | `en` | 357 | Hand-maintained, full (fallback language) |
+| 日本語 | `ja` | 358 | Hand-maintained, full |
+| 한국어 | `ko` | 358 | Hand-maintained, full |
+| Deutsch | `de` | 358 | Hand-maintained, full |
+| Français | `fr` | 358 | Hand-maintained, full |
+| Español | `es` | 358 | Hand-maintained, full |
+| Русский | `ru` | 358 | Hand-maintained, full |
+| Português | `pt` | 358 | Hand-maintained, full |
+
+> Why the entry counts differ: the 10 base languages (zh / zh_TW / en / ja / ko / de / fr / es / ru / pt) carry 4 extra strings added in 1.7.12 that were translated for base languages only. The two "Enable In-App Back" strings (`swipe_back` / `swipe_back_desc`) added in 1.7.13 exist in all 52 languages, and the two obsolete `block_system_back` keys were removed, so the total stays at 18,403.
 | Italiano | `it` | 353 | Hand-maintained, full |
 | Nederlands | `nl` | 353 | Hand-maintained, full |
 | Polski | `pl` | 353 | Hand-maintained, full |

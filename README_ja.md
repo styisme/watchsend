@@ -5,7 +5,7 @@
 > OldSend のウェアラブル進化版。硬核な転送機能はそのままに、UI を Wear OS ネイティブの「3D ホイール」と「ピル型カード」に作り直しました。小型画面と丸い文字盤のために。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.7.13-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -14,7 +14,7 @@
 
 ## 📦 バージョン
 
-現在のバージョン：**v1.7.12**。52 言語すべて全量（各 353 項目、合計 18,363 項目）。履歴は [CHANGELOG.md](CHANGELOG.md) を参照。
+現在のバージョン：**v1.7.13**。52 言語すべて全量（10 の基本言語は 357〜358 項目、その他は 353 項目、合計 18,403 項目）。履歴は [CHANGELOG.md](CHANGELOG.md) を参照。
 
 ---
 
@@ -34,7 +34,7 @@
 
 ### 🎨 UI と言語
 - 物理レベルの UI スケーリング（0.3x〜2.5x）、3 状態テーマ、Android 12+ のダイナミックカラー、3D ホイール、丸画面最適化、スワイプバック。
-- **52 言語すべて全量**：各 353 項目のローカライズ済み文言、生キーなし。1.7.12 で追加した 4 項目は 10 の基本言語に翻訳済み、その他は英語にフォールバック。
+- **52 言語すべて全量**：各言語 353 項目以上のローカライズ済み文言、生キーなし。1.7.13 の「アプリ内戻るを有効化」2 項目は 52 言語すべてに反映。1.7.12 の 4 項目は 10 の基本言語のみ。
 - **言語パックの遅延読み込み**：起動時は基本パックのみ、残りは言語確定後に一度だけ構築（約 1MB のヒープと起動時間を節約）。詳細は [言語ガイド](docs/LANGUAGES.md)。
 - **Wear-Uikit**：純 Java 製 44 ウィジェット＋6 全画面コンテナ、外部依存ゼロ。
 

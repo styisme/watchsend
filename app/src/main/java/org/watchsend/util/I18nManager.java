@@ -142,7 +142,7 @@ zh.put("dark_mode", "深色模式"); zh.put("dynamic_color", "动态取色"); zh
 
 
         zh.put("round_screen_opt", "圆屏优化"); zh.put("round_screen_opt_desc", "防止内容被圆形边缘遮挡");
-        zh.put("block_system_back", "拦截系统返回"); zh.put("block_system_back_desc", "防止与滑动返回冲突");
+        
         zh.put("dark_mode_desc", "黑白主题切换"); zh.put("transfer_settings", "传输");
         zh.put("auto_save_desc", "免确认直接接收"); zh.put("auto_whitelist_desc", "仅限白名单设备");
         zh.put("save_album_desc", "图片与视频放入图库"); zh.put("save_history_desc", "记录收发日志");
@@ -200,6 +200,7 @@ zh.put("save_dir_label", "保存目录: ");
         zh.put("remark_label", "备注名"); zh.put("not_set", "未设置");
         zh.put("resend", "重新发送"); zh.put("choose_device_to_send", "点选设备即可发送");
         zh.put("idle_stop_server", "熄屏空闲暂停服务"); zh.put("idle_stop_server_desc", "熄屏 3 分钟后暂停监听省电，亮屏自动恢复；可能漏接对方主动发送");
+        zh.put("swipe_back", "启用软件内返回"); zh.put("swipe_back_desc", "开启后禁用系统返回，改用界面内滑动返回；关闭则系统返回照常，滑动返回不接管");
         dict.put("zh", zh);
 
                 // ============ 繁体中文 (zh_TW) ============
@@ -267,7 +268,7 @@ zh.put("save_dir_label", "保存目录: ");
         zhTW.put("direct_sending", "正在直連傳送..."); zhTW.put("sending_percent", "傳送中 "); zhTW.put("direct_send_done", "直連傳送完成！"); zhTW.put("direct_failed", "直連失敗: ");
         zhTW.put("connecting", "正在連線..."); zhTW.put("receiving_prefix", "接收中... "); zhTW.put("recv_unzipping", "接收完成，解壓中..."); zhTW.put("recv_done", "接收完成！已儲存到下載。");
         zhTW.put("recv_failed", "接收失敗: "); zhTW.put("round_screen_opt", "圓屏最佳化"); zhTW.put("round_screen_opt_desc", "防止內容被圓形邊緣遮擋");
-        zhTW.put("block_system_back", "攔截系統返回"); zhTW.put("block_system_back_desc", "防止與滑動返回衝突"); zhTW.put("dark_mode_desc", "黑白主題切換");
+        zhTW.put("dark_mode_desc", "黑白主題切換");
         zhTW.put("transfer_settings", "傳輸"); zhTW.put("auto_save_desc", "免確認直接接收"); zhTW.put("auto_whitelist_desc", "僅限白名單裝置"); zhTW.put("save_album_desc", "圖片與影片放入相簿");
         zhTW.put("save_history_desc", "記錄收發日誌"); zhTW.put("use_pin_desc", "增強接收安全性"); zhTW.put("https_enable_desc", "可能影響舊裝置相容性"); zhTW.put("web_enable_desc", "瀏覽器互傳");
         zhTW.put("auto_start_desc", "後臺常駐"); zhTW.put("receive_notif_desc", "需系統許可權"); zhTW.put("port_settings", "埠設定"); zhTW.put("timeout_settings", "搜尋逾時");
@@ -301,6 +302,7 @@ zh.put("save_dir_label", "保存目录: ");
         zhTW.put("fingerprint_label", "裝置指紋"); zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
         zhTW.put("resend", "重新傳送"); zhTW.put("choose_device_to_send", "點選裝置即可傳送");
         zhTW.put("idle_stop_server", "螢幕關閉時暫停服務"); zhTW.put("idle_stop_server_desc", "螢幕關閉 3 分鐘後暫停監聽省電，亮起自動恢復；可能漏接對方主動傳送");
+        zhTW.put("swipe_back", "啟用軟體內返回"); zhTW.put("swipe_back_desc", "開啟後停用系統返回，改用介面內滑動返回；關閉則系統返回照常，滑動返回不接管");
         dict.put("zh_TW", zhTW);
 // ============ 英语 (en) ============
         Map<String, String> en = new HashMap<>();
@@ -434,7 +436,7 @@ en.put("dark_mode", "Dark Mode"); en.put("dynamic_color", "Dynamic Color"); en.p
 
 
         en.put("round_screen_opt", "Round Screen Opt"); en.put("round_screen_opt_desc", "Prevent edge cutoff");
-        en.put("block_system_back", "Block System Back"); en.put("block_system_back_desc", "Prevent gesture conflict");
+        
         en.put("dark_mode_desc", "Black/White theme"); en.put("transfer_settings", "Transfer");
         en.put("auto_save_desc", "Auto accept files"); en.put("auto_whitelist_desc", "Only whitelisted devices");
         en.put("save_album_desc", "Save pics/vids to gallery"); en.put("save_history_desc", "Record transfer logs");
@@ -491,6 +493,7 @@ en.put("save_dir_label", "Save to: ");
         en.put("remark_label", "Nickname"); en.put("not_set", "Not set");
         en.put("resend", "Resend"); en.put("choose_device_to_send", "Tap a device to send");
         en.put("idle_stop_server", "Pause service when idle"); en.put("idle_stop_server_desc", "Stop listening 3 min after screen off to save power; resumes when screen on. May miss incoming pushes");
+        en.put("swipe_back", "Enable In-App Back"); en.put("swipe_back_desc", "Turn on to block the system back and use the in-app swipe gesture; turn off to restore system back and stop capturing swipes");
         dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -566,7 +569,7 @@ en.put("save_dir_label", "Save to: ");
     
 
         ja.put("round_screen_opt", "丸型画面最適化"); ja.put("round_screen_opt_desc", "端の見切れを防ぐ");
-        ja.put("block_system_back", "システム戻るをブロック"); ja.put("block_system_back_desc", "スワイプとの競合を防ぐ");
+        
         ja.put("dark_mode_desc", "白黒テーマ切替"); ja.put("transfer_settings", "転送");
         ja.put("auto_save_desc", "自動的に受け入れる"); ja.put("auto_whitelist_desc", "ホワイトリストのみ");
         ja.put("save_album_desc", "ギャラリーに保存"); ja.put("save_history_desc", "履歴を記録する");
@@ -693,6 +696,7 @@ ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360
         ja.put("year_suffix", "年");
         ja.put("resend", "再送信"); ja.put("choose_device_to_send", "デバイスをタップして送信");
         ja.put("idle_stop_server", "消灯時にサービスを一時停止"); ja.put("idle_stop_server_desc", "消灯から3分後に待ち受けを停止して省電力。点灯で自動再開。相手からの送信を取り逃す場合があります");
+        ja.put("swipe_back", "アプリ内戻るを有効化"); ja.put("swipe_back_desc", "オンでシステム戻るを無効にし画面内スワイプで戻る。オフでシステム戻るを復元しスワイプを奪わない");
         dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -768,7 +772,7 @@ ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360
     
 
         ko.put("round_screen_opt", "원형 화면 최적화"); ko.put("round_screen_opt_desc", "가장자리 잘림 방지");
-        ko.put("block_system_back", "시스템 뒤로 가기 차단"); ko.put("block_system_back_desc", "스와이프 충돌 방지");
+        
         ko.put("dark_mode_desc", "흑백 테마 전환"); ko.put("transfer_settings", "전송");
         ko.put("auto_save_desc", "자동으로 받기"); ko.put("auto_whitelist_desc", "화이트리스트만");
         ko.put("save_album_desc", "갤러리에 저장"); ko.put("save_history_desc", "기록 저장");
@@ -895,6 +899,7 @@ ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360�
         ko.put("year_suffix", "년");
         ko.put("resend", "다시 보내기"); ko.put("choose_device_to_send", "기기를 탭하면 전송됩니다");
         ko.put("idle_stop_server", "화면 꺼짐 시 서비스 일시 중지"); ko.put("idle_stop_server_desc", "화면이 꺼진 뒤 3분이 지나면 수신을 중지해 전력을 아낍니다. 화면을 켜면 자동 재개됩니다. 상대방 전송을 놓칠 수 있습니다");
+        ko.put("swipe_back", "앱 내 뒤로 사용"); ko.put("swipe_back_desc", "켜면 시스템 뒤로 가기를 막고 화면 스와이프로 돌아갑니다. 끄면 시스템 뒤로 가기를 복원하고 스와이프를 가로채지 않습니다");
         dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -970,7 +975,7 @@ ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360�
     
 
         de.put("round_screen_opt", "Rundbildschirm-Opt"); de.put("round_screen_opt_desc", "Randabschnitt verhindern");
-        de.put("block_system_back", "System-Zurück blockieren"); de.put("block_system_back_desc", "Gestenkonflikt verhindern");
+        
         de.put("dark_mode_desc", "Schwarz/Weiß-Thema"); de.put("transfer_settings", "Übertragung");
         de.put("auto_save_desc", "Automatisch annehmen"); de.put("auto_whitelist_desc", "Nur Whitelist-Geräte");
         de.put("save_album_desc", "In Galerie speichern"); de.put("save_history_desc", "Verlauf aufzeichnen");
@@ -1097,6 +1102,7 @@ de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für run
         de.put("year_suffix", "/");
         de.put("resend", "Erneut senden"); de.put("choose_device_to_send", "Gerät antippen zum Senden");
         de.put("idle_stop_server", "Dienst bei Inaktivität pausieren"); de.put("idle_stop_server_desc", "Stoppt das Lauschen 3 Min. nach Bildschirm-aus zum Stromsparen; startet beim Einschalten neu. Eingehende Sendungen können verpasst werden");
+        de.put("swipe_back", "In-App-Zurück aktivieren"); de.put("swipe_back_desc", "An: System-Zurück wird gesperrt, zurück per Wischen im Bild. Aus: System-Zurück gilt wieder, Wischen wird nicht abgefangen");
         dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -1172,7 +1178,7 @@ de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für run
     
 
         fr.put("round_screen_opt", "Opt. écran rond"); fr.put("round_screen_opt_desc", "Éviter la coupe des bords");
-        fr.put("block_system_back", "Bloquer retour système"); fr.put("block_system_back_desc", "Éviter les conflits de gestes");
+        
         fr.put("dark_mode_desc", "Thème noir/blanc"); fr.put("transfer_settings", "Transfert");
         fr.put("auto_save_desc", "Accepter automatiquement"); fr.put("auto_whitelist_desc", "Appareils en liste blanche uniquement");
         fr.put("save_album_desc", "Enregistrer dans la galerie"); fr.put("save_history_desc", "Enregistrer l'historique");
@@ -1299,6 +1305,7 @@ fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Po
         fr.put("year_suffix", "/");
         fr.put("resend", "Renvoyer"); fr.put("choose_device_to_send", "Touchez un appareil pour envoyer");
         fr.put("idle_stop_server", "Suspendre le service en veille"); fr.put("idle_stop_server_desc", "Coupe l'écoute 3 min après extinction de l'écran pour économiser la batterie ; reprise à l'allumage. Des envois entrants peuvent être manqués");
+        fr.put("swipe_back", "Activer le retour intégré"); fr.put("swipe_back_desc", "Activé : le retour système est bloqué, on revient par glissement dans l’interface. Désactivé : retour système rétabli, le glissement n’est plus capté");
         dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1374,7 +1381,7 @@ fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Po
     
 
         es.put("round_screen_opt", "Opt. pantalla redonda"); es.put("round_screen_opt_desc", "Evitar corte de bordes");
-        es.put("block_system_back", "Bloquear retroceso"); es.put("block_system_back_desc", "Evitar conflicto de gestos");
+        
         es.put("dark_mode_desc", "Tema blanco/negro"); es.put("transfer_settings", "Transferencia");
         es.put("auto_save_desc", "Aceptar archivos automáticamente"); es.put("auto_whitelist_desc", "Solo dispositivos de lista blanca");
         es.put("save_album_desc", "Guardar en galería"); es.put("save_history_desc", "Guardar historial");
@@ -1501,6 +1508,7 @@ es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para re
         es.put("year_suffix", "/");
         es.put("resend", "Reenviar"); es.put("choose_device_to_send", "Toca un dispositivo para enviar");
         es.put("idle_stop_server", "Pausar servicio en reposo"); es.put("idle_stop_server_desc", "Detiene la escucha 3 min después de apagar la pantalla para ahorrar batería; se reanuda al encenderla. Puede perder envíos entrantes");
+        es.put("swipe_back", "Activar retroceso interno"); es.put("swipe_back_desc", "Activado: se bloquea el retroceso del sistema y se usa el gesto dentro de la app. Desactivado: vuelve el retroceso del sistema y el gesto no se intercepta");
         dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1576,7 +1584,7 @@ es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para re
     
 
         ru.put("round_screen_opt", "Опт. круглого экрана"); ru.put("round_screen_opt_desc", "Предотвратить обрезку краев");
-        ru.put("block_system_back", "Блокировать системный возврат"); ru.put("block_system_back_desc", "Предотвратить конфликт жестов");
+        
         ru.put("dark_mode_desc", "Черно-белая тема"); ru.put("transfer_settings", "Передача");
         ru.put("auto_save_desc", "Автоматически принимать"); ru.put("auto_whitelist_desc", "Только из белого списка");
         ru.put("save_album_desc", "Сохранить в галерею"); ru.put("save_history_desc", "Записывать историю");
@@ -1703,6 +1711,7 @@ ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "
         ru.put("year_suffix", " г.");
         ru.put("resend", "Отправить снова"); ru.put("choose_device_to_send", "Нажмите на устройство для отправки");
         ru.put("idle_stop_server", "Пауза службы в простое"); ru.put("idle_stop_server_desc", "Прекращает прослушивание через 3 мин после выключения экрана для экономии; возобновляется при включении. Входящие отправки могут быть пропущены");
+        ru.put("swipe_back", "Включить возврат в приложении"); ru.put("swipe_back_desc", "Вкл.: системный возврат блокируется, назад — свайпом внутри приложения. Выкл.: системный возврат работает, свайп не перехватывается");
         dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1778,7 +1787,7 @@ ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "
     
 
         pt.put("round_screen_opt", "Otim. tela redonda"); pt.put("round_screen_opt_desc", "Evitar corte de bordas");
-        pt.put("block_system_back", "Bloquear voltar sistema"); pt.put("block_system_back_desc", "Evitar conflito de gestos");
+        
         pt.put("dark_mode_desc", "Tema preto/branco"); pt.put("transfer_settings", "Transferência");
         pt.put("auto_save_desc", "Aceitar automaticamente"); pt.put("auto_whitelist_desc", "Apenas dispositivos da lista branca");
         pt.put("save_album_desc", "Salvar na galeria"); pt.put("save_history_desc", "Registrar histórico");
@@ -1905,6 +1914,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         pt.put("year_suffix", "/");
         pt.put("resend", "Reenviar"); pt.put("choose_device_to_send", "Toque em um dispositivo para enviar");
         pt.put("idle_stop_server", "Pausar serviço em repouso"); pt.put("idle_stop_server_desc", "Para a escuta 3 min após a tela apagar para economizar bateria; retoma ao acender. Pode perder envios recebidos");
+        pt.put("swipe_back", "Ativar voltar no app"); pt.put("swipe_back_desc", "Ligado: bloqueia o voltar do sistema e usa o gesto dentro do app. Desligado: o voltar do sistema volta e o gesto não é interceptado");
         dict.put("pt", pt);
 
         installExtra1();
@@ -2095,7 +2105,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "القراءة فشلت"); b.put("prepare_failed", "إعداد فشل"); b.put("direct_sending", "إرسال مباشر..."); b.put("sending_percent", "إرسال");
         b.put("direct_send_done", "الإرسال المباشر كامل!"); b.put("direct_failed", "فشل مباشر:"); b.put("connecting", "التواصل"); b.put("receiving_prefix", "تلقيت...");
         b.put("recv_unzipping", "استلمت، استخراج..."); b.put("recv_done", "تم استلامه تم حفظه للتنزيل"); b.put("recv_failed", "الإستقبال فشل:"); b.put("round_screen_opt", "إختيار الشاشة المستديرة");
-        b.put("round_screen_opt_desc", "منع قطع الحافة"); b.put("block_system_back", "إيقاف النظام"); b.put("block_system_back_desc", "منع الصراع بالإشارات"); b.put("dark_mode_desc", "موضوع أسود/بيض");
+        b.put("round_screen_opt_desc", "منع قطع الحافة"); b.put("swipe_back", "تفعيل الرجوع داخل التطبيق"); b.put("swipe_back_desc", "عند التفعيل يُعطَّل رجوع النظام ويُستخدم السحب داخل الواجهة؛ وعند الإيقاف يعود رجوع النظام ولا يُحتجز السحب"); b.put("dark_mode_desc", "موضوع أسود/بيض");
         b.put("transfer_settings", "النقل"); b.put("auto_save_desc", "تقبل الملفات تلقائيًا"); b.put("auto_whitelist_desc", "الأجهزة المذكورة في القائمة البيضاء فقط"); b.put("save_album_desc", "حفظ الصور/فيديو إلى المعرض");
         b.put("save_history_desc", "سجلات نقل السجلات"); b.put("use_pin_desc", "تحسين الأمن"); b.put("https_enable_desc", "قد يؤثر على الأجهزة القديمة"); b.put("web_enable_desc", "نقل المتصفح");
         b.put("auto_start_desc", "إشغال في الخلفية"); b.put("receive_notif_desc", "يتطلب إذن النظام"); b.put("port_settings", "إعدادات الميناء"); b.put("timeout_settings", "البحث عن وقت");
@@ -2189,7 +2199,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Oxumaq uğursuz oldu"); b.put("prepare_failed", "- Yükləmə"); b.put("direct_sending", "Doğrudan göndərmə..."); b.put("sending_percent", "Göndərmək");
         b.put("direct_send_done", "Doğrudan göndərmə tamamlandı!"); b.put("direct_failed", "Düzgün uğursuzluq:"); b.put("connecting", "Bağlantı..."); b.put("receiving_prefix", "Alıram...");
         b.put("recv_unzipping", "Alıb, çıxarıb..."); b.put("recv_done", "Alındı, yükləmələrə saxlanıldı."); b.put("recv_failed", "Alış uğursuz oldu:"); b.put("round_screen_opt", "Dövrə ekran seçimi");
-        b.put("round_screen_opt_desc", "Qalanın kəsilməsinin qarşısını almaq"); b.put("block_system_back", "Sistemə blok"); b.put("block_system_back_desc", "İşarələrin qarşısını almaq"); b.put("dark_mode_desc", "Qara və ağ mövzu");
+        b.put("round_screen_opt_desc", "Qalanın kəsilməsinin qarşısını almaq"); b.put("swipe_back", "Tətbiqdaxili geri qayıtmanı aktivləşdir"); b.put("swipe_back_desc", "Aktiv olduqda sistem geri qayıtması bloklanır, interfeysdə sürüşmə ilə geri qayıdılır; söndükdə sistem geri qayıtması bərpa olunur"); b.put("dark_mode_desc", "Qara və ağ mövzu");
         b.put("transfer_settings", "Transfer"); b.put("auto_save_desc", "Avtomatik faylları qəbul edin"); b.put("auto_whitelist_desc", "Yalnız ağ siyahıya alınmış cihazlar"); b.put("save_album_desc", "Foto/videoları qalereya saxlayın");
         b.put("save_history_desc", "Qəzet transferləri qeydləri"); b.put("use_pin_desc", "Təhlükəsizliyi artırmaq"); b.put("https_enable_desc", "Köhnə cihazlara təsir edə bilər"); b.put("web_enable_desc", "Browser transfer");
         b.put("auto_start_desc", "Arxa planda işləmək"); b.put("receive_notif_desc", "Sistem icazəsi tələb olunur"); b.put("port_settings", "Port parametrləri"); b.put("timeout_settings", "Axtarış vaxtı");
@@ -2283,7 +2293,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Провал на четене"); b.put("prepare_failed", "Пригответе се"); b.put("direct_sending", "Пряко изпращане..."); b.put("sending_percent", "Изпращане");
         b.put("direct_send_done", "Изпращане завършено!"); b.put("direct_failed", "Непряко провалено:"); b.put("connecting", "Свързваме..."); b.put("receiving_prefix", "Приемаме...");
         b.put("recv_unzipping", "Приети, извлечени..."); b.put("recv_done", "Приети!"); b.put("recv_failed", "Приемът е неуспешен:"); b.put("round_screen_opt", "Опиране на кръгния екран");
-        b.put("round_screen_opt_desc", "Предотвратяване на отрязване на ръба"); b.put("block_system_back", "Блокира система обратно"); b.put("block_system_back_desc", "Предотвратяване на конфликт с жеста"); b.put("dark_mode_desc", "Черно/бяла тема");
+        b.put("round_screen_opt_desc", "Предотвратяване на отрязване на ръба"); b.put("swipe_back", "Включване на вътрешно връщане"); b.put("swipe_back_desc", "При включване системното връщане се блокира и се използва плъзгане в интерфейса; при изключване системното връщане се възстановява"); b.put("dark_mode_desc", "Черно/бяла тема");
         b.put("transfer_settings", "Прехвърляне"); b.put("auto_save_desc", "Автоматично приемане на файлове"); b.put("auto_whitelist_desc", "Само устройства с бял списък"); b.put("save_album_desc", "Запазвайте снимки/видео в галерията");
         b.put("save_history_desc", "Регистрирани регистърни данни"); b.put("use_pin_desc", "Повишаване на сигурността"); b.put("https_enable_desc", "Може да засегне старите устройства."); b.put("web_enable_desc", "Прехвърляне на браузъра");
         b.put("auto_start_desc", "Изпълняване в задния план"); b.put("receive_notif_desc", "Нуждае се от разрешение на системата"); b.put("port_settings", "Настройки на пристанището"); b.put("timeout_settings", "Изследване на времеви пропуски");
@@ -2377,7 +2387,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "পড়া ব্যর্থ"); b.put("prepare_failed", "ব্যর্থ প্রস্তুতি"); b.put("direct_sending", "সরাসরি পাঠানো..."); b.put("sending_percent", "পাঠানো");
         b.put("direct_send_done", "সরাসরি পাঠান সম্পন্ন!"); b.put("direct_failed", "সরাসরি ব্যর্থঃ"); b.put("connecting", "সংযোগ..."); b.put("receiving_prefix", "প্রাপ্তি...");
         b.put("recv_unzipping", "প্রাপ্ত, নিষ্কাশন..."); b.put("recv_done", "ডাউনলোডের জন্য সংরক্ষিত।"); b.put("recv_failed", "প্রাপ্তি ব্যর্থঃ"); b.put("round_screen_opt", "গোল পর্দা অপ্ট");
-        b.put("round_screen_opt_desc", "প্রান্তের কাটা বন্ধ করুন"); b.put("block_system_back", "ব্লক সিস্টেম ব্যাক"); b.put("block_system_back_desc", "ইঙ্গিতের দ্বন্দ্ব রোধ করা"); b.put("dark_mode_desc", "কালো/সাদা থিম");
+        b.put("round_screen_opt_desc", "প্রান্তের কাটা বন্ধ করুন"); b.put("swipe_back", "অ্যাপ-অভ্যন্তরীণ ফিরে যাওয়া চালু করুন"); b.put("swipe_back_desc", "চালু থাকলে সিস্টেম ব্যাক বন্ধ হয় ও ইন্টারফেসে সোয়াইপে ফেরা হয়; বন্ধ থাকলে সিস্টেম ব্যাক ফিরে আসে"); b.put("dark_mode_desc", "কালো/সাদা থিম");
         b.put("transfer_settings", "স্থানান্তর"); b.put("auto_save_desc", "অটো ফাইল গ্রহণ"); b.put("auto_whitelist_desc", "শুধুমাত্র সাদা তালিকাভুক্ত ডিভাইস"); b.put("save_album_desc", "গ্যালারীতে ছবি/ভিডি সংরক্ষণ করুন");
         b.put("save_history_desc", "রেকর্ড ট্রান্সফার লগ"); b.put("use_pin_desc", "নিরাপত্তা বাড়ান"); b.put("https_enable_desc", "পুরোনো ডিভাইসগুলোতে প্রভাব ফেলতে পারে"); b.put("web_enable_desc", "ব্রাউজার স্থানান্তর");
         b.put("auto_start_desc", "পটভূমিতে চালান"); b.put("receive_notif_desc", "সিস্টেম অনুমতি প্রয়োজন"); b.put("port_settings", "পোর্ট সেটিং"); b.put("timeout_settings", "অনুসন্ধান সময়সীমা");
@@ -2471,7 +2481,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Čitanje nije uspelo"); b.put("prepare_failed", "Priprema neuspjeha"); b.put("direct_sending", "Direktno šaljanje..."); b.put("sending_percent", "Poslanje");
         b.put("direct_send_done", "Direktna poslata je završena!"); b.put("direct_failed", "Direktno neuspjeha:"); b.put("connecting", "Povezivanje..."); b.put("receiving_prefix", "Dobijaju...");
         b.put("recv_unzipping", "Prihvatio, izvlačio..."); b.put("recv_done", "Prihvaćeno!"); b.put("recv_failed", "Dobijanje nije uspjelo:"); b.put("round_screen_opt", "Okrugli ekran");
-        b.put("round_screen_opt_desc", "Preventiranje preskakanja grana"); b.put("block_system_back", "Sistem blokiranja"); b.put("block_system_back_desc", "Preventiranje sukoba gestova"); b.put("dark_mode_desc", "Tema crno-bijelo");
+        b.put("round_screen_opt_desc", "Preventiranje preskakanja grana"); b.put("swipe_back", "Uključi vraćanje unutar aplikacije"); b.put("swipe_back_desc", "Uključeno: sistemsko vraćanje je blokirano, nazad se ide prevlačenjem u sučelju. Isključeno: sistemsko vraćanje radi"); b.put("dark_mode_desc", "Tema crno-bijelo");
         b.put("transfer_settings", "Prenos"); b.put("auto_save_desc", "Automatno prihvataju datoteke"); b.put("auto_whitelist_desc", "Samo uređaji sa bijelom listom"); b.put("save_album_desc", "Sačuvati slike/vidjove u galeriju");
         b.put("save_history_desc", "Zapisi prenosa"); b.put("use_pin_desc", "Povećanje bezbednosti"); b.put("https_enable_desc", "Mogao bi da utiče na stare uređaje"); b.put("web_enable_desc", "Prenos pretraživača");
         b.put("auto_start_desc", "Uticaj u pozadini"); b.put("receive_notif_desc", "Zahtijeva sistemske dozvole"); b.put("port_settings", "Nastavke luke"); b.put("timeout_settings", "Traženje vremenskih rokova");
@@ -2565,7 +2575,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "La lectura fallida"); b.put("prepare_failed", "Preparar fallida"); b.put("direct_sending", "Envi directe..."); b.put("sending_percent", "Enviant");
         b.put("direct_send_done", "Envi direct complet!"); b.put("direct_failed", "Direct fallida:"); b.put("connecting", "Conectar..."); b.put("receiving_prefix", "Recepció...");
         b.put("recv_unzipping", "Recepció, extracció..."); b.put("recv_done", "Recebits!"); b.put("recv_failed", "Recepció fallida:"); b.put("round_screen_opt", "Opt de pantalla rodona");
-        b.put("round_screen_opt_desc", "Prevenir la ruptura de la vora"); b.put("block_system_back", "Bloquejar el sistema de tornada"); b.put("block_system_back_desc", "Prevenir conflictes de gestos"); b.put("dark_mode_desc", "Temàtica en blanc/negre");
+        b.put("round_screen_opt_desc", "Prevenir la ruptura de la vora"); b.put("swipe_back", "Activa el retrocés dins l’app"); b.put("swipe_back_desc", "Activat: es bloqueja el retrocés del sistema i es fa servir el gest dins la interfície. Desactivat: torna el retrocés del sistema"); b.put("dark_mode_desc", "Temàtica en blanc/negre");
         b.put("transfer_settings", "Transferència"); b.put("auto_save_desc", "Automacta acceptar arxius"); b.put("auto_whitelist_desc", "Només dispositius de llista blanca"); b.put("save_album_desc", "Guardar fotografies/vides a la galeria");
         b.put("save_history_desc", "Registros de transferència"); b.put("use_pin_desc", "Mantenir la seguretat"); b.put("https_enable_desc", "Pot afectar els dispositius antics"); b.put("web_enable_desc", "Transferència de navegador");
         b.put("auto_start_desc", "Correr en fons"); b.put("receive_notif_desc", "Requereix permís del sistema"); b.put("port_settings", "Configuracions de port"); b.put("timeout_settings", "Recerca de temps de sortida");
@@ -2659,7 +2669,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Čtení selhalo"); b.put("prepare_failed", "Připravte se neúspěšně"); b.put("direct_sending", "Přímé zasílání..."); b.put("sending_percent", "Posílání");
         b.put("direct_send_done", "Přímá posílka je kompletní!"); b.put("direct_failed", "Přímý selhání:"); b.put("connecting", "Spojení..."); b.put("receiving_prefix", "Přijímám...");
         b.put("recv_unzipping", "Přijímaná, extrahovaná..."); b.put("recv_done", "Připravená, uložená na stahování."); b.put("recv_failed", "Přijetí neúspěšné:"); b.put("round_screen_opt", "Optování okruhého obrazovky");
-        b.put("round_screen_opt_desc", "Způsobení přerušení okraje"); b.put("block_system_back", "Zastavte systém"); b.put("block_system_back_desc", "Předcházet konfliktu gestů"); b.put("dark_mode_desc", "Černobílé téma");
+        b.put("round_screen_opt_desc", "Způsobení přerušení okraje"); b.put("swipe_back", "Zapnout návrat v aplikaci"); b.put("swipe_back_desc", "Zapnuto: systémové zpět je blokováno, zpět se vrací tažením v rozhraní. Vypnuto: systémové zpět funguje"); b.put("dark_mode_desc", "Černobílé téma");
         b.put("transfer_settings", "Převod"); b.put("auto_save_desc", "Automaticky přijímá soubory"); b.put("auto_whitelist_desc", "Pouze zařízení na bílý seznam"); b.put("save_album_desc", "Uložte fotografie/vidéky do galerie");
         b.put("save_history_desc", "Záznamové přenosové záznamy"); b.put("use_pin_desc", "Zlepšení zabezpečení"); b.put("https_enable_desc", "Může ovlivnit staré zařízení"); b.put("web_enable_desc", "Přenos prohlížeče");
         b.put("auto_start_desc", "Vystupovat v pozadí"); b.put("receive_notif_desc", "Vyžaduje systémové povolení"); b.put("port_settings", "Nastavení přístavů"); b.put("timeout_settings", "Hledání časového výkazu");
@@ -2753,7 +2763,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lesefejl"); b.put("prepare_failed", "Forbered mislykkedes"); b.put("direct_sending", "Direkte sending..."); b.put("sending_percent", "Sending");
         b.put("direct_send_done", "- Send direkte!"); b.put("direct_failed", "Direkt mislykkedes:"); b.put("connecting", "- Jeg forbinder..."); b.put("receiving_prefix", "- Jeg modtager...");
         b.put("recv_unzipping", "- Jeg har modtaget, udvundet..."); b.put("recv_done", "- Vi har modtaget det."); b.put("recv_failed", "Modtagelse mislykkedes:"); b.put("round_screen_opt", "Rundskærm Opt");
-        b.put("round_screen_opt_desc", "Forhindre kant afbrydelse"); b.put("block_system_back", "Blokker systemet tilbage"); b.put("block_system_back_desc", "Forhindre konflikt ved gest"); b.put("dark_mode_desc", "Svarte/hvid tema");
+        b.put("round_screen_opt_desc", "Forhindre kant afbrydelse"); b.put("swipe_back", "Aktivér tilbage i appen"); b.put("swipe_back_desc", "Til: systemets tilbage blokeres, og der går man tilbage ved at stryge i skærmen. Fra: systemets tilbage virker igen"); b.put("dark_mode_desc", "Svarte/hvid tema");
         b.put("transfer_settings", "Overførsel"); b.put("auto_save_desc", "Automaftale"); b.put("auto_whitelist_desc", "Kun apparater med hvidliste"); b.put("save_album_desc", "Gem billeder/videoer til galleriet");
         b.put("save_history_desc", "Registreringsoverførselslogger"); b.put("use_pin_desc", "Forbedre modtager sikkerhed"); b.put("https_enable_desc", "Kan påvirke gamle enheder"); b.put("web_enable_desc", "Browseroverførsel");
         b.put("auto_start_desc", "Løbe i baggrunden"); b.put("receive_notif_desc", "Krav på systemtilladelse"); b.put("port_settings", "Indstillinger af havne"); b.put("timeout_settings", "Søgtid");
@@ -2847,7 +2857,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Διάβασμα απέτυχε"); b.put("prepare_failed", "Προετοιμασία αποτυχημένη"); b.put("direct_sending", "Επικοινωνία..."); b.put("sending_percent", "Στέλωση");
         b.put("direct_send_done", "Επικοινωνία ολοκληρωμένη!"); b.put("direct_failed", "Αμετάβλητη:"); b.put("connecting", "Συνδέοντας..."); b.put("receiving_prefix", "Παραλαμβάνω...");
         b.put("recv_unzipping", "Έλαβες, έβγαλες..."); b.put("recv_done", "Αποθηκεύτηκε για λήψη."); b.put("recv_failed", "Αποτυχημένη λήψη:"); b.put("round_screen_opt", "Επικοινωνία σε στρογγυλή οθόνη");
-        b.put("round_screen_opt_desc", "Προληπτική αποκοπή της άκρης"); b.put("block_system_back", "Επιστροφή του συστήματος"); b.put("block_system_back_desc", "Προληπτική πρόληψη των συγκρούσεων με χειρονομίες"); b.put("dark_mode_desc", "Μαύρο/λευκό θέμα");
+        b.put("round_screen_opt_desc", "Προληπτική αποκοπή της άκρης"); b.put("swipe_back", "Ενεργοποίηση επιστροφής εντός εφαρμογής"); b.put("swipe_back_desc", "Ενεργό: μπλοκάρεται η επιστροφή συστήματος και η επιστροφή γίνεται με σύρσιμο στην οθόνη. Ανενεργό: επιστρέφει η επιστροφή συστήματος"); b.put("dark_mode_desc", "Μαύρο/λευκό θέμα");
         b.put("transfer_settings", "Μεταφορά"); b.put("auto_save_desc", "Αυτοαποδοχή αρχείων"); b.put("auto_whitelist_desc", "Μόνο συσκευές λευκής λίστας"); b.put("save_album_desc", "Αποθηκεύστε φωτογραφίες/vids στην γκαλερί");
         b.put("save_history_desc", "Λογισμικά μεταφοράς καταγραφών"); b.put("use_pin_desc", "Ενίσχυση της ασφάλειας"); b.put("https_enable_desc", "Μπορεί να επηρεάσει παλιά συσκευές"); b.put("web_enable_desc", "Μεταφορά προγράμματος περιήγησης");
         b.put("auto_start_desc", "Τρέξε στο φόντο"); b.put("receive_notif_desc", "Απαιτείται άδεια συστήματος"); b.put("port_settings", "Διάταξη λιμένων"); b.put("timeout_settings", "Αναζήτηση Timeout");
@@ -2941,7 +2951,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lugemine ebaõnnestunud"); b.put("prepare_failed", "Valmistamine ebaõnnestunud"); b.put("direct_sending", "Otsene saatmine..."); b.put("sending_percent", "Lähetamine");
         b.put("direct_send_done", "Otsene saatmine on valmis!"); b.put("direct_failed", "Otsene ebaõnnestumine:"); b.put("connecting", "Sisse ühendamine..."); b.put("receiving_prefix", "Saadme...");
         b.put("recv_unzipping", "Saadsin, võtsin..."); b.put("recv_done", "Saada, salvestada."); b.put("recv_failed", "Võtmine ebaõnnestunud:"); b.put("round_screen_opt", "Rundava ekraani valik");
-        b.put("round_screen_opt_desc", "Vältida randide lõikumine"); b.put("block_system_back", "Süsteem blokeeritakse tagasi"); b.put("block_system_back_desc", "Vältida geestide konflikti"); b.put("dark_mode_desc", "Must-valge teema");
+        b.put("round_screen_opt_desc", "Vältida randide lõikumine"); b.put("swipe_back", "Luba rakendusesisene tagasiliikumine"); b.put("swipe_back_desc", "Sees: süsteemi tagasi on blokeeritud, tagasi liigutakse ekraanil tõmmates. Väljas: süsteemi tagasi taastub"); b.put("dark_mode_desc", "Must-valge teema");
         b.put("transfer_settings", "Üleandmine"); b.put("auto_save_desc", "Automaatselt aktsepteerida failid"); b.put("auto_whitelist_desc", "Ainult valges nimekirjas olevad seadmed"); b.put("save_album_desc", "Salvestada pildid/videod galeriisse");
         b.put("save_history_desc", "Rekordide ülekande logid"); b.put("use_pin_desc", "Kindlustuse suurendamine"); b.put("https_enable_desc", "Võib mõjutada vanu seadmeid"); b.put("web_enable_desc", "Brauseri üleandmine");
         b.put("auto_start_desc", "Käivitamine taustal"); b.put("receive_notif_desc", "Nõuakse süsteemi luba"); b.put("port_settings", "Portide seadistused"); b.put("timeout_settings", "Otsinguaeg");
@@ -3035,7 +3045,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Irakurketa huts egin da"); b.put("prepare_failed", "Prestatu huts egin du."); b.put("direct_sending", "Bidalketa zuzena..."); b.put("sending_percent", "Bidaliko dut.");
         b.put("direct_send_done", "Bidali zuzenean!"); b.put("direct_failed", "Ez da zuzena:"); b.put("connecting", "Lotura..."); b.put("receiving_prefix", "-Eta zer?");
         b.put("recv_unzipping", "Hartu, atera..."); b.put("recv_done", "-Etorri da!"); b.put("recv_failed", "Ez da iritsi:"); b.put("round_screen_opt", "Goi mailako pantaila");
-        b.put("round_screen_opt_desc", "Ez da beharrezkoa."); b.put("block_system_back", "Sistema blokeatu."); b.put("block_system_back_desc", "Ezta keinuen gatazka ere."); b.put("dark_mode_desc", "Tematikak zuri-beltzak");
+        b.put("round_screen_opt_desc", "Ez da beharrezkoa."); b.put("swipe_back", "Gaitu aplikazioko itzulera"); b.put("swipe_back_desc", "Piztuta: sistemaren itzulera blokeatzen da eta pantailan arrastatuta itzultzen da. Itzalita: sistemaren itzulera berreskuratzen da"); b.put("dark_mode_desc", "Tematikak zuri-beltzak");
         b.put("transfer_settings", "Transferentzia"); b.put("auto_save_desc", "Auto-artxiboak onartzen"); b.put("auto_whitelist_desc", "Zerrendan agertzen diren gailuak bakarrik"); b.put("save_album_desc", "Gorde argazkiak eta bideoak galerian.");
         b.put("save_history_desc", "Erregistro transferentziaren egunerokoak"); b.put("use_pin_desc", "Segurtasuna hobetu"); b.put("https_enable_desc", "Beharbada gailu zaharrak kaltetuko ditu."); b.put("web_enable_desc", "Bilaketagailua transferitzea");
         b.put("auto_start_desc", "Atzean ibiltzea"); b.put("receive_notif_desc", "Sistemaren baimena behar da."); b.put("port_settings", "Portuaren ezarpenak"); b.put("timeout_settings", "Bilaketa denbora-pasa");
@@ -3129,7 +3139,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "خواندن شکست خورده"); b.put("prepare_failed", "آماده شدن شکست خورده"); b.put("direct_sending", "ارسال مستقیم..."); b.put("sending_percent", "ارسال کردن");
         b.put("direct_send_done", "ارسال مستقیم کامل!"); b.put("direct_failed", "مستقیم شکست خورد:"); b.put("connecting", "ارتباط..."); b.put("receiving_prefix", "دریافت...");
         b.put("recv_unzipping", "دریافت، استخراج..."); b.put("recv_done", "دریافت شد، به دانلود ها ذخیره شد"); b.put("recv_failed", "دریافت شکست خورده:"); b.put("round_screen_opt", "انتخاب صفحه دایره");
-        b.put("round_screen_opt_desc", "جلوگیری از قطع کناره"); b.put("block_system_back", "سیستم باز کردن"); b.put("block_system_back_desc", "جلوگیری از تعارض حرکات"); b.put("dark_mode_desc", "موضوع سیاه و سفید");
+        b.put("round_screen_opt_desc", "جلوگیری از قطع کناره"); b.put("swipe_back", "فعال‌سازی بازگشت درون برنامه"); b.put("swipe_back_desc", "روشن: بازگشت سیستم مسدود و بازگشت با کشیدن در صفحه انجام می‌شود. خاموش: بازگشت سیستم برمی‌گردد"); b.put("dark_mode_desc", "موضوع سیاه و سفید");
         b.put("transfer_settings", "انتقال"); b.put("auto_save_desc", "فایل ها را به طور خودکار قبول کنید"); b.put("auto_whitelist_desc", "فقط دستگاه های فهرست سفید"); b.put("save_album_desc", "عکس ها/ ویدئو ها را به گالری ذخیره کنید");
         b.put("save_history_desc", "ثبت ثبت انتقال"); b.put("use_pin_desc", "افزایش امنیت دریافت"); b.put("https_enable_desc", "ممکنه به دستگاه هاي قدیمی تاثير پيدا کنه"); b.put("web_enable_desc", "انتقال مرورگر");
         b.put("auto_start_desc", "در پس زمینه اجرا کنید"); b.put("receive_notif_desc", "نیاز به مجوز سیستم"); b.put("port_settings", "تنظیمات بندر"); b.put("timeout_settings", "زمان زمان جستجو");
@@ -3223,7 +3233,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lukeminen epäonnistunut"); b.put("prepare_failed", "Valmistaudu epäonnistuneeksi"); b.put("direct_sending", "Suora lähetys..."); b.put("sending_percent", "Lähetys");
         b.put("direct_send_done", "Suora lähetys valmis!"); b.put("direct_failed", "Suora epäonnistuminen:"); b.put("connecting", "- Liittyminen..."); b.put("receiving_prefix", "- Saamme...");
         b.put("recv_unzipping", "Saimme, saimme..."); b.put("recv_done", "Saatu!"); b.put("recv_failed", "Saamiset epäonnistuivat:"); b.put("round_screen_opt", "Pyöreä näytö");
-        b.put("round_screen_opt_desc", "Varoitetaan reunan katkaisemista"); b.put("block_system_back", "Systeemiä estetään"); b.put("block_system_back_desc", "Vakoita käännöksen ristiriita"); b.put("dark_mode_desc", "Mustana/valkoinen teema");
+        b.put("round_screen_opt_desc", "Varoitetaan reunan katkaisemista"); b.put("swipe_back", "Ota sovelluksen sisäinen paluu käyttöön"); b.put("swipe_back_desc", "Päällä: järjestelmän takaisin estetään ja paluu tehdään pyyhkäisemällä. Pois: järjestelmän takaisin palaa"); b.put("dark_mode_desc", "Mustana/valkoinen teema");
         b.put("transfer_settings", "Siirtäminen"); b.put("auto_save_desc", "Automaattisesti hyväksytty tiedosto"); b.put("auto_whitelist_desc", "Vain valkoisen luettelon laitteet"); b.put("save_album_desc", "Säilytä kuvia/videot galleriaan");
         b.put("save_history_desc", "Rekisteröintien siirto-päiväkirjat"); b.put("use_pin_desc", "Lisää turvatarkastusta"); b.put("https_enable_desc", "Voisi vaikuttaa vanhoihin laitteisiin"); b.put("web_enable_desc", "Selaimen siirto");
         b.put("auto_start_desc", "Käynnistä taustalla"); b.put("receive_notif_desc", "Tarvitsee järjestelmän lupaa"); b.put("port_settings", "Porttiasetukset"); b.put("timeout_settings", "Etsintäaika");
@@ -3317,7 +3327,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Nabalitaan ay nabigo"); b.put("prepare_failed", "Maghanda ay nabigo"); b.put("direct_sending", "Ang direktang pagpapadala..."); b.put("sending_percent", "Pagpadala");
         b.put("direct_send_done", "Nakumpleto ang direktang pagpapadala!"); b.put("direct_failed", "Direct failure:"); b.put("connecting", "Pagkakonekta..."); b.put("receiving_prefix", "Nakatanggap ng...");
         b.put("recv_unzipping", "Tinanggap, pagkuha..."); b.put("recv_done", "Nakatanggap! Na-save sa mga download."); b.put("recv_failed", "Nagtagumpay ang pagtanggap:"); b.put("round_screen_opt", "Pagpili ng Round Screen");
-        b.put("round_screen_opt_desc", "Iwasan ang pagputol ng gilid"); b.put("block_system_back", "I-block ang System Back"); b.put("block_system_back_desc", "Iwasan ang mga pakikibaka"); b.put("dark_mode_desc", "Batang itim/puti");
+        b.put("round_screen_opt_desc", "Iwasan ang pagputol ng gilid"); b.put("swipe_back", "I-enable ang back sa loob ng app"); b.put("swipe_back_desc", "Naka-on: hinaharangan ang system back at gumamit ng swipe sa loob ng app. Naka-off: bumabalik ang system back"); b.put("dark_mode_desc", "Batang itim/puti");
         b.put("transfer_settings", "Paglipat"); b.put("auto_save_desc", "Auto tanggapin ang mga file"); b.put("auto_whitelist_desc", "Mga aparato lamang na may whitelist"); b.put("save_album_desc", "I-save ang mga larawan/video sa gallery");
         b.put("save_history_desc", "Mga log ng paglipat ng rekord"); b.put("use_pin_desc", "Pagpapalakas ng pagtanggap ng seguridad"); b.put("https_enable_desc", "Maaaring makaapekto sa mga lumang aparato"); b.put("web_enable_desc", "Paglipat ng browser");
         b.put("auto_start_desc", "Tumakbo sa background"); b.put("receive_notif_desc", "Kinakailangan ng pahintulot ng sistema"); b.put("port_settings", "Mga Pag-set ng Port"); b.put("timeout_settings", "Paghahanap ng Timeout");
@@ -3411,7 +3421,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "קריאה נכשלה"); b.put("prepare_failed", "תכנן נכשל"); b.put("direct_sending", "שיחת ישירה..."); b.put("sending_percent", "שולח");
         b.put("direct_send_done", "הפרישה הישירה מלאה!"); b.put("direct_failed", "נכשלת ישירה:"); b.put("connecting", "חיבור..."); b.put("receiving_prefix", "מקבלים...");
         b.put("recv_unzipping", "קיבלתי, גייסתי..."); b.put("recv_done", "קיבלתי, שמתי לורדות."); b.put("recv_failed", "התקבל נכשל:"); b.put("round_screen_opt", "תצוגה מסך עגול");
-        b.put("round_screen_opt_desc", "למנוע חותך קצה"); b.put("block_system_back", "מערכת חסימה חזרה"); b.put("block_system_back_desc", "למנוע סכסוך בשגיעות"); b.put("dark_mode_desc", "נושא שחור/לב");
+        b.put("round_screen_opt_desc", "למנוע חותך קצה"); b.put("swipe_back", "הפעלת חזרה בתוך האפליקציה"); b.put("swipe_back_desc", "פועל: חזרת המערכת נחסמת והחזרה נעשית בהחלקה במסך. כבוי: חזרת המערכת חוזרת"); b.put("dark_mode_desc", "נושא שחור/לב");
         b.put("transfer_settings", "העברה"); b.put("auto_save_desc", "קובץ אוטומטי"); b.put("auto_whitelist_desc", "רק מכשירים ברשימת הלבנים"); b.put("save_album_desc", "שמור תמונות/וידיאו בגלריה");
         b.put("save_history_desc", "רישומים של שינויים"); b.put("use_pin_desc", "שיפור מקבל ביטחון"); b.put("https_enable_desc", "יכול להשפיע על מכשירים ישנים"); b.put("web_enable_desc", "העברת הדפדפן");
         b.put("auto_start_desc", "תסתלקו בעקבות"); b.put("receive_notif_desc", "דורש אישור מערכת"); b.put("port_settings", "הגדרות הנמל"); b.put("timeout_settings", "חיפוש זמן");
@@ -3505,7 +3515,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "पढ़ना विफल"); b.put("prepare_failed", "विफलता तैयार करें"); b.put("direct_sending", "प्रत्यक्ष भेजना..."); b.put("sending_percent", "भेजना");
         b.put("direct_send_done", "प्रत्यक्ष भेजने के लिए पूरा!"); b.put("direct_failed", "प्रत्यक्ष विफलता:"); b.put("connecting", "कनेक्टिंग ..."); b.put("receiving_prefix", "प्राप्त करने के लिए ...");
         b.put("recv_unzipping", "प्राप्त, निकालने..."); b.put("recv_done", "प्राप्त! डाउनलोड करने के लिए सहेजा गया।"); b.put("recv_failed", "प्राप्ति विफल रही:"); b.put("round_screen_opt", "गोल स्क्रीन ऑप्ट");
-        b.put("round_screen_opt_desc", "किनारे कट ऑफ को रोकें"); b.put("block_system_back", "ब्लॉक सिस्टम वापस"); b.put("block_system_back_desc", "इशारा से संघर्ष को रोकें"); b.put("dark_mode_desc", "काला/सफेद विषय");
+        b.put("round_screen_opt_desc", "किनारे कट ऑफ को रोकें"); b.put("swipe_back", "ऐप के अंदर वापसी सक्षम करें"); b.put("swipe_back_desc", "चालू: सिस्टम बैक बंद होता है और स्क्रीन में स्वाइप से वापस जाते हैं। बंद: सिस्टम बैक लौटता है"); b.put("dark_mode_desc", "काला/सफेद विषय");
         b.put("transfer_settings", "स्थानांतरण"); b.put("auto_save_desc", "फ़ाइलों को स्वचालित रूप से स्वीकार करें"); b.put("auto_whitelist_desc", "केवल श्वेतसूची वाले उपकरण"); b.put("save_album_desc", "गैलरी में चित्र/वीडियो सहेजें");
         b.put("save_history_desc", "रिकॉर्ड स्थानांतरण लॉग"); b.put("use_pin_desc", "सुरक्षा प्राप्त करना"); b.put("https_enable_desc", "पुराने उपकरणों को प्रभावित कर सकता है"); b.put("web_enable_desc", "ब्राउज़र स्थानांतरण");
         b.put("auto_start_desc", "पृष्ठभूमि में चलाएँ"); b.put("receive_notif_desc", "सिस्टम अनुमति की आवश्यकता होती है"); b.put("port_settings", "पोर्ट सेटिंग्स"); b.put("timeout_settings", "समय सीमा खोजें");
@@ -3599,7 +3609,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Čitanje nije uspjelo"); b.put("prepare_failed", "Pripremite neuspješan"); b.put("direct_sending", "Direktno šaljanje..."); b.put("sending_percent", "Poslanje");
         b.put("direct_send_done", "Potpuno direktno poslanje!"); b.put("direct_failed", "Direktno neuspjeha:"); b.put("connecting", "Povezivanje..."); b.put("receiving_prefix", "Prihvaćam...");
         b.put("recv_unzipping", "Primljen, izvlačen..."); b.put("recv_done", "Prihvaćeno!"); b.put("recv_failed", "Primljena nije uspjela:"); b.put("round_screen_opt", "Okružni ekran");
-        b.put("round_screen_opt_desc", "Preuštiti prekida oblaka"); b.put("block_system_back", "Blokiranje sustava natrag"); b.put("block_system_back_desc", "Zabranite sukob gestova"); b.put("dark_mode_desc", "Tematska tema crno-bijela");
+        b.put("round_screen_opt_desc", "Preuštiti prekida oblaka"); b.put("swipe_back", "Uključi vraćanje unutar aplikacije"); b.put("swipe_back_desc", "Uključeno: sustavno vraćanje je blokirano, natrag se ide povlačenjem u sučelju. Isključeno: sustavno vraćanje radi"); b.put("dark_mode_desc", "Tematska tema crno-bijela");
         b.put("transfer_settings", "Prenos"); b.put("auto_save_desc", "Automatski prihvaćanje datoteka"); b.put("auto_whitelist_desc", "Samo uređaji na bijeloj listi"); b.put("save_album_desc", "Čuvajte slike/vidjografske snimke u galeriju");
         b.put("save_history_desc", "Prenos podataka"); b.put("use_pin_desc", "Povećanje sigurnosti"); b.put("https_enable_desc", "Mogao bi utjecati na stare uređaje"); b.put("web_enable_desc", "Prenos preglednika");
         b.put("auto_start_desc", "Ulazi u pozadin"); b.put("receive_notif_desc", "Zahtijeva sustavna dozvola"); b.put("port_settings", "Nastavljanje luka"); b.put("timeout_settings", "Traži vrijeme");
@@ -3693,7 +3703,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "A felolvasás nem sikerült"); b.put("prepare_failed", "Készülj fel, nem sikerült."); b.put("direct_sending", "Közvetlen küldés..."); b.put("sending_percent", "Küldés");
         b.put("direct_send_done", "Közvetlen küldés teljes!"); b.put("direct_failed", "Közvetlen hiba:"); b.put("connecting", "Összekapcsolódás..."); b.put("receiving_prefix", "- Kaptam...");
         b.put("recv_unzipping", "- Megkaptam, kivontam..."); b.put("recv_done", "Megkaptam!"); b.put("recv_failed", "A felvétel nem sikerült:"); b.put("round_screen_opt", "Körkörös képernyő");
-        b.put("round_screen_opt_desc", "A szél kivágása megelőzése"); b.put("block_system_back", "A blokkoló rendszer vissza"); b.put("block_system_back_desc", "A gesztusokkal való konfliktus megelőzése"); b.put("dark_mode_desc", "Fekete/fehér téma");
+        b.put("round_screen_opt_desc", "A szél kivágása megelőzése"); b.put("swipe_back", "Alkalmazáson belüli vissza bekapcsolása"); b.put("swipe_back_desc", "Be: a rendszer vissza tiltva, vissza a felületen húzva. Ki: a rendszer vissza újra működik"); b.put("dark_mode_desc", "Fekete/fehér téma");
         b.put("transfer_settings", "Átviteli"); b.put("auto_save_desc", "Automatikusan fogadja el a fájlt"); b.put("auto_whitelist_desc", "Csak a fehérlistájú eszközök"); b.put("save_album_desc", "A fotókat/videókat tárolja a galériába");
         b.put("save_history_desc", "A nyilvántartás-átviteli naplók"); b.put("use_pin_desc", "A biztonság növelése"); b.put("https_enable_desc", "Hathat régi eszközökre"); b.put("web_enable_desc", "Bátoló átviteli");
         b.put("auto_start_desc", "A háttérben fut"); b.put("receive_notif_desc", "Szükséges rendszerengedély"); b.put("port_settings", "A kikötő beállításai"); b.put("timeout_settings", "Keresés Időszak");
@@ -3787,7 +3797,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lestu ekki"); b.put("prepare_failed", "Búið að undirbúa mistekkið"); b.put("direct_sending", "Beint sending..."); b.put("sending_percent", "Sending");
         b.put("direct_send_done", "Strax sending fullkominn!"); b.put("direct_failed", "Beint mistekist:"); b.put("connecting", "Hlutverk."); b.put("receiving_prefix", "Ég er að fá...");
         b.put("recv_unzipping", "Fékk, tók..."); b.put("recv_done", "Fékkst! Lagt í niðurhal."); b.put("recv_failed", "Fylgist ekki:"); b.put("round_screen_opt", "Runda skjár val");
-        b.put("round_screen_opt_desc", "Til að koma í veg fyrir að brúnin sé skorin"); b.put("block_system_back", "Hægt að koma aftur"); b.put("block_system_back_desc", "Forðast samræmi í geislum"); b.put("dark_mode_desc", "Svart/hvit þema");
+        b.put("round_screen_opt_desc", "Til að koma í veg fyrir að brúnin sé skorin"); b.put("swipe_back", "Virkja bakvagn innan apps"); b.put("swipe_back_desc", "Kveikt: kerfisbakvagn er lokað og farið til baka með stroki á skjánum. Slökkt: kerfisbakvagn virkar aftur"); b.put("dark_mode_desc", "Svart/hvit þema");
         b.put("transfer_settings", "Útfærsla"); b.put("auto_save_desc", "Sjálfvirk samþykki skrár"); b.put("auto_whitelist_desc", "Aðeins tækin sem eru á hvíta lista"); b.put("save_album_desc", "Geymdu myndum/myndum í galleríu");
         b.put("save_history_desc", "Skrásetningar á flutningskrá"); b.put("use_pin_desc", "Stærja öryggi"); b.put("https_enable_desc", "Getur haft áhrif á gamla tæki"); b.put("web_enable_desc", "Browser flutningur");
         b.put("auto_start_desc", "Hræðju í bakgrunni"); b.put("receive_notif_desc", "Krafist að leyfi fyrir kerfið"); b.put("port_settings", "Stöðvun á höfn"); b.put("timeout_settings", "Leitaðu á tíma");
@@ -3881,7 +3891,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Skaitymas nesėkmingai"); b.put("prepare_failed", "Pasirengti nepavyko"); b.put("direct_sending", "Tiesioginis siuntimas..."); b.put("sending_percent", "Siųsti");
         b.put("direct_send_done", "Tiesioginis išsiuntimas baigtas!"); b.put("direct_failed", "Neįgalima:"); b.put("connecting", "Susisiekimas..."); b.put("receiving_prefix", "Gavau...");
         b.put("recv_unzipping", "Gauta, ištraukta..."); b.put("recv_done", "Gautas!"); b.put("recv_failed", "Gavimas nesilaikė:"); b.put("round_screen_opt", "Apvalomas apvalintas ekranas");
-        b.put("round_screen_opt_desc", "Užkirsti kelią krašto nutarimui"); b.put("block_system_back", "Užblokuoti sistemą"); b.put("block_system_back_desc", "Iškirsti kelią konfliktui"); b.put("dark_mode_desc", "Juoda ir balta tema");
+        b.put("round_screen_opt_desc", "Užkirsti kelią krašto nutarimui"); b.put("swipe_back", "Įjungti grįžimą programoje"); b.put("swipe_back_desc", "Įjungta: sistemos grįžimas blokuojamas, grįžtama braukiant ekrane. Išjungta: sistemos grįžimas grąžinamas"); b.put("dark_mode_desc", "Juoda ir balta tema");
         b.put("transfer_settings", "Perdavimo"); b.put("auto_save_desc", "Automatiniai priimant failus"); b.put("auto_whitelist_desc", "Tik baltųjų sąrašų įrenginiai"); b.put("save_album_desc", "Skaitykite nuotraukas/videos galerijoje");
         b.put("save_history_desc", "Įrašų perdavimo žurnalis"); b.put("use_pin_desc", "Įsitvirtinkite saugumą"); b.put("https_enable_desc", "Gali paveikti senus įrenginius"); b.put("web_enable_desc", "Lygiklinio perkelimas");
         b.put("auto_start_desc", "Važiuokite užrašyje"); b.put("receive_notif_desc", "Reikia sistemos leidimo"); b.put("port_settings", "Uostų nustatymas"); b.put("timeout_settings", "Ieškoti laiko");
@@ -3975,7 +3985,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Skaidrs nav"); b.put("prepare_failed", "Priekšlikums"); b.put("direct_sending", "Tieša nosūtīšana..."); b.put("sending_percent", "Sūtīšana");
         b.put("direct_send_done", "Direktā nosūtīšana pabeigta!"); b.put("direct_failed", "Direktne ir izmainījusies:"); b.put("connecting", "Savienojoties..."); b.put("receiving_prefix", "Atbildēt...");
         b.put("recv_unzipping", "Atpūtu, ekstrakciju..."); b.put("recv_done", "Atpūtu!"); b.put("recv_failed", "Atjaunījums:"); b.put("round_screen_opt", "Apvalktais ekrāns");
-        b.put("round_screen_opt_desc", "Preventēt lieka aizskābes"); b.put("block_system_back", "Atgriežot sistēmu"); b.put("block_system_back_desc", "novērst konfliktus ar gestiem"); b.put("dark_mode_desc", "Svarts/Baltis tema");
+        b.put("round_screen_opt_desc", "Preventēt lieka aizskābes"); b.put("swipe_back", "Iespējot atgriešanos lietotnē"); b.put("swipe_back_desc", "Ieslēgts: sistēmas atpakaļ ir bloķēts, atgriešanās ar velkošu ekrānā. Izslēgts: sistēmas atpakaļ atjaunojas"); b.put("dark_mode_desc", "Svarts/Baltis tema");
         b.put("transfer_settings", "Transporta"); b.put("auto_save_desc", "Automazinātā pieņem datumus"); b.put("auto_whitelist_desc", "Tikai tīri uzskaitītie ierīces"); b.put("save_album_desc", "Salādīt fotogrāfijas/vidēles galērijā");
         b.put("save_history_desc", "Rekordas pārvešanas žurnāli"); b.put("use_pin_desc", "Jautājums par to, vai ir iespējams,"); b.put("https_enable_desc", "Var ietekmēt vecās ierīces"); b.put("web_enable_desc", "Brauklavas pārveides");
         b.put("auto_start_desc", "Run ar aizmugurām"); b.put("receive_notif_desc", "Vajadzē sistēmas atļauju"); b.put("port_settings", "Portas iestatījumi"); b.put("timeout_settings", "Izmeklēšanas laiks");
@@ -4069,7 +4079,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Прочитање не успеа"); b.put("prepare_failed", "Пригответе неуспешен"); b.put("direct_sending", "Директна испраќања..."); b.put("sending_percent", "Праќање");
         b.put("direct_send_done", "Прямо испраќање завршено!"); b.put("direct_failed", "Неисправен:"); b.put("connecting", "Врзување..."); b.put("receiving_prefix", "Пријавувам...");
         b.put("recv_unzipping", "Прифатено, извлечено..."); b.put("recv_done", "Прифатено!"); b.put("recv_failed", "Пријавата не успеа:"); b.put("round_screen_opt", "Оптиција на кругниот екран");
-        b.put("round_screen_opt_desc", "Предупредување на пресек на работ"); b.put("block_system_back", "Блокирајте го системот назад"); b.put("block_system_back_desc", "Предупредување на конфликтот со жеста"); b.put("dark_mode_desc", "Тема во црно/бела");
+        b.put("round_screen_opt_desc", "Предупредување на пресек на работ"); b.put("swipe_back", "Вклучи враќање во апликацијата"); b.put("swipe_back_desc", "Вклучено: системското враќање е блокирано, се враќа со лизгање на екранот. Исклучено: системското враќање се враќа"); b.put("dark_mode_desc", "Тема во црно/бела");
         b.put("transfer_settings", "Предавање"); b.put("auto_save_desc", "Автоприемете ги датотеките"); b.put("auto_whitelist_desc", "Само набележени уреди"); b.put("save_album_desc", "Зачувајте фотографии/видео на галерија");
         b.put("save_history_desc", "Регистрирани регистри за пренос"); b.put("use_pin_desc", "Подобрување на безбедноста"); b.put("https_enable_desc", "Може да влијае на стари уреди"); b.put("web_enable_desc", "Преместување на браузер");
         b.put("auto_start_desc", "Изведете во позадина"); b.put("receive_notif_desc", "Потребно е системско дозвола"); b.put("port_settings", "Настройки на пристаништето"); b.put("timeout_settings", "Проведување на временски доцнат");
@@ -4163,7 +4173,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Baca gagal"); b.put("prepare_failed", "Sediakan gagal"); b.put("direct_sending", "Penghantaran langsung..."); b.put("sending_percent", "Mengirim");
         b.put("direct_send_done", "Penghantaran langsung lengkap!"); b.put("direct_failed", "Kesilapan langsung:"); b.put("connecting", "Menghubungkan..."); b.put("receiving_prefix", "Menerima...");
         b.put("recv_unzipping", "Dapatkan, mengekstrak..."); b.put("recv_done", "Disimpan untuk dimuat turun."); b.put("recv_failed", "Penerimaan gagal:"); b.put("round_screen_opt", "Pilihan skrin bulat");
-        b.put("round_screen_opt_desc", "Mencegah pemotongan tepi"); b.put("block_system_back", "Menghalang Sistem Kembali"); b.put("block_system_back_desc", "Mencegah konflik isyarat"); b.put("dark_mode_desc", "Tema hitam/putih");
+        b.put("round_screen_opt_desc", "Mencegah pemotongan tepi"); b.put("swipe_back", "Dayakan kembali dalam aplikasi"); b.put("swipe_back_desc", "Hidup: kembali sistem disekat dan kembali dengan leret pada skrin. Mati: kembali sistem pulih"); b.put("dark_mode_desc", "Tema hitam/putih");
         b.put("transfer_settings", "Pemindahan"); b.put("auto_save_desc", "Mengaku fail secara automatik"); b.put("auto_whitelist_desc", "Hanya peranti dalam senarai putih"); b.put("save_album_desc", "Simpan gambar/video ke galeri");
         b.put("save_history_desc", "Rekod log pemindahan"); b.put("use_pin_desc", "Meningkatkan penerimaan keselamatan"); b.put("https_enable_desc", "Mungkin mempengaruhi peranti lama"); b.put("web_enable_desc", "Pemindahan penyemak imbas");
         b.put("auto_start_desc", "Berjalan di latar belakang"); b.put("receive_notif_desc", "Memerlukan kebenaran sistem"); b.put("port_settings", "Tetapan Port"); b.put("timeout_settings", "Mencari Timeout");
@@ -4257,7 +4267,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lesing mislyktes"); b.put("prepare_failed", "Forbered mislykkede"); b.put("direct_sending", "Direkte sending..."); b.put("sending_percent", "Sending");
         b.put("direct_send_done", "Direkt send fullført!"); b.put("direct_failed", "Direkt mislykkes:"); b.put("connecting", "- Forbindelse..."); b.put("receiving_prefix", "- Jeg mottar...");
         b.put("recv_unzipping", "Mottatt, utvinning..."); b.put("recv_done", "Mottatt!"); b.put("recv_failed", "Mottak mislyktes:"); b.put("round_screen_opt", "Rundskjerm");
-        b.put("round_screen_opt_desc", "Forhindre bredd avskæring"); b.put("block_system_back", "Block System tilbake"); b.put("block_system_back_desc", "Forebygge konflikt i gest"); b.put("dark_mode_desc", "Svarte/hvitt tema");
+        b.put("round_screen_opt_desc", "Forhindre bredd avskæring"); b.put("swipe_back", "Aktiver tilbake i appen"); b.put("swipe_back_desc", "På: systemets tilbake blokkeres, og man går tilbake ved å sveipe i skjermen. Av: systemets tilbake virker igjen"); b.put("dark_mode_desc", "Svarte/hvitt tema");
         b.put("transfer_settings", "Overføring"); b.put("auto_save_desc", "Automavtale filer"); b.put("auto_whitelist_desc", "Kun hvite lister"); b.put("save_album_desc", "Lagre bilder/videoer til galleriet");
         b.put("save_history_desc", "Registreringsoverførselslogg"); b.put("use_pin_desc", "Forbedre mottakes sikkerhet"); b.put("https_enable_desc", "Kan påvirke gamle enheter"); b.put("web_enable_desc", "Browseroverføring");
         b.put("auto_start_desc", "Løp i bakgrunn"); b.put("receive_notif_desc", "Kraver systemtillatelse"); b.put("port_settings", "Portinnstillinger"); b.put("timeout_settings", "Søk Timeout");
@@ -4351,7 +4361,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "पढ्न असफल"); b.put("prepare_failed", "तयार असफल"); b.put("direct_sending", "प्रत्यक्ष पठाइ..."); b.put("sending_percent", "पठाउँदै");
         b.put("direct_send_done", "प्रत्यक्ष पठाइ पूर्ण!"); b.put("direct_failed", "प्रत्यक्ष असफल:"); b.put("connecting", "जोड्ने..."); b.put("receiving_prefix", "प्राप्त गर्दैछ...");
         b.put("recv_unzipping", "प्राप्त, निकाल्ने..."); b.put("recv_done", "प्राप्त गरियो! डाउनलोड गर्न सुरक्षित गरियो।"); b.put("recv_failed", "प्राप्ति असफल भयो:"); b.put("round_screen_opt", "राउन्ड स्क्रीन अप्ट");
-        b.put("round_screen_opt_desc", "किनारा काट्ने रोकथाम"); b.put("block_system_back", "प्रणाली रोक्न"); b.put("block_system_back_desc", "अनुहारको द्वन्द्व रोक्नु"); b.put("dark_mode_desc", "कालो/सेतो विषयवस्तु");
+        b.put("round_screen_opt_desc", "किनारा काट्ने रोकथाम"); b.put("swipe_back", "एपभित्रको फर्किने सक्षम गर्नुहोस्"); b.put("swipe_back_desc", "खुला: प्रणालीको फर्किने बन्द हुन्छ र स्क्रिनमा स्वाइपले फर्किन्छ। बन्द: प्रणालीको फर्किने फर्कन्छ"); b.put("dark_mode_desc", "कालो/सेतो विषयवस्तु");
         b.put("transfer_settings", "स्थानान्तरण"); b.put("auto_save_desc", "स्वचालित रूपमा फाइलहरू स्वीकार"); b.put("auto_whitelist_desc", "केवल सेतो सूचीबद्ध उपकरणहरू"); b.put("save_album_desc", "फोटो/भिडियो ग्यालरीमा बचत गर्नुहोस्");
         b.put("save_history_desc", "रेकर्ड स्थानान्तरणको अभिलेख"); b.put("use_pin_desc", "सुरक्षा प्राप्ति बढाउने"); b.put("https_enable_desc", "पुरानो उपकरणमा असर गर्न सक्छ"); b.put("web_enable_desc", "ब्राउजर स्थानान्तरण");
         b.put("auto_start_desc", "पृष्ठभूमिमा दौड"); b.put("receive_notif_desc", "प्रणाली अनुमति चाहिन्छ"); b.put("port_settings", "पोर्ट सेटिंग्स"); b.put("timeout_settings", "खोज समय");
@@ -4445,7 +4455,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Citirea a eşuat"); b.put("prepare_failed", "Pregătiţi eşecul"); b.put("direct_sending", "Trimitere directă..."); b.put("sending_percent", "Trimitere");
         b.put("direct_send_done", "Trimitere directă completă!"); b.put("direct_failed", "Efect direct:"); b.put("connecting", "Conectarea..."); b.put("receiving_prefix", "Primesc...");
         b.put("recv_unzipping", "Am primit, am extrag..."); b.put("recv_done", "Am primit, am salvat."); b.put("recv_failed", "Recepţia a eşuat:"); b.put("round_screen_opt", "Optarea ecranului rotund");
-        b.put("round_screen_opt_desc", "Prevenirea tăieturii margine"); b.put("block_system_back", "Blocaţi sistemul înapoi"); b.put("block_system_back_desc", "Preveniți conflictul de gest"); b.put("dark_mode_desc", "Tema alb/negru");
+        b.put("round_screen_opt_desc", "Prevenirea tăieturii margine"); b.put("swipe_back", "Activează întoarcerea în aplicație"); b.put("swipe_back_desc", "Activat: întoarcerea de sistem este blocată, se revine prin glisare în interfață. Dezactivat: revine întoarcerea de sistem"); b.put("dark_mode_desc", "Tema alb/negru");
         b.put("transfer_settings", "Transfer"); b.put("auto_save_desc", "Acceptă automată fișiere"); b.put("auto_whitelist_desc", "Doar dispozitive cu listă albă"); b.put("save_album_desc", "Salvați fotografii/videouri în galerie");
         b.put("save_history_desc", "Înregistrări înregistrate"); b.put("use_pin_desc", "Îmbunătăţirea securităţii"); b.put("https_enable_desc", "Poate afecta dispozitivele vechi"); b.put("web_enable_desc", "Transferul prin browser");
         b.put("auto_start_desc", "Fă-o în fundal"); b.put("receive_notif_desc", "Require permisiunea sistemului"); b.put("port_settings", "Setări de port"); b.put("timeout_settings", "Căutare Timeout");
@@ -4539,7 +4549,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Čítať sa neúspešne"); b.put("prepare_failed", "Pripravte sa"); b.put("direct_sending", "Priame vyslanie..."); b.put("sending_percent", "Poslanie");
         b.put("direct_send_done", "Priame vyslanie kompletné!"); b.put("direct_failed", "Priame zlyhanie:"); b.put("connecting", "Spájať..."); b.put("receiving_prefix", "- Získam...");
         b.put("recv_unzipping", "Prijatá, vyťažená..."); b.put("recv_done", "Prijatý!"); b.put("recv_failed", "Zlyhanie:"); b.put("round_screen_opt", "Optovanie okrúhlyho obrazovky");
-        b.put("round_screen_opt_desc", "Predchádzanie prerušeniu okraje"); b.put("block_system_back", "Zastavovací systém"); b.put("block_system_back_desc", "Predísť konfliktu gestami"); b.put("dark_mode_desc", "Tematické černo/biely");
+        b.put("round_screen_opt_desc", "Predchádzanie prerušeniu okraje"); b.put("swipe_back", "Zapnúť návrat v aplikácii"); b.put("swipe_back_desc", "Zap.: systémové späť je blokované, späť sa ide potiahnutím v rozhraní. Vyp.: systémové späť funguje"); b.put("dark_mode_desc", "Tematické černo/biely");
         b.put("transfer_settings", "Prenos"); b.put("auto_save_desc", "Automaticky prijímať súbory"); b.put("auto_whitelist_desc", "Iba zariadenia na biely zoznam"); b.put("save_album_desc", "Uložte fotky/videá do galérie");
         b.put("save_history_desc", "Záznamové záznamy o prenose"); b.put("use_pin_desc", "Zlepšiť príjem zabezpečenia"); b.put("https_enable_desc", "Môže ovplyvniť staré zariadenia"); b.put("web_enable_desc", "Prenos prehliadača");
         b.put("auto_start_desc", "Vytáčaj v pozadí"); b.put("receive_notif_desc", "Vyžaduje systémové povolenie"); b.put("port_settings", "Nastavenia prístavu"); b.put("timeout_settings", "Vyhľadávanie Timeout");
@@ -4633,7 +4643,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Preberite ne uspelo"); b.put("prepare_failed", "Pripravite se"); b.put("direct_sending", "-Srednja pošiljka..."); b.put("sending_percent", "Pošiljanje");
         b.put("direct_send_done", "Poslanje je popolno!"); b.put("direct_failed", "Neposredna napaka:"); b.put("connecting", "Povezava..."); b.put("receiving_prefix", "Prijemajo...");
         b.put("recv_unzipping", "Prijeli smo, izvlekli..."); b.put("recv_done", "Prijet!"); b.put("recv_failed", "Prejem ni uspel:"); b.put("round_screen_opt", "Izbira okroglega zaslona");
-        b.put("round_screen_opt_desc", "Preprečevanje preskakanja robov"); b.put("block_system_back", "Sistem blokiranja nazaj"); b.put("block_system_back_desc", "Preprečevanje konfliktov z gesti"); b.put("dark_mode_desc", "Tematska tema črno/belo");
+        b.put("round_screen_opt_desc", "Preprečevanje preskakanja robov"); b.put("swipe_back", "Vklopi vračanje v aplikaciji"); b.put("swipe_back_desc", "Vklop.: sistemsko nazaj je blokirano, nazaj se vrne s potegom v vmesniku. Izklop.: sistemsko nazaj deluje"); b.put("dark_mode_desc", "Tematska tema črno/belo");
         b.put("transfer_settings", "Prenos"); b.put("auto_save_desc", "Samodejno sprejemajo datoteke"); b.put("auto_whitelist_desc", "Samo naprave na bele seznamu"); b.put("save_album_desc", "Slika/videne shranite v galerijo");
         b.put("save_history_desc", "Zapisi dnevnika prenosa"); b.put("use_pin_desc", "Povečanje varnosti prejemnikov"); b.put("https_enable_desc", "Lahko vpliva na stare naprave"); b.put("web_enable_desc", "Prenos brskalnika");
         b.put("auto_start_desc", "V ozadju"); b.put("receive_notif_desc", "Zahteva dovoljenje sistema"); b.put("port_settings", "Nastavitve pristanišč"); b.put("timeout_settings", "Iskanje časovnega roka");
@@ -4727,7 +4737,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Leximi dështoi"); b.put("prepare_failed", "Përgatitja dështoi"); b.put("direct_sending", "Të dërgojmë drejtpërdrejt..."); b.put("sending_percent", "Të dërgojmë");
         b.put("direct_send_done", "Shërbimi i plotë!"); b.put("direct_failed", "Fakti i drejtpërdrejtë dështoi:"); b.put("connecting", "Për lidhjen..."); b.put("receiving_prefix", "Të marrësh...");
         b.put("recv_unzipping", "Të marrë, të nxjerrë..."); b.put("recv_done", "E pranuar!"); b.put("recv_failed", "Të marrë dështuar:"); b.put("round_screen_opt", "Optoni ekranin e rrumbullakët");
-        b.put("round_screen_opt_desc", "Përndryshe të ndërprerë krahun"); b.put("block_system_back", "Mblojë sistemin e kthimit"); b.put("block_system_back_desc", "Përparëson konfliktin e gjesteve"); b.put("dark_mode_desc", "Tema e zezë/e bardhë");
+        b.put("round_screen_opt_desc", "Përndryshe të ndërprerë krahun"); b.put("swipe_back", "Aktivizo kthimin brenda aplikacionit"); b.put("swipe_back_desc", "Aktiv: kthimi i sistemit bllokohet, kthehet me rrëshqitje në ekran. Joaktiv: kthimi i sistemit rikthehet"); b.put("dark_mode_desc", "Tema e zezë/e bardhë");
         b.put("transfer_settings", "Transferimi"); b.put("auto_save_desc", "Automatike të pranojnë skedarët"); b.put("auto_whitelist_desc", "Vetëm pajisjet e renditura në listë të bardhë"); b.put("save_album_desc", "Shpejtje foto/video në galeri");
         b.put("save_history_desc", "Regjistrimi i transferimit të regjistrave"); b.put("use_pin_desc", "Përmirësimi i sigurimit të marrjes"); b.put("https_enable_desc", "Mund të ndikojë në pajisjet e vjetra"); b.put("web_enable_desc", "Transferimi i shfletuesit");
         b.put("auto_start_desc", "Të drejtohesh në sfond"); b.put("receive_notif_desc", "Kërkon leje të sistemit"); b.put("port_settings", "Setting port"); b.put("timeout_settings", "Kërkimi Timeout");
@@ -4821,7 +4831,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Прочитање није успело"); b.put("prepare_failed", "Припрема је провалила"); b.put("direct_sending", "Директно слање..."); b.put("sending_percent", "Пошаљивање");
         b.put("direct_send_done", "Прямо пошаљивање завршено!"); b.put("direct_failed", "Непостојан неуспех:"); b.put("connecting", "Сврзавање..."); b.put("receiving_prefix", "Пријем...");
         b.put("recv_unzipping", "Примао сам, извукао..."); b.put("recv_done", "Прихваћен!"); b.put("recv_failed", "Пријем није успео:"); b.put("round_screen_opt", "Оптиција круг екрана");
-        b.put("round_screen_opt_desc", "Превенција прекида крајева"); b.put("block_system_back", "Блокира систем назад"); b.put("block_system_back_desc", "Превенција конфликата у жестама"); b.put("dark_mode_desc", "Црно-бела тема");
+        b.put("round_screen_opt_desc", "Превенција прекида крајева"); b.put("swipe_back", "Укључи враћање у апликацији"); b.put("swipe_back_desc", "Укључено: системско назад је блокирано, назад се иде превлачењем. Искључено: системско назад ради"); b.put("dark_mode_desc", "Црно-бела тема");
         b.put("transfer_settings", "Предај"); b.put("auto_save_desc", "Автономно прихватање датотека"); b.put("auto_whitelist_desc", "Само уређаји на белој листи"); b.put("save_album_desc", "Сачувајте слике/видео у галерију");
         b.put("save_history_desc", "Прописи за пренос"); b.put("use_pin_desc", "Појачавање сигурности"); b.put("https_enable_desc", "Може утицати на старе уређаје"); b.put("web_enable_desc", "Премештај прегледача");
         b.put("auto_start_desc", "Победите у позадини"); b.put("receive_notif_desc", "Потребно је системско дозволу"); b.put("port_settings", "Поставе порта"); b.put("timeout_settings", "Прошук за време");
@@ -4915,7 +4925,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Läs misslyckats"); b.put("prepare_failed", "Förbered misslyckats"); b.put("direct_sending", "Direkt sändning..."); b.put("sending_percent", "Skicka");
         b.put("direct_send_done", "Direkt skickning fullständig!"); b.put("direct_failed", "Direkt misslyckats:"); b.put("connecting", "- Förbindelse..."); b.put("receiving_prefix", "- Jag tar emot...");
         b.put("recv_unzipping", "-Förbörd, utvinning..."); b.put("recv_done", "-Försökt för nedladdning."); b.put("recv_failed", "Inkommit fel:"); b.put("round_screen_opt", "Runda skärmen");
-        b.put("round_screen_opt_desc", "Förhindra bränns avbrott"); b.put("block_system_back", "Blockera systemet tillbaka"); b.put("block_system_back_desc", "Förhindra konflikt med gester"); b.put("dark_mode_desc", "Svarta/vita teman");
+        b.put("round_screen_opt_desc", "Förhindra bränns avbrott"); b.put("swipe_back", "Aktivera tillbaka i appen"); b.put("swipe_back_desc", "På: systemets tillbaka blockeras och man går tillbaka genom att dra i skärmen. Av: systemets tillbaka fungerar igen"); b.put("dark_mode_desc", "Svarta/vita teman");
         b.put("transfer_settings", "Överföring"); b.put("auto_save_desc", "Automavtala filer"); b.put("auto_whitelist_desc", "Endast apparater som är på en vitlista"); b.put("save_album_desc", "Spara bilder/videor till galleriet");
         b.put("save_history_desc", "Registreringsöverföringsloggar"); b.put("use_pin_desc", "Förbättra mottagande säkerhet"); b.put("https_enable_desc", "Kan påverka gamla enheter"); b.put("web_enable_desc", "Browseröverföring");
         b.put("auto_start_desc", "Kör i bakgrunden"); b.put("receive_notif_desc", "Behöver systemtillstånd"); b.put("port_settings", "Portinställningar"); b.put("timeout_settings", "Sök tid");
@@ -5009,7 +5019,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Kusoma kushindwa"); b.put("prepare_failed", "Kuandaa kutofaulu"); b.put("direct_sending", "Kutuma moja kwa moja..."); b.put("sending_percent", "Kutuma");
         b.put("direct_send_done", "Kutuma moja kwa moja kamili!"); b.put("direct_failed", "Moja kwa moja kukosa:"); b.put("connecting", "Kuunganisha..."); b.put("receiving_prefix", "Kupokea...");
         b.put("recv_unzipping", "Kupokea, kuondoa..."); b.put("recv_done", "Imepokelewa!"); b.put("recv_failed", "Kupokea kushindwa:"); b.put("round_screen_opt", "Screen Round Opt");
-        b.put("round_screen_opt_desc", "Kuzuia kukata makali"); b.put("block_system_back", "Kuzuia Mfumo Back"); b.put("block_system_back_desc", "Epuka migogoro ya ishara"); b.put("dark_mode_desc", "Mandhari nyeusi/nyeupe");
+        b.put("round_screen_opt_desc", "Kuzuia kukata makali"); b.put("swipe_back", "Washa kurudi ndani ya programu"); b.put("swipe_back_desc", "Imewashwa: kurudi kwa mfumo kimezuiwa na kurudi hufanywa kwa kutelezesha kwenye skrini. Imezimwa: kurudi kwa mfumo hurudi"); b.put("dark_mode_desc", "Mandhari nyeusi/nyeupe");
         b.put("transfer_settings", "Uhamisho"); b.put("auto_save_desc", "Auto kukubali faili"); b.put("auto_whitelist_desc", "Vifaa tu vilivyoorodheshwa"); b.put("save_album_desc", "Hifadhi picha/viduu kwenye maktaba");
         b.put("save_history_desc", "Rekodi za kuhamisha rekodi"); b.put("use_pin_desc", "Kuongeza kupata usalama"); b.put("https_enable_desc", "Inaweza kuathiri vifaa vya zamani"); b.put("web_enable_desc", "Browser uhamisho");
         b.put("auto_start_desc", "Kuendesha katika background"); b.put("receive_notif_desc", "Inahitaji ruhusa ya mfumo"); b.put("port_settings", "Mipangilio ya Bandari"); b.put("timeout_settings", "Kutafuta Wakati wa Kuondoka");
@@ -5103,7 +5113,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "อ่านล้มเหลว"); b.put("prepare_failed", "เตรียมผิดพลาด"); b.put("direct_sending", "ส่งตรง..."); b.put("sending_percent", "ส่ง");
         b.put("direct_send_done", "ส่งตรงแล้วแล้ว"); b.put("direct_failed", "การทําผิดพลาดโดยตรง:"); b.put("connecting", "การเชื่อมต่อ..."); b.put("receiving_prefix", "รับ...");
         b.put("recv_unzipping", "ได้รับ, ถอน ..."); b.put("recv_done", "ได้รับแล้ว!"); b.put("recv_failed", "รับผิดพลาด:"); b.put("round_screen_opt", "การเลือกจอกลม");
-        b.put("round_screen_opt_desc", "ป้องกันการตัดขอบ"); b.put("block_system_back", "ปิดระบบกลับ"); b.put("block_system_back_desc", "ป้องกันการขัดแย้งทางการแสดงออก"); b.put("dark_mode_desc", "หัวข้อสีดํา/ขาว");
+        b.put("round_screen_opt_desc", "ป้องกันการตัดขอบ"); b.put("swipe_back", "เปิดใช้การย้อนกลับในแอป"); b.put("swipe_back_desc", "เปิด: ปิดการย้อนกลับของระบบและย้อนกลับด้วยการปัดในหน้าจอ ปิด: การย้อนกลับของระบบกลับมา"); b.put("dark_mode_desc", "หัวข้อสีดํา/ขาว");
         b.put("transfer_settings", "การโอน"); b.put("auto_save_desc", "รับไฟล์โดยอัตโนมัติ"); b.put("auto_whitelist_desc", "หน่วยงานที่อยู่ในรายการขาวเท่านั้น"); b.put("save_album_desc", "เก็บภาพ/วีดีโอไปยังห้องแสดงภาพ");
         b.put("save_history_desc", "รายการการโอนเงิน"); b.put("use_pin_desc", "เพิ่มความปลอดภัยรับ"); b.put("https_enable_desc", "อาจส่งผลต่ออุปกรณ์เก่า"); b.put("web_enable_desc", "การโอนตัวอัพพฤธ์");
         b.put("auto_start_desc", "วิ่งในพื้นหลัง"); b.put("receive_notif_desc", "จําเป็นต้องอนุญาตระบบ"); b.put("port_settings", "การตั้งค่าท่าเรือ"); b.put("timeout_settings", "ค้นหาเวลา");
@@ -5197,7 +5207,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Читання не вдалося"); b.put("prepare_failed", "Приготуйте невдало"); b.put("direct_sending", "Пряма відправка..."); b.put("sending_percent", "Посилає");
         b.put("direct_send_done", "Посилаємо прямо!"); b.put("direct_failed", "Неподібна:"); b.put("connecting", "З'єднавши..."); b.put("receiving_prefix", "Приймаю...");
         b.put("recv_unzipping", "Приймав, витягував..."); b.put("recv_done", "Прийшло! Зберіг на завантаження."); b.put("recv_failed", "Не вдалося отримати:"); b.put("round_screen_opt", "Оптивація круглої екрану");
-        b.put("round_screen_opt_desc", "Протишкодити відрізанню краю"); b.put("block_system_back", "Забиває систему назад"); b.put("block_system_back_desc", "Не допускайте конфлікту в жестах"); b.put("dark_mode_desc", "Чорно-білий тематика");
+        b.put("round_screen_opt_desc", "Протишкодити відрізанню краю"); b.put("swipe_back", "Увімкнути повернення в застосунку"); b.put("swipe_back_desc", "Увімк.: системне повернення блокується, назад — свайпом в інтерфейсі. Вимк.: системне повернення працює"); b.put("dark_mode_desc", "Чорно-білий тематика");
         b.put("transfer_settings", "Передача"); b.put("auto_save_desc", "Автоматично приймають файли"); b.put("auto_whitelist_desc", "Тільки пристрої з білого списку"); b.put("save_album_desc", "Зберігайте фотографії/відео в галерею");
         b.put("save_history_desc", "Записи про переведення"); b.put("use_pin_desc", "Посилення безпеки"); b.put("https_enable_desc", "Можуть вплинути на старі пристрої"); b.put("web_enable_desc", "Передача браузера");
         b.put("auto_start_desc", "Витікати на задньому плані"); b.put("receive_notif_desc", "Запрошує системне дозволу"); b.put("port_settings", "Настройки портів"); b.put("timeout_settings", "Пошук Timeout");
@@ -5291,7 +5301,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "پڑھنے ناکام"); b.put("prepare_failed", "ناکام تیار کریں"); b.put("direct_sending", "براہ راست بھیجنے..."); b.put("sending_percent", "بھیجنا");
         b.put("direct_send_done", "براہ راست بھیج مکمل!"); b.put("direct_failed", "براہ راست ناکام:"); b.put("connecting", "رابطہ..."); b.put("receiving_prefix", "وصول کرنے کے لئے ...");
         b.put("recv_unzipping", "موصول، نکالنے..."); b.put("recv_done", "موصول ہوا! ڈاؤن لوڈ کرنے کے لئے محفوظ کیا گیا."); b.put("recv_failed", "وصولی ناکام:"); b.put("round_screen_opt", "گول اسکرین کا انتخاب");
-        b.put("round_screen_opt_desc", "کنارے کا کٹاو روکنا"); b.put("block_system_back", "بلاک سسٹم واپس"); b.put("block_system_back_desc", "اشاروں کے تنازعہ سے بچیں"); b.put("dark_mode_desc", "سیاہ/سفید موضوع");
+        b.put("round_screen_opt_desc", "کنارے کا کٹاو روکنا"); b.put("swipe_back", "ایپ کے اندر واپسی فعال کریں"); b.put("swipe_back_desc", "فعال: سسٹم واپسی بند ہو جاتی ہے اور اسکرین میں سوائپ سے واپس جاتے ہیں۔ غیر فعال: سسٹم واپسی بحال ہوتی ہے"); b.put("dark_mode_desc", "سیاہ/سفید موضوع");
         b.put("transfer_settings", "منتقلی"); b.put("auto_save_desc", "آٹو فائلوں کو قبول"); b.put("auto_whitelist_desc", "صرف وائٹ لسٹ والے آلات"); b.put("save_album_desc", "گیلری میں تصاویر/ویڈیوز محفوظ کریں");
         b.put("save_history_desc", "ریکارڈ ٹرانسفر کی نوشتہ جات"); b.put("use_pin_desc", "تحفظ کو بہتر بنائیں"); b.put("https_enable_desc", "پرانے آلات کو متاثر کر سکتا ہے"); b.put("web_enable_desc", "براؤزر ٹرانسفر");
         b.put("auto_start_desc", "پس منظر میں چلائیں"); b.put("receive_notif_desc", "سسٹم کی اجازت کی ضرورت ہے"); b.put("port_settings", "بندرگاہ کی ترتیبات"); b.put("timeout_settings", "تلاش ٹائم آؤٹ");
@@ -5385,7 +5395,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Oʻqish muvaffaqiyatsiz tugadi"); b.put("prepare_failed", "Ishlab chiqish muvaffaqiyatsiz tugadi"); b.put("direct_sending", "To'g'ridan-to'g'ri jo'natish..."); b.put("sending_percent", "Joʻnatish");
         b.put("direct_send_done", "To'g'ridan-to'g'ri jo'natish to'liq!"); b.put("direct_failed", "Toʻgʻridan-toʻgʻri muvaffaqiyatsiz tugadi:"); b.put("connecting", "Ulanish..."); b.put("receiving_prefix", "Qayta qabul qilmoq...");
         b.put("recv_unzipping", "Qutqarilgan, chiqarib olingan..."); b.put("recv_done", "Qutqarilgan!"); b.put("recv_failed", "Qolaversa:"); b.put("round_screen_opt", "Toʻgʻri ekranni tanlash");
-        b.put("round_screen_opt_desc", "O'tkirlik o'chirilishini oldini olish"); b.put("block_system_back", "Tizimni bloklash"); b.put("block_system_back_desc", "Ishq bilan kelishmovchiliklarni oldini olish"); b.put("dark_mode_desc", "Qora va oq mavzu");
+        b.put("round_screen_opt_desc", "O'tkirlik o'chirilishini oldini olish"); b.put("swipe_back", "Ilova ichida qaytishni yoqish"); b.put("swipe_back_desc", "Yoniq: tizim qaytishi bloklanadi, ekranda surish bilan qaytiladi. O‘chiq: tizim qaytishi tiklanadi"); b.put("dark_mode_desc", "Qora va oq mavzu");
         b.put("transfer_settings", "Oʻtkazish"); b.put("auto_save_desc", "Fayllarni avtomatik qabul qilish"); b.put("auto_whitelist_desc", "Faqat oq ro'yxatga olingan qurilmalar"); b.put("save_album_desc", "Rasm/vidéolarni galereyaga saqlash");
         b.put("save_history_desc", "Yozuvlarni oʻtkazish loglari"); b.put("use_pin_desc", "Xavfsizlikni oshirish"); b.put("https_enable_desc", "Eski qurilmalarga ta'sir qilishi mumkin"); b.put("web_enable_desc", "Browserni oʻtkazish");
         b.put("auto_start_desc", "Orqa fonda yurish"); b.put("receive_notif_desc", "Tizim ruxsatnomasi talab etiladi"); b.put("port_settings", "Portlar moslamalari"); b.put("timeout_settings", "Qidirish muddati");
@@ -5479,7 +5489,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lettura non riuscita"); b.put("prepare_failed", "Preparazione non riuscita"); b.put("direct_sending", "Invio diretto..."); b.put("sending_percent", "Invio ");
         b.put("direct_send_done", "Invio diretto completato!"); b.put("direct_failed", "Direct non riuscito: "); b.put("connecting", "Connessione..."); b.put("receiving_prefix", "Ricezione... ");
         b.put("recv_unzipping", "Ricevuto, estrazione..."); b.put("recv_done", "Ricevuto! Salvato in Download"); b.put("recv_failed", "Ricezione non riuscita: "); b.put("round_screen_opt", "Ottimizzazione schermo rotondo");
-        b.put("round_screen_opt_desc", "Evita il taglio dei bordi"); b.put("block_system_back", "Blocca il tasto Indietro di sistema"); b.put("block_system_back_desc", "Evita conflitti di gesti"); b.put("dark_mode_desc", "Tema bianco/nero");
+        b.put("round_screen_opt_desc", "Evita il taglio dei bordi"); b.put("swipe_back", "Attiva il ritorno interno all’app"); b.put("swipe_back_desc", "Attivo: il tasto indietro di sistema è bloccato e si torna con lo scorrimento nell’interfaccia. Disattivo: torna l’indietro di sistema"); b.put("dark_mode_desc", "Tema bianco/nero");
         b.put("transfer_settings", "Trasferimento"); b.put("auto_save_desc", "Accetta file automaticamente"); b.put("auto_whitelist_desc", "Solo dispositivi in whitelist"); b.put("save_album_desc", "Salva foto/video in galleria");
         b.put("save_history_desc", "Registra i log di trasferimento"); b.put("use_pin_desc", "Aumenta la sicurezza in ricezione"); b.put("https_enable_desc", "Può influire sui dispositivi vecchi"); b.put("web_enable_desc", "Trasferimento da browser");
         b.put("auto_start_desc", "Esegui in background"); b.put("receive_notif_desc", "Richiede permesso di sistema"); b.put("port_settings", "Impostazioni porta"); b.put("timeout_settings", "Timeout ricerca");
@@ -5573,7 +5583,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Lezen mislukt"); b.put("prepare_failed", "Voorbereiden mislukt"); b.put("direct_sending", "Direct verzenden..."); b.put("sending_percent", "Verzenden ");
         b.put("direct_send_done", "Direct verzenden voltooid!"); b.put("direct_failed", "Direct mislukt: "); b.put("connecting", "Verbinden..."); b.put("receiving_prefix", "Ontvangen... ");
         b.put("recv_unzipping", "Ontvangen, uitpakken..."); b.put("recv_done", "Ontvangen! Opgeslagen in Download"); b.put("recv_failed", "Ontvangen mislukt: "); b.put("round_screen_opt", "Rond scherm optimaliseren");
-        b.put("round_screen_opt_desc", "Voorkom afsnijden van randen"); b.put("block_system_back", "Systeem-terug blokkeren"); b.put("block_system_back_desc", "Voorkom gebarenconflicten"); b.put("dark_mode_desc", "Zwart/wit thema");
+        b.put("round_screen_opt_desc", "Voorkom afsnijden van randen"); b.put("swipe_back", "Terug binnen de app inschakelen"); b.put("swipe_back_desc", "Aan: systeem-terug wordt geblokkeerd en teruggaan gaat met vegen in het scherm. Uit: systeem-terug werkt weer"); b.put("dark_mode_desc", "Zwart/wit thema");
         b.put("transfer_settings", "Overdracht"); b.put("auto_save_desc", "Bestanden automatisch accepteren"); b.put("auto_whitelist_desc", "Alleen apparaten op de witte lijst"); b.put("save_album_desc", "Foto's/video's in galerij opslaan");
         b.put("save_history_desc", "Overdrachtslogboek bijhouden"); b.put("use_pin_desc", "Ontvangstbeveiliging verhogen"); b.put("https_enable_desc", "Kan oude apparaten beïnvloeden"); b.put("web_enable_desc", "Overdracht via browser");
         b.put("auto_start_desc", "Op de achtergrond draaien"); b.put("receive_notif_desc", "Systeemtoestemming nodig"); b.put("port_settings", "Poortinstellingen"); b.put("timeout_settings", "Zoektimeout");
@@ -5667,7 +5677,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Odczyt nie udał się"); b.put("prepare_failed", "Przygotowanie nie udało się"); b.put("direct_sending", "Wysyłka bezpośrednia..."); b.put("sending_percent", "Wysyłanie ");
         b.put("direct_send_done", "Wysyłka bezpośrednia zakończona!"); b.put("direct_failed", "Direct nie udał się: "); b.put("connecting", "Łączenie..."); b.put("receiving_prefix", "Odbiór... ");
         b.put("recv_unzipping", "Odebrano, rozpakowywanie..."); b.put("recv_done", "Odebrano! Zapisano w Download"); b.put("recv_failed", "Odbiór nie udał się: "); b.put("round_screen_opt", "Optymalizacja okrągłego ekranu");
-        b.put("round_screen_opt_desc", "Zapobiega ucinaniu krawędzi"); b.put("block_system_back", "Blokuj systemowy przycisk Wstecz"); b.put("block_system_back_desc", "Zapobiega konfliktom gestów"); b.put("dark_mode_desc", "Motyw biało-czarny");
+        b.put("round_screen_opt_desc", "Zapobiega ucinaniu krawędzi"); b.put("swipe_back", "Włącz wstecz w aplikacji"); b.put("swipe_back_desc", "Wł.: systemowy przycisk Wstecz jest blokowany, cofanie działa przez przesunięcie w interfejsie. Wył.: systemowy Wstecz wraca"); b.put("dark_mode_desc", "Motyw biało-czarny");
         b.put("transfer_settings", "Przesyłanie"); b.put("auto_save_desc", "Automatycznie akceptuj pliki"); b.put("auto_whitelist_desc", "Tylko urządzenia z białej listy"); b.put("save_album_desc", "Zapisuj zdjęcia/filmy w galerii");
         b.put("save_history_desc", "Zapisuj logi przesyłania"); b.put("use_pin_desc", "Zwiększ bezpieczeństwo odbioru"); b.put("https_enable_desc", "Może wpłynąć na starsze urządzenia"); b.put("web_enable_desc", "Przesyłanie przez przeglądarkę");
         b.put("auto_start_desc", "Działaj w tle"); b.put("receive_notif_desc", "Wymaga uprawnień systemowych"); b.put("port_settings", "Ustawienia portu"); b.put("timeout_settings", "Limit wyszukiwania");
@@ -5761,7 +5771,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Okuma başarısız"); b.put("prepare_failed", "Hazırlık başarısız"); b.put("direct_sending", "Doğrudan gönderiliyor..."); b.put("sending_percent", "Gönderiliyor ");
         b.put("direct_send_done", "Doğrudan gönderim tamamlandı!"); b.put("direct_failed", "Direct başarısız: "); b.put("connecting", "Bağlanılıyor..."); b.put("receiving_prefix", "Alınıyor... ");
         b.put("recv_unzipping", "Alındı, çıkarılıyor..."); b.put("recv_done", "Alındı! Download klasörüne kaydedildi"); b.put("recv_failed", "Alma başarısız: "); b.put("round_screen_opt", "Yuvarlak ekran iyileştirmesi");
-        b.put("round_screen_opt_desc", "Kenarların kesilmesini önler"); b.put("block_system_back", "Sistem geri tuşunu engelle"); b.put("block_system_back_desc", "Hareket çakışmasını önler"); b.put("dark_mode_desc", "Siyah/beyaz tema");
+        b.put("round_screen_opt_desc", "Kenarların kesilmesini önler"); b.put("swipe_back", "Uygulama içi geri dönüşü aç"); b.put("swipe_back_desc", "Açık: sistem geri tuşu engellenir, ekranda kaydırarak geri dönülür. Kapalı: sistem geri tuşu geri gelir"); b.put("dark_mode_desc", "Siyah/beyaz tema");
         b.put("transfer_settings", "Aktarım"); b.put("auto_save_desc", "Dosyaları otomatik kabul et"); b.put("auto_whitelist_desc", "Yalnızca beyaz listedeki cihazlar"); b.put("save_album_desc", "Fotoğraf/videoları galeriye kaydet");
         b.put("save_history_desc", "Aktarım günlüklerini kaydet"); b.put("use_pin_desc", "Alma güvenliğini artır"); b.put("https_enable_desc", "Eski cihazları etkileyebilir"); b.put("web_enable_desc", "Tarayıcıdan aktarım");
         b.put("auto_start_desc", "Arka planda çalıştır"); b.put("receive_notif_desc", "Sistem izni gerekir"); b.put("port_settings", "Port ayarları"); b.put("timeout_settings", "Arama zaman aşımı");
@@ -5855,7 +5865,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Gagal membaca"); b.put("prepare_failed", "Gagal menyiapkan"); b.put("direct_sending", "Kirim langsung..."); b.put("sending_percent", "Mengirim ");
         b.put("direct_send_done", "Kirim langsung selesai!"); b.put("direct_failed", "Direct gagal: "); b.put("connecting", "Menghubungkan..."); b.put("receiving_prefix", "Menerima... ");
         b.put("recv_unzipping", "Diterima, mengekstrak..."); b.put("recv_done", "Diterima! Disimpan ke Download"); b.put("recv_failed", "Gagal menerima: "); b.put("round_screen_opt", "Optimasi layar bulat");
-        b.put("round_screen_opt_desc", "Mencegah tepi terpotong"); b.put("block_system_back", "Blokir tombol kembali sistem"); b.put("block_system_back_desc", "Mencegah konflik gestur"); b.put("dark_mode_desc", "Tema hitam/putih");
+        b.put("round_screen_opt_desc", "Mencegah tepi terpotong"); b.put("swipe_back", "Aktifkan kembali dalam aplikasi"); b.put("swipe_back_desc", "Aktif: tombol kembali sistem diblokir dan kembali dengan geser di layar. Nonaktif: kembali sistem pulih"); b.put("dark_mode_desc", "Tema hitam/putih");
         b.put("transfer_settings", "Transfer"); b.put("auto_save_desc", "Terima berkas otomatis"); b.put("auto_whitelist_desc", "Hanya perangkat daftar putih"); b.put("save_album_desc", "Simpan foto/video ke galeri");
         b.put("save_history_desc", "Catat log transfer"); b.put("use_pin_desc", "Tingkatkan keamanan penerimaan"); b.put("https_enable_desc", "Dapat memengaruhi perangkat lama"); b.put("web_enable_desc", "Transfer lewat browser");
         b.put("auto_start_desc", "Berjalan di latar belakang"); b.put("receive_notif_desc", "Memerlukan izin sistem"); b.put("port_settings", "Pengaturan port"); b.put("timeout_settings", "Batas waktu pencarian");
@@ -5949,7 +5959,7 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         b.put("read_failed", "Đọc thất bại"); b.put("prepare_failed", "Chuẩn bị thất bại"); b.put("direct_sending", "Đang gửi trực tiếp..."); b.put("sending_percent", "Đang gửi ");
         b.put("direct_send_done", "Gửi trực tiếp hoàn tất!"); b.put("direct_failed", "Direct thất bại: "); b.put("connecting", "Đang kết nối..."); b.put("receiving_prefix", "Đang nhận... ");
         b.put("recv_unzipping", "Đã nhận, đang giải nén..."); b.put("recv_done", "Đã nhận! Đã lưu vào Download"); b.put("recv_failed", "Nhận thất bại: "); b.put("round_screen_opt", "Tối ưu màn hình tròn");
-        b.put("round_screen_opt_desc", "Ngăn cắt mép viền"); b.put("block_system_back", "Chặn nút quay lại hệ thống"); b.put("block_system_back_desc", "Tránh xung đột cử chỉ"); b.put("dark_mode_desc", "Chủ đề đen/trắng");
+        b.put("round_screen_opt_desc", "Ngăn cắt mép viền"); b.put("swipe_back", "Bật quay lại trong ứng dụng"); b.put("swipe_back_desc", "Bật: chặn nút quay lại hệ thống và quay lại bằng vuốt trong giao diện. Tắt: nút quay lại hệ thống hoạt động lại"); b.put("dark_mode_desc", "Chủ đề đen/trắng");
         b.put("transfer_settings", "Truyền tệp"); b.put("auto_save_desc", "Tự động nhận tệp"); b.put("auto_whitelist_desc", "Chỉ thiết bị trong danh sách trắng"); b.put("save_album_desc", "Lưu ảnh/video vào thư viện");
         b.put("save_history_desc", "Ghi nhật ký truyền"); b.put("use_pin_desc", "Tăng bảo mật khi nhận"); b.put("https_enable_desc", "Có thể ảnh hưởng thiết bị cũ"); b.put("web_enable_desc", "Truyền qua trình duyệt");
         b.put("auto_start_desc", "Chạy nền"); b.put("receive_notif_desc", "Cần quyền hệ thống"); b.put("port_settings", "Cài đặt cổng"); b.put("timeout_settings", "Thời gian tìm kiếm");
