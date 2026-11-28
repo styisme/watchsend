@@ -1,5 +1,7 @@
 [简体中文](README.md) | [繁體中文](README_zh_TW.md) | **English** | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **User Guide**: [English edition](docs/USER_GUIDE_en.md)
+
 # WatchSend
 
 > The watch evolution of OldSend. Retaining all hardcore transfer capabilities, the UI has been completely reshaped into Wear OS native "3D Wheel" and "Pill Cards", designed for small and round screens.
@@ -99,6 +101,7 @@ Toolchain: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** (to maintain `minSdkVersion 10`,
 - [CHANGELOG.md](CHANGELOG.md)
 - [CONTRIBUTING_EN.md](CONTRIBUTING_EN.md)
 - [docs/LANGUAGES_EN.md](docs/LANGUAGES_EN.md) — language coverage, switching and fallback rules
+- [docs/USER_GUIDE_en.md](docs/USER_GUIDE_en.md) — the full usage manual for end users (10 languages)
 - [OldSend](https://github.com/styisme/oldsend)
 
 ---

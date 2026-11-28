@@ -1,5 +1,7 @@
 **简体中文** | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **使用指南**：[简体中文版](docs/USER_GUIDE_zh.md)
+
 # WatchSend
 
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
@@ -124,6 +126,7 @@
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md) —— AI 生成声明与参与细节
 - [docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md) —— 开发环境约束与测试覆盖说明
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) —— 52 种语言支持清单、切换方式与回退规则
+- [docs/USER_GUIDE_zh.md](docs/USER_GUIDE_zh.md) —— 面向使用者的完整操作手册（10 种语言）
 - [OldSend 原项目](https://github.com/styisme/oldsend) —— 协议栈与业务逻辑的来源
 
 ---

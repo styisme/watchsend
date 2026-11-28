@@ -1,5 +1,7 @@
 **Русский** | [简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Português](README_pt.md)
 
+📖 **Руководство**: [русская версия](docs/USER_GUIDE_ru.md)
+
 # WatchSend
 
 > Часовая версия OldSend. Все возможности передачи сохранены, интерфейс полностью переработан под маленькие и круглые экраны: «3D-колесо» и карточки-пилюли в духе Wear OS.
@@ -68,6 +70,7 @@
 - [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md)
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md), [docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) — список языков, переключение, правила откатов
+- [docs/USER_GUIDE_ru.md](docs/USER_GUIDE_ru.md) — полное руководство для пользователей (10 языков)
 
 ## 📜 Лицензия
 MIT License. Полностью совместим с протоколом LocalSend (собственная реализация).

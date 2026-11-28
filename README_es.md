@@ -1,5 +1,7 @@
 **Español** | [简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **Guía del usuario**: [edición en español](docs/USER_GUIDE_es.md)
+
 # WatchSend
 
 > La versión de reloj de OldSend. Conserva todas las capacidades de transferencia y reconstruye la interfaz para pantallas pequeñas y redondas como «rueda 3D» y tarjetas píldora, al estilo de Wear OS.
@@ -68,6 +70,7 @@ Versión actual: **v1.7.13**. 52 idiomas completos (357–358 entradas para los 
 - [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md)
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md), [docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) — lista de idiomas, cambio y reglas de respaldo
+- [docs/USER_GUIDE_es.md](docs/USER_GUIDE_es.md) — el manual completo para usuarios (10 idiomas)
 
 ## 📜 Licencia
 MIT License. Totalmente compatible con el protocolo LocalSend (implementación propia).

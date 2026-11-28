@@ -1,5 +1,7 @@
 **日本語** | [简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **取扱説明書**：[日本語版](docs/USER_GUIDE_ja.md)
+
 # WatchSend
 
 > OldSend のウェアラブル進化版。硬核な転送機能はそのままに、UI を Wear OS ネイティブの「3D ホイール」と「ピル型カード」に作り直しました。小型画面と丸い文字盤のために。
@@ -68,6 +70,7 @@
 - [CHANGELOG.md](CHANGELOG.md)、[CONTRIBUTING.md](CONTRIBUTING.md)
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)、[docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) —— 52 言語の一覧、切替方法、フォールバック規則
+- [docs/USER_GUIDE_ja.md](docs/USER_GUIDE_ja.md) —— 利用者向けの操作マニュアル（10 言語）
 
 ## 📜 ライセンス
 MIT License。LocalSend プロトコルと完全互換（独自実装、原コードの複製なし）。

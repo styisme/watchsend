@@ -1,5 +1,7 @@
 **Deutsch** | [简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **Benutzerhandbuch**: [deutsche Ausgabe](docs/USER_GUIDE_de.md)
+
 # WatchSend
 
 > Die Wearable-Version von OldSend. Alle Übertragungsfunktionen bleiben, die Oberfläche wurde für kleine und runde Displays als Wear-OS-natives „3D-Wheel“ mit Pillen-Karten neu gebaut.
@@ -68,6 +70,7 @@ Aktuell: **v1.7.13**. 52 Sprachen vollständig (357–358 Einträge für die 10 
 - [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md)
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md), [docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) — Sprachliste, Umschalten, Fallback-Regeln
+- [docs/USER_GUIDE_de.md](docs/USER_GUIDE_de.md) — das vollständige Handbuch für Anwender (10 Sprachen)
 
 ## 📜 Lizenz
 MIT License. Vollständig kompatibel zum LocalSend-Protokoll (Eigenimplementierung).

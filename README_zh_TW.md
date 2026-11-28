@@ -1,5 +1,7 @@
 **繁體中文** | [简体中文](README.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
 
+📖 **使用指南**：[繁體中文版](docs/USER_GUIDE_zh_TW.md)
+
 # WatchSend
 
 > OldSend 的手錶進化版。保留全部硬核傳輸能力，將 UI 徹底重塑為 Wear OS 原生的「3D 滾輪」與「藥丸卡片」形態，為小螢幕與圓錶盤而生。
@@ -69,6 +71,7 @@
 - [CHANGELOG.md](CHANGELOG.md)、[CONTRIBUTING.md](CONTRIBUTING.md)
 - [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md)、[docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
 - [docs/LANGUAGES.md](docs/LANGUAGES.md) —— 52 種語言清單、切換方式與回退規則
+- [docs/USER_GUIDE_zh_TW.md](docs/USER_GUIDE_zh_TW.md) —— 給使用者的完整操作手冊（10 種語言）
 
 ## 📜 協議
 MIT License。完美相容 LocalSend 協議（獨立實作，未複製其原始碼）。
