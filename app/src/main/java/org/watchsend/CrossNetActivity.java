@@ -216,9 +216,13 @@ public class CrossNetActivity extends Activity {
         // 卡片6：操作按钮 (生成密码)
         btnGen = new Button(this);
         btnGen.setText(I18nManager.get("select_file_gen_pin"));
-        btnGen.setTextColor(0xFFFFFFFF);
+        // 主操作按钮跟随动态主色（关闭动态取色时取到的就是默认绿）
+        btnGen.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
         btnGen.setTextSize(14);
-        btnGen.setBackgroundResource(R.drawable.watch_btn_primary);
+        android.graphics.drawable.GradientDrawable genBg = new android.graphics.drawable.GradientDrawable();
+        genBg.setCornerRadius(dp(26));
+        genBg.setColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
+        btnGen.setBackground(genBg);
         btnGen.setMinHeight(0);
         LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(52));
         btnLp.bottomMargin = dp(8);

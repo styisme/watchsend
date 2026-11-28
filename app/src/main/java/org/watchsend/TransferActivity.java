@@ -207,7 +207,7 @@ public class TransferActivity extends Activity {
 
         addSection(I18nManager.get("action"));
         
-        btnAccept = createButton("✔ " + I18nManager.get("accept"), 0xFF388E3C, 0xFFFFFFFF);
+        btnAccept = createButton("✔ " + I18nManager.get("accept"), org.watchsend.uikit.UikitColor.getPrimaryColor(this), org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
         LinearLayout.LayoutParams accLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         accLp.bottomMargin = dp(8);
         btnAccept.setLayoutParams(accLp);
@@ -341,7 +341,7 @@ public class TransferActivity extends Activity {
         });
         container.addView(btnCancel);
 
-        btnDone = createButton("✔ " + I18nManager.get("completed"), 0xFF388E3C, 0xFFFFFFFF);
+        btnDone = createButton("✔ " + I18nManager.get("completed"), org.watchsend.uikit.UikitColor.getPrimaryColor(this), org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
         LinearLayout.LayoutParams doneLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));
         doneLp.bottomMargin = dp(8);
         btnDone.setLayoutParams(doneLp);
@@ -420,7 +420,7 @@ public class TransferActivity extends Activity {
 
         GradientDrawable progress = new GradientDrawable();
         progress.setCornerRadius(dp(3));
-        progress.setColor(0xFF388E3C);
+        progress.setColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
         progress.setSize(0, dp(6));
 
         // RTL 语言里进度条从右往左推进，方向跟着阅读方向走
@@ -557,7 +557,7 @@ public class TransferActivity extends Activity {
         if (ok) {
             addMainTitle(mode == 1 || mode == 2 ? I18nManager.get("recv_completed") : I18nManager.get("send_completed"));
             tvFileStatus.setText(mode == 1 || mode == 2 ? I18nManager.get("saved_to_local") : I18nManager.get("transfer_success"));
-            tvFileStatus.setTextColor(0xFF388E3C);
+            tvFileStatus.setTextColor(org.watchsend.uikit.UikitColor.getAccentColor(this, isDark));
             pbTotal.setProgress(100);
             pbFile.setProgress(100);
             
@@ -610,7 +610,7 @@ public class TransferActivity extends Activity {
                     // 2. 如果是 APK 或普通文件，注入打开/安装按钮
                     final boolean isApk = recvFile.getName().toLowerCase().endsWith(".apk");
                     String btnText = isApk ? "📦 " + I18nManager.get("install_apk") : "📂 " + I18nManager.get("open_file");
-                    int btnColor = isApk ? 0xFF1976D2 : 0xFF388E3C;
+                    int btnColor = isApk ? 0xFF1976D2 : org.watchsend.uikit.UikitColor.getPrimaryColor(this);
                     
                     Button btnOpen = createButton(btnText, isDark ? 0xFF2C2C2E : 0xFFEEEEEE, btnColor);
                     LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));

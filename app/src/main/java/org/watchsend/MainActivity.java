@@ -82,6 +82,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     
     private String lastLang;
     private boolean lastDark;
+    private boolean lastDynamic;
     private float lastScale;
 
     @Override
@@ -235,16 +236,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         });
 
 
-        // 强制应用 MD3 动态色到主操作按钮
-        int primaryColor = ThemeUtils.getPrimaryColor(this);
-        if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
-            if (toggleBtn != null) {
-                android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-                bg.setCornerRadius((int)(26 * getResources().getDisplayMetrics().density));
-                bg.setColor(primaryColor);
-                toggleBtn.setBackground(bg);
-            }
-        }
+        // 应用 MD3 动态主色到主操作按钮（不再用"是否等于默认绿"判断，
+        // 壁纸取色落在绿色系时旧写法会把动态色整块跳过）
+        applyPrimaryToToggleButton();
 
         updateStatus();
         applyI18n();
@@ -257,21 +251,28 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void recordConfigState() {
         android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
         lastLang = sp.getString("app_lang", "system");
-        lastDark = sp.getBoolean("dark_mode", false);
+        // 主题以 theme_mode（auto/light/dark）为准；旧实现读 dark_mode 布尔，
+        // 改 theme_mode 时检测不到变化，主界面不会重建、颜色停在旧主题。
+        lastDark = ThemeUtils.isDarkMode(this);
+        lastDynamic = org.watchsend.uikit.UikitConfig.isDynamicColorEnabled(this);
         lastScale = sp.getFloat("ui_scale", 1.0f);
     }
 
     private void applyI18n() {
         boolean isDark = ThemeUtils.isDarkMode(this);
         if (btnSend != null) btnSend.setText(I18nManager.get("send"));
-        int txtColor = isDark ? 0xFF81C784 : 0xFF1B5E20;
+
+        // 动态取色开启时，文字与底色都走系统色调；关闭时这两个取值正好等于原来的
+        // 深绿/浅绿与浅绿/墨绿底，所以不需要再分支。
+        boolean dynamic = org.watchsend.uikit.UikitColor.isDynamicColorEnabled(this);
+        int txtColor = org.watchsend.uikit.UikitColor.getAccentColor(this, isDark);
         int bgRes = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
-        
-        if (btnHistory != null) { btnHistory.setTextColor(txtColor); btnHistory.setBackgroundResource(bgRes); }
-        if (btnCrossNet != null) { btnCrossNet.setTextColor(txtColor); btnCrossNet.setBackgroundResource(bgRes); }
-        if (btnSettings != null) { btnSettings.setTextColor(txtColor); btnSettings.setBackgroundResource(bgRes); }
-        if (scanBtn != null) { scanBtn.setTextColor(txtColor); scanBtn.setBackgroundResource(bgRes); }
-        if (manualIpBtn != null) { manualIpBtn.setTextColor(txtColor); manualIpBtn.setBackgroundResource(bgRes); }
+
+        if (btnHistory != null) { btnHistory.setTextColor(txtColor); setSecondaryBg(btnHistory, isDark, dynamic, bgRes); }
+        if (btnCrossNet != null) { btnCrossNet.setTextColor(txtColor); setSecondaryBg(btnCrossNet, isDark, dynamic, bgRes); }
+        if (btnSettings != null) { btnSettings.setTextColor(txtColor); setSecondaryBg(btnSettings, isDark, dynamic, bgRes); }
+        if (scanBtn != null) { scanBtn.setTextColor(txtColor); setSecondaryBg(scanBtn, isDark, dynamic, bgRes); }
+        if (manualIpBtn != null) { manualIpBtn.setTextColor(txtColor); setSecondaryBg(manualIpBtn, isDark, dynamic, bgRes); }
         if (btnLog != null) { btnLog.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666); }
         if (btnHistory != null) btnHistory.setText(I18nManager.get("record"));
         if (btnCrossNet != null) btnCrossNet.setText(I18nManager.get("cross_net"));
@@ -285,6 +286,36 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (btnEditFiles != null) btnEditFiles.setText(I18nManager.get("edit"));
         
         updateStatus();
+    }
+
+    /**
+     * 次要按钮底色：动态取色开启时按系统 accent1 的容器色重建（圆角与按压态保留），
+     * 关闭时沿用原来的 drawable，行为与旧版一致。
+     */
+    /** 主操作按钮跟随主色；动态色关闭时主色就是默认绿，与旧版一致。 */
+    private void applyPrimaryToToggleButton() {
+        if (toggleBtn == null) return;
+        int primary = org.watchsend.uikit.UikitColor.getPrimaryColor(this);
+        android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+        bg.setCornerRadius((int) (26 * getResources().getDisplayMetrics().density));
+        bg.setColor(primary);
+        toggleBtn.setBackground(bg);
+        toggleBtn.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
+    }
+
+    private void setSecondaryBg(android.widget.TextView v, boolean isDark, boolean dynamic, int bgRes) {
+        if (!dynamic) { v.setBackgroundResource(bgRes); return; }
+        int radius = (int) (23 * getResources().getDisplayMetrics().density);
+        android.graphics.drawable.GradientDrawable normal = new android.graphics.drawable.GradientDrawable();
+        normal.setCornerRadius(radius);
+        normal.setColor(org.watchsend.uikit.UikitColor.getContainerColor(this, isDark));
+        android.graphics.drawable.GradientDrawable pressed = new android.graphics.drawable.GradientDrawable();
+        pressed.setCornerRadius(radius);
+        pressed.setColor(org.watchsend.uikit.UikitColor.getContainerPressedColor(this, isDark));
+        android.graphics.drawable.StateListDrawable sl = new android.graphics.drawable.StateListDrawable();
+        sl.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        sl.addState(new int[0], normal);
+        v.setBackground(sl);
     }
 
     private void updateStatus() {
@@ -305,16 +336,9 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (running) { stopService(new Intent(this, OldSendService.class)); running = false; }
         else { startService(new Intent(this, OldSendService.class)); running = true; }
 
-        // 强制应用 MD3 动态色到主操作按钮
-        int primaryColor = ThemeUtils.getPrimaryColor(this);
-        if (primaryColor != 0xFF388E3C) { // 如果取到了非默认颜色
-            if (toggleBtn != null) {
-                android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-                bg.setCornerRadius((int)(26 * getResources().getDisplayMetrics().density));
-                bg.setColor(primaryColor);
-                toggleBtn.setBackground(bg);
-            }
-        }
+        // 应用 MD3 动态主色到主操作按钮（不再用"是否等于默认绿"判断，
+        // 壁纸取色落在绿色系时旧写法会把动态色整块跳过）
+        applyPrimaryToToggleButton();
 
         updateStatus();
         applyI18n();
@@ -416,17 +440,6 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void updateSelectedFilesUI() {
         if (pendingUris == null || pendingUris.isEmpty()) {
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.GONE);
-            boolean isDark = ThemeUtils.isDarkMode(this);
-        if (btnSend != null) btnSend.setText(I18nManager.get("send"));
-        int txtColor = isDark ? 0xFF81C784 : 0xFF1B5E20;
-        int bgRes = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
-        
-        if (btnHistory != null) { btnHistory.setTextColor(txtColor); btnHistory.setBackgroundResource(bgRes); }
-        if (btnCrossNet != null) { btnCrossNet.setTextColor(txtColor); btnCrossNet.setBackgroundResource(bgRes); }
-        if (btnSettings != null) { btnSettings.setTextColor(txtColor); btnSettings.setBackgroundResource(bgRes); }
-        if (scanBtn != null) { scanBtn.setTextColor(txtColor); scanBtn.setBackgroundResource(bgRes); }
-        if (manualIpBtn != null) { manualIpBtn.setTextColor(txtColor); manualIpBtn.setBackgroundResource(bgRes); }
-        if (btnLog != null) { btnLog.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666); }
         } else {
             if (layoutSelectedFiles != null) layoutSelectedFiles.setVisibility(View.VISIBLE);
             long totalSize = 0;
@@ -864,10 +877,12 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         super.onResume();
         android.content.SharedPreferences sp = getSharedPreferences("oldsend", MODE_PRIVATE);
         String curLang = sp.getString("app_lang", "system");
-        boolean curDark = sp.getBoolean("dark_mode", false);
+        boolean curDark = ThemeUtils.isDarkMode(this);
+        boolean curDynamic = org.watchsend.uikit.UikitConfig.isDynamicColorEnabled(this);
         float curScale = sp.getFloat("ui_scale", 1.0f);
-        
-        if (!curLang.equals(lastLang) || curDark != lastDark || curScale != lastScale) {
+
+        if (!curLang.equals(lastLang) || curDark != lastDark
+                || curDynamic != lastDynamic || curScale != lastScale) {
             new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(new Runnable() {
                 public void run() {
                     recreate();

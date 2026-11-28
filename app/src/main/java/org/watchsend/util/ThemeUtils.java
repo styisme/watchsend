@@ -24,30 +24,17 @@ public class ThemeUtils {
         return fallback;
     }
 
+    /**
+     * 主色/强调色统一委托给 UikitColor，避免两份实现分叉：
+     * 之前这里也有一份"先解析 colorAccent"的逻辑，与 UikitColor 各自为政，
+     * 主界面（MainActivity 标题、按钮）与 uikit 控件会取到不同颜色。
+     */
     public static int getPrimaryColor(Context ctx) {
-        if (isDynamicColorEnabled(ctx)) {
-            // 更稳的方式：直接解析主题里的 colorAccent，而不是死磕 system_accent1 反射
-            try {
-                android.util.TypedValue tv = new android.util.TypedValue();
-                if (ctx.getTheme().resolveAttribute(android.R.attr.colorAccent, tv, true)) {
-                    if (tv.resourceId != 0) return ctx.getColor(tv.resourceId);
-                    if (tv.data != 0) return tv.data;
-                }
-            } catch (Exception ignored) {}
-            // Fallback 到原来的反射
-            int color = getSystemColor(ctx, "system_accent1_600", 0);
-            if (color != 0) return color;
-        }
-        return 0xFF388E3C;
+        return org.watchsend.uikit.UikitColor.getPrimaryColor(ctx);
     }
 
     public static int getAccentColor(Context ctx) {
-        boolean isDark = isDarkMode(ctx);
-        if (isDynamicColorEnabled(ctx)) {
-            return getSystemColor(ctx, isDark ? "system_accent1_200" : "system_accent1_800", 
-                                 isDark ? 0xFF81C784 : 0xFF1B5E20);
-        }
-        return isDark ? 0xFF81C784 : 0xFF1B5E20;
+        return org.watchsend.uikit.UikitColor.getAccentColor(ctx, isDarkMode(ctx));
     }
 
     public static boolean isDarkMode(Context ctx) {

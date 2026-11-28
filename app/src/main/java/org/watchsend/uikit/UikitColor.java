@@ -4,7 +4,6 @@ import org.watchsend.R;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.TypedValue;
 
 public final class UikitColor {
     public static final int FALLBACK_PRIMARY      = 0xFF388E3C;
@@ -32,19 +31,17 @@ public final class UikitColor {
         int custom = UikitConfig.getCustomPrimaryColor(ctx);
         if (custom != 0) return custom;
 
-        // 2. 其次使用 MD3 动态取色
+        // 2. 动态取色：直接用 framework 的 M3 色调资源。
+        //    旧实现先解析 android:attr/colorAccent，但手表主题（Theme.DeviceDefault.*）里的
+        //    accent 是写死的常量，动态色一开就被它短路，看起来"开关没反应"，因此去掉这一层。
+        //    浅色用 accent1-600（白底上足够深），深色用 accent1-200（黑底上足够亮）。
         if (isDynamicColorEnabled(ctx)) {
-            try {
-                TypedValue tv = new TypedValue();
-                if (ctx.getTheme().resolveAttribute(android.R.attr.colorAccent, tv, true)) {
-                    if (tv.resourceId != 0) {
-                        if (Build.VERSION.SDK_INT >= 23) return ctx.getColor(tv.resourceId);
-                        return ctx.getResources().getColor(tv.resourceId);
-                    }
-                    if (tv.data != 0) return tv.data;
-                }
-            } catch (Exception ignored) {}
-            int c = getSystemColor(ctx, "system_accent1_600", 0);
+            boolean dark = UikitTheme.isDarkMode(ctx);
+            int c = getSystemColor(ctx, dark ? "system_accent1_200" : "system_accent1_600", 0);
+            if (c == 0) {
+                // 个别 ROM 缺失 600/200 档位，退一档取近似色，而不是直接掉回默认绿
+                c = getSystemColor(ctx, dark ? "system_accent1_100" : "system_accent1_500", 0);
+            }
             if (c != 0) return c;
         }
         // 3. 兜底
@@ -71,6 +68,30 @@ public final class UikitColor {
         int r = (p >> 16) & 0xFF, g = (p >> 8) & 0xFF, b = p & 0xFF;
         int y = (r * 299 + g * 587 + b * 114) / 1000;
         return y > 160 ? 0xFF1C1B1F : 0xFFFFFFFF;
+    }
+
+    /**
+     * 取某一档 M3 色调（system_accent1_xxx），动态色关闭或系统缺该档时回退 fallback。
+     * 供需要"主色容器/按下态"的界面复用，避免各处再硬编码绿色。
+     */
+    public static int getToneColor(Context ctx, boolean dark, String lightTone, String darkTone, int fallback) {
+        if (isDynamicColorEnabled(ctx)) {
+            int c = getSystemColor(ctx, dark ? darkTone : lightTone, 0);
+            if (c != 0) return c;
+        }
+        return fallback;
+    }
+
+    /** 次要按钮/标签的底色：浅色用 accent1-100，深色用 accent1-900。 */
+    public static int getContainerColor(Context ctx, boolean dark) {
+        return getToneColor(ctx, dark, "system_accent1_100", "system_accent1_900",
+                dark ? 0xFF1E2E22 : 0xFFC8E6C9);
+    }
+
+    /** 容器色按下态：比常态深/浅一档，保留原来的按压反馈。 */
+    public static int getContainerPressedColor(Context ctx, boolean dark) {
+        return getToneColor(ctx, dark, "system_accent1_200", "system_accent1_800",
+                dark ? 0xFF2E4F33 : 0xFFA5D6A7);
     }
     public static int getCardBgColor(Context ctx) {
         return UikitTheme.isDarkMode(ctx) ? 0xFF1E1E1E : 0xFFFFFFFF;

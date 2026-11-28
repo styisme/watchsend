@@ -4,6 +4,19 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.9.2] - 2026-11-28
+
+### Fixed
+- **动态取色开了却不变色**：`UikitColor.getPrimaryColor` 原先先解析 `android:attr/colorAccent`，而手表主题（`Theme.DeviceDefault.*`）里的 accent 是写死的常量，动态色一开就被它短路，后面的 `system_accent1_*` 永远取不到。现在直接读 Android 12+ 的 M3 色调资源，浅色用 `system_accent1_600`、深色用 `system_accent1_200`，个别 ROM 缺这两档时退到 `500`/`100`。
+- **主界面选完文件就变回绿色**：`updateSelectedFilesUI()` 的空分支里混进了一段旧版按钮配色副本，每次选/清文件都会把五个次要按钮刷回硬编码的深绿文字与浅绿底，动态色被覆盖。已删除该残留代码。
+- **主按钮判断方式错误**：`MainActivity` 用 `primaryColor != 0xFF388E3C` 决定是否套用动态色，壁纸取色恰好落在绿色系时整块跳过。改为无条件套用（动态色关闭时主色本就是默认绿，效果与旧版一致），按钮文字色按亮度自动取黑/白。
+- **两套取色实现分叉**：`ThemeUtils.getPrimaryColor/getAccentColor` 与 `UikitColor` 各自维护一份逻辑，主界面标题/按钮与 uikit 控件可能取到不同颜色。`ThemeUtils` 改为委托 `UikitColor`，单一数据源。
+- **改完开关返回主界面不刷新**：`MainActivity.onResume` 只比较语言、`dark_mode` 布尔与缩放，动态取色与 `theme_mode` 都不在检测项里，切完开关回到主界面颜色停在旧值。现在检测 `theme_mode` 实际明暗与 `dynamic_color`，变化即重建。
+
+### Changed
+- 主界面五个次要按钮（记录/跨网/设置/扫描/加 IP）在动态取色下按 `system_accent1-100/900` 重绘圆角底色并保留按压态，文字改用 `system_accent1-800/200`。
+- 传输页的接受/完成按钮、总进度条、完成状态文字、“打开文件”按钮，以及跨网页“生成密码”按钮、输入页语音按钮、设置页右侧箭头，全部改为跟随动态主色/强调色。
+
 ## [1.9.1] - 2026-11-28
 
 ### Fixed

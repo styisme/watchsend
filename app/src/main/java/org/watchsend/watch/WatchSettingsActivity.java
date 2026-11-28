@@ -362,7 +362,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         TextView arrow = new TextView(this);
         // RTL 语言的阅读方向相反，箭头也跟着指左
         arrow.setText(org.watchsend.uikit.RtlSupport.isRtl() ? "<" : ">"); arrow.setTextSize(18);
-        arrow.setTextColor(isDark ? 0xFF81C784 : 0xFF999999);
+        arrow.setTextColor(isDark ? org.watchsend.uikit.UikitColor.getAccentColor(this, true) : 0xFF999999);
         row.addView(arrow);
 
         row.setOnClickListener(click);

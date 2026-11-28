@@ -138,7 +138,7 @@ public class UikitFullInputActivity extends Activity {
         TextView btnVoice = new TextView(this);
         btnVoice.setText(I18nManager.get("voice_input"));
         btnVoice.setTextSize(12);
-        btnVoice.setTextColor(dark ? 0xFF81C784 : 0xFF1B5E20);
+        btnVoice.setTextColor(org.watchsend.uikit.UikitColor.getAccentColor(this, dark));
         int vpad = UikitScreenUtils.dp2px(this, 8);
         btnVoice.setPadding(vpad, vpad / 2, vpad, vpad / 2);
         btnVoice.setOnClickListener(new View.OnClickListener() {
