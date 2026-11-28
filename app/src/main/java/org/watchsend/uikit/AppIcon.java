@@ -30,11 +30,11 @@ public final class AppIcon {
 
     private AppIcon() {}
 
-    /** 当前应使用的图标强调色：动态取色可用时取系统浅色调（黑底上更亮），否则保持绿。 */
+    /** 当前应使用的图标强调色：与界面主色同档（浅色 600 / 深色 200），取不到就用图标原本的绿。 */
     public static int tint(Context ctx) {
-        // 图标底固定是黑的，所以固定取"深色主题档" accent1-200，不随界面明暗切换
-        return UikitColor.getToneColor(ctx, true,
-                "system_accent1_200", "system_accent1_200", ICON_GREEN);
+        boolean dark = UikitTheme.isDarkMode(ctx);
+        return UikitColor.getToneColor(ctx, dark,
+                "system_accent1_600", "system_accent1_200", ICON_GREEN);
     }
 
     /** 组装好的图标：黑圆 + 染色后的绿色层 + 白箭头。 */

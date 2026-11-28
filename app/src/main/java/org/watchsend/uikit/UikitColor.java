@@ -53,10 +53,11 @@ public final class UikitColor {
         int custom = UikitConfig.getCustomAccentColor(ctx);
         if (custom != 0) return custom;
 
-        // 2. 动态强调色
+        // 2. 动态强调色。浅色档位从 800 收到 700：与主色（accent1-600）只差一档，
+        //    浅色模式下按钮/文字/进度条不再一个很深一个偏浅。
         if (isDynamicColorEnabled(ctx)) {
             return getSystemColor(ctx,
-                    isDark ? "system_accent1_200" : "system_accent1_800",
+                    isDark ? "system_accent1_200" : "system_accent1_700",
                     isDark ? FALLBACK_ACCENT_DARK : FALLBACK_ACCENT_LIGHT);
         }
         // 3. 兜底

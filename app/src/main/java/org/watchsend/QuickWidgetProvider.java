@@ -48,7 +48,10 @@ public class QuickWidgetProvider extends AppWidgetProvider {
         
         if (isRunning) {
             views.setTextViewText(R.id.widget_status, "● 运行中");
-            views.setTextColor(R.id.widget_status, 0xFF388E3C);
+            // 状态文字跟随动态强调色；取不到时保持原来的深绿
+            views.setTextColor(R.id.widget_status, org.watchsend.uikit.UikitColor.getToneColor(
+                    context, org.watchsend.util.ThemeUtils.isDarkMode(context),
+                    "system_accent1_700", "system_accent1_200", 0xFF388E3C));
             views.setTextViewText(R.id.widget_toggle_btn, "停止服务");
             views.setInt(R.id.widget_toggle_btn, "setBackgroundResource", R.drawable.watch_btn_send);
         } else {

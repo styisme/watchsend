@@ -283,7 +283,11 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         if (manualIpBtn != null) manualIpBtn.setText("+ " + I18nManager.get("add_ip"));
         if (emptyHint != null) emptyHint.setText(I18nManager.get("no_device_scan"));
         if (toggleBtn != null) toggleBtn.setText(running ? I18nManager.get("stop_service") : I18nManager.get("start_service"));
-        if (btnAddFilesMore != null) btnAddFilesMore.setText(I18nManager.get("add"));
+        if (btnAddFilesMore != null) {
+            btnAddFilesMore.setText(I18nManager.get("add"));
+            // 原来固定用 watch_btn_primary 的深绿，紧挨着动态主色的发送按钮就"一深一浅"
+            stylePrimaryPill(btnAddFilesMore, isDark, R.drawable.watch_btn_primary, 0xFF2E7D32, 26);
+        }
         if (btnEditFiles != null) btnEditFiles.setText(I18nManager.get("edit"));
         
         updateStatus();
@@ -297,41 +301,42 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
      * 发送按钮：动态取色可用时用主色（按下态取深一档），不可用时保持原来那套蓝
      * （#1976D2 / 按下 #1565C0），避免"没取到色就变成别的颜色"。
      */
-    private void applySendButtonStyle(boolean isDark) {
-        if (btnSend == null) return;
-        boolean dynamic = org.watchsend.uikit.UikitColor.isDynamicColorEnabled(this);
-        int normal = dynamic ? org.watchsend.uikit.UikitColor.getPrimaryColor(this) : 0xFF1976D2;
-        int pressed = dynamic
-                ? org.watchsend.uikit.UikitColor.getToneColor(this, isDark,
-                        "system_accent1_700", "system_accent1_300", 0xFF1565C0)
-                : 0xFF1565C0;
-
-        int radius = dp(26);
+    /**
+     * 主操作按钮的统一样式（启动/停止、发送、追加都走这里）：
+     * 动态取色可用 → 主色底 + 按下态深/浅一档，文字按亮度取黑/白；
+     * 不可用 → 回到各自原来的背景 + 白字，不会出现"半截动态半截静态"。
+     */
+    private void stylePrimaryPill(android.widget.TextView v, boolean isDark,
+                                  int fallbackRes, int fallbackPressed, int radiusDp) {
+        if (v == null) return;
+        if (!org.watchsend.uikit.UikitColor.isDynamicColorEnabled(this)) {
+            v.setBackgroundResource(fallbackRes);
+            v.setTextColor(0xFFFFFFFF);
+            return;
+        }
+        int radius = dp(radiusDp);
         android.graphics.drawable.GradientDrawable n = new android.graphics.drawable.GradientDrawable();
         n.setCornerRadius(radius);
-        n.setColor(normal);
+        n.setColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
         android.graphics.drawable.GradientDrawable p = new android.graphics.drawable.GradientDrawable();
         p.setCornerRadius(radius);
-        p.setColor(pressed);
+        p.setColor(org.watchsend.uikit.UikitColor.getToneColor(this, isDark,
+                "system_accent1_700", "system_accent1_300", fallbackPressed));
         android.graphics.drawable.StateListDrawable sl = new android.graphics.drawable.StateListDrawable();
         sl.addState(new int[]{android.R.attr.state_pressed}, p);
         sl.addState(new int[0], n);
-        btnSend.setBackground(sl);
-
-        btnSend.setTextColor(dynamic
-                ? org.watchsend.uikit.UikitColor.getOnPrimaryColor(this)
-                : 0xFFFFFFFF);
+        v.setBackground(sl);
+        v.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
     }
 
-    /** 主操作按钮跟随主色；动态色关闭时主色就是默认绿，与旧版一致。 */
+    private void applySendButtonStyle(boolean isDark) {
+        stylePrimaryPill(btnSend, isDark, R.drawable.watch_btn_send, 0xFF1565C0, 26);
+    }
+
+    /** 启动/停止大按钮：动态色关闭时回到原来的 watch_btn_primary 绿。 */
     private void applyPrimaryToToggleButton() {
-        if (toggleBtn == null) return;
-        int primary = org.watchsend.uikit.UikitColor.getPrimaryColor(this);
-        android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-        bg.setCornerRadius((int) (26 * getResources().getDisplayMetrics().density));
-        bg.setColor(primary);
-        toggleBtn.setBackground(bg);
-        toggleBtn.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
+        stylePrimaryPill(toggleBtn, ThemeUtils.isDarkMode(this),
+                R.drawable.watch_btn_primary, 0xFF2E7D32, 26);
     }
 
     private void setSecondaryBg(android.widget.TextView v, boolean isDark, boolean dynamic, int bgRes) {
