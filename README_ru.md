@@ -7,7 +7,7 @@
 > Часовая версия OldSend. Все возможности передачи сохранены, интерфейс полностью переработан под маленькие и круглые экраны: «3D-колесо» и карточки-пилюли в духе Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.1-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -16,7 +16,7 @@
 
 ## 📦 Версия
 
-Текущая версия: **v1.8.1**. 52 языка полностью (357–358 записей для 10 базовых языков, 353 для остальных, всего 18 403). История в [CHANGELOG.md](CHANGELOG.md).
+Текущая версия: **v1.8.2**. 52 языка полностью (357–358 записей для 10 базовых языков, 353 для остальных, всего 18 403). История в [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

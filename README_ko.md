@@ -7,7 +7,7 @@
 > OldSend의 웨어러블 진화판. 강력한 전송 기능은 그대로 두고 UI를 Wear OS 네이티브 "3D 휠"과 "필 카드"로 다시 설계했습니다. 작은 화면과 원형 디스플레이를 위해.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.1-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -16,7 +16,7 @@
 
 ## 📦 버전
 
-현재 버전: **v1.8.1**. 52개 언어 전량(10개 기본 언어 357–358개, 나머지 353개, 총 18,403개 항목). 전체 이력은 [CHANGELOG.md](CHANGELOG.md).
+현재 버전: **v1.8.2**. 52개 언어 전량(10개 기본 언어 357–358개, 나머지 353개, 총 18,403개 항목). 전체 이력은 [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

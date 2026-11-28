@@ -4,13 +4,13 @@
 
 > File transfer on your watch - user manual
 
-Applies to v1.8.1 (versionCode 10801)    November 2026
+Applies to v1.8.2 (versionCode 10802)    November 2026
 
 ## 1 About This Guide
 
 This guide is written for people who use WatchSend: how to install it, connect, send and receive files, and what every option on the Settings screen actually does. Button and menu names match what the app shows in the language you have selected; if you have switched the interface language, read the edition in that same language.
 
-It covers usage only, not building, packaging or extending the project. For the toolchain, contribution rules and how to maintain language packs, see CONTRIBUTING and the docs folder in the repository. Behaviour described here reflects the 1.8.1 implementation; the cloud build environment cannot run an emulator, so judge gesture feel on real hardware.
+It covers usage only, not building, packaging or extending the project. For the toolchain, contribution rules and how to maintain language packs, see CONTRIBUTING and the docs folder in the repository. Behaviour described here reflects the 1.8.2 implementation; the cloud build environment cannot run an emulator, so judge gesture feel on real hardware.
 
 ## 2 Install and First Launch
 
@@ -73,7 +73,7 @@ Record lists transferred files and text in reverse chronological order, with a c
 
 ## 8 Settings Reference
 
-Settings is grouped as shown below. Defaults describe a fresh install that has never been changed; after you edit something, the app shows the actual value.
+Settings is grouped as shown below. Defaults describe a fresh install that has never been changed; after you edit something, the app shows the actual value. In long languages such as German or Russian a switch description is clipped to three lines with an ellipsis - tap the description to open it in full.
 
 **Table 1  Settings at a glance**
 

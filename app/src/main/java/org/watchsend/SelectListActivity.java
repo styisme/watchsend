@@ -216,6 +216,7 @@ public class SelectListActivity extends Activity {
         btnClearAll.setText(I18nManager.get("clear_all_files_btn"));
         btnClearAll.setTextColor(colorAccent);
         btnClearAll.setTextSize(14);
+        org.watchsend.uikit.TextFit.fitSingleLine(btnClearAll, 14, 10);
         int bgSec = isDark ? R.drawable.watch_btn_secondary_dark : R.drawable.watch_btn_secondary;
         btnClearAll.setBackgroundResource(bgSec);
         btnClearAll.setMinHeight(0);
@@ -237,6 +238,7 @@ public class SelectListActivity extends Activity {
         btnReturn.setText(I18nManager.get("back_prev"));
         btnReturn.setTextColor(colorAccent);
         btnReturn.setTextSize(14);
+        org.watchsend.uikit.TextFit.fitSingleLine(btnReturn, 14, 10);
         btnReturn.setBackgroundResource(bgSec);
         btnReturn.setMinHeight(0);
         LinearLayout.LayoutParams retLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(48));

@@ -32,7 +32,7 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="#1C1B1F"
-            android:singleLine="true"
+            android:maxLines="2"
             android:ellipsize="end" />
 
         <TextView

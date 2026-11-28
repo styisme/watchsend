@@ -111,6 +111,8 @@ public class UikitButton extends LinearLayout {
     public void setText(CharSequence text) {
         if (textView != null) {
             textView.setText(text);
+            // 按钮不能换行：长语言放不下时自动降字号，仍放不下再省略
+            TextFit.fitSingleLine(textView, 16, 11);
             textView.setVisibility(text != null && text.length() > 0 ? VISIBLE : GONE);
         }
     }

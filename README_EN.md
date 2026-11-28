@@ -7,7 +7,7 @@
 > The watch evolution of OldSend. Retaining all hardcore transfer capabilities, the UI has been completely reshaped into Wear OS native "3D Wheel" and "Pill Cards", designed for small and round screens.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.1-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -21,7 +21,7 @@
 ---
 
 ## 📦 Version & Origin
-Current Version: **v1.8.1**. 52 languages complete (357–358 entries for the 10 base languages, 353 for the rest, 18,403 in total). See [CHANGELOG.md](CHANGELOG.md) for history.
+Current Version: **v1.8.2**. 52 languages complete (357–358 entries for the 10 base languages, 353 for the rest, 18,403 in total). See [CHANGELOG.md](CHANGELOG.md) for history.
 
 This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). Core protocols, HTTP server, and cross-network features are inherited from OldSend, while the UI and package name (`org.watchsend`) are completely rewritten.
 

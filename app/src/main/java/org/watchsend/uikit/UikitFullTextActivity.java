@@ -98,6 +98,7 @@ public class UikitFullTextActivity extends Activity {
         TextView tvTitle = new TextView(this);
         tvTitle.setText(title);
         tvTitle.setTextSize(20);
+        TextFit.wrap(tvTitle, 2);
         tvTitle.setGravity(Gravity.CENTER);
         tvTitle.setTextColor(UikitColor.getAccentColor(this, dark));
         LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(

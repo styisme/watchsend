@@ -7,7 +7,7 @@
 > OldSend 的手表进化版。保留全部硬核传输能力，将 UI 彻底重塑为 Wear OS 原生的“3D 滚轮”与“药丸卡片”形态，为小屏幕与圆表盘而生。
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
-[![Version](https://img.shields.io/badge/version-1.8.1-512BD4)]()
+[![Version](https://img.shields.io/badge/version-1.8.2-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
 [![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
@@ -28,7 +28,7 @@
 
 ## 📦 版本与溯源
 
-当前版本：**v1.8.1**。52 种语言全量（10 个基础语种 357–358 条，其余 353 条，共 18,403 条词条）。完整历史见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本：**v1.8.2**。52 种语言全量（10 个基础语种 357–358 条，其余 353 条，共 18,403 条词条）。完整历史见 [CHANGELOG.md](CHANGELOG.md)。
 
 本项目是 [OldSend](https://github.com/styisme/oldsend) 的 **Watch Edition（手表版）**。OldSend 的协议栈、HTTP 服务、组播发现、跨网传输等核心业务逻辑均被完整继承，UI 层与包名（`org.watchsend`）进行了彻底重构。
 

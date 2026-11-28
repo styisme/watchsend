@@ -275,6 +275,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         TextView tvTitle = new TextView(this);
         tvTitle.setText(label); tvTitle.setTextSize(16);
         tvTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        org.watchsend.uikit.TextFit.wrap(tvTitle, 2); // 德/俄长词最多两行，超出省略
         textCol.addView(tvTitle);
 
         if (subLabel != null) {
@@ -282,6 +283,17 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             tvSub.setText(subLabel); tvSub.setTextSize(12);
             tvSub.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
             tvSub.setPadding(0, dp(2), 0, 0);
+            // 说明文字在中日韩只要一两行，德/俄能到 70em 以上（六七行）。限三行、尾部省略，
+            // 被截断的长说明改成点正文区打开全文页，短语言的正文区点了也给全文，不额外占高度。
+            org.watchsend.uikit.TextFit.wrap(tvSub, 3);
+            final String fullDesc = subLabel;
+            final String fullTitle = label;
+            textCol.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    org.watchsend.uikit.UikitFullTextActivity.show(WatchSettingsActivity.this,
+                            fullTitle, fullDesc, I18nManager.get("confirm"), 6090); // 6090 为本页「说明全文」专用，无结果处理分支
+                }
+            });
             textCol.addView(tvSub);
         }
         row.addView(textCol);
@@ -325,6 +337,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
         TextView tvTitle = new TextView(this);
         tvTitle.setText(label); tvTitle.setTextSize(16);
         tvTitle.setTextColor(isDark ? 0xFFE0E0E0 : 0xFF1C1B1F);
+        org.watchsend.uikit.TextFit.wrap(tvTitle, 2); // 德/俄长词最多两行，超出省略
         textCol.addView(tvTitle);
 
         if (value != null && value.length() > 0) {
@@ -332,7 +345,7 @@ private void addSwitch(String label, String subLabel, boolean value, final Switc
             tvValue.setText(value); tvValue.setTextSize(12);
             tvValue.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
             tvValue.setPadding(0, dp(2), dp(6), 0);
-            tvValue.setMaxLines(2);
+            org.watchsend.uikit.TextFit.wrap(tvValue, 2);
             textCol.addView(tvValue);
         }
         row.addView(textCol);

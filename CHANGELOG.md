@@ -4,6 +4,27 @@
 
 > **关于溯源**：项目为 [OldSend](https://github.com/styisme/oldsend) 的专属进化分支。版本号从 `v1.0.0` 重新开始计算。底层协议栈（LocalSend 兼容、跨网穿透、HTTP 服务）完整继承，UI 层已完全重构。
 
+## [1.8.2] - 2026-11-28
+
+### Fixed
+- **长语言把设置页撑爆**：开关项的说明文字在德语、俄语能到 67–78em（约六七行），中文只要一两行，同一行卡片高度能差三倍，一屏只放得下一项。现在说明限三行、超出用省略号，点一下说明区域可打开全文页（`UikitFullTextActivity`），短语言不受影响。
+- **标题与列表条目无限换行**：`UikitFullListActivity` 的页标题、条目主标题与副标题，`UikitFullConfirmActivity` 的标题与提示，`UikitFullText`/`UikitFullInput` 的页标题，以及 `TransferActivity` 的主标题，此前都没限行。现在统一走 `TextFit.wrap()`：标题最多两行、提示最多六行，超出省略。
+- **按钮文字被裁**：带文字的按钮（接受、拒绝、清空全部、返回上一页、STUN 探测、编辑等）之前固定字号、单行、无省略，德语 “Alle Dateien löschen” 之类会被切掉尾字。现在统一走 `TextFit.fitSingleLine()`：Android 8.0+ 交给系统 autosize 在 16→11sp 之间自适应，更低版本按视觉宽度估算降字号（中日韩字符算 1em、拉丁按 0.55em），降到下限仍放不下才省略。
+- **设备名与详情值一刀切单行**：设备列表的名称、设备详情里的值（路径、SSID、型号）此前都是单行尾部省略，长语言与长路径只剩开头几个字；现在放宽到两行。
+- **德语复合词被整段挤出行外**：可换行的文本统一打开 `breakStrategy=high_quality` 与普通断词，长单词必要时从词中断开，不再把整行顶出去。
+
+### Added
+- **`uikit/TextFit`**：把“多语言文本适配”收口成一个工具，`wrap(tv, maxLines)` 负责可换行文本（限行、省略、断词），`fitSingleLine(tv, maxSp, minSp)` 负责按钮类不可换行控件（autosize + 兜底估算）。以后新增页面只调这两个方法，不用每处自己写 `setMaxLines`。
+
+### Docs
+- 10 份 README 徽章与“当前版本”行、10 份用户指南的适用版本行同步到 1.8.2（versionCode 10802）。
+- 中、繁、英三份指南在设置章节补充：长语言的开关说明显示三行后以省略号收尾，点说明区域可看全文。
+
+### Verified
+- `gradle assembleDebug` 通过（JDK8 / build-tools 30.0.3）。
+- 用语言包实测最长条目做了阈值核算：德语 `idle_stop_server_desc` 75.3em、俄语 78.6em、英语 55.5em，三行上限约 33em，故保留“点开看全文”这条出口，而不是硬压成两行。
+- 未在真机验证（云主机无 KVM、无 X11），三行上限与按钮降字号的观感以装机为准。
+
 ## [1.8.1] - 2026-11-28
 
 ### Fixed

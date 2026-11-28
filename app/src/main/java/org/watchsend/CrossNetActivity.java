@@ -332,12 +332,14 @@ public class CrossNetActivity extends Activity {
         TextView tvTitle = new TextView(this);
         tvTitle.setText(title);
         tvTitle.setTextSize(15);
+        org.watchsend.uikit.TextFit.wrap(tvTitle, 2);
         tvTitle.setTextColor(colorMain);
         textContainer.addView(tvTitle);
 
         if (subtitleView != null) {
             LinearLayout.LayoutParams subLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             subLp.topMargin = dp(2);
+            if (subtitleView instanceof TextView) org.watchsend.uikit.TextFit.wrap((TextView) subtitleView, 2);
             subtitleView.setLayoutParams(subLp);
             textContainer.addView(subtitleView);
         }
@@ -354,6 +356,7 @@ public class CrossNetActivity extends Activity {
         Button btn = new Button(this);
         btn.setText(text);
         btn.setTextSize(11);
+        org.watchsend.uikit.TextFit.fitSingleLine(btn, 11, 8);
         btn.setTextColor(colorAccent);
         btn.setBackgroundResource(bgSec);
         btn.setMinHeight(0);
@@ -367,6 +370,7 @@ public class CrossNetActivity extends Activity {
         TextView tv = new TextView(this);
         tv.setText(text);
         tv.setTextSize(12);
+        org.watchsend.uikit.TextFit.fitSingleLine(tv, 12, 9);
         tv.setTextColor(colorSec);
         tv.setPadding(dp(8), dp(8), dp(8), dp(8));
         return tv;

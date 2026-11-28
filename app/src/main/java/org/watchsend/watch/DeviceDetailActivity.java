@@ -242,7 +242,7 @@ public class DeviceDetailActivity extends Activity {
         tvValue.setText(value == null ? "" : value);
         tvValue.setTextSize(11);
         tvValue.setTextColor(isDark ? 0xFFAAAAAA : 0xFF666666);
-        tvValue.setSingleLine(true);
+        org.watchsend.uikit.TextFit.wrap(tvValue, 2); // 长值（路径、SSID、型号名）允许两行
         row.addView(tvValue);
 
         if (click != null) {

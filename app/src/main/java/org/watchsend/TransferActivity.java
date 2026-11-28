@@ -356,6 +356,7 @@ public class TransferActivity extends Activity {
         TextView tv = new TextView(this);
         tv.setText(title);
         tv.setTextSize(24);
+        org.watchsend.uikit.TextFit.wrap(tv, 2);
         tv.setTypeface(null, Typeface.BOLD);
         tv.setTextColor(colorMain);
         tv.setGravity(Gravity.CENTER);
@@ -396,6 +397,7 @@ public class TransferActivity extends Activity {
         btn.setText(text);
         btn.setTextColor(textColor);
         btn.setTextSize(15);
+        org.watchsend.uikit.TextFit.fitSingleLine(btn, 15, 11);
         btn.setMinHeight(0);
         GradientDrawable bg = new GradientDrawable();
         bg.setCornerRadius(dp(24));

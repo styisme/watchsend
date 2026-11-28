@@ -76,6 +76,7 @@ public class UikitFullListActivity extends Activity {
         TextView tvTitle = new TextView(this);
         tvTitle.setText(title);
         tvTitle.setTextSize(20);
+        TextFit.wrap(tvTitle, 2);
         tvTitle.setGravity(Gravity.CENTER);
         tvTitle.setTextColor(UikitColor.getAccentColor(this, dark));
         LinearLayout.LayoutParams titleLp = new LinearLayout.LayoutParams(
@@ -115,6 +116,7 @@ public class UikitFullListActivity extends Activity {
             TextView tvMain = new TextView(this);
             tvMain.setText(model.title);
             tvMain.setTextSize(16);
+            TextFit.wrap(tvMain, 2);
             if (model.accentColor != 0) {
                 tvMain.setTextColor(model.accentColor);
             } else if (model.cardColor != 0) {
@@ -134,6 +136,7 @@ public class UikitFullListActivity extends Activity {
                 TextView tvSub = new TextView(this);
                 tvSub.setText(model.subtitle);
                 tvSub.setTextSize(12);
+                TextFit.wrap(tvSub, 2);
                 if (model.accentColor == 0 && model.cardColor != 0) {
                     int r = (model.cardColor >> 16) & 0xFF;
                     int g = (model.cardColor >> 8) & 0xFF;

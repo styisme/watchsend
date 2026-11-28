@@ -51,6 +51,7 @@ public class UikitFullConfirmActivity extends Activity {
         TextView tvTitle = new TextView(this);
         tvTitle.setText(getIntent().getStringExtra(EXTRA_TITLE));
         tvTitle.setTextSize(22);
+        TextFit.wrap(tvTitle, 2);
         tvTitle.setTextColor(dark ? 0xFFFFFFFF : 0xFF000000);
         tvTitle.setGravity(Gravity.CENTER);
         centerBox.addView(tvTitle);
@@ -59,6 +60,7 @@ public class UikitFullConfirmActivity extends Activity {
             TextView tvMsg = new TextView(this);
             tvMsg.setText(msg);
             tvMsg.setTextSize(14);
+            TextFit.wrap(tvMsg, 6);
             tvMsg.setTextColor(dark ? 0xFFAAAAAA : 0xFF666666);
             tvMsg.setGravity(Gravity.CENTER);
             tvMsg.setPadding(0, (int)(8*density), 0, 0);
