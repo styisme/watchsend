@@ -261,6 +261,7 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
     private void applyI18n() {
         boolean isDark = ThemeUtils.isDarkMode(this);
         if (btnSend != null) btnSend.setText(I18nManager.get("send"));
+        applySendButtonStyle(isDark);
 
         // 动态取色开启时，文字与底色都走系统色调；关闭时这两个取值正好等于原来的
         // 深绿/浅绿与浅绿/墨绿底，所以不需要再分支。
@@ -292,6 +293,36 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
      * 次要按钮底色：动态取色开启时按系统 accent1 的容器色重建（圆角与按压态保留），
      * 关闭时沿用原来的 drawable，行为与旧版一致。
      */
+    /**
+     * 发送按钮：动态取色可用时用主色（按下态取深一档），不可用时保持原来那套蓝
+     * （#1976D2 / 按下 #1565C0），避免"没取到色就变成别的颜色"。
+     */
+    private void applySendButtonStyle(boolean isDark) {
+        if (btnSend == null) return;
+        boolean dynamic = org.watchsend.uikit.UikitColor.isDynamicColorEnabled(this);
+        int normal = dynamic ? org.watchsend.uikit.UikitColor.getPrimaryColor(this) : 0xFF1976D2;
+        int pressed = dynamic
+                ? org.watchsend.uikit.UikitColor.getToneColor(this, isDark,
+                        "system_accent1_700", "system_accent1_300", 0xFF1565C0)
+                : 0xFF1565C0;
+
+        int radius = dp(26);
+        android.graphics.drawable.GradientDrawable n = new android.graphics.drawable.GradientDrawable();
+        n.setCornerRadius(radius);
+        n.setColor(normal);
+        android.graphics.drawable.GradientDrawable p = new android.graphics.drawable.GradientDrawable();
+        p.setCornerRadius(radius);
+        p.setColor(pressed);
+        android.graphics.drawable.StateListDrawable sl = new android.graphics.drawable.StateListDrawable();
+        sl.addState(new int[]{android.R.attr.state_pressed}, p);
+        sl.addState(new int[0], n);
+        btnSend.setBackground(sl);
+
+        btnSend.setTextColor(dynamic
+                ? org.watchsend.uikit.UikitColor.getOnPrimaryColor(this)
+                : 0xFFFFFFFF);
+    }
+
     /** 主操作按钮跟随主色；动态色关闭时主色就是默认绿，与旧版一致。 */
     private void applyPrimaryToToggleButton() {
         if (toggleBtn == null) return;

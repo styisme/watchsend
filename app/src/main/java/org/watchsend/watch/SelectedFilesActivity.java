@@ -101,11 +101,12 @@ public class SelectedFilesActivity extends Activity {
         for (int i = 0; i < names.size(); i++) container.addView(buildRow(i));
 
         sendBtn = new Button(this);
-        sendBtn.setTextColor(Color.WHITE);
+        // 发送按钮跟随动态主色；取不到时 getPrimaryColor 回退默认绿，文字按亮度取黑/白
+        sendBtn.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
         sendBtn.setTextSize(14);
         GradientDrawable bg = new GradientDrawable();
         bg.setCornerRadius(dp(22));
-        bg.setColor(0xFF388E3C);
+        bg.setColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
         sendBtn.setBackground(bg);
         sendBtn.setAllCaps(false);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(44));
@@ -153,7 +154,7 @@ public class SelectedFilesActivity extends Activity {
         final TextView mark = new TextView(this);
         mark.setText("✓");
         mark.setTextSize(11);
-        mark.setTextColor(0xFF388E3C);
+        mark.setTextColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
         row.addView(mark);
 
         row.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +162,7 @@ public class SelectedFilesActivity extends Activity {
                 boolean now = !kept.get(index);
                 kept.set(index, Boolean.valueOf(now));
                 mark.setText(now ? "✓" : "✕");
-                mark.setTextColor(now ? 0xFF388E3C : 0xFFD32F2F);
+                mark.setTextColor(now ? org.watchsend.uikit.UikitColor.getPrimaryColor(SelectedFilesActivity.this) : 0xFFD32F2F);
                 ((TextView) ((LinearLayout) v).getChildAt(0)).setAlpha(now ? 1f : 0.45f);
                 refreshSendBtn();
             }
