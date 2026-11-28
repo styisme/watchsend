@@ -110,6 +110,10 @@ public class WatchSettingsActivity extends Activity {
                 UikitConfig.isLowPerf(this), saveTo("low_perf_mode"));
         
 
+        // 熄屏空闲暂停服务（默认关闭：开启后会牺牲"对方随时推过来都能收到"的可靠性换续航）
+        addSwitch(I18nManager.get("idle_stop_server"), I18nManager.get("idle_stop_server_desc"),
+                prefs().getBoolean("idle_stop_server", false), saveTo("idle_stop_server"));
+
         // 主题模式 (深/浅/自动)
         addItem(I18nManager.get("theme_mode") + ": " + currentThemeLabel(), new View.OnClickListener() {
             public void onClick(View v) { pickTheme(); }

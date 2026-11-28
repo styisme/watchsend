@@ -230,8 +230,12 @@ public class Uploader {
             byte[] buf = new byte[65536];
             int n;
             long fileSent = 0;
+            // 省电：低性能模式 / 低电量时按 bps 上限给字节流做节流（未限速时该对象是空操作）
+            org.watchsend.util.TransferThrottle throttle =
+                    org.watchsend.util.TransferThrottle.create(org.watchsend.OldSendService.getContext());
             while ((n = fis.read(buf)) > 0) {
                 os.write(buf, 0, n); fileSent += n;
+                throttle.onBytes(n);
                 if (cb != null) cb.onProgress("发送中", baseSent + fileSent, finalTotalSize);
             }
             os.flush(); fis.close(); os.close();

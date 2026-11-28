@@ -23,6 +23,16 @@ public class UploadHandler implements Router.Handler {
 
     public HttpResponse handle(HttpRequest req) throws Exception {
         if (!"POST".equalsIgnoreCase(req.method)) return HttpResponse.status(405);
+        // 计入"传输进行中"，空闲停服时不会把传到一半的请求掐断
+        OldSendService.beginTransfer();
+        try {
+            return handleLocked(req);
+        } finally {
+            OldSendService.endTransfer();
+        }
+    }
+
+    private HttpResponse handleLocked(HttpRequest req) throws Exception {
         Map<String, String> q = req.getQueryParams();
         String sessionId = q.get("sessionId");
         String fileId = q.get("fileId");
@@ -65,12 +75,16 @@ public class UploadHandler implements Router.Handler {
             }
             InputStream in = req.body;
             byte[] buf = new byte[65536];
+            // 省电：接收同样按上限节流（低性能 2MB/s、低电量 512KB/s；未限速时为空操作）
+            org.watchsend.util.TransferThrottle throttle =
+                    org.watchsend.util.TransferThrottle.create(OldSendService.getContext());
             if (remaining <= 0) remaining = Long.MAX_VALUE;
             while (remaining > 0) {
                 int max = (int) Math.min(buf.length, remaining);
                 int n = in.read(buf, 0, max);
                 if (n <= 0) break;
                 fos.write(buf, 0, n);
+                throttle.onBytes(n);
                 if (digest != null) digest.update(buf, 0, n);
                 written += n;
                 android.content.Intent intent = new android.content.Intent("org.watchsend.UPDATE_PROGRESS");

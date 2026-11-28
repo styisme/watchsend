@@ -541,9 +541,29 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         // 5014 历史记录菜单
         if (requestCode == 5014 && resultCode == RESULT_OK) {
             int p = data.getIntExtra(UikitFullListActivity.EXTRA_RESULT_INDEX, -1);
-            int shareIdx = pendingHistoryIsZip ? 1 : 0;
-            int delIdx = pendingHistoryIsZip ? 2 : 1;
-            if (pendingHistoryIsZip && p == 0) {
+            // 首位是"重新发送"，其余索引整体后移一位
+            int shareIdx = pendingHistoryIsZip ? 2 : 1;
+            int delIdx = pendingHistoryIsZip ? 3 : 2;
+            if (p == 0) {
+                // 重新发送：直接把历史里的文件塞回待发送列表，退回设备列表让用户点设备即可
+                if (pendingHistoryFile == null || !pendingHistoryFile.exists() || pendingHistoryFile.length() <= 0) {
+                    toast(I18nManager.get("file_not_found"));
+                } else if (pendingUris == null) {
+                    toast(I18nManager.get("file_not_found"));
+                } else {
+                    File f = pendingHistoryFile;
+                    // 部分历史条目是解压后的目录（path 指向目录时不能当文件发）
+                    if (f.isDirectory()) {
+                        toast(I18nManager.get("file_not_found"));
+                        return;
+                    }
+                    exitHistoryMode();
+                    pendingUris.clear();
+                    pendingUris.add(android.net.Uri.fromFile(f));
+                    onFilesPicked();
+                    toast(I18nManager.get("choose_device_to_send"));
+                }
+            } else if (pendingHistoryIsZip && p == 1) {
                 toast(I18nManager.get("unzipping"));
                 new Thread(new Runnable() {
                     public void run() {
@@ -776,9 +796,10 @@ public class MainActivity extends Activity implements OldSendService.LogSink, De
         pendingHistoryFile = f;
         pendingHistoryIsZip = isZip;
         pendingHistoryPos = pos;
+        // 首位固定"重新发送"：历史记录里最常用的动作，省掉重新选文件的四五步
         String[] items = isZip ?
-            new String[]{I18nManager.get("unzip"), I18nManager.get("share_file"), I18nManager.get("delete_record")} :
-            new String[]{I18nManager.get("share_file"), I18nManager.get("delete_record")};
+            new String[]{I18nManager.get("resend"), I18nManager.get("unzip"), I18nManager.get("share_file"), I18nManager.get("delete_record")} :
+            new String[]{I18nManager.get("resend"), I18nManager.get("share_file"), I18nManager.get("delete_record")};
         UikitFullListActivity.show(this, historyAdapter.getItem(pos).split("\n")[0], items, 5014);
     }
 

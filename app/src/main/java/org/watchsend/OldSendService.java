@@ -9,8 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
@@ -32,6 +36,25 @@ public class OldSendService extends Service {
 
     private HttpServer httpServer;
     private MulticastListener multicastListener;
+
+    // ===== 空闲停服（设置项 idle_stop_server，默认关闭）=====
+    /** 熄屏后静默多久停掉监听。选 3 分钟：足够覆盖"看完就熄屏"的短暂离开，又不至于半夜一直挂着。 */
+    private static final long IDLE_STOP_DELAY_MS = 3L * 60 * 1000;
+    /** 停服前发现仍有传输在进行时，最多再往后顺延多久一次。 */
+    private static final long IDLE_STOP_RECHECK_MS = 60L * 1000;
+    private final Handler idleHandler = new Handler(Looper.getMainLooper());
+    private Runnable idleStopTask;
+    private BroadcastReceiver screenReceiver;
+    private volatile boolean listeningStopped = false;
+    private volatile boolean destroyed = false;
+    /** 当前正在进行的接收传输数，>0 时不允许空闲停服（否则会把传到一半的文件硬掐断）。 */
+    private static volatile int activeTransfers = 0;
+
+    public static void beginTransfer() { activeTransfers++; }
+    public static void endTransfer() { if (activeTransfers > 0) activeTransfers--; }
+    public static boolean hasActiveTransfer() { return activeTransfers > 0; }
+    public static boolean isListeningStopped() { return sInstance != null && sInstance.listeningStopped; }
+    private static volatile OldSendService sInstance;
     private WifiManager.MulticastLock multicastLock;
 
     public static boolean getPrefBooleanGlobal(String key, boolean def) {
@@ -57,7 +80,95 @@ public class OldSendService extends Service {
 
     private static Context appContext;
     public static Context getContext() { return appContext; }
-    @Override public void onCreate() { super.onCreate(); appContext = this; Identity.init(getApplicationContext()); HistoryStore.get().init(this); startForegroundNotification(); }
+    @Override public void onCreate() {
+        super.onCreate();
+        sInstance = this;
+        appContext = this;
+        Identity.init(getApplicationContext());
+        HistoryStore.get().init(this);
+        startForegroundNotification();
+        setupIdleStopWatcher();
+    }
+
+    /**
+     * 注册熄屏/亮屏监听（必须动态注册，SCREEN_OFF 没有静态声明方式）。
+     * 只在 Service 存活期间注册，Service 结束随 onDestroy 注销。
+     */
+    private void setupIdleStopWatcher() {
+        screenReceiver = new BroadcastReceiver() {
+            @Override public void onReceive(Context context, Intent intent) {
+                String action = intent == null ? null : intent.getAction();
+                if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                    scheduleIdleStop();
+                } else if (Intent.ACTION_SCREEN_ON.equals(action) || Intent.ACTION_USER_PRESENT.equals(action)) {
+                    cancelIdleStop();
+                    // 熄屏时停过的监听，亮屏立刻恢复，避免用户回来发现"搜不到设备"
+                    if (listeningStopped) {
+                        listeningStopped = false;
+                        log("亮屏，恢复监听");
+                        restartServer(OldSendService.this);
+                    }
+                }
+            }
+        };
+        IntentFilter f = new IntentFilter();
+        f.addAction(Intent.ACTION_SCREEN_OFF);
+        f.addAction(Intent.ACTION_SCREEN_ON);
+        f.addAction(Intent.ACTION_USER_PRESENT);
+        try { registerReceiver(screenReceiver, f); } catch (Throwable t) { log("熄屏监听注册失败: " + t); }
+    }
+
+    /** 熄屏后开始倒计时；设置项关闭时直接忽略。 */
+    private void scheduleIdleStop() {
+        if (!getPrefBooleanGlobal("idle_stop_server", false)) return;
+        cancelIdleStop();
+        idleStopTask = new Runnable() {
+            @Override public void run() {
+                idleStopTask = null;
+                if (!getPrefBooleanGlobal("idle_stop_server", false)) return;
+                if (destroyed) return;
+                if (hasActiveTransfer()) {
+                    log("仍有传输在进行，空闲停服顺延");
+                    idleHandler.postDelayed(new Runnable() {
+                        @Override public void run() {
+                            if (destroyed) return;
+                            if (hasActiveTransfer()) scheduleIdleStopNow(); else scheduleIdleStop();
+                        }
+                    }, IDLE_STOP_RECHECK_MS);
+                    return;
+                }
+                stopListeningForIdle();
+            }
+        };
+        idleHandler.postDelayed(idleStopTask, IDLE_STOP_DELAY_MS);
+    }
+
+    /** 顺延到点后的再次检查：仍忙就继续等，不忙就停。 */
+    private void scheduleIdleStopNow() {
+        if (hasActiveTransfer()) {
+            idleHandler.postDelayed(new Runnable() {
+                @Override public void run() { if (hasActiveTransfer()) scheduleIdleStopNow(); else stopListeningForIdle(); }
+            }, IDLE_STOP_RECHECK_MS);
+        } else {
+            stopListeningForIdle();
+        }
+    }
+
+    private void cancelIdleStop() {
+        if (idleStopTask != null) { idleHandler.removeCallbacks(idleStopTask); idleStopTask = null; }
+    }
+
+    /** 真正停掉 HTTP/组播监听，但保留前台服务与通知，方便亮屏后原地恢复。 */
+    private void stopListeningForIdle() {
+        if (httpServer == null && multicastListener == null) return;
+        try { if (httpServer != null) httpServer.stop(); } catch (Throwable ignored) {}
+        try { if (multicastListener != null) multicastListener.stop(); } catch (Throwable ignored) {}
+        if (multicastLock != null) { try { multicastLock.release(); } catch (Throwable ignored) {} multicastLock = null; }
+        httpServer = null;
+        multicastListener = null;
+        listeningStopped = true;
+        log("熄屏空闲，已暂停监听（亮屏或打开应用后恢复）");
+    }
     
     public static void showReceiveNotification(String alias, int count) {
         Context ctx = getContext();
@@ -268,6 +379,10 @@ public class OldSendService extends Service {
 
     @Override
     public void onDestroy() {
+        destroyed = true;
+        cancelIdleStop();
+        if (screenReceiver != null) { try { unregisterReceiver(screenReceiver); } catch (Throwable ignored) {} screenReceiver = null; }
+        sInstance = null;
         isServiceRunning = false;
         if (getContext() != null) QuickWidgetProvider.sendUpdateBroadcast(getContext());
         try { if (httpServer != null) httpServer.stop(); } catch (Exception ignored) {}

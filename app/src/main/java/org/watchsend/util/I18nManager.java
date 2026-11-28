@@ -198,6 +198,8 @@ zh.put("save_dir_label", "保存目录: ");
         zh.put("day_yesterday", "昨天"); zh.put("month_suffix", "月"); zh.put("day_suffix", "日"); zh.put("year_suffix", "年"); zh.put("selected_files", "待发送文件"); zh.put("send_n_files", "发送 %1 个文件"); zh.put("copy_fingerprint", "复制地址"); zh.put("direct_send", "直连发送"); zh.put("gen_pin_send", "生成 PIN 发送"); zh.put("log", "日志");
         zh.put("fingerprint_phrase", "核对短语"); zh.put("remaining", "剩余"); zh.put("device_details", "设备详情"); zh.put("protocol_label", "协议"); zh.put("fingerprint_label", "设备指纹");
         zh.put("remark_label", "备注名"); zh.put("not_set", "未设置");
+        zh.put("resend", "重新发送"); zh.put("choose_device_to_send", "点选设备即可发送");
+        zh.put("idle_stop_server", "熄屏空闲暂停服务"); zh.put("idle_stop_server_desc", "熄屏 3 分钟后暂停监听省电，亮屏自动恢复；可能漏接对方主动发送");
         dict.put("zh", zh);
 
                 // ============ 繁体中文 (zh_TW) ============
@@ -297,6 +299,8 @@ zh.put("save_dir_label", "保存目录: ");
         zhTW.put("copy_fingerprint", "複製位址"); zhTW.put("direct_send", "直連傳送"); zhTW.put("gen_pin_send", "生成 PIN 傳送"); zhTW.put("log", "日誌");
         zhTW.put("fingerprint_phrase", "核對短語"); zhTW.put("remaining", "剩餘"); zhTW.put("device_details", "裝置詳情"); zhTW.put("protocol_label", "協定");
         zhTW.put("fingerprint_label", "裝置指紋"); zhTW.put("remark_label", "備註名"); zhTW.put("not_set", "未設定");
+        zhTW.put("resend", "重新傳送"); zhTW.put("choose_device_to_send", "點選裝置即可傳送");
+        zhTW.put("idle_stop_server", "螢幕關閉時暫停服務"); zhTW.put("idle_stop_server_desc", "螢幕關閉 3 分鐘後暫停監聽省電，亮起自動恢復；可能漏接對方主動傳送");
         dict.put("zh_TW", zhTW);
 // ============ 英语 (en) ============
         Map<String, String> en = new HashMap<>();
@@ -485,6 +489,8 @@ en.put("save_dir_label", "Save to: ");
         en.put("day_yesterday", "Yesterday"); en.put("month_suffix", "/"); en.put("day_suffix", ""); en.put("year_suffix", "/"); en.put("selected_files", "Selected Files"); en.put("send_n_files", "Send %1 file(s)"); en.put("copy_fingerprint", "Copy address"); en.put("direct_send", "Direct Send"); en.put("gen_pin_send", "Generate PIN & Send"); en.put("log", "Log");
         en.put("fingerprint_phrase", "Verify Phrase"); en.put("remaining", "ETA"); en.put("device_details", "Device Details"); en.put("protocol_label", "Protocol"); en.put("fingerprint_label", "Fingerprint");
         en.put("remark_label", "Nickname"); en.put("not_set", "Not set");
+        en.put("resend", "Resend"); en.put("choose_device_to_send", "Tap a device to send");
+        en.put("idle_stop_server", "Pause service when idle"); en.put("idle_stop_server_desc", "Stop listening 3 min after screen off to save power; resumes when screen on. May miss incoming pushes");
         dict.put("en", en);
 
         // ============ 日语 (ja) ============
@@ -685,6 +691,8 @@ ja.put("chin_padding", "底部の余白"); ja.put("chin_padding_desc", "Moto 360
         ja.put("voice_input", "🎤 音声");
         ja.put("voice_unsupported", "音声入力は非対応です");
         ja.put("year_suffix", "年");
+        ja.put("resend", "再送信"); ja.put("choose_device_to_send", "デバイスをタップして送信");
+        ja.put("idle_stop_server", "消灯時にサービスを一時停止"); ja.put("idle_stop_server_desc", "消灯から3分後に待ち受けを停止して省電力。点灯で自動再開。相手からの送信を取り逃す場合があります");
         dict.put("ja", ja);
 
         // ============ 韩语 (ko) ============
@@ -885,6 +893,8 @@ ko.put("chin_padding", "하단 여백"); ko.put("chin_padding_desc", "Moto 360�
         ko.put("voice_input", "🎤 음성");
         ko.put("voice_unsupported", "음성 입력을 지원하지 않습니다");
         ko.put("year_suffix", "년");
+        ko.put("resend", "다시 보내기"); ko.put("choose_device_to_send", "기기를 탭하면 전송됩니다");
+        ko.put("idle_stop_server", "화면 꺼짐 시 서비스 일시 중지"); ko.put("idle_stop_server_desc", "화면이 꺼진 뒤 3분이 지나면 수신을 중지해 전력을 아낍니다. 화면을 켜면 자동 재개됩니다. 상대방 전송을 놓칠 수 있습니다");
         dict.put("ko", ko);
 
         // ============ 德语 (de) ============
@@ -1085,6 +1095,8 @@ de.put("chin_padding", "Kinn-Polsterung"); de.put("chin_padding_desc", "Für run
         de.put("voice_input", "🎤 Sprache");
         de.put("voice_unsupported", "Spracheingabe nicht unterstützt");
         de.put("year_suffix", "/");
+        de.put("resend", "Erneut senden"); de.put("choose_device_to_send", "Gerät antippen zum Senden");
+        de.put("idle_stop_server", "Dienst bei Inaktivität pausieren"); de.put("idle_stop_server_desc", "Stoppt das Lauschen 3 Min. nach Bildschirm-aus zum Stromsparen; startet beim Einschalten neu. Eingehende Sendungen können verpasst werden");
         dict.put("de", de);
 
         // ============ 法语 (fr) ============
@@ -1285,6 +1297,8 @@ fr.put("chin_padding", "Remplissage du menton"); fr.put("chin_padding_desc", "Po
         fr.put("voice_input", "🎤 Voix");
         fr.put("voice_unsupported", "Saisie vocale non prise en charge");
         fr.put("year_suffix", "/");
+        fr.put("resend", "Renvoyer"); fr.put("choose_device_to_send", "Touchez un appareil pour envoyer");
+        fr.put("idle_stop_server", "Suspendre le service en veille"); fr.put("idle_stop_server_desc", "Coupe l'écoute 3 min après extinction de l'écran pour économiser la batterie ; reprise à l'allumage. Des envois entrants peuvent être manqués");
         dict.put("fr", fr);
 
         // ============ 西班牙语 (es) ============
@@ -1485,6 +1499,8 @@ es.put("chin_padding", "Relleno inferior"); es.put("chin_padding_desc", "Para re
         es.put("voice_input", "🎤 Voz");
         es.put("voice_unsupported", "Entrada de voz no compatible");
         es.put("year_suffix", "/");
+        es.put("resend", "Reenviar"); es.put("choose_device_to_send", "Toca un dispositivo para enviar");
+        es.put("idle_stop_server", "Pausar servicio en reposo"); es.put("idle_stop_server_desc", "Detiene la escucha 3 min después de apagar la pantalla para ahorrar batería; se reanuda al encenderla. Puede perder envíos entrantes");
         dict.put("es", es);
 
         // ============ 俄语 (ru) ============
@@ -1685,6 +1701,8 @@ ru.put("chin_padding", "Отступ снизу"); ru.put("chin_padding_desc", "
         ru.put("voice_input", "🎤 Голос");
         ru.put("voice_unsupported", "Голосовой ввод не поддерживается");
         ru.put("year_suffix", " г.");
+        ru.put("resend", "Отправить снова"); ru.put("choose_device_to_send", "Нажмите на устройство для отправки");
+        ru.put("idle_stop_server", "Пауза службы в простое"); ru.put("idle_stop_server_desc", "Прекращает прослушивание через 3 мин после выключения экрана для экономии; возобновляется при включении. Входящие отправки могут быть пропущены");
         dict.put("ru", ru);
 
         // ============ 葡萄牙语 (pt) ============
@@ -1885,6 +1903,8 @@ pt.put("chin_padding", "Preenchimento inferior"); pt.put("chin_padding_desc", "P
         pt.put("voice_input", "🎤 Voz");
         pt.put("voice_unsupported", "Entrada de voz não suportada");
         pt.put("year_suffix", "/");
+        pt.put("resend", "Reenviar"); pt.put("choose_device_to_send", "Toque em um dispositivo para enviar");
+        pt.put("idle_stop_server", "Pausar serviço em repouso"); pt.put("idle_stop_server_desc", "Para a escuta 3 min após a tela apagar para economizar bateria; retoma ao acender. Pode perder envios recebidos");
         dict.put("pt", pt);
 
         installExtra1();
