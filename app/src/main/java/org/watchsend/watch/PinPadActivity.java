@@ -31,6 +31,7 @@ public class PinPadActivity extends Activity {
 
     private final StringBuilder input = new StringBuilder();
     private TextView display;
+    private boolean isDark;
 
     public static void show(Activity ctx, String title, int requestCode) {
         Intent i = new Intent(ctx, PinPadActivity.class);
@@ -53,9 +54,11 @@ public class PinPadActivity extends Activity {
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
+        isDark = ThemeUtils.isDarkMode(this);
         View root = findViewById(R.id.settings_root);
         if (root != null) {
-            root.setBackgroundColor(0xFF000000);
+            // 浅色主题下不能继续用黑底，否则从白色主界面进来像换了个 App
+            root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
             WatchUiUtils.applyRoundPadding(this, root);
             View header = findViewById(R.id.settings_header);
             if (header != null) header.setVisibility(View.GONE);
@@ -68,14 +71,14 @@ public class PinPadActivity extends Activity {
 
         TextView t = new TextView(this);
         t.setText(title);
-        t.setTextColor(0xFFFFFFFF);
+        t.setTextColor(isDark ? 0xFFFFFFFF : 0xFF1C1B1F);
         t.setTextSize(13);
         t.setGravity(Gravity.CENTER);
         t.setPadding(0, dp(4), 0, dp(6));
         container.addView(t);
 
         display = new TextView(this);
-        display.setTextColor(0xFFFFFFFF);
+        display.setTextColor(isDark ? 0xFFFFFFFF : 0xFF1C1B1F);
         display.setTextSize(22);
         display.setGravity(Gravity.CENTER);
         display.setPadding(0, dp(2), 0, dp(8));
@@ -98,11 +101,20 @@ public class PinPadActivity extends Activity {
                 Button b = new Button(this);
                 b.setText(key);
                 b.setTextSize(15);
-                b.setTextColor(0xFFFFFFFF);
+                b.setTextColor(isDark ? 0xFFFFFFFF : 0xFF1C1B1F);
                 b.setAllCaps(false);
                 GradientDrawable bg = new GradientDrawable();
                 bg.setShape(GradientDrawable.OVAL);
-                bg.setColor(key.equals("✓") ? 0xFF2E7D32 : (key.equals("⌫") ? 0xFF444444 : 0xFF262626));
+                if (key.equals("✓")) {
+                    // 确认键跟随动态主色；取不到时回到原来的深绿
+                    bg.setColor(org.watchsend.uikit.UikitColor.getPrimaryColor(this));
+                    b.setTextColor(org.watchsend.uikit.UikitColor.getOnPrimaryColor(this));
+                } else {
+                    bg.setColor(key.equals("⌫")
+                            ? (isDark ? 0xFF444444 : 0xFFE0E0E0)
+                            : (isDark ? 0xFF262626 : 0xFFFFFFFF));
+                    if (!isDark) bg.setStroke(dp(1), 0xFFDDDDDD); // 白键压在白底上要靠描边才看得出
+                }
                 b.setBackground(bg);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp(52), dp(40));
                 lp.setMargins(dp(4), dp(3), dp(4), dp(3));

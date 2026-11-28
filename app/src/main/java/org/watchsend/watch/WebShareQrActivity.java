@@ -56,9 +56,11 @@ public class WebShareQrActivity extends Activity {
         ThemeUtils.applyTheme(this);
         WatchUiUtils.applyEntryAnimation(this);
 
+        boolean isDark = ThemeUtils.isDarkMode(this);
         View root = findViewById(R.id.settings_root);
         if (root != null) {
-            root.setBackgroundColor(0xFF000000);
+            // 原来固定黑底：浅色主题下这一页和主界面一黑一白，像两个应用
+            root.setBackgroundColor(isDark ? 0xFF000000 : 0xFFF4F6F8);
             WatchUiUtils.applyRoundPadding(this, root);
             View header = findViewById(R.id.settings_header);
             if (header != null) header.setVisibility(View.GONE);
@@ -77,7 +79,7 @@ public class WebShareQrActivity extends Activity {
 
         TextView title = new TextView(this);
         title.setText(I18nManager.get("web_qr"));
-        title.setTextColor(0xFFFFFFFF);
+        title.setTextColor(isDark ? 0xFFFFFFFF : 0xFF1C1B1F);
         title.setTextSize(13);
         title.setGravity(Gravity.CENTER);
         container.addView(title);
@@ -93,19 +95,24 @@ public class WebShareQrActivity extends Activity {
         lp.bottomMargin = dp(6);
         iv.setLayoutParams(lp);
         iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        // 二维码本身必须是白底黑块才扫得出；浅色主题下白块压在白背景上会没有边界，补一圈描边
+        GradientDrawable qrFrame = new GradientDrawable();
+        qrFrame.setColor(0xFFFFFFFF);
+        qrFrame.setStroke(dp(1), isDark ? 0xFF3E3E3E : 0xFFE0E0E0);
+        iv.setBackground(qrFrame);
         iv.setImageBitmap(render(url, lp.width));
         container.addView(iv);
 
         TextView tvUrl = new TextView(this);
         tvUrl.setText(url);
-        tvUrl.setTextColor(0xFFAAAAAA);
+        tvUrl.setTextColor(isDark ? 0xFFAAAAAA : 0xFF333333);
         tvUrl.setTextSize(10);
         tvUrl.setGravity(Gravity.CENTER);
         container.addView(tvUrl);
 
         TextView desc = new TextView(this);
         desc.setText(I18nManager.get("web_qr_desc"));
-        desc.setTextColor(0xFF888888);
+        desc.setTextColor(isDark ? 0xFF888888 : 0xFF666666);
         desc.setTextSize(9);
         desc.setGravity(Gravity.CENTER);
         container.addView(desc);
@@ -117,7 +124,15 @@ public class WebShareQrActivity extends Activity {
         copy.setAllCaps(false);
         GradientDrawable bg = new GradientDrawable();
         bg.setCornerRadius(dp(18));
-        bg.setColor(0xFF262626);
+        boolean dynamic = org.watchsend.uikit.UikitColor.isDynamicColorEnabled(this);
+        if (dynamic) {
+            // 复制按钮用主色的容器档，和主界面次要按钮同一套层级
+            bg.setColor(org.watchsend.uikit.UikitColor.getContainerColor(this, isDark));
+            copy.setTextColor(org.watchsend.uikit.UikitColor.getAccentColor(this, isDark));
+        } else {
+            bg.setColor(isDark ? 0xFF262626 : 0xFFE0E0E0);
+            copy.setTextColor(isDark ? 0xFFFFFFFF : 0xFF1C1B1F);
+        }
         copy.setBackground(bg);
         LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(dp(120), dp(34));
         clp.gravity = Gravity.CENTER_HORIZONTAL;
