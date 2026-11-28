@@ -1,34 +1,73 @@
+**Español** | [简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Русский](README_ru.md) | [Português](README_pt.md)
+
 # WatchSend
 
-[简体中文](README.md) | [繁體中文](README_zh_TW.md) | [English](README_EN.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [**Español**](README_es.md) | [Русский](README_ru.md) | [Português](README_pt.md)
-
-> La evolución del reloj de OldSend. Manteniendo todas las capacidades de transferencia hardcore, la interfaz de usuario se ha remodelado por completo en '3D Wheel' y 'Pill Cards' nativos de Wear OS.
+> La versión de reloj de OldSend. Conserva todas las capacidades de transferencia y reconstruye la interfaz para pantallas pequeñas y redondas como «rueda 3D» y tarjetas píldora, al estilo de Wear OS.
 
 [![Build Android APK](https://github.com/styisme/watchsend/actions/workflows/android.yml/badge.svg)](https://github.com/styisme/watchsend/actions/workflows/android.yml)
 [![Version](https://img.shields.io/badge/version-1.7.12-512BD4)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Made with AI](https://img.shields.io/badge/made%20with-AI-FF6B6B)](docs/AI_DISCLOSURE.md)
+[![Platform](https://img.shields.io/badge/platform-Android%202.3%2B-brightgreen)]()
 
 ---
 
-## ⚠️ Divulgación de Generación por IA
-Este proyecto está fuertemente asistido por IA. Consulte [AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md) para obtener más detalles.
+## 📦 Versión
+
+Versión actual: **v1.7.12**. 52 idiomas completos (353 entradas por idioma, 18.363 en total). Historial en [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
-## ✨ Características Principales
-- **Entrada Rotativa**: Perfectamente adaptado a la corona giratoria de Wear OS 3+.
-- **Escalado físico de UI**: Reconstrucción del Context base para eludir las restricciones de Android 11+ y admitir de 0.3x a 2.5x.
-- **Tema de 3 estados**: Seguir sistema, Modo claro, Modo oscuro.
-- **Color Dinámico**: Integración de Material You (Android 12+).
-- **Caja de herramientas Geek**: Instalación silenciosa Shizuku/Root, extracción ZIP nativa y gestión rápida del historial.
-- **Web 10 idiomas**: Detecta automáticamente el idioma del navegador y admite carga de arrastrar y soltar.
+## ✨ Funciones
+
+### ⌚ Optimización para reloj
+- **Corona giratoria** (Wear OS 3+), **respuesta háptica**, pantalla encendida durante la transferencia, entrada por voz, mosaicos (Android 7.0+).
+- **Modo de bajo rendimiento**: desactiva casi todas las animaciones (rueda 3D, entrada, pulsación, barrido de carga, respiración de tres puntos, brillo del esqueleto, transición de interruptor, rebote del panel), reduce la concurrencia del escaneo de respaldo y limita la velocidad. Se activa solo en equipos con poca memoria (heap ≤256 MB / marca low-RAM / ≤2 núcleos) si nunca se configuró.
+- **Límite de velocidad**: 2 MB/s en bajo rendimiento, 512 KB/s con batería bajo 15 % y sin carga, tanto al enviar como al recibir.
+- **Pausa por inactividad (desactivada por defecto)**: 3 minutos tras apagar la pantalla se pausan las escuchas HTTP y multicast, y se reanudan al encender; se pospone sola si hay una transferencia en curso.
+
+### 🛠️ Caja de herramientas geek
+- **Instalación silenciosa (beta)**: Root o Shizuku, proxy Binder IPC escrito a mano.
+- **Extracción ZIP nativa**: motor Java puro con protección contra path traversal.
+- **Historial**: pulsación larga para **reenviar**, compartir, descomprimir o borrar. «Reenviar» devuelve el archivo a la lista de envío.
+- **Web en 10 idiomas**: detecta el idioma del navegador, arrastrar y soltar, sincronización del portapapeles.
+
+### 🎨 Interfaz e idiomas
+- Escalado físico de la UI (0,3x–2,5x), tema de tres estados, color dinámico en Android 12+, rueda 3D, adaptación a pantalla redonda, gesto de volver.
+- **52 idiomas completos**: 353 entradas localizadas por idioma, sin claves crudas. Los 4 textos nuevos de 1.7.12 están traducidos en los 10 idiomas base; el resto cae en inglés.
+- **Carga de idiomas bajo demanda**: al arrancar solo los paquetes base, el resto se construye una vez conocida la lengua (ahorra ~1 MB de heap y tiempo de arranque). Ver [guía de idiomas](docs/LANGUAGES.md).
+- **Wear-Uikit**: 44 widgets Java nativos + 6 contenedores a pantalla completa, sin dependencias externas.
+
+### 🌐 Red y compatibilidad
+- PIN de 6 dígitos de un solo uso, FRP/Ngrok/ZeroTier, UPnP/STUN/IPv6.
+- Compatible con LocalSend v1/v2.2, desde Android 2.3 (API 10), listas blanca/negra y bloqueo de extensiones peligrosas.
+
+---
+
+## 📱 Inicio rápido
+1. **Reloj**: mismo Wi-Fi, iniciar el servicio, los equipos aparecen solos, tocar para enviar.
+2. **Web**: abrir `http://<IP del reloj>:53317` en el navegador.
+3. **Fuera de la LAN**: PIN de 6 dígitos o conexión directa `[IP]:53317`.
 
 ---
 
 ## 🛠️ Compilación
-Conjunto de herramientas: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8**. Compilación con un clic: `python build.py`.
+**AGP 3.6.3 + Gradle 5.6.4 + JDK 8** (minSdk 10). La CI publica según la versión de `CHANGELOG.md`.
 
 ---
 
+## 🚧 Límites y riesgos
+1. Las funciones fuera de la LAN dependen de servicios de terceros o de configuración pública propia.
+2. Algunos equipos antiguos no tienen vibrador ni corona; mosaicos desde Android 7.0.
+3. Android 2.3 solo admite TLS 1.0: HTTPS falla.
+4. Los efectos 3D exigen GPU; el modo de bajo rendimiento se activa solo y también puede forzarse.
+
+---
+
+## 📚 Documentos
+- [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md)
+- [docs/AI_DISCLOSURE.md](docs/AI_DISCLOSURE.md), [docs/DEVELOPMENT_CONSTRAINTS.md](docs/DEVELOPMENT_CONSTRAINTS.md)
+- [docs/LANGUAGES.md](docs/LANGUAGES.md) — lista de idiomas, cambio y reglas de respaldo
+
 ## 📜 Licencia
-MIT License. Totalmente compatible con los protocolos LocalSend.
+MIT License. Totalmente compatible con el protocolo LocalSend (implementación propia).

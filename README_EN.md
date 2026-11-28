@@ -19,7 +19,7 @@
 ---
 
 ## 📦 Version & Origin
-Current Version: **v1.7.7**.
+Current Version: **v1.7.12**.
 
 This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). Core protocols, HTTP server, and cross-network features are inherited from OldSend, while the UI and package name (`org.watchsend`) are completely rewritten.
 
@@ -32,13 +32,15 @@ This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). 
 - **Haptic Feedback**: Fine-tuned vibrations for actions.
 - **Ambient/Idle Mode**: Transfers continue with minimal UI when screen is off.
 - **Voice Input**: Built-in system `RecognizerIntent` support.
-- **Low Performance Mode**: Disables 3D effects for older watches.
+- **Low Performance Mode**: Disables almost every animation (3D wheel, entry, press, loading scan, three-dot breathing, skeleton shimmer, switch transition, sheet bounce), lowers fallback scan concurrency and caps transfer rate. When never set manually it turns on automatically on capable-low devices (heap ≤256MB / low-RAM flag / ≤2 cores).
+- **Transfer Rate Cap**: 2 MB/s in low performance mode, 512 KB/s when battery is under 15% and not charging, applied to both upload and receive.
+- **Idle Service Pause (off by default)**: 3 minutes after screen-off, HTTP and multicast listeners are paused to save power and resume on screen-on; postponed automatically while a transfer is running.
 
 ### 🛠️ Geek Toolbox
 - **Silent Install (Beta)**: Supports Root or Shizuku to install APKs seamlessly in the background (via hand-written Binder IPC proxy).
 - **Native ZIP Extraction**: Unzip files directly from the transfer completion page or history long-press menu, powered by a pure Java engine (built-in Zip Slip prevention).
 - **Web 10-Language Adaptive**: The WebShare frontend automatically detects browser language across 10 variants, supporting drag-and-drop and clipboard sync.
-- **History Quick Management**: Long-press records to share or delete files. ZIP files are marked with a 📦 icon.
+- **History Quick Management**: Long-press a record to resend, share, unzip or delete. ZIP files are marked with a 📦 icon; "Resend" puts the original file straight back into the pending list.
 - **Debug Keys Mode**: A developer option in language settings that displays raw i18n keys across the entire UI, making it a perfect tool for spotting missing translations.
 
 ### 🎨 Extreme UI Experience
@@ -48,7 +50,8 @@ This is the **Watch Edition** of [OldSend](https://github.com/styisme/oldsend). 
 - **3D Wheel Effect**: Cards scale down and fade out at the edges while scrolling.
 - **Round Screen Optimization**: Dynamic paddings to prevent text cutoff.
 - **Predictive Back**: Simulates system-level predictive back animations.
-- **10 Language Variants**: Supports zh, zh_TW, en, ja, ko, de, fr, es, ru, pt.
+- **52 Languages, Fully Translated**: 353 entries per language, 18,363 strings in total, no mixed-language UI and no raw keys. The 4 strings added in 1.7.12 cover the 10 base languages and fall back to English elsewhere.
+- **Per-need Language Loading**: Only base packs (en / zh …) are built at startup; the rest are built once when the active language is known, saving roughly 1MB of heap and some cold-start time. See [Language Guide](docs/LANGUAGES_EN.md).
 - **Wear-Uikit Library (v1.5.0)**: 44 dependency-free native Java widgets (buttons, switches, sliders, steppers, progress rings, skeletons, bottom sheets, ...) plus 6 fullscreen containers, with theme and dynamic color driven by `UikitTheme`.
 
 ### 🌐 Cross-network Transfer
@@ -88,13 +91,14 @@ Toolchain: **AGP 3.6.3 + Gradle 5.6.4 + JDK 8** (to maintain `minSdkVersion 10`,
 1. **Experimental**: Cross-net features rely on third-party services (ntfy.sh). Shizuku silent install is subject to ROM restrictions and may fall back to standard installation.
 2. **Hardware Gap**: Some features (like Tiles) require API 24+.
 3. **TLS Legacy**: Android 2.3 only supports TLS 1.0.
-4. **Performance**: 3D effects require GPU. Use Low Performance Mode if needed.
+4. **Performance**: 3D effects require GPU. Low Performance Mode turns on automatically on low-memory / low-core devices and can also be forced manually in settings.
 
 ---
 
 ## 📚 Related Docs
 - [CHANGELOG.md](CHANGELOG.md)
 - [CONTRIBUTING_EN.md](CONTRIBUTING_EN.md)
+- [docs/LANGUAGES_EN.md](docs/LANGUAGES_EN.md) — language coverage, switching and fallback rules
 - [OldSend](https://github.com/styisme/oldsend)
 
 ---

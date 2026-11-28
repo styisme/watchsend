@@ -27,6 +27,12 @@
 - 桌面 JVM 校验新词条：zh / zh_TW / en 为人工译文，ar / vi / fr 正确回退英文，且不影响其余 18,363 条既有译文（懒加载后仍 52 包）。
 - 静态断言：熄屏监听注册、停服前传输检查与 3 分钟阈值、默认关闭读 prefs、亮屏恢复、`beginTransfer/endTransfer` 成对、发送与接收两侧均接入限速、历史菜单首位重发与索引重排（zip 3 项→4 项）、设置页开关、限速阈值常量。
 
+### Docs
+- 审查并重写全部 10 份 README（zh / zh_TW / en / ja / ko / de / fr / es / ru / pt），统一版本号、特性列表、语言数字与关联文档，补齐此前缺失的语言导航与风险提示。
+- 新增 [docs/LANGUAGES.md](docs/LANGUAGES.md) 与 [docs/LANGUAGES_EN.md](docs/LANGUAGES_EN.md)：52 种语言清单、切换方式、回退规则、懒加载机制、新增语言/词条的流程。
+- 修正事实错误：旧 README 宣称"网页端支持 52 语种"，而 `assets/index.html` 实际只有 10 种语言字典；现按实现分别写明 App 52 / Web 10。
+- 更新 CONTRIBUTING（中英）：补 `PowerGuard` / `TransferThrottle` 与新词条登记流程；更新 `docs/DEVELOPMENT_CONSTRAINTS.md` 的 1.7.10—1.7.12 验证范围；`docs/AI_DISCLOSURE.md` 增补 1.7.8—1.7.12 的 AI 参与记录。
+
 ### Notes
 - 接收端断点续传与"文本自动进剪贴板"**此前已实现**（`FileSaver.createResumeTarget` + `UploadHandler` 追加写入与续算摘要；`UploadHandler` 文本落盘后写剪贴板），本次未重复开发。
 - 发送端仍为整包重发、由接收端跳过已落盘前缀，因此续传省的是"重复落盘与校验"，不是带宽；真正的按偏移续发需要私有协议扩展，官方 LocalSend 客户端不认该参数，故未做。

@@ -93,7 +93,9 @@ watchsend/
 │   │   │   ├── UikitButton/CheckBox/Slider...  # 单个控件实现
 │   │   │   └── UikitFull*Activity.java    # 全屏列表/输入/文本/确认/选择/日期容器
 │   │   ├── util/         # 工具类 (含以下核心极客工具)
-│   │   │   ├── I18nManager.java    # 多语言引擎
+│   │   │   ├── I18nManager.java    # 多语言引擎：52 包 × 353 条，按需加载（ensureLoaded）
+│   │   │   ├── PowerGuard.java     # 传输省电策略（低性能 2MB/s、低电量 512KB/s 阈值）
+│   │   │   ├── TransferThrottle.java # 字节流限速器（发送/接收共用，未限速时为空操作）
 │   │   │   ├── ThemeUtils.java     # 深色主题与动态取色 (支持三态切换)
 │   │   │   ├── ZipUtils.java       # 纯 Java 原生 ZIP 解压 (防 Zip Slip)
 │   │   │   ├── ShellUtils.java     # Root 权限检测与执行
@@ -245,6 +247,12 @@ A: 从 v1.4.0 开始，由于 Android 11+ 拦截了 `updateConfiguration`，缩�
 
 **Q: 为什么在 Android 12+ 上取不到 Material You 动态颜色？**
 A: 请确保 `AndroidManifest.xml` 中使用的主题不是死板的 `Theme.Light`，需要设置为 `@android:style/Theme.DeviceDefault.NoActionBar`，且 `targetSdkVersion` 不能太低（目前为 30），系统才会下发动态色板。
+
+**Q: 要新增一条界面文案，应该改哪里？**
+A: 先给 10 个基础包（zh / zh_TW / en / ja / ko / de / fr / es / ru / pt）加 `put`；若要覆盖全部 52 种语言，再在对应的 `installFullXx()` 里补。**新增语言包必须同时登记到 `I18nManager.ensureLoaded()` 的分支**，否则该语言永远不会被装载，界面会一直回退英文。改完可在 设置 → 语言 里选 `debug_keys` 自查漏翻。
+
+**Q: 低性能模式为什么连传输速度也变慢？**
+A: 它同时作用于 UI 与传输：动画时长统一由 `UikitConfig.animDuration()` 归零，加载/骨架/滚轮等走静态分支；传输层由 `PowerGuard` 给出上限（低性能 2MB/s，电量低于 15% 且未充电 512KB/s），`TransferThrottle` 在发送与接收的字节循环里节流。排查速度问题先看电量与低性能模式状态。
 
 **Q: 找不全多语言缺漏的 key？**
 A: 在设置 -> 语言列表中，滑到最底部选择 `debug_keys`。全界面文字将直接显示原始 Key，极速定位排版溢出或漏翻问题。

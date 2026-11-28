@@ -46,7 +46,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - [x] **自动化签名与发布** —— *（CI 自动解析 Secrets 中的密钥，编译 Release APK 并自动打 Tag、创建 GitHub Release）*
 - [x] **UI 风格与多语言代码级强审查** —— *（人工严格把关了所有卡片必须使用 `WatchUiUtils.getPillBackground`，文本必须走 `I18nManager.get()`，防止出现白底白字或中英韩混排）*
 - [x] **底层 API 与系统机制强审查** —— *（强制废弃已被 Android 11+ 拦截的 `updateConfiguration`，改用 `attachBaseContext`；彻底清理不兼容的残留 Theme，确保动态取色生效）*
-- [x] **前端多语言与资源强隔离** —— *（网页端代码剥离至 `assets`，前端 JS 字典强制覆盖 10 种语言）*
+- [x] **前端多语言与资源强隔离** —— *（网页端代码剥离至 `assets`，前端 JS 字典覆盖 10 种语言；App 端 52 种语言由 `I18nManager` 统一兜底，两者覆盖面不同，已在 README 与语言指南中分别写明）*
 
 ### 测试
 
@@ -57,6 +57,7 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 - [x] **高版本系统兼容测试** —— *（验证了 Android 16 上的物理级 UI 缩放与 Material You 取色，修复了 DayNight 主题导致的 AAPT 崩溃）*
 - [ ] **表冠真机测试** —— *（受限于测试设备，部分无表冠设备仅验证了代码兼容性）*
 - [ ] 模拟器测试（无物理设备条件下）
+- [x] **1.7.10—1.7.12 的验证方式（编译级 + 桌面 JVM 级 + 静态断言级）** —— *（当前云电脑无 KVM、无 X11、无真机，Android 模拟器无法启动：动画闸门、语言包懒加载、日志/进度节流、限速阈值、空闲停服分支均只到静态断言与桌面 JVM 反射校验，真机帧率与内存收益未实测）*
 - [ ] **未测试**（见下方诚实声明）
 
 > 未勾选的条目，代表**本仓库没有条件做**，不是"忘了做"。
@@ -99,6 +100,9 @@ WatchSend 是 [OldSend](https://github.com/styisme/oldsend) 的手表专属分�
 | `ZipUtils.java`（原生 Java ZIP 安全解压） | ✅ 真机测试（含 Zip Slip 防御） |
 | `uikit/*`（Wear-Uikit 控件库，45 个类 + 6 个全屏容器） | ⚠️ 仅编译验证 / 静态检查（v1.5.1 圆屏适配与日志刷新未真机点验，未逐控件真机测试） |
 | `WebShareHandler.java` 与 `assets/index.html`（前端多语言与 API） | ✅ 真机测试（浏览器端功能及 10 语种自适应正常） |
+| `I18nManager.java`（52 语言按需加载，`ensureLoaded`） | ⚠️ 仅编译 + 桌面 JVM 反射（静态初始化 10 包→全量 52 包、18,363 条、幂等，未真机点验切换语言） |
+| `PowerGuard.java` / `TransferThrottle.java`（传输限速） | ⚠️ 仅编译 + 静态断言（阈值常量与两侧接入点，实际速率曲线未实测） |
+| `OldSendService` 熄屏空闲停服（默认关闭） | ⚠️ 仅编译 + 静态断言（不得在真机上验证"漏收"概率） |
 
 > 标注 `⚠️ 仅 CI` 或 `❌ 未验证` 的模块，**不代表不能发布**，但使用前请评估风险。
 

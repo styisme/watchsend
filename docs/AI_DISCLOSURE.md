@@ -76,3 +76,12 @@
 本项目代码使用 [MIT 协议](../LICENSE)。
 
 本项目完美兼容 LocalSend 协议，特别感谢开源项目 LocalSend 提供的优秀协议规范（Apache-2.0 协议授权）。WatchSend 为独立从零实现的 UI，未直接复制其源码。
+
+---
+
+## 补充记录：v1.7.8 — v1.7.12
+
+- **v1.7.8 / v1.7.9（多语言全量）**：52 种语言的 353 条词条由 AI 完成三层合并（官方 LocalSend 人工译文 → 既有核心文案 → 离线 NLLB 机翻），并逐条修正约 140 处明显误译。机翻链路的选型、踩坑与修正均记录在 CHANGELOG 与提交历史中。
+- **v1.7.10 / v1.7.11（低性能模式与省电）**：`UikitConfig.animDuration()` 统一动画闸门、语言包懒加载、日志与传输进度节流、回退扫描降并发、骨架屏纯色路径、低性能模式自动判定，均由 AI 编写；验证方式为编译 + 桌面 JVM 反射 + 静态断言（见 [DEVELOPMENT_CONSTRAINTS](DEVELOPMENT_CONSTRAINTS.md)）。
+- **v1.7.12（传输与闲置策略）**：历史记录一键重发、`PowerGuard` / `TransferThrottle` 限速、熄屏空闲暂停服务（默认关闭）由 AI 编写。
+- **文档审查**：README 十语种版本、CONTRIBUTING、本文件与开发约束文档的更新、以及 `docs/LANGUAGES.md` / `LANGUAGES_EN.md` 由 AI 起草并核对实现，其中修正了一处事实错误——旧 README 宣称"网页端支持 52 语种"，而 `assets/index.html` 实际只有 10 种字典。

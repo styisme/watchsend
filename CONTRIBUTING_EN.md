@@ -93,7 +93,9 @@ watchsend/
 │   │   │   ├── UikitButton/CheckBox/Slider...  # Individual widgets
 │   │   │   └── UikitFull*Activity.java    # Fullscreen list/input/text/confirm/picker/date
 │   │   ├── util/         # Utilities (Core Geek Tools)
-│   │   │   ├── I18nManager.java    # Multi-language Engine
+│   │   │   ├── I18nManager.java    # Multi-language Engine: 52 packs × 353 entries, lazy-loaded via ensureLoaded()
+│   │   │   ├── PowerGuard.java     # Power policy for transfers (2MB/s low-perf, 512KB/s low battery)
+│   │   │   ├── TransferThrottle.java # Byte-stream rate limiter shared by send and receive (no-op when unlimited)
 │   │   │   ├── ThemeUtils.java     # Dark Mode & Dynamic Color (Tri-state)
 │   │   │   ├── ZipUtils.java       # Native Java ZIP extraction (Zip Slip prevention)
 │   │   │   ├── ShellUtils.java     # Root detection and execution
@@ -245,6 +247,12 @@ A: Starting from v1.4.0, because Android 11+ intercepts `updateConfiguration`, t
 
 **Q: Why can't I get Material You dynamic colors on Android 12+?**
 A: Ensure the theme in `AndroidManifest.xml` is not a hardcoded `Theme.Light`, but set to `@android:style/Theme.DeviceDefault.NoActionBar`, and `targetSdkVersion` is not too low (currently 30) so the system can provide dynamic color palettes.
+
+**Q: I need to add a new UI string — where does it go?**
+A: Add the `put` to the 10 base packs (zh / zh_TW / en / ja / ko / de / fr / es / ru / pt); to cover all 52 languages, also add it to the corresponding `installFullXx()`. **Any new language pack must also be registered in `I18nManager.ensureLoaded()`**, otherwise it is never loaded and the UI silently falls back to English. Pick `debug_keys` in Settings → Language afterwards to spot missing strings.
+
+**Q: Why does Low Performance Mode slow transfers down as well?**
+A: It covers both UI and transport: all animation durations collapse to zero through `UikitConfig.animDuration()`, and loading/skeleton/wheel take static branches. On transport, `PowerGuard` supplies the cap (2MB/s in low performance, 512KB/s under 15% battery while discharging) and `TransferThrottle` throttles the byte loops on both send and receive. When debugging speed, check battery and the mode state first.
 
 **Q: How to find missing i18n keys?**
 A: In Settings -> Language list, scroll to the bottom and select `debug_keys`. The UI will directly display the raw keys instead of translated text, making it extremely fast to locate missing translations or layout overflow issues.
